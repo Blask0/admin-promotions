@@ -46,7 +46,7 @@ export class BooksManager extends Component {
 
     return (
       <div>
-        <h2>{title}</h2>
+        {/* <h2>{title}</h2>
         <h3>Books in the Library</h3>
         {books && books.map(({id, name, authors}) => {
           return <div key={id}>
@@ -67,7 +67,7 @@ export class BooksManager extends Component {
         <h3>Remove a book from the library</h3>
         <label>ID:<input type="text" value={this.state.id} onChange={event => this.setState({id: event.target.value})}/></label>
         <button onClick={event => this.deleteBook()}>DELETE</button>
-        <br/><hr/>
+        <br/><hr/> */}
       </div>
     )
   }
