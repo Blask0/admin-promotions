@@ -52,12 +52,12 @@ class BookDatabase {
 const mock = new BookDatabase()
 
 export const resolvers = {
-  Query: {
-    cachedBooks: (_, __) => mock.get(),
-    cachedBook: (_, {id}) => mock.getById(id),
-  },
-  Mutation: {
-    deleteCachedBook: (_, {id}) => mock.delete(id),
-    createCachedBook: (_, {data}) => mock.add(data)
-  }
+  // Query: {
+  //   cachedBooks: (_, __) => mock.get(),
+  //   cachedBook: (_, {id}) => mock.getById(id),
+  // },
+  // Mutation: {
+  //   deleteCachedBook: (_, {id}) => mock.delete(id),
+  //   createCachedBook: (_, {data}) => mock.add(data)
+  // }
 }
