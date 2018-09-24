@@ -1,5 +1,6 @@
 type Query {
-    getCampaigns: ConditionList!
+  getCampaigns: ConditionList!
+  getBenefits: [Benefit]
 }
 
 type ConditionList {
@@ -21,4 +22,8 @@ type Condition {
 type DateRange {
   from: String
   to: String
+}
+
+type Benefit {
+  name: String
 }
