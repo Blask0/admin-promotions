@@ -1,7 +1,7 @@
 {
   "pages": {
     "library": {
-      "path": "/library"
+      "path": "/admin/campaigns"
     }
   },
   "extensions": {

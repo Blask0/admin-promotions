@@ -4,29 +4,28 @@ import {compose, graphql} from 'react-apollo'
 
 import getCampaigns from './graphql/getCampaigns.graphql'
 
-class Library extends Component {
+class Campaigns extends Component {
   render() {
-    const {
-      data: {getCampaigns},
-    } = this.props
-
-    const inlineStyle = {
-      padding: '15px'
-    }
 
     return (
-      <div style={inlineStyle}>
-
+      <div>
+        Hello world
       </div>
     )
   }
 }
 
-Library.propTypes = {
+Campaigns.propTypes = {
   data: PropTypes.object,
   mutate: PropTypes.func
 }
 
+//export default Campaigns
 export default compose(
-  graphql(getCampaigns)
-)(Library)
+  graphql(getCampaigns, {
+    options: ({ params }) => ({
+      ssr: false,
+      variables: { conditionType: "campaigns" },
+    }),
+  })
+)(Campaigns)

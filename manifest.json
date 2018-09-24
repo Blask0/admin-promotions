@@ -17,9 +17,32 @@
     "react": "2.x",
     "pages": "0.x"
   },
+  "dependencies": {
+    "vtex.admin": "1.x"
+  },
   "policies": [
     {
-      "name": "resolve-graphql"
+      "name": "read_prices"
+    },
+    {
+      "name": "modify_prices"
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "api.vtex.com",
+        "path": "/{{account}}/conditions/{{type}}/condition/{{conditionId}}"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "{{account}}.vtexcommercestable.com.br",
+        "path": "/api/catalog_system/*"
+      }
     }
-  ]
+  ],
+  "billingOptions": {
+    "free": true
+  }
 }
