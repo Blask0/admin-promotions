@@ -1,0 +1,31 @@
+{
+  "name": "campaigns",
+  "version": "1.0.0",
+  "description": "Campaigns Admin",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-eslint": "^9.0.0",
+    "eslint": "^5.6.0",
+    "eslint-config-vtex": "^8.0.0",
+    "eslint-config-vtex-react": "^3.0.3",
+    "eslint-plugin-import": "^2.14.0",
+    "jest": "^23.6.0",
+    "prettier-eslint": "^8.8.2"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vtex/campaigns-admin-ui"
+  },
+  "keywords": [
+    "campaigns"
+  ],
+  "author": "Pricing & RnB Team",
+  "bugs": {
+    "url": "https://github.com/vtex/campaigns-admin-ui/issues"
+  },
+  "homepage": "https://github.com/vtex/campaigns-admin-ui#readme"
+}
