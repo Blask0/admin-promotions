@@ -14,25 +14,25 @@ export const resolvers = {
         ioContext.account +
         ".vtexcommerce.com.br/api/rnb/pvt/benefits/calculatorconfiguration";
 
-      await axios
-        .get(benefitsURL, {
-          headers: {
-            Authorization: `${ioContext.authToken}`
-          }
-        })
-        .then(
-          response => {
-            console.log(response);
-          },
-          error => {
-            console.log(error);
-          }
-        );
+      // await axios
+      //   .get(benefitsURL, {
+      //     headers: {
+      //       Authorization: `${ioContext.authToken}`
+      //     }
+      //   })
+      //   .then(
+      //     response => {
+      //       console.log(response);
+      //     },
+      //     error => {
+      //       console.log(error);
+      //     }
+      //   );
 
       return [
-        { name: "get-headphone" },
-        { name: "50-percent-off" },
-        { name: "free-shipping" }
+        { name: "get-headphone", isActive: true },
+        { name: "50-percent-off", isActive: true },
+        { name: "free-shipping", isActive: false }
       ];
     },
     getCampaigns: async (_, info, { vtex: ioContext, request }, query) => {

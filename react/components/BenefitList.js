@@ -2,6 +2,7 @@ import React, { PureComponent, Component } from 'react'
 import { compose, graphql } from 'react-apollo'
 import PropTypes from 'prop-types'
 
+import Badge from '@vtex/styleguide/lib/Badge'
 import Table from '@vtex/styleguide/lib/Table'
 
 import getBenefits from '../graphql/getBenefits.graphql'
@@ -11,6 +12,16 @@ const schema = {
     name: {
       type: 'string',
       title: 'Name',
+    },
+    isActive: {
+      type: 'boolean',
+      title: 'Status',
+      cellRenderer: ({ cellData }) => {
+        const badgeProps = cellData
+          ? { bgColor: '#8BC34A', color: '#FFFFFF', children: 'Active' }
+          : { bgColor: '#727273', color: '#FFFFFF', children: 'Inactive' }
+        return <Badge {...badgeProps} />
+      },
     },
   },
 }
