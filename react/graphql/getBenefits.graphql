@@ -2,5 +2,8 @@ query GetBenefits {
   getBenefits {
     name
     isActive
+    campaigns {
+      name
+    }
   }
 }

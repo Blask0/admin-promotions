@@ -30,9 +30,21 @@ export const resolvers = {
       //   );
 
       return [
-        { name: "get-headphone", isActive: true },
-        { name: "50-percent-off", isActive: true },
-        { name: "free-shipping", isActive: false }
+        {
+          name: "get-headphone",
+          isActive: true,
+          campaigns: [{ name: "black-friday" }]
+        },
+        {
+          name: "50-percent-off",
+          isActive: true,
+          campaigns: []
+        },
+        {
+          name: "free-shipping",
+          isActive: false,
+          campaigns: [{ name: "black-friday" }]
+        }
       ];
     },
     getCampaigns: async (_, info, { vtex: ioContext, request }, query) => {

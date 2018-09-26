@@ -27,4 +27,9 @@ type DateRange {
 type Benefit {
   name: String!
   isActive: Boolean!
+  campaigns: [Campaign]!
+}
+
+type Campaign {
+  name: String!
 }

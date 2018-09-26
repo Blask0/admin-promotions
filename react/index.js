@@ -8,7 +8,7 @@ import BenefitContainer from './components/BenefitList'
 
 class Campaigns extends Component {
   render() {
-    return <BenefitContainer />
+    return <BenefitContainer campaign={{ name: 'black-friday' }} />
   }
 }
 

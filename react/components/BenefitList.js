@@ -29,12 +29,36 @@ const schema = {
 
 export class BenefitListContainer extends Component {
   static propTypes = {
+    campaign: PropTypes.shape({
+      name: PropTypes.string,
+    }),
     data: PropTypes.object,
   }
 
+  static defaultProps = {
+    campaign: null,
+  }
+
+  filterByCampaign = benefit => {
+    const { campaign } = this.props
+    for (var index in benefit.campaigns) {
+      if (benefit.campaigns[index].name === campaign.name) {
+        return true
+      }
+    }
+    return false
+  }
+
   render() {
-    const benefits = this.props.data.getBenefits
+    const { campaign } = this.props
+    let benefits = this.props.data.getBenefits
+
     if (!benefits) return null
+
+    // Only show benefits associated with the context campaign
+    if (campaign) {
+      benefits = benefits.filter(this.filterByCampaign)
+    }
 
     return <BenefitList benefits={benefits} />
   }
