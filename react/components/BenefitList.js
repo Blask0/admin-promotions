@@ -16,8 +16,9 @@ const schema = {
     isActive: {
       type: 'boolean',
       title: 'Status',
-      cellRenderer: ({ cellData }) => {
-        const badgeProps = cellData
+      cellRenderer: data => {
+        const active = data.cellData
+        const badgeProps = active
           ? { bgColor: '#8BC34A', color: '#FFFFFF', children: 'Active' }
           : { bgColor: '#727273', color: '#FFFFFF', children: 'Inactive' }
         return <Badge {...badgeProps} />
