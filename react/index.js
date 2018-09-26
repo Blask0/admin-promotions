@@ -4,11 +4,11 @@ import { compose, graphql } from 'react-apollo'
 
 import getCampaigns from './graphql/getCampaigns.graphql'
 
-import BenefitListContainer from './components/BenefitListContainer'
+import BenefitContainer from './components/BenefitContainer'
 
 class Campaigns extends Component {
   render() {
-    return <BenefitListContainer />
+    return <BenefitContainer />
   }
 }
 

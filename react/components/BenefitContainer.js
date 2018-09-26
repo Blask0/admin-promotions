@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import getBenefits from '../graphql/getBenefits.graphql'
 
-class BenefitListContainer extends Component {
+class BenefitContainer extends Component {
   static propTypes = {
     data: PropTypes.object,
   }
@@ -30,4 +30,4 @@ export default compose(
       ssr: false,
     }),
   })
-)(BenefitListContainer)
+)(BenefitContainer)
