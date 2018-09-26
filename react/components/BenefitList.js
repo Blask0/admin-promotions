@@ -41,6 +41,10 @@ export class BenefitListContainer extends Component {
 
   filterByCampaign = benefit => {
     const { campaign } = this.props
+    // If no campaign specified, show all benefits
+    if (!campaign) {
+      return true
+    }
     for (var index in benefit.campaigns) {
       if (benefit.campaigns[index].name === campaign.name) {
         return true
@@ -50,15 +54,10 @@ export class BenefitListContainer extends Component {
   }
 
   render() {
-    const { campaign } = this.props
     let benefits = this.props.data.getBenefits
-
     if (!benefits) return null
 
-    // Only show benefits associated with the context campaign
-    if (campaign) {
-      benefits = benefits.filter(this.filterByCampaign)
-    }
+    benefits = benefits.filter(this.filterByCampaign)
 
     return <BenefitList benefits={benefits} />
   }
