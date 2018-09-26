@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Campaigns Admin",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "@vtex/styleguide": "^6.3.3"
+  },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
     "eslint": "^5.6.0",

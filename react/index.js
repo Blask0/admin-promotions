@@ -4,7 +4,7 @@ import { compose, graphql } from 'react-apollo'
 
 import getCampaigns from './graphql/getCampaigns.graphql'
 
-import BenefitContainer from './components/BenefitContainer'
+import BenefitContainer from './components/BenefitList'
 
 class Campaigns extends Component {
   render() {
