@@ -3,6 +3,7 @@ import { compose, graphql } from 'react-apollo'
 import PropTypes from 'prop-types'
 
 import Badge from '@vtex/styleguide/lib/Badge'
+import Button from '@vtex/styleguide/lib/Button'
 import Table from '@vtex/styleguide/lib/Table'
 
 import getBenefits from '../graphql/getBenefits.graphql'
@@ -22,6 +23,22 @@ const schema = {
           ? { bgColor: '#8BC34A', color: '#FFFFFF', children: 'Active' }
           : { bgColor: '#727273', color: '#FFFFFF', children: 'Inactive' }
         return <Badge {...badgeProps} />
+      },
+    },
+    actions: {
+      title: 'Actions',
+      cellRenderer: data => {
+        const benefit = data.rowData
+        const button = (
+          <Button
+            size="small"
+            variation="secondary"
+            onClick={() => alert(`Removing ${benefit.name}`)}
+          >
+            DETACH
+          </Button>
+        )
+        return button
       },
     },
   },
