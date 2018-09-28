@@ -18,6 +18,7 @@ export class BenefitListContainer extends Component {
           name: {
             type: 'string',
             title: 'Name',
+            width: 100,
           },
           isActive: {
             type: 'boolean',
