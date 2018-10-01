@@ -28,6 +28,7 @@ type Benefit {
   name: String!
   isActive: Boolean!
   campaigns: [Campaign]!
+  effectType: String
 }
 
 type Campaign {

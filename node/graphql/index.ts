@@ -9,41 +9,25 @@ const storages = {
 export const resolvers = {
   Query: {
     getBenefits: async (_, args, { vtex: ioContext }) => {
-      const benefitsURL =
-        "https://" +
-        ioContext.account +
-        ".vtexcommerce.com.br/api/rnb/pvt/benefits/calculatorconfiguration";
-
-      // await axios
-      //   .get(benefitsURL, {
-      //     headers: {
-      //       Authorization: `${ioContext.authToken}`
-      //     }
-      //   })
-      //   .then(
-      //     response => {
-      //       console.log(response);
-      //     },
-      //     error => {
-      //       console.log(error);
-      //     }
-      //   );
-
+      // MOCK
       return [
         {
           name: "get-headphone",
           isActive: true,
-          campaigns: [{ name: "black-friday" }]
+          campaigns: [{ name: "black-friday" }],
+          effectType: "Gift"
         },
         {
           name: "50-percent-off",
           isActive: true,
-          campaigns: []
+          campaigns: [],
+          effectType: "Price"
         },
         {
           name: "free-shipping",
           isActive: false,
-          campaigns: [{ name: "black-friday" }]
+          campaigns: [{ name: "black-friday" }],
+          effectType: "Shipping"
         }
       ];
     },
