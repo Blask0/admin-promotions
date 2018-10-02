@@ -22,7 +22,7 @@ export class BenefitListContainer extends Component {
           name: {
             type: 'string',
             title: 'Name',
-            width: 100,
+            width: 75,
           },
           effectType: {
             type: 'string',
