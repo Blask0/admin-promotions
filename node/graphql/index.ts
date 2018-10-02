@@ -24,6 +24,12 @@ export const resolvers = {
           effectType: "Price"
         },
         {
+          name: "90-percent-off",
+          isActive: true,
+          campaigns: [{ name: "black-friday" }],
+          effectType: "Price"
+        },
+        {
           name: "free-shipping",
           isActive: false,
           campaigns: [{ name: "black-friday" }],

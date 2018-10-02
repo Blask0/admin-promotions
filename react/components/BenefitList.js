@@ -6,6 +6,10 @@ import Badge from '@vtex/styleguide/lib/Badge'
 import Button from '@vtex/styleguide/lib/Button'
 import Table from '@vtex/styleguide/lib/Table'
 
+import Gift from './Icon/Gift'
+import Tag from './Icon/Tag'
+import Truck from './Icon/Truck'
+
 import getBenefits from '../graphql/getBenefits.graphql'
 
 export class BenefitListContainer extends Component {
@@ -23,6 +27,25 @@ export class BenefitListContainer extends Component {
           effectType: {
             type: 'string',
             title: 'Type',
+            cellRenderer: data => {
+              const type = data.cellData
+              const icon =
+                type === 'Price' ? (
+                  <Tag style={{ paddingTop: '2px' }} />
+                ) : type === 'Gift' ? (
+                  <Gift />
+                ) : type === 'Shipping' ? (
+                  <Truck style={{ paddingTop: '2px' }} />
+                ) : (
+                  ''
+                )
+              return (
+                <div className="dt">
+                  <span className="c-muted-1 dtc v-mid">{icon}</span>
+                  <span className="dtc v-mid pl3">{type}</span>
+                </div>
+              )
+            },
           },
           isActive: {
             type: 'boolean',
