@@ -2,13 +2,32 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { compose, graphql } from 'react-apollo'
 
+import { Box, Button, PageHeader } from 'vtex.styleguide'
+
+import './global.css'
 import getCampaigns from './graphql/getCampaigns.graphql'
 
-import BenefitContainer from './components/BenefitList'
+import GettingStarted from './components/GettingStarted'
 
 class Campaigns extends Component {
   render() {
-    return <BenefitContainer campaign={{ name: 'black-friday' }} />
+    // MOCK CAMPAIGNS
+    // TODO: substitute with this.props.data.getCampaigns
+    const campaigns = []
+
+    return (
+      <div className="w-100 bg-muted-5">
+        <PageHeader title="Campaigns">
+          <Button variation="primary">New campaign</Button>
+        </PageHeader>
+        <div className="ph7">
+          <Box>
+            {campaigns.length === 0 && <GettingStarted />}
+            {campaigns.length !== 0 && <div>CAMPAIGNS LIST</div>}
+          </Box>
+        </div>
+      </div>
+    )
   }
 }
 
