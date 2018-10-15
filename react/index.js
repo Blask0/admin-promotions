@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { compose, graphql } from 'react-apollo'
 
-import { Box, Button, PageHeader } from 'vtex.styleguide'
+import { Box, PageHeader } from 'vtex.styleguide'
 
 import './global.css'
 import getCampaigns from './graphql/getCampaigns.graphql'
 
+import CreateCampaignButton from './components/Button/CreateCampaign'
 import GettingStarted from './components/GettingStarted'
 
 class Campaigns extends Component {
@@ -18,7 +19,7 @@ class Campaigns extends Component {
     return (
       <div className="w-100 bg-muted-5">
         <PageHeader title="Campaigns">
-          <Button variation="primary">New campaign</Button>
+          <CreateCampaignButton />
         </PageHeader>
         <div className="ph7">
           <Box>
