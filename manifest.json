@@ -5,9 +5,7 @@
   "title": "Campaigns",
   "description": "Admin interface for Campaigns",
   "mustUpdateAt": "2019-08-27",
-  "registries": [
-    "smartcheckout"
-  ],
+  "registries": ["smartcheckout"],
   "scripts": {
     "postreleasy": "vtex publish --public"
   },
@@ -18,7 +16,8 @@
     "pages": "0.x"
   },
   "dependencies": {
-    "vtex.admin": "1.x"
+    "vtex.admin": "1.x",
+    "vtex.styleguide": "7.x"
   },
   "policies": [
     {
