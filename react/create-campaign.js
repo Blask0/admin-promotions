@@ -8,12 +8,16 @@ import './global.css'
 import SaveCampaignButton from './components/Button/SaveCampaign'
 
 class CreateCampaign extends Component {
-  static contextTypes = {
-    navigate: PropTypes.func,
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      isEnabled: true,
+    }
   }
 
-  componentDidMount = () => {
-    window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
+  static contextTypes = {
+    navigate: PropTypes.func,
   }
 
   static Panel = props => (
@@ -23,8 +27,13 @@ class CreateCampaign extends Component {
     </Box>
   )
 
+  componentDidMount = () => {
+    window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
+  }
+
   render() {
     const { navigate } = this.context
+    const { isEnabled } = this.state
     return (
       <div>
         <PageHeader
@@ -46,7 +55,15 @@ class CreateCampaign extends Component {
                 <Textarea label="Description" />
               </div>
               <div className="pt6">
-                <Toggle label="Enable campaign" />
+                <Toggle
+                  label="Enable campaign"
+                  checked={isEnabled}
+                  onChange={() =>
+                    this.setState(prevState => ({
+                      isEnabled: !prevState.isEnabled,
+                    }))
+                  }
+                />
               </div>
             </div>
           </CreateCampaign.Panel>
