@@ -11,13 +11,17 @@ import CreateCampaignButton from './components/Button/CreateCampaign'
 import GettingStarted from './components/GettingStarted'
 
 class Campaigns extends Component {
+  componentDidMount = () => {
+    window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
+  }
+
   render() {
     // MOCK CAMPAIGNS
     // TODO: substitute with this.props.data.getCampaigns
     const campaigns = []
 
     return (
-      <div className="w-100 bg-muted-5">
+      <div>
         <PageHeader title="Campaigns">
           <CreateCampaignButton />
         </PageHeader>
