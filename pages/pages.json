@@ -1,12 +1,18 @@
 {
   "pages": {
-    "library": {
+    "admin/index": {
       "path": "/admin/campaigns"
+    },
+    "admin/create": {
+      "path": "/admin/campaigns/create-campaign"
     }
   },
   "extensions": {
-    "library": {
+    "admin/index": {
       "component": "index"
+    },
+    "admin/create": {
+      "component": "create-campaign"
     }
   }
 }
