@@ -3,3 +3,4 @@ node_modules/
 .vscode/
 .eslintrc
 !Icon
+package-lock.json
