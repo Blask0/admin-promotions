@@ -8,6 +8,7 @@ import './global.css'
 
 import SaveCampaignButton from './components/Button/SaveCampaign'
 import Scheduling from './components/Input/Scheduling'
+import BenefitsList from './components/BenefitList'
 
 class CreateCampaign extends Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class CreateCampaign extends Component {
 
   static Panel = props => (
     <Box>
-      <h1 className="f4 normal ma0">{props.title} <span className="ml3 f5 fw1 gray">{props.subtitle}</span></h1>
+      <h1 className="f4 normal ma0">{props.title} <span className="ml3 f4 fw1 gray">{props.subtitle}</span></h1>
       <div className="mt5">{props.children}</div>
     </Box>
   )
@@ -97,14 +98,34 @@ class CreateCampaign extends Component {
         </div>
 
         <div className="ph7 mt6">
-          <CreateCampaign.Panel title={this.props.intl.formatMessage({id: 'input.label.scheduling'})} subtitle={`${this.getTimezoneOffset()}GMT`}>
+          <CreateCampaign.Panel
+            title={this.props.intl.formatMessage({id: 'input.label.scheduling'})} 
+            subtitle={`${this.getTimezoneOffset()}GMT`}>
             <div style={{ maxWidth: 600 }}>
               <Scheduling
                 onChange={this.handleScheduleChange}
                 dateRange={this.state.dateRange}
-                errorMessage={this.state.dateRangeError}
+                errorMessage={this.state.dateRange.error}
               />
             </div>
+          </CreateCampaign.Panel>
+        </div>
+
+        <div className="ph7 mt6">
+          <CreateCampaign.Panel
+            title={this.props.intl.formatMessage({id: 'input.label.audiences'})}
+            subtitle={`0 Target Audiences`}>
+              <div>
+                  
+              </div>
+          </CreateCampaign.Panel>
+        </div>
+
+        <div className="ph7 mt6">
+          <CreateCampaign.Panel
+            title={this.props.intl.formatMessage({id: 'input.label.benefits-list'})}
+            subtitle={`0 Benefits`}>
+              <BenefitsList/>
           </CreateCampaign.Panel>
         </div>
       </div>

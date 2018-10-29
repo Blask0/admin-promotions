@@ -115,7 +115,7 @@ export class BenefitListContainer extends Component {
 
     benefits = benefits.filter(this.filterByCampaign)
 
-    return <BenefitList benefits={benefits} schema={schema} />
+    return <BenefitList className="nh6" benefits={benefits} schema={schema} />
   }
 }
 
