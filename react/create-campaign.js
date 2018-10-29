@@ -23,7 +23,7 @@ class CreateCampaign extends Component {
   static Panel = props => (
     <Box>
       <h1 className="f3 normal ma0">{props.title}</h1>
-      <div className="mt7">{props.children}</div>
+      <div className="mt5">{props.children}</div>
     </Box>
   )
 
@@ -47,16 +47,19 @@ class CreateCampaign extends Component {
         >
           <SaveCampaignButton />
         </PageHeader>
+        
         <div className="ph7">
           <CreateCampaign.Panel title="General">
-            <div style={{ maxWidth: 500 }}>
-              <Input label="Name" size="large" />
-              <div className="pt6">
-                <Textarea label="Description" />
+            <div style={{ maxWidth: 600 }}>
+              <Input label="Name" />
+              <div className="pt5">
+                <span className="db mb3 w-100 f6">Description</span>
+                <Textarea />
               </div>
-              <div className="pt6">
+              <div className="pt5">
                 <Toggle
                   label="Enable campaign"
+                  size="small"
                   checked={isEnabled}
                   onChange={() =>
                     this.setState(prevState => ({
