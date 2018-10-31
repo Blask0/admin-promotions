@@ -22,7 +22,6 @@ class SimpleConditions extends React.Component {
     operator: 'any',
     showOperator: true,
     conditions: [],
-    suffix: '',
     onChangeOperator: () => {},
     onChangeConditions: () => {},
     labels: {
@@ -44,7 +43,18 @@ class SimpleConditions extends React.Component {
     if (selectedOperator !== newOperator) {
       this.props.onChangeOperator(newOperator)
       this.setState({ selectedOperator: newOperator })
-    } 
+    }
+  }
+
+  canAddNewCondition = () => {
+    const { stateConditions } = this.state
+
+    if (stateConditions.length === 0) {
+      return true
+    }
+
+    const hasIncompleteCondition = stateConditions.some(condition => condition.field === '' || condition.operator == '' || condition.value === null)
+    return !hasIncompleteCondition
   }
 
   handleAddNewCondition = () => {
@@ -52,7 +62,6 @@ class SimpleConditions extends React.Component {
     stateConditions.push({
       field: '',
       operator: '',
-      suffix: '',
       value: null,
     })
     this.setState({ stateConditions })
@@ -167,7 +176,6 @@ class SimpleConditions extends React.Component {
                           />
                         }
                       </div>
-                      {condition.suffix}
                       <div className="mh3 pointer" onClick={ e => this.handleRemoveCondition(index) }>
                         <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                           <path d="M11.7429 0.257143C11.4 -0.0857143 10.8857 -0.0857143 10.5429 0.257143L6 4.8L1.45714 0.257143C1.11429 -0.0857143 0.6 -0.0857143 0.257143 0.257143C-0.0857143 0.6 -0.0857143 1.11429 0.257143 1.45714L4.8 6L0.257143 10.5429C-0.0857143 10.8857 -0.0857143 11.4 0.257143 11.7429C0.428571 11.9143 0.6 12 0.857143 12C1.11429 12 1.28571 11.9143 1.45714 11.7429L6 7.2L10.5429 11.7429C10.7143 11.9143 10.9714 12 11.1429 12C11.3143 12 11.5714 11.9143 11.7429 11.7429C12.0857 11.4 12.0857 10.8857 11.7429 10.5429L7.2 6L11.7429 1.45714C12.0857 1.11429 12.0857 0.6 11.7429 0.257143Z" fill="#979899"/>
@@ -195,6 +203,7 @@ class SimpleConditions extends React.Component {
           <Button
               variation="tertiary"
               size="small"
+              disabled={!this.canAddNewCondition()}
               onClick={this.handleAddNewCondition}
             >
               <span className="flex align-baseline">
@@ -219,7 +228,6 @@ SimpleConditions.propTypes = {
   /** Conditions list */
   conditions: PropTypes.arrayOf(
     PropTypes.shape({
-      suffix: PropTypes.string,
       field: PropTypes.string,
       operator: PropTypes.string,
       value: PropTypes.any,

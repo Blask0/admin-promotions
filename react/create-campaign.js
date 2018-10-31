@@ -155,6 +155,32 @@ class CreateCampaign extends Component {
                     ]
                   },
                   {
+                    label: 'Test',
+                    fieldValue: 'value',
+                    type: 'selector',
+                    suffix: 'test',
+                    operators: [
+                      {
+                        label: 'is',
+                        value: '='
+                      },
+                      {
+                        label: 'is not',
+                        value: '!='
+                      },
+                    ],
+                    options: [
+                      {
+                        label: 'Boleto',
+                        value: 'Boleto',
+                      },
+                      {
+                        label: 'Credit Card',
+                        value: 'Credit Card',
+                      },
+                    ]
+                  },
+                  {
                     label: 'BIN',
                     fieldValue: 'value',
                     type: 'string',
