@@ -2,12 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Dropdown, Input } from 'vtex.styleguide'
 
+import debounce from 'lodash/debounce'
+
 class Statement extends React.Component {
   constructor(props) {
     super(props)
 
+    this.statementRef = React.createRef()
+
     this.state = {
       errorMessage: '',
+      fullWidth: false,
     }
   }
 
@@ -23,7 +28,7 @@ class Statement extends React.Component {
   )
 
   static Subject = props => (
-    <div className="w-30 mh3">
+    <div className={`mh3 ${props.fullWidth ? 'w-100 pb3' : 'w-30'}`}>
       <Dropdown
         options={props.choices.map(choice => {
           return {
@@ -38,7 +43,7 @@ class Statement extends React.Component {
   )
 
   static Verb = props => (
-    <div className="w-20 mh3">
+    <div className={`mh3 ${props.fullWidth ? 'w-100 pb3' : 'w-20'}`}>
       <Dropdown
         disabled={!props.condition.subject}
         options={props.options}
@@ -49,7 +54,7 @@ class Statement extends React.Component {
   )
 
   static Object = props => (
-    <div className="w-30 mh3">
+    <div className={`mh3 ${props.fullWidth ? 'w-100 pb3' : 'w-30'}`}>
       {props.condition.subject && props.choice.type === 'selector' ? (
         <Dropdown
           disabled={!props.condition.operator}
@@ -93,56 +98,93 @@ class Statement extends React.Component {
     this.handleChangeStatement(Statement.defaultProps.value, 'value')
   }
 
+  updateLayout = () => {
+    if (this.statementRef.current.offsetWidth < this.props.breakpoint) {
+      this.setState({ fullWidth: true })
+      return
+    }
+
+    if (this.statementRef.current.offsetWidth >= this.props.breakpoint) {
+      this.setState({ fullWidth: false })
+      return
+    }
+  }
+
+  handleDebouncedUpdateLayout = debounce(
+    async () => {
+      this.updateLayout()
+    },
+    150,
+    { trailing: true }
+  )
+
+  componentDidMount() {
+    window.addEventListener('resize', this.handleDebouncedUpdateLayout)
+    this.updateLayout()
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleDebouncedUpdateLayout)
+  }
+
   render() {
     const { condition, choices } = this.props
 
-    console.dir(condition)
     return (
-      <div className="flex flex-column w-100 mv3">
-        <div className="flex flex-row w-100 items-center mv3">
-          <Statement.Subject
-            condition={condition}
-            choices={choices}
-            onChange={value => {
-              this.handleChangeStatement(value, 'subject')
-              this.clearPredicate()
-            }}
-          />
+      <div
+        ref={this.statementRef}
+        className={`flex w-100 items-center mv3 ${
+          this.state.fullWidth ? 'flex-column' : ''
+        }`}>
+        <Statement.Subject
+          condition={condition}
+          choices={choices}
+          fullWidth={this.state.fullWidth}
+          onChange={value => {
+            this.handleChangeStatement(value, 'subject')
+            this.clearPredicate()
+          }}
+        />
 
-          <Statement.Verb
-            condition={condition}
-            choices={choices}
-            options={
-              !condition.subject
-                ? [
-                  {
-                    value: '',
-                    label: '',
-                  },
-                ]
-                : this.getChoiceBySubject(condition.subject).operators
-            }
-            onChange={value => {
-              this.handleChangeStatement(value, 'operator')
-            }}
-          />
+        <Statement.Verb
+          condition={condition}
+          choices={choices}
+          fullWidth={this.state.fullWidth}
+          options={
+            !condition.subject
+              ? [
+                {
+                  value: '',
+                  label: '',
+                },
+              ]
+              : this.getChoiceBySubject(condition.subject).operators
+          }
+          onChange={value => {
+            this.handleChangeStatement(value, 'operator')
+          }}
+        />
+        <Statement.Object
+          condition={condition}
+          choice={this.getChoiceBySubject(condition.subject)}
+          fullWidth={this.state.fullWidth}
+          onChange={value => {
+            this.handleChangeStatement(value, 'value')
+          }}
+        />
 
-          <Statement.Object
-            condition={condition}
-            choice={this.getChoiceBySubject(condition.subject)}
-            onChange={value => {
-              this.handleChangeStatement(value, 'value')
-            }}
-          />
+        <Statement.RemoveButton
+          remove={() => {
+            this.handleRemoveStatement()
+          }}
+        />
 
-          <Statement.RemoveButton remove={this.handleRemoveStatement()} />
-        </div>
-
-        {this.state.errorMessage && (
+        {/* <div>{`is full width: ${this.state.fullWidth}`}</div> */}
+        {/* {this.state.errorMessage && (
           <div className="c-danger t-small mt2 lh-title">
             {this.state.errorMessage}
           </div>
-        )}
+        )} */}
       </div>
     )
   }
@@ -156,6 +198,7 @@ Statement.defaultProps = {
     operator: '',
     value: null,
   },
+  breakpoint: 600,
 }
 
 Statement.propTypes = {
@@ -186,6 +229,8 @@ Statement.propTypes = {
   onChangeStatement: PropTypes.func,
   /** Statement remove callback */
   onRemoveStatement: PropTypes.func,
+  /** Width that will trigger full width form */
+  breakpoint: PropTypes.number,
 }
 
 export default Statement

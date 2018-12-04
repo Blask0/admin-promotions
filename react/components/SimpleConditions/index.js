@@ -107,7 +107,7 @@ class SimpleConditions extends React.Component {
           <div className="mv5">
             {stateConditions.map((condition, index) => {
               return (
-                <div key={index}>
+                <div className="flex flex-column w-100 mv3" key={index}>
                   <Statement
                     condition={condition}
                     choices={choices}

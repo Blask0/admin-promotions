@@ -4,7 +4,6 @@ import Statement from './components/SimpleConditions/Statement'
 
 import { Box, PageHeader, Tabs, Tab } from 'vtex.styleguide'
 
-import Resizable from 're-resizable'
 import AceEditor from 'react-ace'
 import 'brace/mode/json'
 import './theme/vtex'
@@ -61,6 +60,9 @@ class SimpleConditionsSandbox extends Component {
     this.setState({ conditions: conditions })
   }
 
+  handleRemoveStatement = () => {
+    alert('handleRemoveStatement')
+  }
   render() {
     return (
       <div>
@@ -80,6 +82,9 @@ class SimpleConditionsSandbox extends Component {
                     choices={this.state.choices}
                     onChangeStatement={(value, param) => {
                       this.handleChangeStatement('empty', value, param)
+                    }}
+                    onRemoveStatement={() => {
+                      this.handleRemoveStatement()
                     }}
                   />
 
@@ -105,6 +110,9 @@ class SimpleConditionsSandbox extends Component {
                     onChangeStatement={(value, param) => {
                       this.handleChangeStatement('pre-filled', value, param)
                     }}
+                    onRemoveStatement={() => {
+                      this.handleRemoveStatement()
+                    }}
                   />
 
                   <div className="ph3">
@@ -121,30 +129,39 @@ class SimpleConditionsSandbox extends Component {
               </div>
 
               <div className="ph7">
-                <h4>Resizeable empty statement</h4>
+                <h4>Small width container (full width breakpoint: 600px)</h4>
                 <Box>
-                  <Resizable
-                    style={{
-                      border: '1px solid #ccc',
-                      borderRadius: '3px',
-                      backgroundImage:
-                        'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAIElEQVQoU2O8/fF/AwMRgBGkUJWfkaDiUYV4Q5Po4AEAq0gnVtscrm0AAAAASUVORK5CYII=)',
-                    }}
-                    className="mv5 ml3"
-                    defaultSize={{
-                      width: 350,
-                      height: 75,
-                    }}
-                    maxHeight={75}
-                    minHeight={75}>
+                  <div
+                    style={{ maxWidth: '400px' }}
+                    className="mh3 mb5 pa3 br3 b--light-gray bw1 ba">
+                    <h5 className="mv2">400px width</h5>
                     <Statement
                       condition={this.state.conditions['resizable']}
                       choices={this.state.choices}
                       onChangeStatement={(value, param) => {
                         this.handleChangeStatement('resizable', value, param)
                       }}
+                      onRemoveStatement={() => {
+                        this.handleRemoveStatement()
+                      }}
                     />
-                  </Resizable>
+                  </div>
+
+                  <div
+                    style={{ maxWidth: '620px' }}
+                    className="mh3 mb5 pa3 br3 b--light-gray bw1 ba">
+                    <h5 className="mv2">620px width</h5>
+                    <Statement
+                      condition={this.state.conditions['resizable']}
+                      choices={this.state.choices}
+                      onChangeStatement={(value, param) => {
+                        this.handleChangeStatement('resizable', value, param)
+                      }}
+                      onRemoveStatement={() => {
+                        this.handleRemoveStatement()
+                      }}
+                    />
+                  </div>
 
                   <div className="ph3">
                     <AceEditor
