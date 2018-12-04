@@ -35,11 +35,11 @@
     "options": [
       {
         "label": "Boleto",
-        "value": "Boleto"
+        "value": "boleto"
       },
       {
         "label": "Credit Card",
-        "value": "Credit Card"
+        "value": "credit-card"
       }
     ]
   },

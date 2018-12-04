@@ -22,6 +22,51 @@ class Statement extends React.Component {
     </div>
   )
 
+  static Subject = props => (
+    <div className="w-30 mh3">
+      <Dropdown
+        options={props.choices.map(choice => {
+          return {
+            value: choice.subject.value,
+            label: choice.subject.label,
+          }
+        })}
+        value={!props.condition.subject ? '' : props.condition.subject || ''}
+        onChange={(e, value) => props.onChange(value)}
+      />
+    </div>
+  )
+
+  static Verb = props => (
+    <div className="w-20 mh3">
+      <Dropdown
+        disabled={!props.condition.subject}
+        options={props.options}
+        value={!props.condition.subject ? '' : props.condition.operator || ''}
+        onChange={(e, value) => props.onChange(value)}
+      />
+    </div>
+  )
+
+  static Object = props => (
+    <div className="w-30 mh3">
+      {props.condition.subject && props.choice.type === 'selector' ? (
+        <Dropdown
+          disabled={!props.condition.operator}
+          options={props.choice.options}
+          value={!props.condition.operator ? '' : props.condition.value || ''}
+          onChange={(e, value) => props.onChange(value, 'value')}
+        />
+      ) : (
+        <Input
+          disabled={!props.condition.operator}
+          value={!props.condition.operator ? '' : props.condition.value}
+          onChange={e => props.onChange(e.target.value, 'value')}
+        />
+      )}
+    </div>
+  )
+
   handleChangeStatement = (value, param) => {
     this.props.onChangeStatement(value, param)
   }
@@ -55,64 +100,41 @@ class Statement extends React.Component {
     return (
       <div className="flex flex-column w-100 mv3">
         <div className="flex flex-row w-100 items-center mv3">
-          <div className="w-30 mh3">
-            <Dropdown
-              options={choices.map(choice => {
-                return {
-                  value: choice.subject.value,
-                  label: choice.subject.label,
-                }
-              })}
-              value={!condition.subject ? '' : condition.subject || ''}
-              onChange={(e, value) => {
-                this.handleChangeStatement(value, 'subject')
-                this.clearPredicate()
-              }}
-            />
-          </div>
-          <div className="w-20 mh3">
-            <Dropdown
-              disabled={!condition.subject}
-              options={
-                !condition.subject
-                  ? [
-                    {
-                      value: '',
-                      label: '',
-                    },
-                  ]
-                  : this.getChoiceBySubject(condition.subject).operators
-              }
-              value={!condition.subject ? '' : condition.operator || ''}
-              onChange={(e, value) =>
-                this.handleChangeStatement(value, 'operator')
-              }
-            />
-          </div>
-          <div className="w-30 mh3">
-            {condition.field &&
-            this.getChoiceBySubject(condition.subject.value).type ===
-              'selector' ? (
-                <Dropdown
-                  disabled={!condition.operator}
-                  options={
-                    this.getChoiceBySubject(condition.subject.value).options
-                  }
-                  value={!condition.operator ? '' : condition.value || ''}
-                  onChange={(e, value) =>
-                    this.handleChangeStatement(value, 'value')
-                  }
-                />
-              ) : (
-                <Input
-                  disabled={!condition.operator}
-                  value={!condition.operator ? '' : condition.value}
-                  onChange={e =>
-                    this.handleChangeStatement(e.target.value, 'value')
-                  }
-                />
-              )}
-          </div>
+          <Statement.Subject
+            condition={condition}
+            choices={choices}
+            onChange={value => {
+              this.handleChangeStatement(value, 'subject')
+              this.clearPredicate()
+            }}
+          />
+
+          <Statement.Verb
+            condition={condition}
+            choices={choices}
+            options={
+              !condition.subject
+                ? [
+                  {
+                    value: '',
+                    label: '',
+                  },
+                ]
+                : this.getChoiceBySubject(condition.subject).operators
+            }
+            onChange={value => {
+              this.handleChangeStatement(value, 'operator')
+            }}
+          />
+
+          <Statement.Object
+            condition={condition}
+            choice={this.getChoiceBySubject(condition.subject)}
+            onChange={value => {
+              this.handleChangeStatement(value, 'value')
+            }}
+          />
+
           <Statement.RemoveButton remove={this.handleRemoveStatement()} />
         </div>
 

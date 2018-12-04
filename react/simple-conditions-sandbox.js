@@ -12,6 +12,16 @@ import 'brace/ext/searchbox'
 
 import choices from './choices/choices.json'
 
+const aceProps = {
+  readOnly: true,
+  maxLines: '10',
+  className: 'code',
+  mode: 'json',
+  tabSize: 2,
+  theme: 'vtex',
+  width: '100%',
+}
+
 class SimpleConditionsSandbox extends Component {
   constructor(props) {
     super(props)
@@ -23,7 +33,11 @@ class SimpleConditionsSandbox extends Component {
       choices: choices,
       conditions: {
         empty: { subject: '', operator: '', value: null },
-        'pre-filling': { subject: '', operator: '', value: null },
+        'pre-filled': {
+          subject: 'payment-method',
+          operator: '!=',
+          value: 'credit-card',
+        },
         resizable: { subject: '', operator: '', value: null },
       },
     }
@@ -71,42 +85,42 @@ class SimpleConditionsSandbox extends Component {
 
                   <div className="ph3">
                     <AceEditor
-                      readOnly
-                      maxLines="10"
-                      className="code"
-                      mode="json"
-                      tabSize={2}
-                      theme="vtex"
+                      {...aceProps}
                       value={`${JSON.stringify(
                         this.state.conditions['empty'],
                         null,
                         2
                       )}`}
-                      width="100%"
                     />
                   </div>
                 </Box>
               </div>
 
-              {/* <div className="ph7">
-                <h4>Pre-filling statement</h4>
+              <div className="ph7">
+                <h4>Pre-filled statement</h4>
                 <Box>
                   <Statement
-                    condition={{
-                      field: 'Seller ID',
-                      operator: 'is',
-                      value: 'storename',
-                    }}
+                    condition={this.state.conditions['pre-filled']}
                     choices={this.state.choices}
                     onChangeStatement={(value, param) => {
-                      this.handleChangeStatement('pre-filling', value, param)
+                      this.handleChangeStatement('pre-filled', value, param)
                     }}
                   />
-                  {`${JSON.stringify(this.state.conditions['pre-filling'])}`}
-                </Box>
-              </div> */}
 
-              {/* <div className="ph7">
+                  <div className="ph3">
+                    <AceEditor
+                      {...aceProps}
+                      value={`${JSON.stringify(
+                        this.state.conditions['pre-filled'],
+                        null,
+                        2
+                      )}`}
+                    />
+                  </div>
+                </Box>
+              </div>
+
+              <div className="ph7">
                 <h4>Resizeable empty statement</h4>
                 <Box>
                   <Resizable
@@ -116,6 +130,7 @@ class SimpleConditionsSandbox extends Component {
                       backgroundImage:
                         'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAIElEQVQoU2O8/fF/AwMRgBGkUJWfkaDiUYV4Q5Po4AEAq0gnVtscrm0AAAAASUVORK5CYII=)',
                     }}
+                    className="mv5 ml3"
                     defaultSize={{
                       width: 350,
                       height: 75,
@@ -130,9 +145,19 @@ class SimpleConditionsSandbox extends Component {
                       }}
                     />
                   </Resizable>
-                  {`${JSON.stringify(this.state.conditions['resizable'])}`}
+
+                  <div className="ph3">
+                    <AceEditor
+                      {...aceProps}
+                      value={`${JSON.stringify(
+                        this.state.conditions['resizable'],
+                        null,
+                        2
+                      )}`}
+                    />
+                  </div>
                 </Box>
-              </div> */}
+              </div>
             </Tab>
             <Tab
               label="Simple Conditions"

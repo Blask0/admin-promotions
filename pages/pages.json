@@ -5,6 +5,9 @@
     },
     "admin/create": {
       "path": "/admin/campaigns/create-campaign"
+    },
+    "admin/sandbox": {
+      "path": "/admin/campaigns/simple-conditions-sandbox"
     }
   },
   "extensions": {
@@ -13,6 +16,9 @@
     },
     "admin/create": {
       "component": "create-campaign"
+    },
+    "admin/sandbox": {
+      "component": "simple-conditions-sandbox"
     }
   }
 }
