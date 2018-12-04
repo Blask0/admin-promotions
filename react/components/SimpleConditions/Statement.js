@@ -128,7 +128,60 @@ class Statement extends React.Component {
   }
 
   render() {
-    const { condition, choices } = this.props
+    const { condition, choices, order } = this.props
+    const entities = []
+
+    order.split('').map(entity => {
+      if (entity === 'S') {
+        entities.push(
+          <Statement.Subject
+            condition={condition}
+            choices={choices}
+            fullWidth={this.state.fullWidth}
+            onChange={value => {
+              this.handleChangeStatement(value, 'subject')
+              this.clearPredicate()
+            }}
+          />
+        )
+      }
+
+      if (entity === 'O') {
+        entities.push(
+          <Statement.Object
+            condition={condition}
+            choice={this.getChoiceBySubject(condition.subject)}
+            fullWidth={this.state.fullWidth}
+            onChange={value => {
+              this.handleChangeStatement(value, 'value')
+            }}
+          />
+        )
+      }
+
+      if (entity === 'V') {
+        entities.push(
+          <Statement.Verb
+            condition={condition}
+            choices={choices}
+            fullWidth={this.state.fullWidth}
+            options={
+              !condition.subject
+                ? [
+                  {
+                    value: '',
+                    label: '',
+                  },
+                ]
+                : this.getChoiceBySubject(condition.subject).operators
+            }
+            onChange={value => {
+              this.handleChangeStatement(value, 'operator')
+            }}
+          />
+        )
+      }
+    })
 
     return (
       <div
@@ -136,49 +189,13 @@ class Statement extends React.Component {
         className={`flex w-100 items-center mv3 ${
           this.state.fullWidth ? 'flex-column' : ''
         }`}>
-        <Statement.Subject
-          condition={condition}
-          choices={choices}
-          fullWidth={this.state.fullWidth}
-          onChange={value => {
-            this.handleChangeStatement(value, 'subject')
-            this.clearPredicate()
-          }}
-        />
-
-        <Statement.Verb
-          condition={condition}
-          choices={choices}
-          fullWidth={this.state.fullWidth}
-          options={
-            !condition.subject
-              ? [
-                {
-                  value: '',
-                  label: '',
-                },
-              ]
-              : this.getChoiceBySubject(condition.subject).operators
-          }
-          onChange={value => {
-            this.handleChangeStatement(value, 'operator')
-          }}
-        />
-        <Statement.Object
-          condition={condition}
-          choice={this.getChoiceBySubject(condition.subject)}
-          fullWidth={this.state.fullWidth}
-          onChange={value => {
-            this.handleChangeStatement(value, 'value')
-          }}
-        />
+        {entities}
 
         <Statement.RemoveButton
           remove={() => {
             this.handleRemoveStatement()
           }}
         />
-
         {/* <div>{`is full width: ${this.state.fullWidth}`}</div> */}
         {/* {this.state.errorMessage && (
           <div className="c-danger t-small mt2 lh-title">
@@ -199,6 +216,7 @@ Statement.defaultProps = {
     value: null,
   },
   breakpoint: 600,
+  order: 'SVO',
 }
 
 Statement.propTypes = {
@@ -225,6 +243,8 @@ Statement.propTypes = {
       ),
     })
   ),
+  /** Ordering of sentence structures https://en.wikipedia.org/wiki/Subject%E2%80%93verb%E2%80%93object */
+  order: PropTypes.oneOf(['SVO', 'SOV', 'VSO', 'VOS', 'OSV', 'OVS']),
   /** Statement change callback */
   onChangeStatement: PropTypes.func,
   /** Statement remove callback */

@@ -2,16 +2,16 @@
   {
     "type": "string",
     "subject": {
-      "label": "Seller ID",
+      "label": "معرف البائع",
       "value": "seller-id"
     },
     "operators": [
       {
-        "label": "contains",
+        "label": "يحتوي على",
         "value": "contains"
       },
       {
-        "label": "does not contain",
+        "label": "لا يحتوي",
         "value": "does-not-contain"
       }
     ]
@@ -19,26 +19,26 @@
   {
     "type": "selector",
     "subject": {
-      "label": "Payment method",
+      "label": "طريقة الدفع او السداد",
       "value": "payment-method"
     },
     "operators": [
       {
-        "label": "is",
+        "label": "هو",
         "value": "="
       },
       {
-        "label": "is not",
+        "label": "ليس",
         "value": "!="
       }
     ],
     "options": [
       {
-        "label": "Boleto",
+        "label": "البرازيلي boleto",
         "value": "boleto"
       },
       {
-        "label": "Credit Card",
+        "label": "بطاقة الائتمان",
         "value": "credit-card"
       }
     ]
@@ -51,15 +51,15 @@
     },
     "operators": [
       {
-        "label": "was",
+        "label": "هو",
         "value": "="
       },
       {
-        "label": "was greater than",
+        "label": "أكبر من",
         "value": ">"
       },
       {
-        "label": "was smaller than",
+        "label": "أصغر من",
         "value": "<"
       }
     ]

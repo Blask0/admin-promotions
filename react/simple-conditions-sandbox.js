@@ -9,7 +9,9 @@ import 'brace/mode/json'
 import './theme/vtex'
 import 'brace/ext/searchbox'
 
-import choices from './choices/choices.json'
+import choicesEn from './choices/choices-en-US.json'
+import choicesKo from './choices/choices-ko.json'
+import choicesArabic from './choices/choices-ar.json'
 
 const aceProps = {
   readOnly: true,
@@ -29,7 +31,11 @@ class SimpleConditionsSandbox extends Component {
       currentTab: 1,
       isEnabled: true,
       dateRange: { from: null, to: null, error: null },
-      choices: choices,
+      choices: {
+        'en-US': choicesEn,
+        ko: choicesKo,
+        ar: choicesArabic,
+      },
       conditions: {
         empty: { subject: '', operator: '', value: null },
         'pre-filled': {
@@ -37,9 +43,17 @@ class SimpleConditionsSandbox extends Component {
           operator: '!=',
           value: 'credit-card',
         },
-        resizable: { subject: '', operator: '', value: null },
+        'small-width': { subject: '', operator: '', value: null },
+        ordering: {
+          subject: 'payment-method',
+          operator: '=',
+          value: 'boleto',
+        },
       },
     }
+
+    console.dir(this.state.choices['en-US'])
+    console.dir(this.state.choices['ko'])
   }
 
   componentDidMount = () => {
@@ -79,7 +93,7 @@ class SimpleConditionsSandbox extends Component {
                 <Box>
                   <Statement
                     condition={this.state.conditions['empty']}
-                    choices={this.state.choices}
+                    choices={this.state.choices['en-US']}
                     onChangeStatement={(value, param) => {
                       this.handleChangeStatement('empty', value, param)
                     }}
@@ -106,7 +120,7 @@ class SimpleConditionsSandbox extends Component {
                 <Box>
                   <Statement
                     condition={this.state.conditions['pre-filled']}
-                    choices={this.state.choices}
+                    choices={this.state.choices['en-US']}
                     onChangeStatement={(value, param) => {
                       this.handleChangeStatement('pre-filled', value, param)
                     }}
@@ -136,10 +150,10 @@ class SimpleConditionsSandbox extends Component {
                     className="mh3 mb5 pa3 br3 b--light-gray bw1 ba">
                     <h5 className="mv2">400px width</h5>
                     <Statement
-                      condition={this.state.conditions['resizable']}
-                      choices={this.state.choices}
+                      condition={this.state.conditions['small-width']}
+                      choices={this.state.choices['en-US']}
                       onChangeStatement={(value, param) => {
-                        this.handleChangeStatement('resizable', value, param)
+                        this.handleChangeStatement('small-width', value, param)
                       }}
                       onRemoveStatement={() => {
                         this.handleRemoveStatement()
@@ -152,10 +166,10 @@ class SimpleConditionsSandbox extends Component {
                     className="mh3 mb5 pa3 br3 b--light-gray bw1 ba">
                     <h5 className="mv2">620px width</h5>
                     <Statement
-                      condition={this.state.conditions['resizable']}
-                      choices={this.state.choices}
+                      condition={this.state.conditions['small-width']}
+                      choices={this.state.choices['en-US']}
                       onChangeStatement={(value, param) => {
-                        this.handleChangeStatement('resizable', value, param)
+                        this.handleChangeStatement('small-width', value, param)
                       }}
                       onRemoveStatement={() => {
                         this.handleRemoveStatement()
@@ -167,7 +181,61 @@ class SimpleConditionsSandbox extends Component {
                     <AceEditor
                       {...aceProps}
                       value={`${JSON.stringify(
-                        this.state.conditions['resizable'],
+                        this.state.conditions['small-width'],
+                        null,
+                        2
+                      )}`}
+                    />
+                  </div>
+                </Box>
+              </div>
+
+              <div className="ph7">
+                <h4>Grammatical ordering pattern</h4>
+                <Box>
+                  <h5 className="mv2">Subject-Object-Verb (korean)</h5>
+                  <Statement
+                    condition={this.state.conditions['ordering']}
+                    choices={this.state.choices['ko']}
+                    order="SOV"
+                    onChangeStatement={(value, param) => {
+                      this.handleChangeStatement('ordering', value, param)
+                    }}
+                    onRemoveStatement={() => {
+                      this.handleRemoveStatement()
+                    }}
+                  />
+
+                  <h5 className="mv2">Verb-Object-Subject (arabic)</h5>
+                  <Statement
+                    condition={this.state.conditions['ordering']}
+                    choices={this.state.choices['ar']}
+                    order="VOS"
+                    onChangeStatement={(value, param) => {
+                      this.handleChangeStatement('ordering', value, param)
+                    }}
+                    onRemoveStatement={() => {
+                      this.handleRemoveStatement()
+                    }}
+                  />
+
+                  <h5 className="mv2">Subject-Verb-Object (en-US)</h5>
+                  <Statement
+                    condition={this.state.conditions['ordering']}
+                    choices={this.state.choices['en-US']}
+                    onChangeStatement={(value, param) => {
+                      this.handleChangeStatement('ordering', value, param)
+                    }}
+                    onRemoveStatement={() => {
+                      this.handleRemoveStatement()
+                    }}
+                  />
+
+                  <div className="ph3">
+                    <AceEditor
+                      {...aceProps}
+                      value={`${JSON.stringify(
+                        this.state.conditions['ordering'],
                         null,
                         2
                       )}`}
