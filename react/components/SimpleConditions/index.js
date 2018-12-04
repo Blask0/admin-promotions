@@ -160,8 +160,8 @@ SimpleConditions.propTypes = {
   /** Conditions list */
   conditions: PropTypes.arrayOf(
     PropTypes.shape({
-      field: PropTypes.string,
-      operator: PropTypes.string,
+      subject: PropTypes.string,
+      verb: PropTypes.string,
       value: PropTypes.any,
     })
   ),
@@ -176,7 +176,7 @@ SimpleConditions.propTypes = {
       }),
       type: PropTypes.string,
       format: PropTypes.string,
-      operators: PropTypes.arrayOf(
+      verbs: PropTypes.arrayOf(
         PropTypes.shape({
           label: PropTypes.string,
           value: PropTypes.string,

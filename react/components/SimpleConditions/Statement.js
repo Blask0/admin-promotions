@@ -47,7 +47,7 @@ class Statement extends React.Component {
       <Dropdown
         disabled={!props.condition.subject}
         options={props.options}
-        value={!props.condition.subject ? '' : props.condition.operator || ''}
+        value={!props.condition.subject ? '' : props.condition.verb || ''}
         onChange={(e, value) => props.onChange(value)}
       />
     </div>
@@ -57,15 +57,15 @@ class Statement extends React.Component {
     <div className={`mh3 ${props.fullWidth ? 'w-100 pb3' : 'w-30'}`}>
       {props.condition.subject && props.choice.type === 'selector' ? (
         <Dropdown
-          disabled={!props.condition.operator}
+          disabled={!props.condition.verb}
           options={props.choice.options}
-          value={!props.condition.operator ? '' : props.condition.value || ''}
+          value={!props.condition.verb ? '' : props.condition.value || ''}
           onChange={(e, value) => props.onChange(value, 'value')}
         />
       ) : (
         <Input
-          disabled={!props.condition.operator}
-          value={!props.condition.operator ? '' : props.condition.value}
+          disabled={!props.condition.verb}
+          value={!props.condition.verb ? '' : props.condition.value}
           onChange={e => props.onChange(e.target.value, 'value')}
         />
       )}
@@ -87,14 +87,14 @@ class Statement extends React.Component {
     )
 
     if (!foundChoice) {
-      return { subject: '', operators: [], value: null }
+      return { subject: '', verbs: [], value: null }
     }
 
     return foundChoice
   }
 
   clearPredicate = () => {
-    this.handleChangeStatement(Statement.defaultProps.operator, 'operator')
+    this.handleChangeStatement(Statement.defaultProps.verb, 'verb')
     this.handleChangeStatement(Statement.defaultProps.value, 'value')
   }
 
@@ -173,10 +173,10 @@ class Statement extends React.Component {
                     label: '',
                   },
                 ]
-                : this.getChoiceBySubject(condition.subject).operators
+                : this.getChoiceBySubject(condition.subject).verbs
             }
             onChange={value => {
-              this.handleChangeStatement(value, 'operator')
+              this.handleChangeStatement(value, 'verb')
             }}
           />
         )
@@ -212,7 +212,7 @@ Statement.defaultProps = {
   onChangeStatement: () => {},
   condition: {
     subject: '',
-    operator: '',
+    verb: '',
     value: null,
   },
   breakpoint: 600,
@@ -223,10 +223,10 @@ Statement.propTypes = {
   /** Current options for this Statement */
   condition: PropTypes.shape({
     subject: PropTypes.string,
-    operator: PropTypes.string,
+    verb: PropTypes.string,
     value: PropTypes.any,
   }),
-  /** Possible choices and respective data types, operator options */
+  /** Possible choices and respective data types, verb options */
   choices: PropTypes.arrayOf(
     PropTypes.shape({
       subject: PropTypes.shape({
@@ -235,7 +235,7 @@ Statement.propTypes = {
       }),
       type: PropTypes.string,
       format: PropTypes.string,
-      operators: PropTypes.arrayOf(
+      verbs: PropTypes.arrayOf(
         PropTypes.shape({
           label: PropTypes.string,
           value: PropTypes.string,

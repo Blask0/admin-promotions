@@ -5,7 +5,7 @@
       "label": "Seller ID",
       "value": "seller-id"
     },
-    "operators": [
+    "verbs": [
       {
         "label": "contains",
         "value": "contains"
@@ -22,7 +22,7 @@
       "label": "Payment method",
       "value": "payment-method"
     },
-    "operators": [
+    "verbs": [
       {
         "label": "is",
         "value": "="
@@ -49,7 +49,7 @@
       "label": "BIN",
       "value": "bin"
     },
-    "operators": [
+    "verbs": [
       {
         "label": "is",
         "value": "="

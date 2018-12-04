@@ -37,16 +37,16 @@ class SimpleConditionsSandbox extends Component {
         ar: choicesArabic,
       },
       conditions: {
-        empty: { subject: '', operator: '', value: null },
+        empty: { subject: '', verb: '', value: null },
         'pre-filled': {
           subject: 'payment-method',
-          operator: '!=',
+          verb: '!=',
           value: 'credit-card',
         },
-        'small-width': { subject: '', operator: '', value: null },
+        'small-width': { subject: '', verb: '', value: null },
         ordering: {
           subject: 'payment-method',
-          operator: '=',
+          verb: '=',
           value: 'boleto',
         },
       },
