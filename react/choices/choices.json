@@ -1,0 +1,67 @@
+[
+  {
+    "type": "string",
+    "subject": {
+      "label": "Seller ID",
+      "value": "seller-id"
+    },
+    "operators": [
+      {
+        "label": "contains",
+        "value": "contains"
+      },
+      {
+        "label": "does not contain",
+        "value": "does-not-contain"
+      }
+    ]
+  },
+  {
+    "type": "selector",
+    "subject": {
+      "label": "Payment method",
+      "value": "payment-method"
+    },
+    "operators": [
+      {
+        "label": "is",
+        "value": "="
+      },
+      {
+        "label": "is not",
+        "value": "!="
+      }
+    ],
+    "options": [
+      {
+        "label": "Boleto",
+        "value": "Boleto"
+      },
+      {
+        "label": "Credit Card",
+        "value": "Credit Card"
+      }
+    ]
+  },
+  {
+    "type": "string",
+    "subject": {
+      "label": "BIN",
+      "value": "bin"
+    },
+    "operators": [
+      {
+        "label": "was",
+        "value": "="
+      },
+      {
+        "label": "was greater than",
+        "value": ">"
+      },
+      {
+        "label": "was smaller than",
+        "value": "<"
+      }
+    ]
+  }
+]

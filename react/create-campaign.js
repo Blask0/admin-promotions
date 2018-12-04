@@ -2,14 +2,21 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl } from 'react-intl'
 
-import { Box, Input, PageHeader, Textarea, Toggle, Button } from 'vtex.styleguide'
+import {
+  Box,
+  Input,
+  PageHeader,
+  Textarea,
+  Toggle,
+  Button,
+} from 'vtex.styleguide'
 
 import './global.css'
 
 import SaveCampaignButton from './components/Button/SaveCampaign'
 import Scheduling from './components/Input/Scheduling'
 import BenefitsList from './components/BenefitList'
-import SimpleConditions from './components/SimpleConditions';
+import SimpleConditions from './components/SimpleConditions'
 
 class CreateCampaign extends Component {
   constructor(props) {
@@ -27,7 +34,9 @@ class CreateCampaign extends Component {
 
   static Panel = props => (
     <Box>
-      <h1 className="f4 normal ma0">{props.title} <span className="ml3 f5 fw2s gray">{props.subtitle}</span></h1>
+      <h1 className="f4 normal ma0">
+        {props.title} <span className="ml3 f5 fw2s gray">{props.subtitle}</span>
+      </h1>
       <div className="mt5">{props.children}</div>
     </Box>
   )
@@ -38,14 +47,14 @@ class CreateCampaign extends Component {
 
   handleScheduleChange = (date, type, valid) => {
     const newRange = { ...this.state.dateRange, [type]: date }
-    newRange.error = valid ? undefined : 'error.dateRange.validation', 
+    ;(newRange.error = valid ? undefined : 'error.dateRange.validation'),
     this.setState({
-      dateRange: newRange
+      dateRange: newRange,
     })
   }
-  
+
   handleAddAudience = () => {
-    return alert("Add audience")
+    return alert('Add audience')
   }
 
   getTimezoneOffset = () => {
@@ -73,11 +82,10 @@ class CreateCampaign extends Component {
               page: 'admin/index',
             })
           }}
-          title="Create Campaign"
-        >
+          title="Create Campaign">
           <SaveCampaignButton />
         </PageHeader>
-        
+
         <div className="ph7">
           <CreateCampaign.Panel title="General">
             <div style={{ maxWidth: 600 }}>
@@ -104,7 +112,9 @@ class CreateCampaign extends Component {
 
         <div className="ph7 mt6">
           <CreateCampaign.Panel
-            title={this.props.intl.formatMessage({id: 'input.label.scheduling'})} 
+            title={this.props.intl.formatMessage({
+              id: 'input.label.scheduling',
+            })}
             subtitle={`${this.getTimezoneOffset()}GMT`}>
             <div style={{ maxWidth: 600 }}>
               <Scheduling
@@ -113,119 +123,28 @@ class CreateCampaign extends Component {
                 errorMessage={this.state.dateRange.error}
               />
             </div>
-
           </CreateCampaign.Panel>
         </div>
 
         <div className="ph7 mt6">
           <CreateCampaign.Panel
-            title={this.props.intl.formatMessage({id: 'input.label.audiences'})}
-            subtitle={`0 Target Audiences`}>
+            title={this.props.intl.formatMessage({
+              id: 'input.label.audiences',
+            })}
+            subtitle={'0 Target Audiences'}>
             <div style={{ maxWidth: 600 }}>
-            <SimpleConditions
-                showOperator={false}
+              <SimpleConditions
+                showStrategySelector={false}
                 operator="all"
-                onChangeOperator={(operator) => this.setState({ operator })}
-                onChangeConditions={(conditions) => this.setState({ conditions })}
-                fields={[
-                  {
-                    label: 'Payment method',
-                    fieldValue: 'value',
-                    type: 'selector',
-                    suffix: 'test',
-                    operators: [
-                      {
-                        label: 'is',
-                        value: '='
-                      },
-                      {
-                        label: 'is not',
-                        value: '!='
-                      },
-                    ],
-                    options: [
-                      {
-                        label: 'Boleto',
-                        value: 'Boleto',
-                      },
-                      {
-                        label: 'Credit Card',
-                        value: 'Credit Card',
-                      },
-                    ]
-                  },
-                  {
-                    label: 'Test',
-                    fieldValue: 'value',
-                    type: 'selector',
-                    suffix: 'test',
-                    operators: [
-                      {
-                        label: 'is',
-                        value: '='
-                      },
-                      {
-                        label: 'is not',
-                        value: '!='
-                      },
-                    ],
-                    options: [
-                      {
-                        label: 'Boleto',
-                        value: 'Boleto',
-                      },
-                      {
-                        label: 'Credit Card',
-                        value: 'Credit Card',
-                      },
-                    ]
-                  },
-                  {
-                    label: 'BIN',
-                    fieldValue: 'value',
-                    type: 'string',
-                    operators: [
-                      {
-                        label: 'was',
-                        value: '='
-                      },
-                      {
-                        label: 'was greater than',
-                        value: '>'
-                      },
-                      {
-                        label: 'was smaller than',
-                        value: '<'
-                      },
-                    ]
-                  },
-                  // {
-                  //   label: 'Email',
-                  //   fieldValue: 'clientProfileData.email',
-                  //   type: 'string',
-                  //   operators: [
-                  //     {
-                  //       label: 'is',
-                  //       value: '='
-                  //     },
-                  //     {
-                  //       label: 'is not',
-                  //       value: '<>'
-                  //     },
-                  //     {
-                  //       label: 'contains',
-                  //       value: '=*'
-                  //     },
-                  //   ]
-                  // },
-                ]}
+                onChangeOperator={operator => this.setState({ operator })}
+                onChangeConditions={conditions => this.setState({ conditions })}
+                choices={[]}
               />
               <Button
-                  size="small"
-                  variation="secondary"
-                  onClick={() => this.handleAddAudience()}
-                >
-                  Add target audience
+                size="small"
+                variation="secondary"
+                onClick={() => this.handleAddAudience()}>
+                Add target audience
               </Button>
             </div>
           </CreateCampaign.Panel>
@@ -233,9 +152,11 @@ class CreateCampaign extends Component {
 
         <div className="ph7 mt6">
           <CreateCampaign.Panel
-            title={this.props.intl.formatMessage({id: 'input.label.benefits-list'})}
-            subtitle={`0 Benefits`}>
-              <BenefitsList/>
+            title={this.props.intl.formatMessage({
+              id: 'input.label.benefits-list',
+            })}
+            subtitle={'0 Benefits'}>
+            <BenefitsList />
           </CreateCampaign.Panel>
         </div>
       </div>
