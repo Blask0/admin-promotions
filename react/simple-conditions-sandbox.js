@@ -37,17 +37,17 @@ class SimpleConditionsSandbox extends Component {
         ar: choicesArabic,
       },
       conditions: {
-        empty: { subject: '', verb: '', value: null },
+        empty: { subject: '', verb: '', object: null },
         'pre-filled': {
           subject: 'payment-method',
           verb: '!=',
-          value: 'credit-card',
+          object: 'credit-card',
         },
-        'small-width': { subject: '', verb: '', value: null },
+        'small-width': { subject: '', verb: '', object: null },
         ordering: {
-          subject: 'payment-method',
-          verb: '=',
-          value: 'boleto',
+          subject: '',
+          verb: '',
+          object: null,
         },
       },
     }
@@ -193,6 +193,18 @@ class SimpleConditionsSandbox extends Component {
               <div className="ph7">
                 <h4>Grammatical ordering pattern</h4>
                 <Box>
+                  <h5 className="mv2">Subject-Verb-Object (en-US)</h5>
+                  <Statement
+                    condition={this.state.conditions['ordering']}
+                    choices={this.state.choices['en-US']}
+                    onChangeStatement={(value, param) => {
+                      this.handleChangeStatement('ordering', value, param)
+                    }}
+                    onRemoveStatement={() => {
+                      this.handleRemoveStatement()
+                    }}
+                  />
+
                   <h5 className="mv2">Subject-Object-Verb (korean)</h5>
                   <Statement
                     condition={this.state.conditions['ordering']}
@@ -211,18 +223,6 @@ class SimpleConditionsSandbox extends Component {
                     condition={this.state.conditions['ordering']}
                     choices={this.state.choices['ar']}
                     order="VOS"
-                    onChangeStatement={(value, param) => {
-                      this.handleChangeStatement('ordering', value, param)
-                    }}
-                    onRemoveStatement={() => {
-                      this.handleRemoveStatement()
-                    }}
-                  />
-
-                  <h5 className="mv2">Subject-Verb-Object (en-US)</h5>
-                  <Statement
-                    condition={this.state.conditions['ordering']}
-                    choices={this.state.choices['en-US']}
                     onChangeStatement={(value, param) => {
                       this.handleChangeStatement('ordering', value, param)
                     }}

@@ -59,14 +59,14 @@ class Statement extends React.Component {
         <Dropdown
           disabled={!props.condition.verb}
           options={props.choice.options}
-          value={!props.condition.verb ? '' : props.condition.value || ''}
-          onChange={(e, value) => props.onChange(value, 'value')}
+          value={!props.condition.verb ? '' : props.condition.object || ''}
+          onChange={(e, value) => props.onChange(value)}
         />
       ) : (
         <Input
           disabled={!props.condition.verb}
-          value={!props.condition.verb ? '' : props.condition.value}
-          onChange={e => props.onChange(e.target.value, 'value')}
+          value={!props.condition.verb ? '' : props.condition.object}
+          onChange={e => props.onChange(e.target.value)}
         />
       )}
     </div>
@@ -87,7 +87,7 @@ class Statement extends React.Component {
     )
 
     if (!foundChoice) {
-      return { subject: '', verbs: [], value: null }
+      return { subject: '', verbs: [], object: null }
     }
 
     return foundChoice
@@ -95,7 +95,7 @@ class Statement extends React.Component {
 
   clearPredicate = () => {
     this.handleChangeStatement(Statement.defaultProps.verb, 'verb')
-    this.handleChangeStatement(Statement.defaultProps.value, 'value')
+    this.handleChangeStatement(Statement.defaultProps.object, 'object')
   }
 
   updateLayout = () => {
@@ -153,7 +153,7 @@ class Statement extends React.Component {
             choice={this.getChoiceBySubject(condition.subject)}
             fullWidth={this.state.fullWidth}
             onChange={value => {
-              this.handleChangeStatement(value, 'value')
+              this.handleChangeStatement(value, 'object')
             }}
           />
         )
@@ -213,7 +213,7 @@ Statement.defaultProps = {
   condition: {
     subject: '',
     verb: '',
-    value: null,
+    object: null,
   },
   breakpoint: 600,
   order: 'SVO',
@@ -224,7 +224,7 @@ Statement.propTypes = {
   condition: PropTypes.shape({
     subject: PropTypes.string,
     verb: PropTypes.string,
-    value: PropTypes.any,
+    object: PropTypes.any,
   }),
   /** Possible choices and respective data types, verb options */
   choices: PropTypes.arrayOf(
