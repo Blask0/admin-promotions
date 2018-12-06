@@ -36,24 +36,24 @@ class Statement extends React.Component {
   }
 
   static Subject = props => (
-    <div className={`mh3 flex-auto ${props.fullWidth ? 'w-100 pb3' : ''}`}>
-      <Statement.Dropdown
-        options={props.choices.map(choice => {
-          return {
-            value: choice.subject.value,
-            label: choice.subject.label,
-          }
-        })}
-        value={!props.condition.subject ? '' : props.condition.subject || ''}
-        onChange={(e, value) => props.onChange(value)}
-      />
+    <div className="flex-column flex-auto">
+      <div className={`mh3 ${props.fullWidth ? 'pb3' : ''}`}>
+        <Statement.Dropdown
+          options={props.choices.map(choice => {
+            return {
+              value: choice.subject.value,
+              label: choice.subject.label,
+            }
+          })}
+          value={!props.condition.subject ? '' : props.condition.subject || ''}
+          onChange={(e, value) => props.onChange(value)}
+        />
+      </div>
     </div>
   )
 
   static Verb = props => (
-    <div
-      className={`mh3 ${props.fullWidth ? 'w-100 pb3' : ''}`}
-      style={{ flex: '.5 1 auto' }}>
+    <div className={`mh3 ${props.fullWidth ? 'pb3' : ''}`}>
       {props.options.length === 1 && props.condition.subject ? (
         <span className="dark-gray mh3">{props.options[0].label}</span>
       ) : (
@@ -63,7 +63,10 @@ class Statement extends React.Component {
           value={!props.condition.subject ? '' : props.condition.verb || ''}
           onChange={(e, value) => {
             const foundVerb = props.options.find(verb => verb.value === value)
-            props.onChange(foundVerb.value, foundVerb.conjunction)
+            props.onChange(
+              foundVerb.value,
+              foundVerb.conjunction ? foundVerb.conjunction.value : undefined
+            )
           }}
         />
       )}
@@ -71,7 +74,7 @@ class Statement extends React.Component {
   )
 
   static Object = props => (
-    <div className={'mh3 flex-auto'}>
+    <div className={'mh3 mb3'}>
       {props.condition.subject && props.choice.type === 'selector' ? (
         <Statement.Dropdown
           disabled={!props.condition.verb}
@@ -172,8 +175,9 @@ class Statement extends React.Component {
   }
 
   render() {
-    const { condition, choices, order } = this.props
+    const { condition, choices, isRtl } = this.props
     const entities = []
+    const order = isRtl ? 'OVS' : 'SVO'
 
     order.split('').map(entity => {
       if (entity === 'S') {
@@ -220,14 +224,20 @@ class Statement extends React.Component {
           />
         )
 
-        if (condition.conjunction) {
+        if (condition.conjunction && !this.state.fullWidth) {
           verbAndConjunction.push(
-            <div className="dark-gray tr mt5 mh3">{condition.conjunction}</div>
+            <div className={`dark-gray ${isRtl ? 'tl' : 'tr'} mt5 mh3`}>
+              {
+                this.getChoiceBySubject(condition.subject).verbs.find(
+                  verb => verb.value === condition.verb
+                ).conjunction.label
+              }
+            </div>
           )
         }
 
         entities.push(
-          <div className="flex-column w-30">{verbAndConjunction}</div>
+          <div className="flex-column flex-auto">{verbAndConjunction}</div>
         )
       }
 
@@ -249,7 +259,18 @@ class Statement extends React.Component {
         )
 
         if (condition.conjunction) {
-          objects.push(<div className="mt3" />)
+          if (this.state.fullWidth) {
+            objects.push(
+              <div className="dark-gray tr mv3 mh3">
+                {
+                  this.getChoiceBySubject(condition.subject).verbs.find(
+                    verb => verb.value === condition.verb
+                  ).conjunction.label
+                }
+              </div>
+            )
+          }
+
           objects.push(
             <Statement.Object
               value={!condition.verb ? '' : secondObject}
@@ -263,7 +284,7 @@ class Statement extends React.Component {
           )
         }
 
-        entities.push(<div className="flex-column w-30">{objects}</div>)
+        entities.push(<div className="flex-column flex-auto">{objects}</div>)
       }
     })
 
@@ -272,7 +293,7 @@ class Statement extends React.Component {
         <div className="flex-column w-100">
           <div
             className={`flex w-100 items-start mv3 ${
-              this.state.fullWidth ? 'flex-column' : ''
+              this.state.fullWidth ? 'flex-column items-stretch' : ''
             }`}>
             {entities}
 
@@ -308,6 +329,7 @@ Statement.defaultProps = {
   },
   breakpoint: 600,
   order: 'SVO',
+  isRtl: false,
 }
 
 Statement.propTypes = {
@@ -335,8 +357,8 @@ Statement.propTypes = {
       ),
     })
   ),
-  /** Ordering of sentence structures https://en.wikipedia.org/wiki/Subject%E2%80%93verb%E2%80%93object */
-  order: PropTypes.oneOf(['SVO', 'SOV', 'VSO', 'VOS', 'OSV', 'OVS']),
+  /** Whether the order of elements and text if right to left */
+  isRtl: PropTypes.bool,
   /** Statement change callback */
   onChangeStatement: PropTypes.func,
   /** Statement remove callback */

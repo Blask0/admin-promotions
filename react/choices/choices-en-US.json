@@ -63,7 +63,10 @@
         "value": "<"
       },
       {
-        "conjunction": "and",
+        "conjunction": {
+          "label": "and",
+          "value": "and"
+        },
         "label": "is between",
         "value": "between"
       }

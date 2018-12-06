@@ -63,8 +63,11 @@
         "value": "<"
       },
       {
-        "conjunction": "and",
-        "label": "is between",
+        "conjunction": {
+          "label": "و",
+          "value": "and"
+        },
+        "label": "يتراوح ما بين",
         "value": "between"
       }
     ]

@@ -10,7 +10,6 @@ import './theme/vtex'
 import 'brace/ext/searchbox'
 
 import choicesEn from './choices/choices-en-US.json'
-import choicesKo from './choices/choices-ko.json'
 import choicesArabic from './choices/choices-ar.json'
 import choicesOnlyOption from './choices/choices-only-option.json'
 
@@ -34,7 +33,6 @@ class SimpleConditionsSandbox extends Component {
       dateRange: { from: null, to: null, error: null },
       choices: {
         'en-US': choicesEn,
-        ko: choicesKo,
         ar: choicesArabic,
         onlyOption: choicesOnlyOption,
       },
@@ -79,7 +77,6 @@ class SimpleConditionsSandbox extends Component {
     const conditions = this.state.conditions
 
     if (paramIndex !== undefined) {
-      console.log(paramIndex)
       if (!conditions[index][param]) {
         conditions[index][param] = []
       }
@@ -233,28 +230,10 @@ class SimpleConditionsSandbox extends Component {
               <div className="ph7">
                 <h4>Grammatical ordering pattern</h4>
                 <Box>
-                  <h5 className="mv2">Subject-Verb-Object (en-US)</h5>
+                  <h5 className="mv2">Subject-Verb-Object (LTR, en-US)</h5>
                   <Statement
                     condition={this.state.conditions['ordering']}
                     choices={this.state.choices['en-US']}
-                    onChangeStatement={(value, param, index) => {
-                      this.handleChangeStatement(
-                        'ordering',
-                        value,
-                        param,
-                        index
-                      )
-                    }}
-                    onRemoveStatement={() => {
-                      this.handleRemoveStatement()
-                    }}
-                  />
-
-                  <h5 className="mv2">Subject-Object-Verb (korean)</h5>
-                  <Statement
-                    condition={this.state.conditions['ordering']}
-                    choices={this.state.choices['ko']}
-                    order="SOV"
                     onChangeStatement={(value, param, index) => {
                       this.handleChangeStatement(
                         'ordering',
@@ -272,7 +251,7 @@ class SimpleConditionsSandbox extends Component {
                   <Statement
                     condition={this.state.conditions['ordering']}
                     choices={this.state.choices['ar']}
-                    order="OVS"
+                    isRtl
                     onChangeStatement={(value, param, index) => {
                       this.handleChangeStatement(
                         'ordering',
@@ -302,7 +281,6 @@ class SimpleConditionsSandbox extends Component {
               <div className="ph7">
                 <h4>Dropdown with only one option</h4>
                 <Box>
-                  <h5 className="mv2">Subject-Verb-Object (en-US)</h5>
                   <Statement
                     condition={this.state.conditions.onlyOption}
                     choices={this.state.choices.onlyOption}
