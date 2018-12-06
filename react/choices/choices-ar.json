@@ -61,6 +61,11 @@
       {
         "label": "أصغر من",
         "value": "<"
+      },
+      {
+        "conjunction": "and",
+        "label": "is between",
+        "value": "between"
       }
     ]
   }

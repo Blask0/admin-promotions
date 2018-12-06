@@ -39,22 +39,27 @@ class SimpleConditionsSandbox extends Component {
         onlyOption: choicesOnlyOption,
       },
       conditions: {
-        empty: { subject: '', verb: '', object: null },
+        empty: { subject: '', verb: '', object: [] },
         'pre-filled': {
-          subject: 'payment-method',
-          verb: '!=',
-          object: 'credit-card',
+          subject: 'bin',
+          verb: 'between',
+          object: [],
+          conjunction: 'and',
         },
-        'small-width': { subject: '', verb: '', object: null },
+        'small-width': {
+          subject: '',
+          verb: '',
+          object: [],
+        },
         ordering: {
           subject: '',
           verb: '',
-          object: null,
+          object: [],
         },
         onlyOption: {
           subject: '',
           verb: '',
-          object: null,
+          object: [],
         },
       },
     }
@@ -70,11 +75,27 @@ class SimpleConditionsSandbox extends Component {
     })
   }
 
-  handleChangeStatement = (index, value, param) => {
+  handleChangeStatement = (index, value, param, paramIndex) => {
     const conditions = this.state.conditions
-    conditions[index][param] = value
 
-    console.log(value, param)
+    if (paramIndex !== undefined) {
+      console.log(paramIndex)
+      if (!conditions[index][param]) {
+        conditions[index][param] = []
+      }
+
+      conditions[index][param][paramIndex] = value
+
+      // remove last element && null
+      conditions[index][param] = conditions[index][param].filter(
+        (elem, index) => {
+          return elem !== null || index < conditions.length - 1
+        }
+      )
+    } else {
+      conditions[index][param] = value
+    }
+
     this.setState({ conditions: conditions })
   }
 
@@ -98,8 +119,8 @@ class SimpleConditionsSandbox extends Component {
                   <Statement
                     condition={this.state.conditions['empty']}
                     choices={this.state.choices['en-US']}
-                    onChangeStatement={(value, param) => {
-                      this.handleChangeStatement('empty', value, param)
+                    onChangeStatement={(value, param, index) => {
+                      this.handleChangeStatement('empty', value, param, index)
                     }}
                     onRemoveStatement={() => {
                       this.handleRemoveStatement()
@@ -125,8 +146,13 @@ class SimpleConditionsSandbox extends Component {
                   <Statement
                     condition={this.state.conditions['pre-filled']}
                     choices={this.state.choices['en-US']}
-                    onChangeStatement={(value, param) => {
-                      this.handleChangeStatement('pre-filled', value, param)
+                    onChangeStatement={(value, param, index) => {
+                      this.handleChangeStatement(
+                        'pre-filled',
+                        value,
+                        param,
+                        index
+                      )
                     }}
                     onRemoveStatement={() => {
                       this.handleRemoveStatement()
@@ -156,8 +182,13 @@ class SimpleConditionsSandbox extends Component {
                     <Statement
                       condition={this.state.conditions['small-width']}
                       choices={this.state.choices['en-US']}
-                      onChangeStatement={(value, param) => {
-                        this.handleChangeStatement('small-width', value, param)
+                      onChangeStatement={(value, param, index) => {
+                        this.handleChangeStatement(
+                          'small-width',
+                          value,
+                          param,
+                          index
+                        )
                       }}
                       onRemoveStatement={() => {
                         this.handleRemoveStatement()
@@ -172,8 +203,13 @@ class SimpleConditionsSandbox extends Component {
                     <Statement
                       condition={this.state.conditions['small-width']}
                       choices={this.state.choices['en-US']}
-                      onChangeStatement={(value, param) => {
-                        this.handleChangeStatement('small-width', value, param)
+                      onChangeStatement={(value, param, index) => {
+                        this.handleChangeStatement(
+                          'small-width',
+                          value,
+                          param,
+                          index
+                        )
                       }}
                       onRemoveStatement={() => {
                         this.handleRemoveStatement()
@@ -201,8 +237,13 @@ class SimpleConditionsSandbox extends Component {
                   <Statement
                     condition={this.state.conditions['ordering']}
                     choices={this.state.choices['en-US']}
-                    onChangeStatement={(value, param) => {
-                      this.handleChangeStatement('ordering', value, param)
+                    onChangeStatement={(value, param, index) => {
+                      this.handleChangeStatement(
+                        'ordering',
+                        value,
+                        param,
+                        index
+                      )
                     }}
                     onRemoveStatement={() => {
                       this.handleRemoveStatement()
@@ -214,8 +255,13 @@ class SimpleConditionsSandbox extends Component {
                     condition={this.state.conditions['ordering']}
                     choices={this.state.choices['ko']}
                     order="SOV"
-                    onChangeStatement={(value, param) => {
-                      this.handleChangeStatement('ordering', value, param)
+                    onChangeStatement={(value, param, index) => {
+                      this.handleChangeStatement(
+                        'ordering',
+                        value,
+                        param,
+                        index
+                      )
                     }}
                     onRemoveStatement={() => {
                       this.handleRemoveStatement()
@@ -227,8 +273,13 @@ class SimpleConditionsSandbox extends Component {
                     condition={this.state.conditions['ordering']}
                     choices={this.state.choices['ar']}
                     order="OVS"
-                    onChangeStatement={(value, param) => {
-                      this.handleChangeStatement('ordering', value, param)
+                    onChangeStatement={(value, param, index) => {
+                      this.handleChangeStatement(
+                        'ordering',
+                        value,
+                        param,
+                        index
+                      )
                     }}
                     onRemoveStatement={() => {
                       this.handleRemoveStatement()
@@ -255,8 +306,13 @@ class SimpleConditionsSandbox extends Component {
                   <Statement
                     condition={this.state.conditions.onlyOption}
                     choices={this.state.choices.onlyOption}
-                    onChangeStatement={(value, param) => {
-                      this.handleChangeStatement('onlyOption', value, param)
+                    onChangeStatement={(value, param, index) => {
+                      this.handleChangeStatement(
+                        'onlyOption',
+                        value,
+                        param,
+                        index
+                      )
                     }}
                     onRemoveStatement={() => {
                       this.handleRemoveStatement()

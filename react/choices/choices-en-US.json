@@ -61,6 +61,11 @@
       {
         "label": "is smaller than",
         "value": "<"
+      },
+      {
+        "conjunction": "and",
+        "label": "is between",
+        "value": "between"
       }
     ]
   }
