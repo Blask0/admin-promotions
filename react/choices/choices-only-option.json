@@ -1,0 +1,74 @@
+[
+  {
+    "type": "string",
+    "subject": {
+      "label": "One verb option + Input",
+      "value": "one-verb-option"
+    },
+    "verbs": [
+      {
+        "label": "is",
+        "value": "="
+      }
+    ]
+  },
+  {
+    "type": "string",
+    "subject": {
+      "label": "Two verb options + Input",
+      "value": "two-verb-options"
+    },
+    "verbs": [
+      {
+        "label": "is",
+        "value": "="
+      },
+      {
+        "label": "is not",
+        "value": "!="
+      }
+    ]
+  },
+  {
+    "type": "selector",
+    "subject": {
+      "label": "One verb option + one object option",
+      "value": "one-verb-option-one-subject-option"
+    },
+    "verbs": [
+      {
+        "label": "is not",
+        "value": "!="
+      }
+    ],
+    "options": [
+      {
+        "label": "Boleto",
+        "value": "boleto"
+      }
+    ]
+  },
+  {
+    "type": "selector",
+    "subject": {
+      "label": "Two verb options + one object option",
+      "value": "two-verb-options-one-subject-option"
+    },
+    "verbs": [
+      {
+        "label": "is",
+        "value": "="
+      },
+      {
+        "label": "is not",
+        "value": "!="
+      }
+    ],
+    "options": [
+      {
+        "label": "Boleto",
+        "value": "boleto"
+      }
+    ]
+  }
+]

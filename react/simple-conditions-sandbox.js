@@ -12,6 +12,7 @@ import 'brace/ext/searchbox'
 import choicesEn from './choices/choices-en-US.json'
 import choicesKo from './choices/choices-ko.json'
 import choicesArabic from './choices/choices-ar.json'
+import choicesOnlyOption from './choices/choices-only-option.json'
 
 const aceProps = {
   readOnly: true,
@@ -35,6 +36,7 @@ class SimpleConditionsSandbox extends Component {
         'en-US': choicesEn,
         ko: choicesKo,
         ar: choicesArabic,
+        onlyOption: choicesOnlyOption,
       },
       conditions: {
         empty: { subject: '', verb: '', object: null },
@@ -49,11 +51,13 @@ class SimpleConditionsSandbox extends Component {
           verb: '',
           object: null,
         },
+        onlyOption: {
+          subject: '',
+          verb: '',
+          object: null,
+        },
       },
     }
-
-    console.dir(this.state.choices['en-US'])
-    console.dir(this.state.choices['ko'])
   }
 
   componentDidMount = () => {
@@ -218,11 +222,11 @@ class SimpleConditionsSandbox extends Component {
                     }}
                   />
 
-                  <h5 className="mv2">Verb-Object-Subject (arabic)</h5>
+                  <h5 className="mv2">Object-Verb-Subject (RTL, arabic)</h5>
                   <Statement
                     condition={this.state.conditions['ordering']}
                     choices={this.state.choices['ar']}
-                    order="VOS"
+                    order="OVS"
                     onChangeStatement={(value, param) => {
                       this.handleChangeStatement('ordering', value, param)
                     }}
@@ -236,6 +240,34 @@ class SimpleConditionsSandbox extends Component {
                       {...aceProps}
                       value={`${JSON.stringify(
                         this.state.conditions['ordering'],
+                        null,
+                        2
+                      )}`}
+                    />
+                  </div>
+                </Box>
+              </div>
+
+              <div className="ph7">
+                <h4>Dropdown with only one option</h4>
+                <Box>
+                  <h5 className="mv2">Subject-Verb-Object (en-US)</h5>
+                  <Statement
+                    condition={this.state.conditions.onlyOption}
+                    choices={this.state.choices.onlyOption}
+                    onChangeStatement={(value, param) => {
+                      this.handleChangeStatement('onlyOption', value, param)
+                    }}
+                    onRemoveStatement={() => {
+                      this.handleRemoveStatement()
+                    }}
+                  />
+
+                  <div className="ph3">
+                    <AceEditor
+                      {...aceProps}
+                      value={`${JSON.stringify(
+                        this.state.conditions.onlyOption,
                         null,
                         2
                       )}`}

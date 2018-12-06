@@ -27,9 +27,17 @@ class Statement extends React.Component {
     </div>
   )
 
+  static Dropdown = props => {
+    return props.options.length === 1 && props.options[0].value ? (
+      <span className="dark-gray mh3">{props.options[0].label}</span>
+    ) : (
+      <Dropdown {...props} />
+    )
+  }
+
   static Subject = props => (
     <div className={`mh3 ${props.fullWidth ? 'w-100 pb3' : 'w-30'}`}>
-      <Dropdown
+      <Statement.Dropdown
         options={props.choices.map(choice => {
           return {
             value: choice.subject.value,
@@ -44,19 +52,23 @@ class Statement extends React.Component {
 
   static Verb = props => (
     <div className={`mh3 ${props.fullWidth ? 'w-100 pb3' : 'w-20'}`}>
-      <Dropdown
-        disabled={!props.condition.subject}
-        options={props.options}
-        value={!props.condition.subject ? '' : props.condition.verb || ''}
-        onChange={(e, value) => props.onChange(value)}
-      />
+      {props.options.length === 1 && props.condition.subject ? (
+        <span className="dark-gray mh3">{props.options[0].label}</span>
+      ) : (
+        <Statement.Dropdown
+          disabled={!props.condition.subject}
+          options={props.options}
+          value={!props.condition.subject ? '' : props.condition.verb || ''}
+          onChange={(e, value) => props.onChange(value)}
+        />
+      )}
     </div>
   )
 
   static Object = props => (
     <div className={`mh3 ${props.fullWidth ? 'w-100 pb3' : 'w-30'}`}>
       {props.condition.subject && props.choice.type === 'selector' ? (
-        <Dropdown
+        <Statement.Dropdown
           disabled={!props.condition.verb}
           options={props.choice.options}
           value={!props.condition.verb ? '' : props.condition.object || ''}
@@ -96,6 +108,27 @@ class Statement extends React.Component {
   clearPredicate = () => {
     this.handleChangeStatement(Statement.defaultProps.verb, 'verb')
     this.handleChangeStatement(Statement.defaultProps.object, 'object')
+  }
+
+  checkObviousPredicates = subjectValue => {
+    const { choices } = this.props
+    const foundChoice = choices.find(
+      choice => choice.subject.value === subjectValue
+    )
+
+    console.log('checking obvious predicates')
+
+    if (!foundChoice) {
+      return
+    }
+
+    if (foundChoice.verbs && foundChoice.verbs.length === 1) {
+      this.handleChangeStatement(foundChoice.verbs[0].value, 'verb')
+    }
+
+    if (foundChoice.options && foundChoice.options.length === 1) {
+      this.handleChangeStatement(foundChoice.options[0].value, 'object')
+    }
   }
 
   updateLayout = () => {
@@ -138,22 +171,10 @@ class Statement extends React.Component {
             condition={condition}
             choices={choices}
             fullWidth={this.state.fullWidth}
-            onChange={value => {
-              this.handleChangeStatement(value, 'subject')
+            onChange={selectedSubjectValue => {
+              this.handleChangeStatement(selectedSubjectValue, 'subject')
               this.clearPredicate()
-            }}
-          />
-        )
-      }
-
-      if (entity === 'O') {
-        entities.push(
-          <Statement.Object
-            condition={condition}
-            choice={this.getChoiceBySubject(condition.subject)}
-            fullWidth={this.state.fullWidth}
-            onChange={value => {
-              this.handleChangeStatement(value, 'object')
+              this.checkObviousPredicates(selectedSubjectValue)
             }}
           />
         )
@@ -177,6 +198,19 @@ class Statement extends React.Component {
             }
             onChange={value => {
               this.handleChangeStatement(value, 'verb')
+            }}
+          />
+        )
+      }
+
+      if (entity === 'O') {
+        entities.push(
+          <Statement.Object
+            condition={condition}
+            choice={this.getChoiceBySubject(condition.subject)}
+            fullWidth={this.state.fullWidth}
+            onChange={value => {
+              this.handleChangeStatement(value, 'object')
             }}
           />
         )
