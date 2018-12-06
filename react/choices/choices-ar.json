@@ -71,5 +71,34 @@
         "value": "between"
       }
     ]
+  },
+  {
+    "type": "datetime",
+    "subject": {
+      "label": "Bruno's Birthday",
+      "value": "bruno-birthday"
+    },
+    "verbs": [
+      {
+        "label": "is",
+        "value": "="
+      },
+      {
+        "label": "is before",
+        "value": "before"
+      },
+      {
+        "label": "is after",
+        "value": "after"
+      },
+      {
+        "conjunction": {
+          "label": "and",
+          "value": "and"
+        },
+        "label": "is between",
+        "value": "between"
+      }
+    ]
   }
 ]

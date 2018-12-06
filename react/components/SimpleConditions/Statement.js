@@ -1,8 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Dropdown, Input } from 'vtex.styleguide'
+import { Button, Dropdown, Input, IconClock } from 'vtex.styleguide'
+import DatePicker from 'react-datepicker'
 
 import debounce from 'lodash/debounce'
+import moment from 'moment'
 
 class Statement extends React.Component {
   constructor(props) {
@@ -75,20 +77,59 @@ class Statement extends React.Component {
 
   static Object = props => (
     <div className={'mh3 mb3'}>
-      {props.condition.subject && props.choice.type === 'selector' ? (
+      {props.choice.type === 'datetime' && (
+        <label className="vtex-input w-100">
+          <DatePicker
+            customInput={
+              <Input
+                value={props.value}
+                prefix={
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M5.66667 7.2H4.11111V8.8H5.66667V7.2ZM8.77778 7.2H7.22222V8.8H8.77778V7.2ZM11.8889 7.2H10.3333V8.8H11.8889V7.2ZM13.4444 1.6H12.6667V0H11.1111V1.6H4.88889V0H3.33333V1.6H2.55556C1.69222 1.6 1.00778 2.32 1.00778 3.2L1 14.4C1 15.28 1.69222 16 2.55556 16H13.4444C14.3 16 15 15.28 15 14.4V3.2C15 2.32 14.3 1.6 13.4444 1.6ZM13.4444 14.4H2.55556V5.6H13.4444V14.4Z"
+                      fill="#979899"
+                    />
+                  </svg>
+                }
+              />
+            }
+            selected={props.value ? moment(props.value) : null}
+            showTimeSelect
+            onChange={date => {
+              props.onChange(date)
+            }}
+            locale={props.locale || 'en-US'}
+            dateFormat="L — LT"
+            timeIntervals={15}
+            timeFormat="HH:mm"
+            readOnly
+          />
+        </label>
+      )}
+
+      {props.choice.type === 'selector' && (
         <Statement.Dropdown
           disabled={!props.condition.verb}
           options={props.choice.options}
           value={props.value}
           onChange={(e, value) => props.onChange(value)}
         />
-      ) : (
+      )}
+
+      {props.choice.type === 'string' && (
         <Input
           disabled={!props.condition.verb}
           value={props.value}
           onChange={e => props.onChange(e.target.value)}
         />
       )}
+
+      {!props.condition.subject && <Input disabled={!props.condition.verb} />}
     </div>
   )
 
@@ -297,7 +338,14 @@ class Statement extends React.Component {
             }`}>
             {entities}
 
-            {!this.state.fullWidth && (
+            {this.state.fullWidth ? (
+              <Button
+                variation="tertiary"
+                size="small"
+                onClick={() => this.handleRemoveStatement()}>
+                REMOVE
+              </Button>
+            ) : (
               <Statement.RemoveButton
                 remove={() => {
                   this.handleRemoveStatement()
@@ -306,13 +354,6 @@ class Statement extends React.Component {
             )}
           </div>
         </div>
-
-        {/* <div>{`is full width: ${this.state.fullWidth}`}</div> */}
-        {/* {this.state.errorMessage && (
-          <div className="c-danger t-small mt2 lh-title">
-            {this.state.errorMessage}
-          </div>
-        )} */}
       </div>
     )
   }

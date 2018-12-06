@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { injectIntl } from 'react-intl'
 import Statement from './components/SimpleConditions/Statement'
 
+import './global.css'
 import { Box, PageHeader, Tabs, Tab } from 'vtex.styleguide'
 
 import AceEditor from 'react-ace'
@@ -21,6 +22,7 @@ const aceProps = {
   tabSize: 2,
   theme: 'vtex',
   width: '100%',
+  zIndex: 0,
 }
 
 class SimpleConditionsSandbox extends Component {
