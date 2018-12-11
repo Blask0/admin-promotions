@@ -17,6 +17,57 @@
     ]
   },
   {
+    "type": "string",
+    "subject": {
+      "label": "User is buying",
+      "value": "is-buying"
+    },
+    "verbs": [
+      {
+        "label": "at least",
+        "value": "at-least"
+      },
+      {
+        "label": "at most",
+        "value": "at-most"
+      }
+    ]
+  },
+  {
+    "type": "multiselect",
+    "query": "getColorsFromDatabase",
+    "subject": {
+      "label": "Favorite color",
+      "value": "favorite-color"
+    },
+    "verbs": [
+      {
+        "label": "is",
+        "value": "="
+      },
+      {
+        "label": "is not",
+        "value": "!="
+      }
+    ],
+    "options": [
+      { "label": "White", "value": "white" },
+      { "label": "Black", "value": "black" },
+      { "label": "Grey", "value": "grey" },
+      { "label": "Yellow", "value": "yellow" },
+      { "label": "Red", "value": "red" },
+      { "label": "Blue", "value": "blue" },
+      { "label": "Green", "value": "green" },
+      { "label": "Brown", "value": "brown" },
+      { "label": "Pink", "value": "pink" },
+      { "label": "Orange", "value": "orange" },
+      { "label": "Purple", "value": "purple" },
+      { "label": "Dark-blue", "value": "dark-blue" },
+      { "label": "Dark-red", "value": "dark-red" },
+      { "label": "Light-blue", "value": "light-blue" }
+    ]
+  },
+  {
     "type": "selector",
     "subject": {
       "label": "Payment method",
@@ -59,6 +110,10 @@
         "value": ">"
       },
       {
+        "conjunction": {
+          "label": "or",
+          "value": "or"
+        },
         "label": "is smaller than",
         "value": "<"
       },
@@ -84,6 +139,10 @@
         "value": "="
       },
       {
+        "conjunction": {
+          "label": "or",
+          "value": "or"
+        },
         "label": "is before",
         "value": "before"
       },
@@ -98,6 +157,27 @@
         },
         "label": "is between",
         "value": "between"
+      }
+    ]
+  },
+  {
+    "type": "Custom",
+    "subject": {
+      "label": "Custom",
+      "value": "custom"
+    },
+    "verbs": [
+      {
+        "label": "is",
+        "value": "="
+      },
+      {
+        "label": "is before",
+        "value": "before"
+      },
+      {
+        "label": "is after",
+        "value": "after"
       }
     ]
   }

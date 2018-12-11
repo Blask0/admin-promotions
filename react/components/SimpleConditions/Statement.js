@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, Dropdown, Input, IconClock } from 'vtex.styleguide'
+import { Button, Dropdown, Input, MultiSelect } from 'vtex.styleguide'
 import DatePicker from 'react-datepicker'
 
 import debounce from 'lodash/debounce'
@@ -14,7 +14,6 @@ class Statement extends React.Component {
 
     this.state = {
       errorMessage: '',
-      fullWidth: false,
     }
   }
 
@@ -56,19 +55,16 @@ class Statement extends React.Component {
 
   static Verb = props => (
     <div className={`mh3 ${props.fullWidth ? 'pb3' : ''}`}>
-      {props.options.length === 1 && props.condition.subject ? (
-        <span className="dark-gray mh3">{props.options[0].label}</span>
+      {props.verbs.length === 1 && props.condition.subject ? (
+        <span className="dark-gray mh3">{props.verbs[0].label}</span>
       ) : (
         <Statement.Dropdown
           disabled={!props.condition.subject}
-          options={props.options}
+          options={props.verbs}
           value={!props.condition.subject ? '' : props.condition.verb || ''}
           onChange={(e, value) => {
-            const foundVerb = props.options.find(verb => verb.value === value)
-            props.onChange(
-              foundVerb.value,
-              foundVerb.conjunction ? foundVerb.conjunction.value : undefined
-            )
+            const foundVerb = props.verbs.find(verb => verb.value === value)
+            props.onChange(foundVerb)
           }}
         />
       )}
@@ -77,7 +73,7 @@ class Statement extends React.Component {
 
   static Object = props => (
     <div className={'mh3 mb3'}>
-      {props.choice.type === 'datetime' && (
+      {/* {props.choice.type === 'datetime' && (
         <label className="vtex-input w-100">
           <DatePicker
             customInput={
@@ -103,7 +99,7 @@ class Statement extends React.Component {
             onChange={date => {
               props.onChange(date)
             }}
-            locale={props.locale || 'en-US'}
+            locale={props.locale}
             dateFormat="L — LT"
             timeIntervals={15}
             timeFormat="HH:mm"
@@ -121,13 +117,29 @@ class Statement extends React.Component {
         />
       )}
 
+      {props.choice.type === 'multiselect' && (
+        <MultiSelect
+          size="small"
+          disabled={!props.condition.verb}
+          options={props.choice.options}
+          value={props.value}
+          onChange={selected => props.onChange(selected)}
+          selected={props.value ? props.value : []}
+          emptyState={term => {
+            return `Your search for "${term}" did not find any results.`
+          }}
+        />
+      )}
+
       {props.choice.type === 'string' && (
         <Input
           disabled={!props.condition.verb}
           value={props.value}
           onChange={e => props.onChange(e.target.value)}
         />
-      )}
+      )} */}
+
+      {props.choice.type === 'custom' && props.widget}
 
       {!props.condition.subject && <Input disabled={!props.condition.verb} />}
     </div>
@@ -142,13 +154,14 @@ class Statement extends React.Component {
   }
 
   getChoiceBySubject = subjectValue => {
+    console.log(subjectValue)
     const { choices } = this.props
     const foundChoice = choices.find(
       choice => choice.subject.value === subjectValue
     )
 
     if (!foundChoice) {
-      return { subject: '', verbs: [], object: null }
+      return { subject: '', verbs: [], objects: [] }
     }
 
     return foundChoice
@@ -160,7 +173,7 @@ class Statement extends React.Component {
       Statement.defaultProps.conjunction,
       'conjunction'
     )
-    this.handleChangeStatement(Statement.defaultProps.object, 'object')
+    this.handleChangeStatement(Statement.defaultProps.objects, 'objects')
   }
 
   checkObviousPredicates = subjectValue => {
@@ -182,19 +195,7 @@ class Statement extends React.Component {
     }
 
     if (foundChoice.options && foundChoice.options.length === 1) {
-      this.handleChangeStatement(foundChoice.options[0].value, 'object')
-    }
-  }
-
-  updateLayout = () => {
-    if (this.statementRef.current.offsetWidth < this.props.breakpoint) {
-      this.setState({ fullWidth: true })
-      return
-    }
-
-    if (this.statementRef.current.offsetWidth >= this.props.breakpoint) {
-      this.setState({ fullWidth: false })
-      return
+      this.handleChangeStatement([foundChoice.options[0].value], 'objects')
     }
   }
 
@@ -206,17 +207,16 @@ class Statement extends React.Component {
     { trailing: true }
   )
 
-  componentDidMount() {
-    window.addEventListener('resize', this.handleDebouncedUpdateLayout)
-    this.updateLayout()
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleDebouncedUpdateLayout)
-  }
-
   render() {
-    const { condition, choices, isRtl } = this.props
+    const {
+      condition,
+      choices,
+      isRtl,
+      locale,
+      widget,
+      queries,
+      fullWidth,
+    } = this.props
     const entities = []
     const order = isRtl ? 'OVS' : 'SVO'
 
@@ -224,9 +224,10 @@ class Statement extends React.Component {
       if (entity === 'S') {
         entities.push(
           <Statement.Subject
+            locale={locale}
             condition={condition}
             choices={choices}
-            fullWidth={this.state.fullWidth}
+            fullWidth={fullWidth}
             onChange={selectedSubjectValue => {
               this.handleChangeStatement(selectedSubjectValue, 'subject')
               this.clearPredicate()
@@ -241,10 +242,11 @@ class Statement extends React.Component {
 
         verbAndConjunction.push(
           <Statement.Verb
+            locale={locale}
             condition={condition}
             choices={choices}
-            fullWidth={this.state.fullWidth}
-            options={
+            fullWidth={fullWidth}
+            verbs={
               !condition.subject
                 ? [
                   {
@@ -254,28 +256,35 @@ class Statement extends React.Component {
                 ]
                 : this.getChoiceBySubject(condition.subject).verbs
             }
-            onChange={(verb, conjunction) => {
-              this.handleChangeStatement(verb, 'verb')
-              this.handleChangeStatement(conjunction, 'conjunction')
+            onChange={verb => {
+              this.handleChangeStatement(verb.value, 'verb')
+              // this.handleChangeStatement(
+              //   verb.conjunction ? verb.conjunction.value : undefined,
+              //   'conjunction'
+              // )
 
-              if (!condition.conjunction) {
-                this.handleChangeStatement(null, 'object', 1)
-              }
+              // if (!condition.conjunction) {
+              //   this.handleChangeStatement(
+              //     Statement.defaultProps.objects,
+              //     'objects',
+              //     1
+              //   )
+              // }
             }}
           />
         )
 
-        if (condition.conjunction && !this.state.fullWidth) {
-          verbAndConjunction.push(
-            <div className={`dark-gray ${isRtl ? 'tl' : 'tr'} mt5 mh3`}>
-              {
-                this.getChoiceBySubject(condition.subject).verbs.find(
-                  verb => verb.value === condition.verb
-                ).conjunction.label
-              }
-            </div>
-          )
-        }
+        // if (condition.conjunction && !fullWidth) {
+        //   verbAndConjunction.push(
+        //     <div className={`dark-gray ${isRtl ? 'tl' : 'tr'} mt5 mh3`}>
+        //       {
+        //         this.getChoiceBySubject(condition.subject).verbs.find(
+        //           verb => verb.value === condition.verb
+        //         ).conjunction.label
+        //       }
+        //     </div>
+        //   )
+        // }
 
         entities.push(
           <div className="flex-column flex-auto">{verbAndConjunction}</div>
@@ -283,49 +292,26 @@ class Statement extends React.Component {
       }
 
       if (entity === 'O') {
-        const objects = []
-        const firstObject = condition.object ? condition.object[0] : null
-        const secondObject = condition.object ? condition.object[1] : null
+        const objects = this.getChoiceBySubject(condition.subject).objects
 
-        objects.push(
-          <Statement.Object
-            condition={condition}
-            value={!condition.verb ? '' : firstObject}
-            choice={this.getChoiceBySubject(condition.subject)}
-            fullWidth={this.state.fullWidth}
-            onChange={value => {
-              this.handleChangeStatement(value, 'object', 0)
-            }}
-          />
-        )
+        console.log(`objects ${objects}`)
+        let key = 0
 
-        if (condition.conjunction) {
-          if (this.state.fullWidth) {
-            objects.push(
-              <div className="dark-gray tr mv3 mh3">
-                {
-                  this.getChoiceBySubject(condition.subject).verbs.find(
-                    verb => verb.value === condition.verb
-                  ).conjunction.label
-                }
-              </div>
-            )
-          }
+        const ourObjects = objects.map(object => {
+          console.log(object)
 
-          objects.push(
+          return (
             <Statement.Object
-              value={!condition.verb ? '' : secondObject}
-              condition={condition}
+              key={key++}
+              widget={object}
               choice={this.getChoiceBySubject(condition.subject)}
-              fullWidth={this.state.fullWidth}
-              onChange={value => {
-                this.handleChangeStatement(value, 'object', 1)
-              }}
+              value={!condition.verb ? '' : object}
+              condition={condition}
+              fullWidth={fullWidth}
             />
           )
-        }
-
-        entities.push(<div className="flex-column flex-auto">{objects}</div>)
+        })
+        entities.push(<div className="flex-column flex-auto">{ourObjects}</div>)
       }
     })
 
@@ -334,11 +320,11 @@ class Statement extends React.Component {
         <div className="flex-column w-100">
           <div
             className={`flex w-100 items-start mv3 ${
-              this.state.fullWidth ? 'flex-column items-stretch' : ''
+              fullWidth ? 'flex-column items-stretch' : ''
             }`}>
             {entities}
 
-            {this.state.fullWidth ? (
+            {fullWidth ? (
               <Button
                 variation="tertiary"
                 size="small"
@@ -366,11 +352,13 @@ Statement.defaultProps = {
     subject: '',
     verb: '',
     conjunction: '',
-    object: [],
+    objects: [],
   },
   breakpoint: 600,
   order: 'SVO',
   isRtl: false,
+  locale: 'en-US',
+  fullWidth: false,
 }
 
 Statement.propTypes = {
@@ -379,7 +367,7 @@ Statement.propTypes = {
     subject: PropTypes.string,
     verb: PropTypes.string,
     conjunction: PropTypes.string,
-    object: PropTypes.any,
+    objects: PropTypes.arrayOf(PropTypes.any),
   }),
   /** Possible choices and respective data types, verb options */
   choices: PropTypes.arrayOf(
@@ -406,6 +394,12 @@ Statement.propTypes = {
   onRemoveStatement: PropTypes.func,
   /** Width that will trigger full width form */
   breakpoint: PropTypes.number,
+  /** Locale */
+  locale: PropTypes.string,
+  /** Widgets are custom inputs that can be used instead of the default ones */
+  widget: PropTypes.any,
+  /** Wether to show this component stretched to the width */
+  fullWidth: PropTypes.bool,
 }
 
 export default Statement

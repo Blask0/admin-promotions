@@ -3,7 +3,7 @@ import { injectIntl } from 'react-intl'
 import Statement from './components/SimpleConditions/Statement'
 
 import './global.css'
-import { Box, PageHeader, Tabs, Tab } from 'vtex.styleguide'
+import { Box, PageHeader, Tabs, Tab, Input } from 'vtex.styleguide'
 
 import AceEditor from 'react-ace'
 import 'brace/mode/json'
@@ -22,8 +22,18 @@ const aceProps = {
   tabSize: 2,
   theme: 'vtex',
   width: '100%',
-  zIndex: 0,
 }
+
+const toBeOrNotToBe = [
+  {
+    label: 'is',
+    value: '=',
+  },
+  {
+    label: 'is_not',
+    value: '!=',
+  },
+]
 
 class SimpleConditionsSandbox extends Component {
   constructor(props) {
@@ -37,29 +47,58 @@ class SimpleConditionsSandbox extends Component {
         'en-US': choicesEn,
         ar: choicesArabic,
         onlyOption: choicesOnlyOption,
+        simple: [
+          {
+            type: 'custom',
+            subject: {
+              label: 'Custom (one object)',
+              value: 'custom-one-object',
+            },
+            verbs: toBeOrNotToBe,
+            objects: [this.generateInput('empty', 0)],
+          },
+          {
+            type: 'custom-2',
+            subject: {
+              label: 'Custom (two objects)',
+              value: 'custom-two-objects',
+            },
+            verbs: toBeOrNotToBe,
+            objects: [
+              this.generateInput('empty', 0),
+              this.generateInput('empty', 1),
+            ],
+          },
+        ],
       },
       conditions: {
-        empty: { subject: '', verb: '', object: [] },
+        empty: { subject: '', verb: '', objects: [] },
+        fullWidth: { subject: '', verb: '', objects: [] },
         'pre-filled': {
           subject: 'bin',
           verb: 'between',
-          object: [],
+          objects: [],
           conjunction: 'and',
         },
         'small-width': {
           subject: '',
           verb: '',
-          object: [],
+          objects: [],
         },
         ordering: {
           subject: '',
           verb: '',
-          object: [],
+          objects: [],
         },
         onlyOption: {
           subject: '',
           verb: '',
-          object: [],
+          objects: [],
+        },
+        custom: {
+          subject: '',
+          verb: '',
+          objects: [],
         },
       },
     }
@@ -98,9 +137,28 @@ class SimpleConditionsSandbox extends Component {
     this.setState({ conditions: conditions })
   }
 
-  handleRemoveStatement = () => {
+  handleRemoveStatement = index => {
     alert('handleRemoveStatement')
   }
+
+  handleChangeInput = value => {}
+
+  generateInput = (conditionId, index) => {
+    return (
+      <Input
+        key="input-1"
+        onChange={e =>
+          this.handleChangeStatement(
+            conditionId,
+            e.target.value,
+            'objects',
+            index
+          )
+        }
+      />
+    )
+  }
+
   render() {
     return (
       <div>
@@ -117,7 +175,7 @@ class SimpleConditionsSandbox extends Component {
                 <Box>
                   <Statement
                     condition={this.state.conditions['empty']}
-                    choices={this.state.choices['en-US']}
+                    choices={this.state.choices.simple}
                     onChangeStatement={(value, param, index) => {
                       this.handleChangeStatement('empty', value, param, index)
                     }}
@@ -140,6 +198,38 @@ class SimpleConditionsSandbox extends Component {
               </div>
 
               <div className="ph7">
+                <h4>Full width</h4>
+                <Box>
+                  <Statement
+                    condition={this.state.conditions['fullWidth']}
+                    fullWidth
+                    choices={this.state.choices.simple}
+                    onChangeStatement={(value, param, index) => {
+                      this.handleChangeStatement(
+                        'fullWidth',
+                        value,
+                        param,
+                        index
+                      )
+                    }}
+                    onRemoveStatement={() => {
+                      this.handleRemoveStatement()
+                    }}
+                  />
+
+                  <div className="ph3">
+                    <AceEditor
+                      {...aceProps}
+                      value={`${JSON.stringify(
+                        this.state.conditions['fullWidth'],
+                        null,
+                        2
+                      )}`}
+                    />
+                  </div>
+                </Box>
+              </div>
+              {/* <div className="ph7">
                 <h4>Pre-filled statement</h4>
                 <Box>
                   <Statement
@@ -169,9 +259,9 @@ class SimpleConditionsSandbox extends Component {
                     />
                   </div>
                 </Box>
-              </div>
+              </div> */}
 
-              <div className="ph7">
+              {/* <div className="ph7">
                 <h4>Small width container (full width breakpoint: 600px)</h4>
                 <Box>
                   <div
@@ -193,9 +283,9 @@ class SimpleConditionsSandbox extends Component {
                         this.handleRemoveStatement()
                       }}
                     />
-                  </div>
+                  </div> */}
 
-                  <div
+              {/* <div
                     style={{ maxWidth: '620px' }}
                     className="mh3 mb5 pa3 br3 b--light-gray bw1 ba">
                     <h5 className="mv2">620px width</h5>
@@ -230,12 +320,13 @@ class SimpleConditionsSandbox extends Component {
               </div>
 
               <div className="ph7">
-                <h4>Grammatical ordering pattern</h4>
+                <h4>Phrasal structure</h4>
                 <Box>
                   <h5 className="mv2">Subject-Verb-Object (LTR, en-US)</h5>
                   <Statement
                     condition={this.state.conditions['ordering']}
                     choices={this.state.choices['en-US']}
+                    locale="en-US"
                     onChangeStatement={(value, param, index) => {
                       this.handleChangeStatement(
                         'ordering',
@@ -254,6 +345,7 @@ class SimpleConditionsSandbox extends Component {
                     condition={this.state.conditions['ordering']}
                     choices={this.state.choices['ar']}
                     isRtl
+                    locale="ar"
                     onChangeStatement={(value, param, index) => {
                       this.handleChangeStatement(
                         'ordering',
@@ -310,7 +402,39 @@ class SimpleConditionsSandbox extends Component {
                     />
                   </div>
                 </Box>
-              </div>
+              </div> */}
+
+              {/* <div className="ph7">
+                <h4>Custom component</h4>
+                <Box>
+                  <Statement
+                    widget={{
+                      customSelect: (
+                        <div onClick={() => this.onChange('test')}>cauli</div>
+                      ),
+                    }}
+                    condition={this.state.conditions.custom}
+                    choices={this.state.choices['en-US']}
+                    onChangeStatement={(value, param, index) => {
+                      this.handleChangeStatement('custom', value, param, index)
+                    }}
+                    onRemoveStatement={() => {
+                      this.handleRemoveStatement()
+                    }}
+                  />
+
+                  <div className="ph3">
+                    <AceEditor
+                      {...aceProps}
+                      value={`${JSON.stringify(
+                        this.state.conditions.custom,
+                        null,
+                        2
+                      )}`}
+                    />
+                  </div>
+                </Box>
+              </div> */}
             </Tab>
             <Tab
               label="Simple Conditions"

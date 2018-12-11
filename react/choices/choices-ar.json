@@ -74,6 +74,7 @@
   },
   {
     "type": "datetime",
+    "options": {},
     "subject": {
       "label": "Bruno's Birthday",
       "value": "bruno-birthday"
@@ -93,11 +94,32 @@
       },
       {
         "conjunction": {
-          "label": "and",
+          "label": "و",
           "value": "and"
         },
         "label": "is between",
         "value": "between"
+      }
+    ]
+  },
+  {
+    "subject": {
+      "label": "Custom multiselect",
+      "value": "custom-multiselect"
+    },
+    "verbs": [
+      {
+        "label": "is",
+        "value": "=",
+        "object": ["customSelect"]
+      },
+      {
+        "label": "is before",
+        "value": "before"
+      },
+      {
+        "label": "is after",
+        "value": "after"
       }
     ]
   }
