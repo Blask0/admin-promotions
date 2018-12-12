@@ -1,10 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, Dropdown, Input, MultiSelect } from 'vtex.styleguide'
-import DatePicker from 'react-datepicker'
+import {
+  Button,
+  Dropdown,
+  Input,
+  MultiSelect,
+  IconClose,
+} from 'vtex.styleguide'
 
 import debounce from 'lodash/debounce'
-import moment from 'moment'
 
 class Statement extends React.Component {
   constructor(props) {
@@ -298,8 +302,9 @@ class Statement extends React.Component {
         let key = 0
 
         const ourObjects = objects.map(object => {
+          console.log('-----2')
           console.log(object)
-
+          console.log('-----1')
           return (
             <Statement.Object
               key={key++}
@@ -311,6 +316,15 @@ class Statement extends React.Component {
             />
           )
         })
+
+        if (ourObjects.length === 0) {
+          ourObjects.push(
+            <div className="mh3 mb3">
+              <Input disabled={!condition.verb} />
+            </div>
+          )
+        }
+
         entities.push(<div className="flex-column flex-auto">{ourObjects}</div>)
       }
     })
@@ -325,12 +339,20 @@ class Statement extends React.Component {
             {entities}
 
             {fullWidth ? (
-              <Button
-                variation="tertiary"
-                size="small"
-                onClick={() => this.handleRemoveStatement()}>
-                REMOVE
-              </Button>
+              <div className="tr">
+                <Button
+                  variation="tertiary"
+                  size="small"
+                  onClick={() => this.handleRemoveStatement()}>
+                  <div className="dib">
+                    <IconClose className="c-on-action-primary" />
+                  </div>
+
+                  <div className="dib mb1 v-mid" style={{ lineHeight: '10px' }}>
+                    DELETE
+                  </div>
+                </Button>
+              </div>
             ) : (
               <Statement.RemoveButton
                 remove={() => {

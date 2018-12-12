@@ -58,7 +58,7 @@ class SimpleConditionsSandbox extends Component {
             objects: [this.generateInput('empty', 0)],
           },
           {
-            type: 'custom-2',
+            type: 'custom',
             subject: {
               label: 'Custom (two objects)',
               value: 'custom-two-objects',
@@ -67,6 +67,22 @@ class SimpleConditionsSandbox extends Component {
             objects: [
               this.generateInput('empty', 0),
               this.generateInput('empty', 1),
+            ],
+          },
+          {
+            type: 'custom',
+            subject: {
+              label: 'Dropdown',
+              value: 'dropdown',
+            },
+            verbs: toBeOrNotToBe,
+            objects: [
+              <Statement.Dropdown
+                disabled={!props.condition.verb}
+                options={props.choice.options}
+                value={props.value}
+                onChange={(e, value) => props.onChange(value)}
+              />,
             ],
           },
         ],
@@ -146,7 +162,7 @@ class SimpleConditionsSandbox extends Component {
   generateInput = (conditionId, index) => {
     return (
       <Input
-        key="input-1"
+        size="regular"
         onChange={e =>
           this.handleChangeStatement(
             conditionId,
@@ -199,42 +215,52 @@ class SimpleConditionsSandbox extends Component {
 
               <div className="ph7">
                 <h4>Full width</h4>
-                <Box>
-                  <Statement
-                    condition={this.state.conditions['fullWidth']}
-                    fullWidth
-                    choices={this.state.choices.simple}
-                    onChangeStatement={(value, param, index) => {
-                      this.handleChangeStatement(
-                        'fullWidth',
-                        value,
-                        param,
-                        index
-                      )
-                    }}
-                    onRemoveStatement={() => {
-                      this.handleRemoveStatement()
-                    }}
-                  />
 
-                  <div className="ph3">
-                    <AceEditor
-                      {...aceProps}
-                      value={`${JSON.stringify(
-                        this.state.conditions['fullWidth'],
-                        null,
-                        2
-                      )}`}
+                <Box>
+                  <div
+                    style={{ maxWidth: '400px' }}
+                    className="mh3 mb5 pa3 br3 b--light-gray bw1 ba">
+                    <Statement
+                      condition={this.state.conditions['fullWidth']}
+                      fullWidth
+                      choices={this.state.choices.simple}
+                      onChangeStatement={(value, param, index) => {
+                        this.handleChangeStatement(
+                          'fullWidth',
+                          value,
+                          param,
+                          index
+                        )
+                      }}
+                      onRemoveStatement={() => {
+                        this.handleRemoveStatement()
+                      }}
                     />
+
+                    <div className="ph3">
+                      <AceEditor
+                        {...aceProps}
+                        value={`${JSON.stringify(
+                          this.state.conditions['fullWidth'],
+                          null,
+                          2
+                        )}`}
+                      />
+                    </div>
                   </div>
                 </Box>
               </div>
-              {/* <div className="ph7">
+
+              <div className="ph7">
                 <h4>Pre-filled statement</h4>
                 <Box>
                   <Statement
-                    condition={this.state.conditions['pre-filled']}
-                    choices={this.state.choices['en-US']}
+                    condition={{
+                      subject: 'custom-one-object',
+                      verb: 'is',
+                      objects: ["I'm pre-filled"],
+                    }}
+                    choices={this.state.choices.simple}
                     onChangeStatement={(value, param, index) => {
                       this.handleChangeStatement(
                         'pre-filled',
@@ -259,31 +285,7 @@ class SimpleConditionsSandbox extends Component {
                     />
                   </div>
                 </Box>
-              </div> */}
-
-              {/* <div className="ph7">
-                <h4>Small width container (full width breakpoint: 600px)</h4>
-                <Box>
-                  <div
-                    style={{ maxWidth: '400px' }}
-                    className="mh3 mb5 pa3 br3 b--light-gray bw1 ba">
-                    <h5 className="mv2">400px width</h5>
-                    <Statement
-                      condition={this.state.conditions['small-width']}
-                      choices={this.state.choices['en-US']}
-                      onChangeStatement={(value, param, index) => {
-                        this.handleChangeStatement(
-                          'small-width',
-                          value,
-                          param,
-                          index
-                        )
-                      }}
-                      onRemoveStatement={() => {
-                        this.handleRemoveStatement()
-                      }}
-                    />
-                  </div> */}
+              </div>
 
               {/* <div
                     style={{ maxWidth: '620px' }}
