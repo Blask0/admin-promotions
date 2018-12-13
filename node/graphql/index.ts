@@ -56,7 +56,7 @@ export const resolvers = {
       await axios
         .get(conditionsURL, {
           headers: {
-            Authorization: `${ioContext.authToken}`
+            Authorization: ioContext.authToken
           }
         })
         .then(

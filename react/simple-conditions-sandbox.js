@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { injectIntl } from 'react-intl'
 import Statement from './components/SimpleConditions/Statement'
+import SimpleConditions from './components/SimpleConditions'
 
 import './global.css'
-import { Box, PageHeader, Tabs, Tab, Input } from 'vtex.styleguide'
+import { Box, PageHeader, Tabs, Tab, Input, Dropdown } from 'vtex.styleguide'
 
 import AceEditor from 'react-ace'
 import 'brace/mode/json'
@@ -13,6 +14,7 @@ import 'brace/ext/searchbox'
 import choicesEn from './choices/choices-en-US.json'
 import choicesArabic from './choices/choices-ar.json'
 import choicesOnlyOption from './choices/choices-only-option.json'
+import { getFragmentDefinitions } from 'apollo-utilities'
 
 const aceProps = {
   readOnly: true,
@@ -24,20 +26,57 @@ const aceProps = {
   width: '100%',
 }
 
-const toBeOrNotToBe = [
+const isOrNot = [
   {
     label: 'is',
     value: '=',
+    objectId: 'default',
   },
   {
     label: 'is_not',
     value: '!=',
+    objectId: 'default',
+  },
+]
+
+const isOrNotBetween = [
+  {
+    label: 'is',
+    value: '=',
+    objectId: 'default',
+  },
+  {
+    label: 'is_not',
+    value: '!=',
+    objectId: 'default',
+  },
+  {
+    label: 'is between',
+    value: 'between',
+    objectId: 'double',
   },
 ]
 
 class SimpleConditionsSandbox extends Component {
   constructor(props) {
     super(props)
+
+    this.colors = [
+      { label: 'White', value: 'white' },
+      { label: 'Black', value: 'black' },
+      { label: 'Grey', value: 'grey' },
+      { label: 'Yellow', value: 'yellow' },
+      { label: 'Red', value: 'red' },
+      { label: 'Blue', value: 'blue' },
+      { label: 'Green', value: 'green' },
+      { label: 'Brown', value: 'brown' },
+      { label: 'Pink', value: 'pink' },
+      { label: 'Orange', value: 'orange' },
+      { label: 'Purple', value: 'purple' },
+      { label: 'Dark-blue', value: 'dark-blue' },
+      { label: 'Dark-red', value: 'dark-red' },
+      { label: 'Light-blue', value: 'light-blue' },
+    ]
 
     this.state = {
       currentTab: 1,
@@ -47,45 +86,6 @@ class SimpleConditionsSandbox extends Component {
         'en-US': choicesEn,
         ar: choicesArabic,
         onlyOption: choicesOnlyOption,
-        simple: [
-          {
-            type: 'custom',
-            subject: {
-              label: 'Custom (one object)',
-              value: 'custom-one-object',
-            },
-            verbs: toBeOrNotToBe,
-            objects: [this.generateInput('empty', 0)],
-          },
-          {
-            type: 'custom',
-            subject: {
-              label: 'Custom (two objects)',
-              value: 'custom-two-objects',
-            },
-            verbs: toBeOrNotToBe,
-            objects: [
-              this.generateInput('empty', 0),
-              this.generateInput('empty', 1),
-            ],
-          },
-          {
-            type: 'custom',
-            subject: {
-              label: 'Dropdown',
-              value: 'dropdown',
-            },
-            verbs: toBeOrNotToBe,
-            objects: [
-              <Statement.Dropdown
-                disabled={!props.condition.verb}
-                options={props.choice.options}
-                value={props.value}
-                onChange={(e, value) => props.onChange(value)}
-              />,
-            ],
-          },
-        ],
       },
       conditions: {
         empty: { subject: '', verb: '', objects: [] },
@@ -94,7 +94,6 @@ class SimpleConditionsSandbox extends Component {
           subject: 'bin',
           verb: 'between',
           objects: [],
-          conjunction: 'and',
         },
         'small-width': {
           subject: '',
@@ -175,6 +174,25 @@ class SimpleConditionsSandbox extends Component {
     )
   }
 
+  getObjectValue = (conditionId, index) => {
+    if (this.state.conditions[conditionId] === undefined) {
+      // Condition with id `conditionId` does not exist
+      return
+    }
+
+    if (this.state.conditions[conditionId].objects === undefined) {
+      // Condition has undefined objects
+      return
+    }
+
+    if (this.state.conditions[conditionId].objects.length < index + 1) {
+      // Condition objects do not have required index
+      return
+    }
+
+    return this.state.conditions[conditionId].objects[index]
+  }
+
   render() {
     return (
       <div>
@@ -191,7 +209,88 @@ class SimpleConditionsSandbox extends Component {
                 <Box>
                   <Statement
                     condition={this.state.conditions['empty']}
-                    choices={this.state.choices.simple}
+                    choices={[
+                      {
+                        type: 'custom',
+                        subject: {
+                          label: 'Custom (one object)',
+                          value: 'custom-one-object',
+                        },
+                        verbs: isOrNot,
+                        objects: {
+                          default: [this.generateInput('empty', 0)],
+                        },
+                      },
+                      {
+                        type: 'custom',
+                        subject: {
+                          label: 'Custom (two objects)',
+                          value: 'custom-two-objects',
+                        },
+                        verbs: isOrNot,
+                        objects: {
+                          default: [
+                            this.generateInput('empty', 0),
+                            <div key="conjunction">and</div>,
+                            this.generateInput('empty', 1),
+                          ],
+                        },
+                      },
+                      {
+                        type: 'custom',
+                        subject: {
+                          label: 'Dropdown',
+                          value: 'dropdown',
+                        },
+                        verbs: isOrNotBetween,
+                        objects: {
+                          default: [
+                            <Dropdown
+                              key="dropdpown-1"
+                              options={this.colors}
+                              value={this.getObjectValue('empty', 0)}
+                              onChange={(e, value) =>
+                                this.handleChangeStatement(
+                                  'empty',
+                                  value,
+                                  'objects',
+                                  0
+                                )
+                              }
+                            />,
+                          ],
+                          double: [
+                            <Dropdown
+                              key="dropdown-1"
+                              options={this.colors}
+                              value={this.getObjectValue('empty', 0)}
+                              onChange={(e, value) =>
+                                this.handleChangeStatement(
+                                  'empty',
+                                  value,
+                                  'objects',
+                                  0
+                                )
+                              }
+                            />,
+                            <div key="and">and</div>,
+                            <Dropdown
+                              key="dropdown-2"
+                              options={this.colors}
+                              value={this.getObjectValue('empty', 1)}
+                              onChange={(e, value) =>
+                                this.handleChangeStatement(
+                                  'empty',
+                                  value,
+                                  'objects',
+                                  1
+                                )
+                              }
+                            />,
+                          ],
+                        },
+                      },
+                    ]}
                     onChangeStatement={(value, param, index) => {
                       this.handleChangeStatement('empty', value, param, index)
                     }}
@@ -212,7 +311,7 @@ class SimpleConditionsSandbox extends Component {
                   </div>
                 </Box>
               </div>
-
+              {/*
               <div className="ph7">
                 <h4>Full width</h4>
 
@@ -285,7 +384,7 @@ class SimpleConditionsSandbox extends Component {
                     />
                   </div>
                 </Box>
-              </div>
+              </div> */}
 
               {/* <div
                     style={{ maxWidth: '620px' }}
@@ -442,7 +541,13 @@ class SimpleConditionsSandbox extends Component {
               label="Simple Conditions"
               active={this.state.currentTab === 2}
               onClick={() => this.handleTabChange(2)}>
-              <p>TODO: Create examples for Simple Conditions</p>
+              <SimpleConditions
+                choices={this.state.choices.simple}
+                showStrategySelector={false}
+                operator="all"
+                onChangeOperator={operator => this.setState({ operator })}
+                onChangeConditions={conditions => this.setState({ conditions })}
+              />
             </Tab>
           </Tabs>
         </div>
