@@ -411,7 +411,7 @@ class SimpleConditionsSandbox extends Component {
                 isDebug
                 showOperator
                 operator="all"
-                conditions={this.state.simpleConditions}
+                conditions={this.state.conditions.full}
                 onChangeOperator={operator => this.setState({ operator })}
                 onChangeConditions={conditions =>
                   this.setState({ simpleConditions: conditions })
@@ -535,7 +535,7 @@ class SimpleConditionsSandbox extends Component {
                 <AceEditor
                   {...aceProps}
                   value={`${JSON.stringify(
-                    this.state.simpleConditions,
+                    this.state.conditions.full,
                     null,
                     2
                   )}`}

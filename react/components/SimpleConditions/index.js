@@ -10,7 +10,6 @@ class SimpleConditions extends React.Component {
 
     this.state = {
       selectedOperator: props.operator,
-      stateConditions: props.conditions || [],
     }
   }
 
@@ -50,10 +49,10 @@ class SimpleConditions extends React.Component {
   }
 
   canAddNewCondition = () => {
-    const { stateConditions } = this.state
-    if (stateConditions.length === 0) return true
+    const { conditions } = this.props
+    if (conditions.length === 0) return true
 
-    const hasIncompleteCondition = stateConditions.some(
+    const hasIncompleteCondition = conditions.some(
       condition =>
         condition.subject.value === '' ||
         condition.operator === '' ||
@@ -63,19 +62,21 @@ class SimpleConditions extends React.Component {
   }
 
   handleAddNewCondition = () => {
-    const { stateConditions } = this.state
-    stateConditions.push({
+    const currentConditions = this.props.conditions
+
+    currentConditions.push({
       subject: '',
       verb: '',
       objects: [],
     })
-    this.setState({ stateConditions })
+    this.props.onChangeConditions(currentConditions)
   }
 
   handleRemoveStatement = index => {
-    const { stateConditions } = this.state
-    stateConditions.splice(index, 1)
-    this.setState({ stateConditions })
+    const currentConditions = this.props.conditions
+    currentConditions.splice(index, 1)
+
+    this.props.onChangeConditions(currentConditions)
   }
 
   handleChangeStatement = (statementIndex, newValue, structure) => {
@@ -83,8 +84,15 @@ class SimpleConditions extends React.Component {
   }
 
   render() {
-    const { labels, choices, showOperator, operator, isDebug } = this.props
-    const { selectedOperator, stateConditions } = this.state
+    const {
+      labels,
+      choices,
+      showOperator,
+      operator,
+      isDebug,
+      conditions,
+    } = this.props
+    const { selectedOperator } = this.state
 
     return (
       <div>
@@ -99,13 +107,14 @@ class SimpleConditions extends React.Component {
         )}
 
         <div className="t-body c-on-base ph5 mt4 br3 b--muted-4 ba">
-          {stateConditions.length === 0 ? (
+          {this.props.conditions.length === 0 ? (
             <div className="mv6 mh3">
               <span className="light-gray">{labels.noConditions}</span>
             </div>
           ) : (
             <div className="mv5">
-              {stateConditions.map((condition, statementIndex) => {
+              {console.log(JSON.stringify(conditions))}
+              {conditions.map((condition, statementIndex) => {
                 return (
                   <div
                     className="flex flex-column w-100 mv3"
@@ -129,7 +138,7 @@ class SimpleConditions extends React.Component {
                       }
                     />
 
-                    {statementIndex !== stateConditions.length - 1 && (
+                    {statementIndex !== conditions.length - 1 && (
                       <SimpleConditions.Separator
                         label={
                           selectedOperator === 'all'
