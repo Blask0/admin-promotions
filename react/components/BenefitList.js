@@ -2,13 +2,9 @@ import React, { PureComponent, Component } from 'react'
 import { compose, graphql } from 'react-apollo'
 import PropTypes from 'prop-types'
 
-import Badge from '@vtex/styleguide/lib/Badge'
+import Tag from '@vtex/styleguide/lib/Tag'
 import Button from '@vtex/styleguide/lib/Button'
 import Table from '@vtex/styleguide/lib/Table'
-
-import Gift from './Icon/Gift'
-import Tag from './Icon/Tag'
-import Truck from './Icon/Truck'
 
 import getBenefits from '../graphql/getBenefits.graphql'
 
@@ -29,19 +25,8 @@ export class BenefitListContainer extends Component {
             title: 'Type',
             cellRenderer: data => {
               const type = data.cellData
-              const icon =
-                type === 'Price' ? (
-                  <Tag style={{ paddingTop: '2px' }} />
-                ) : type === 'Gift' ? (
-                  <Gift />
-                ) : type === 'Shipping' ? (
-                  <Truck style={{ paddingTop: '2px' }} />
-                ) : (
-                  ''
-                )
               return (
                 <div className="dt">
-                  <span className="c-muted-1 dtc v-mid">{icon}</span>
                   <span className="dtc v-mid pl3">{type}</span>
                 </div>
               )
@@ -66,8 +51,7 @@ export class BenefitListContainer extends Component {
                 <Button
                   size="small"
                   variation="secondary"
-                  onClick={() => this.handleDetachment(benefit)}
-                >
+                  onClick={() => this.handleDetachment(benefit)}>
                   DETACH
                 </Button>
               )
