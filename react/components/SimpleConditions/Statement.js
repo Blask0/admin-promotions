@@ -1,14 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {
-  Button,
-  Dropdown,
-  Input,
-  MultiSelect,
-  IconClose,
-} from 'vtex.styleguide'
-
-import debounce from 'lodash/debounce'
+import { Button, Dropdown, Input, IconClose } from 'vtex.styleguide'
 
 class Statement extends React.Component {
   constructor(props) {
@@ -22,7 +14,7 @@ class Statement extends React.Component {
   }
 
   static RemoveButton = props => (
-    <div className="mh3 mv3 pointer flex-auto" onClick={e => props.remove()}>
+    <div className="mh3 mt4 pointer flex-auto" onClick={e => props.remove()}>
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
         <path
           d="M11.7429 0.257143C11.4 -0.0857143 10.8857 -0.0857143 10.5429 0.257143L6 4.8L1.45714 0.257143C1.11429 -0.0857143 0.6 -0.0857143 0.257143 0.257143C-0.0857143 0.6 -0.0857143 1.11429 0.257143 1.45714L4.8 6L0.257143 10.5429C-0.0857143 10.8857 -0.0857143 11.4 0.257143 11.7429C0.428571 11.9143 0.6 12 0.857143 12C1.11429 12 1.28571 11.9143 1.45714 11.7429L6 7.2L10.5429 11.7429C10.7143 11.9143 10.9714 12 11.1429 12C11.3143 12 11.5714 11.9143 11.7429 11.7429C12.0857 11.4 12.0857 10.8857 11.7429 10.5429L7.2 6L11.7429 1.45714C12.0857 1.11429 12.0857 0.6 11.7429 0.257143Z"
@@ -32,28 +24,28 @@ class Statement extends React.Component {
     </div>
   )
 
-  static EmptyObject = () => {
+  static EmptyObject = () => (
     <div className="flex-auto">
       <div className="mh3 mb3">
         <Input key={'object-0'} disabled />
       </div>
     </div>
-  }
+  )
 
   static Dropdown = props => {
     if (!props.options) {
-      return <Dropdown {...props} />
+      return <Dropdown {...props} style={{ minWidth: '250px' }} />
     }
     return props.options.length === 1 && props.options[0].value ? (
       <span className="dark-gray mh3">{props.options[0].label}</span>
     ) : (
-      <Dropdown {...props} />
+      <Dropdown {...props} style={{ minWidth: '250px' }} />
     )
   }
 
   static Subject = props => (
-    <div className="flex-column flex-auto">
-      <div className={`mh3 ${props.fullWidth ? 'pb3' : ''}`}>
+    <div className="flex-auto">
+      <div className={`mh3 ${props.isFullWidth ? 'pb3' : ''}`}>
         <Statement.Dropdown
           options={props.choices.map(choice => {
             return {
@@ -69,7 +61,7 @@ class Statement extends React.Component {
   )
 
   static Verb = props => (
-    <div className={`mh3 ${props.fullWidth ? 'pb3' : ''}`}>
+    <div className={`mh3 ${props.isFullWidth ? 'pb3' : ''}`}>
       {props.verbs.length === 1 && props.condition.subject ? (
         <span className="dark-gray mh3">{props.verbs[0].label}</span>
       ) : (
@@ -86,7 +78,7 @@ class Statement extends React.Component {
     </div>
   )
 
-  static Object = props => <div className={'mh3 mb3'}>{props.widget}</div>
+  static Object = props => <div>{props.widget}</div>
 
   handleChangeStatement = (value, param, paramIndex) => {
     this.props.onChangeStatement(value, param, paramIndex)
@@ -118,6 +110,10 @@ class Statement extends React.Component {
     this.handleChangeStatement(Statement.defaultProps.objects, 'objects')
   }
 
+  clearObjects = () => {
+    this.handleChangeStatement(Statement.defaultProps.objects, 'objects')
+  }
+
   checkObviousPredicates = subjectValue => {
     const { choices } = this.props
     const foundChoice = choices.find(
@@ -130,10 +126,6 @@ class Statement extends React.Component {
 
     if (foundChoice.verbs && foundChoice.verbs.length === 1) {
       this.handleChangeStatement(foundChoice.verbs[0].value, 'verb')
-      // this.handleChangeStatement(
-      //   foundChoice.verbs[0].conjunction,
-      //   'conjunction'
-      // )
     }
 
     if (foundChoice.options && foundChoice.options.length === 1) {
@@ -141,35 +133,14 @@ class Statement extends React.Component {
     }
   }
 
-  renderSubject = (props, entities) => {
-    const { condition, choices, locale, fullWidth } = this.props
-
-    entities.push(
-      <Statement.Subject
-        locale={locale}
-        condition={condition}
-        choices={choices}
-        fullWidth={fullWidth}
-        onChange={selectedSubjectValue => {
-          this.handleChangeStatement(selectedSubjectValue, 'subject')
-          this.clearPredicate()
-          this.checkObviousPredicates(selectedSubjectValue)
-        }}
-      />
-    )
-
-    return entities
-  }
-
   renderSubject = entities => {
-    const { condition, choices, locale, fullWidth } = this.props
+    const { condition, choices, isFullWidth } = this.props
 
     entities.push(
       <Statement.Subject
-        locale={locale}
         condition={condition}
         choices={choices}
-        fullWidth={fullWidth}
+        isFullWidth={isFullWidth}
         onChange={selectedSubjectValue => {
           this.handleChangeStatement(selectedSubjectValue, 'subject')
           this.clearPredicate()
@@ -182,16 +153,15 @@ class Statement extends React.Component {
   }
 
   renderVerbs = entities => {
-    const { condition, choices, locale, fullWidth } = this.props
+    const { condition, choices, isFullWidth } = this.props
     const myChoice = this.getChoiceBySubject(condition.subject)
     const desiredVerbs = []
 
     desiredVerbs.push(
       <Statement.Verb
-        locale={locale}
         condition={condition}
         choices={choices}
-        fullWidth={fullWidth}
+        isFullWidth={isFullWidth}
         verbs={
           !condition.subject
             ? [
@@ -204,17 +174,18 @@ class Statement extends React.Component {
         }
         onChange={verb => {
           this.handleChangeStatement(verb.value, 'verb')
+          this.clearObjects()
         }}
       />
     )
 
-    entities.push(<div className="flex-column flex-auto">{desiredVerbs}</div>)
+    entities.push(<div className="flex-auto">{desiredVerbs}</div>)
 
     return entities
   }
 
   renderObjects = entities => {
-    const { condition, fullWidth, isRtl } = this.props
+    const { condition, isFullWidth, isRtl } = this.props
     const myChoice = this.getChoiceBySubject(condition.subject)
 
     if (!condition.verb) {
@@ -245,30 +216,24 @@ class Statement extends React.Component {
       objects = objects.reverse()
     }
 
-    let key = 0
-    const objectsFromChoice = objects.map(object => {
-      return (
-        <div key={`object-${key++}`}>
-          <Statement.Object
-            widget={object}
-            choice={myChoice}
-            value={!condition.verb ? '' : object}
-            condition={condition}
-            fullWidth={fullWidth}
-          />
-        </div>
+    const key = 0
+    objects.map(object => {
+      return entities.push(
+        <Statement.Object
+          widget={object}
+          choice={myChoice}
+          value={!condition.verb ? '' : object}
+          condition={condition}
+          isFullWidth={isFullWidth}
+        />
       )
     })
-
-    entities.push(
-      <div className="flex-column flex-auto">{objectsFromChoice}</div>
-    )
 
     return entities
   }
 
   render() {
-    const { isRtl, fullWidth } = this.props
+    const { canDelete, isRtl, isFullWidth } = this.props
     const order = isRtl ? 'OVS' : 'SVO'
     let statementAtoms = []
 
@@ -288,13 +253,27 @@ class Statement extends React.Component {
 
     return (
       <div ref={this.statementRef}>
-        <div className="flex-column w-100">
+        <div className="flex-column w-100 mv3">
           <div
-            className={`flex w-100 items-start mv3 ${
-              fullWidth ? 'flex-column items-stretch' : ''
+            className={`flex w-100 items-start ${
+              isFullWidth ? 'flex-column items-stretch' : ''
             }`}>
+            {canDelete && !isFullWidth && isRtl && (
+              <Statement.RemoveButton
+                remove={() => {
+                  this.handleRemoveStatement()
+                }}
+              />
+            )}
             {statementAtoms}
-            {fullWidth ? (
+            {canDelete && !isFullWidth && !isRtl && (
+              <Statement.RemoveButton
+                remove={() => {
+                  this.handleRemoveStatement()
+                }}
+              />
+            )}
+            {canDelete && isFullWidth && (
               <div className="tr">
                 <Button
                   variation="tertiary"
@@ -309,14 +288,13 @@ class Statement extends React.Component {
                   </div>
                 </Button>
               </div>
-            ) : (
-              <Statement.RemoveButton
-                remove={() => {
-                  this.handleRemoveStatement()
-                }}
-              />
             )}
           </div>
+          {this.props.condition.errorMessage && (
+            <div className="red f6 mh3 lh-title">
+              {this.props.condition.errorMessage}
+            </div>
+          )}
         </div>
       </div>
     )
@@ -326,26 +304,27 @@ class Statement extends React.Component {
 Statement.defaultProps = {
   onRemoveStatement: () => {},
   onChangeStatement: () => {},
+  canDelete: true,
   condition: {
     subject: '',
     verb: '',
-    conjunction: '',
     objects: [],
   },
-  breakpoint: 600,
-  order: 'SVO',
   isRtl: false,
-  locale: 'en-US',
-  fullWidth: false,
+  order: 'SVO',
+
+  isFullWidth: false,
 }
 
 Statement.propTypes = {
+  /** Shows or hides the delete button */
+  canDelete: PropTypes.bool,
   /** Current options for this Statement */
   condition: PropTypes.shape({
     subject: PropTypes.string,
     verb: PropTypes.string,
-    conjunction: PropTypes.string,
     objects: PropTypes.arrayOf(PropTypes.any),
+    errorMessage: PropTypes.string,
   }),
   /** Possible choices and respective data types, verb options */
   choices: PropTypes.arrayOf(
@@ -354,20 +333,13 @@ Statement.propTypes = {
         label: PropTypes.string,
         value: PropTypes.string,
       }),
-      type: PropTypes.string,
-      format: PropTypes.string,
       verbs: PropTypes.arrayOf(
         PropTypes.shape({
           label: PropTypes.string,
           value: PropTypes.string,
         })
       ),
-      objects: PropTypes.shape(
-        PropTypes.shape({
-          label: PropTypes.string,
-          value: PropTypes.string,
-        })
-      ),
+      objects: PropTypes.shape(PropTypes.arrayOf(PropTypes.any)),
     })
   ),
   /** Whether the order of elements and text if right to left */
@@ -376,14 +348,10 @@ Statement.propTypes = {
   onChangeStatement: PropTypes.func,
   /** Statement remove callback */
   onRemoveStatement: PropTypes.func,
-  /** Width that will trigger full width form */
-  breakpoint: PropTypes.number,
-  /** Locale */
-  locale: PropTypes.string,
   /** Widgets are custom inputs that can be used instead of the default ones */
   widget: PropTypes.any,
   /** Wether to show this component stretched to the width */
-  fullWidth: PropTypes.bool,
+  isFullWidth: PropTypes.bool,
 }
 
 export default Statement

@@ -40,7 +40,7 @@ export class BenefitListContainer extends Component {
               const badgeProps = active
                 ? { bgColor: '#8BC34A', color: '#FFFFFF', children: 'Active' }
                 : { bgColor: '#727273', color: '#FFFFFF', children: 'Inactive' }
-              return <Badge {...badgeProps} />
+              return <Tag {...badgeProps} />
             },
           },
           actions: {
