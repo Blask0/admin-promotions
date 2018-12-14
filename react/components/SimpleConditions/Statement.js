@@ -14,7 +14,10 @@ class Statement extends React.Component {
   }
 
   static RemoveButton = props => (
-    <div className="mh3 mt4 pointer flex-auto" onClick={e => props.remove()}>
+    <div
+      className="mh3 mt4 pointer flex-auto"
+      style={{ maxWidth: 50 }}
+      onClick={e => props.remove()}>
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
         <path
           d="M11.7429 0.257143C11.4 -0.0857143 10.8857 -0.0857143 10.5429 0.257143L6 4.8L1.45714 0.257143C1.11429 -0.0857143 0.6 -0.0857143 0.257143 0.257143C-0.0857143 0.6 -0.0857143 1.11429 0.257143 1.45714L4.8 6L0.257143 10.5429C-0.0857143 10.8857 -0.0857143 11.4 0.257143 11.7429C0.428571 11.9143 0.6 12 0.857143 12C1.11429 12 1.28571 11.9143 1.45714 11.7429L6 7.2L10.5429 11.7429C10.7143 11.9143 10.9714 12 11.1429 12C11.3143 12 11.5714 11.9143 11.7429 11.7429C12.0857 11.4 12.0857 10.8857 11.7429 10.5429L7.2 6L11.7429 1.45714C12.0857 1.11429 12.0857 0.6 11.7429 0.257143Z"
@@ -80,8 +83,8 @@ class Statement extends React.Component {
 
   static Object = props => <div>{props.widget}</div>
 
-  handleChangeStatement = (value, param, paramIndex) => {
-    this.props.onChangeStatement(value, param, paramIndex)
+  handleChangeStatement = (newValue, structure) => {
+    this.props.onChangeStatement(newValue, structure)
   }
 
   handleRemoveStatement = () => {
@@ -103,15 +106,13 @@ class Statement extends React.Component {
 
   clearPredicate = () => {
     this.handleChangeStatement(Statement.defaultProps.verb, 'verb')
-    this.handleChangeStatement(
-      Statement.defaultProps.conjunction,
-      'conjunction'
-    )
     this.handleChangeStatement(Statement.defaultProps.objects, 'objects')
+    this.handleChangeStatement(null, 'errorMessage')
   }
 
   clearObjects = () => {
     this.handleChangeStatement(Statement.defaultProps.objects, 'objects')
+    this.handleChangeStatement(null, 'errorMessage')
   }
 
   checkObviousPredicates = subjectValue => {
@@ -215,8 +216,6 @@ class Statement extends React.Component {
     if (isRtl) {
       objects = objects.reverse()
     }
-
-    const key = 0
     objects.map(object => {
       return entities.push(
         <Statement.Object
@@ -233,10 +232,11 @@ class Statement extends React.Component {
   }
 
   render() {
-    const { canDelete, isRtl, isFullWidth } = this.props
+    const { canDelete, isRtl, isFullWidth, isDebug } = this.props
     const order = isRtl ? 'OVS' : 'SVO'
     let statementAtoms = []
 
+    console.log(`--------- ${this.props.condition}`)
     order.split('').map(entity => {
       if (entity === 'S') {
         statementAtoms = this.renderSubject(statementAtoms)
@@ -296,6 +296,10 @@ class Statement extends React.Component {
             </div>
           )}
         </div>
+
+        {isDebug && (
+          <code>{`${JSON.stringify(this.props.condition, null, 2)}`}</code>
+        )}
       </div>
     )
   }
@@ -342,6 +346,10 @@ Statement.propTypes = {
       objects: PropTypes.shape(PropTypes.arrayOf(PropTypes.any)),
     })
   ),
+  /** isDebug shows the current state of the component in a box */
+  isDebug: PropTypes.bool,
+  /** Wether to show this component stretched to the width */
+  isFullWidth: PropTypes.bool,
   /** Whether the order of elements and text if right to left */
   isRtl: PropTypes.bool,
   /** Statement change callback */
@@ -350,8 +358,6 @@ Statement.propTypes = {
   onRemoveStatement: PropTypes.func,
   /** Widgets are custom inputs that can be used instead of the default ones */
   widget: PropTypes.any,
-  /** Wether to show this component stretched to the width */
-  isFullWidth: PropTypes.bool,
 }
 
 export default Statement

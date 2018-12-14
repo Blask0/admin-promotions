@@ -16,7 +16,7 @@ class SimpleConditions extends React.Component {
 
   static defaultProps = {
     operator: 'any',
-    showStrategySelector: true,
+    showOperator: true,
     conditions: [],
     onChangeOperator: () => {},
     onChangeConditions: () => {},
@@ -25,7 +25,7 @@ class SimpleConditions extends React.Component {
       operatorAnd: 'and',
       operatorAny: 'any',
       operatorOr: 'or',
-      headerPrefix: 'Match',
+      headerPrefix: 'Matching',
       headerSufix: 'following conditions:',
       addConditionBtn: 'add condition',
       noConditions: 'No conditions selected.',
@@ -57,7 +57,7 @@ class SimpleConditions extends React.Component {
       condition =>
         condition.subject.value === '' ||
         condition.operator === '' ||
-        condition.value === null
+        (condition.objects && condition.objects.length === 0)
     )
     return !hasIncompleteCondition
   }
@@ -66,8 +66,8 @@ class SimpleConditions extends React.Component {
     const { stateConditions } = this.state
     stateConditions.push({
       subject: '',
-      operator: '',
-      value: null,
+      verb: '',
+      objects: [],
     })
     this.setState({ stateConditions })
   }
@@ -78,73 +78,95 @@ class SimpleConditions extends React.Component {
     this.setState({ stateConditions })
   }
 
-  handleChangeStatement = (index, value, param) => {
-    const { stateConditions } = this.state
-    stateConditions[index][param] = value
-    this.props.onChangeConditions(stateConditions)
-    this.setState({ stateConditions })
+  handleChangeStatement = (statementIndex, newValue, structure) => {
+    this.props.onChangeStatement(statementIndex, newValue, structure)
   }
 
   render() {
-    const { labels, choices, showStrategySelector, operator } = this.props
+    const { labels, choices, showOperator, operator, isDebug } = this.props
     const { selectedOperator, stateConditions } = this.state
 
     return (
       <div>
-        {showStrategySelector && (
-          <StrategySelector
-            operator={operator}
-            labels={labels}
-            onChangeOperator={operator => this.onChangeOperator({ operator })}
-          />
+        {showOperator && (
+          <div className="mh6">
+            <StrategySelector
+              operator={operator}
+              labels={labels}
+              onChangeOperator={operator => this.onChangeOperator({ operator })}
+            />
+          </div>
         )}
 
-        {stateConditions.length === 0 ? (
-          <div className="mv5">
-            <span className="light-gray">{labels.noConditions}</span>
-          </div>
-        ) : (
-          <div className="mv5">
-            {stateConditions.map((condition, index) => {
-              return (
-                <div className="flex flex-column w-100 mv3" key={index}>
-                  <Statement
-                    condition={condition}
-                    choices={choices}
-                    onChangeStatement={(value, param) => {
-                      this.handleChangeStatement(index, value, param)
-                    }}
-                    onRemoveStatement={() => this.handleRemoveStatement(index)}
-                  />
-
-                  {index !== stateConditions.length - 1 && (
-                    <SimpleConditions.Separator
-                      label={
-                        selectedOperator === 'all'
-                          ? labels.operatorAnd
-                          : labels.operatorOr
+        <div className="t-body c-on-base ph5 mt4 br3 b--muted-4 ba">
+          {stateConditions.length === 0 ? (
+            <div className="mv6 mh3">
+              <span className="light-gray">{labels.noConditions}</span>
+            </div>
+          ) : (
+            <div className="mv5">
+              {stateConditions.map((condition, statementIndex) => {
+                return (
+                  <div
+                    className="flex flex-column w-100 mv3"
+                    key={statementIndex}>
+                    <Statement
+                      isDebug={isDebug}
+                      condition={condition}
+                      choices={choices}
+                      onChangeStatement={(newValue, structure) => {
+                        console.log(
+                          `newvalue ${newValue}strucvture${structure}`
+                        )
+                        this.handleChangeStatement(
+                          statementIndex,
+                          newValue,
+                          structure
+                        )
+                      }}
+                      onRemoveStatement={() =>
+                        this.handleRemoveStatement(statementIndex)
                       }
                     />
-                  )}
-                </div>
-              )
-            })}
-          </div>
-        )}
 
-        <div style={{ marginLeft: -18 }}>
-          <Button
-            variation="tertiary"
-            size="small"
-            disabled={!this.canAddNewCondition()}
-            onClick={this.handleAddNewCondition}>
-            <span className="flex align-baseline">
-              <span className="mr2">
-                <IconPlus solid size={16} color="currentColor" />
+                    {statementIndex !== stateConditions.length - 1 && (
+                      <SimpleConditions.Separator
+                        label={
+                          selectedOperator === 'all'
+                            ? labels.operatorAnd
+                            : labels.operatorOr
+                        }
+                      />
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          )}
+
+          <div
+            style={{
+              marginLeft: -17,
+              width: 'calc(100% + 34px)',
+            }}
+            className="flex flex-row w-100 nowrap items-center mv3">
+            <hr className="ma0 b--black-10 bb bb-0 w-100" />
+          </div>
+
+          <div style={{ marginLeft: -10 }} className="mv5">
+            <Button
+              variation="tertiary"
+              size="small"
+              disabled={!this.canAddNewCondition()}
+              onClick={this.handleAddNewCondition}>
+              <span className="flex align-baseline">
+                <span className="mr2">
+                  <IconPlus solid size={16} color="currentColor" />
+                </span>
+                {labels.addNewCondition}
               </span>
-              {labels.addNewCondition}
-            </span>
-          </Button>
+            </Button>
+          </div>
         </div>
       </div>
     )
@@ -152,40 +174,47 @@ class SimpleConditions extends React.Component {
 }
 
 SimpleConditions.propTypes = {
+  /** Shows or hides the delete button */
+  canDelete: PropTypes.bool,
   /** Operator indicates whether all the conditions should be met or any of them */
   operator: PropTypes.oneOf(['all', 'any']),
-  showOperator: PropTypes.bool,
-  /** Operator change callback (conditions): array of conditions */
-  onChangeOperator: PropTypes.func,
-  /** Conditions list */
+  /** Current selected options for this Statement */
   conditions: PropTypes.arrayOf(
     PropTypes.shape({
       subject: PropTypes.string,
       verb: PropTypes.string,
-      value: PropTypes.any,
+      objects: PropTypes.arrayOf(PropTypes.any),
+      errorMessage: PropTypes.string,
     })
   ),
-  /** Conditions change callback (conditions): array of conditions */
-  onChangeConditions: PropTypes.func,
-  /** Fields and respective data types, operator options */
+  /** Possible choices and respective data types, verb options */
   choices: PropTypes.arrayOf(
     PropTypes.shape({
       subject: PropTypes.shape({
         label: PropTypes.string,
         value: PropTypes.string,
       }),
-      type: PropTypes.string,
-      format: PropTypes.string,
       verbs: PropTypes.arrayOf(
         PropTypes.shape({
           label: PropTypes.string,
           value: PropTypes.string,
         })
       ),
+      objects: PropTypes.shape(PropTypes.arrayOf(PropTypes.any)),
     })
   ),
-  /** Show or hide the header that selects the strategy (any vs all) */
-  showStrategySelector: PropTypes.bool,
+  /** Conditions change callback (conditions): array of conditions */
+  onChangeConditions: PropTypes.func,
+  /** Statement change callback */
+  onChangeStatement: PropTypes.func,
+  /** Operator change callback (conditions): array of conditions */
+  onChangeOperator: PropTypes.func,
+  /** isDebug shows the current state of the component in a box */
+  isDebug: PropTypes.bool,
+  /** Whether the order of elements and text if right to left */
+  isRtl: PropTypes.bool,
+  /** Show or hide the header that selects the operator (any vs all) */
+  showOperator: PropTypes.bool,
   /** Labels for the controls and texts, default is english */
   labels: PropTypes.shape({
     operatorAll: PropTypes.string,

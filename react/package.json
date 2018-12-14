@@ -4,7 +4,7 @@
   "description": "Campaigns Admin",
   "main": "index.js",
   "dependencies": {
-    "@vtex/styleguide": "^8.3.0",
+    "@vtex/styleguide": "^8.4.0",
     "apollo-client": "^2.4.7",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.9.2",
