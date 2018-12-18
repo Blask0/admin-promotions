@@ -1,10 +1,8 @@
 import React, { PureComponent } from 'react'
-
+import CreatePromotionButton from './Button/CreatePromotion'
 import Columns from './Icon/Columns'
-import User from './Icon/User'
 import { WrappedGift } from './Icon/Gift'
-
-import CreateCampaignButton from './Button/CreateCampaign'
+import User from './Icon/User'
 
 class GettingStarted extends PureComponent {
   static BulletPoint = props => {
@@ -20,11 +18,14 @@ class GettingStarted extends PureComponent {
     return (
       <div>
         <h1 className="f3 normal ma0">Getting Started</h1>
-        <p className="f5">Welcome to our new Campaigns Admin. Here, you can:</p>
+        <p className="f5">
+          Welcome to our new Promotions Admin (Formerly known as Rates and
+          Benefits). Here, you can:
+        </p>
         <div className="flex flex-wrap items-center justify-between">
           <GettingStarted.BulletPoint
             icon={<User />}
-            text="Define the target audience for your campaigns"
+            text="Define the target audience for your promotiomns"
           />
           <GettingStarted.BulletPoint
             icon={<WrappedGift />}
@@ -32,11 +33,11 @@ class GettingStarted extends PureComponent {
           />
           <GettingStarted.BulletPoint
             icon={<Columns />}
-            text="Manage campaigns and benefits on the same page"
+            text="Manage audiences and promotions on the same page"
           />
         </div>
         <div className="pt6 tc">
-          <CreateCampaignButton />
+          <CreatePromotionButton />
           <a className="db pt4" href="https://www.google.com/">
             Learn More
           </a>

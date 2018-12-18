@@ -7,7 +7,7 @@ import { Box, PageHeader } from 'vtex.styleguide'
 import './global.css'
 import getCampaigns from './graphql/getCampaigns.graphql'
 
-import CreateCampaignButton from './components/Button/CreateCampaign'
+import CreatePromotionButton from './components/Button/CreatePromotion'
 import GettingStarted from './components/GettingStarted'
 
 class Campaigns extends Component {
@@ -23,7 +23,7 @@ class Campaigns extends Component {
     return (
       <div>
         <PageHeader title="Campaigns">
-          <CreateCampaignButton />
+          <CreatePromotionButton />
         </PageHeader>
         <div className="ph7">
           <Box>

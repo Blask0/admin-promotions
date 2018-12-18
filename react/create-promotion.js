@@ -2,23 +2,16 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl } from 'react-intl'
 
-import {
-  Box,
-  Input,
-  PageHeader,
-  Textarea,
-  Toggle,
-  Button,
-} from 'vtex.styleguide'
+import { Box, Input, PageHeader, Textarea, Toggle } from 'vtex.styleguide'
 
 import './global.css'
 
 import SaveCampaignButton from './components/Button/SaveCampaign'
 import Scheduling from './components/Input/Scheduling'
 import BenefitsList from './components/BenefitList'
-import SimpleConditions from './components/SimpleConditions'
+import Audience from './components/Input/Audience'
 
-class CreateCampaign extends Component {
+class CreatePromotion extends Component {
   constructor(props) {
     super(props)
 
@@ -76,18 +69,18 @@ class CreateCampaign extends Component {
     return (
       <div>
         <PageHeader
-          linkLabel="Campaigns"
+          linkLabel="Promotions"
           onLinkClick={() => {
             navigate({
               page: 'admin/index',
             })
           }}
-          title="Create Campaign">
+          title="Create Promotion">
           <SaveCampaignButton />
         </PageHeader>
 
         <div className="ph7">
-          <CreateCampaign.Panel title="General">
+          <CreatePromotion.Panel title="General">
             <div style={{ maxWidth: 600 }}>
               <Input label="Name" />
               <div className="pt5">
@@ -107,11 +100,11 @@ class CreateCampaign extends Component {
                 />
               </div>
             </div>
-          </CreateCampaign.Panel>
+          </CreatePromotion.Panel>
         </div>
 
         <div className="ph7 mt6">
-          <CreateCampaign.Panel
+          <CreatePromotion.Panel
             title={this.props.intl.formatMessage({
               id: 'input.label.scheduling',
             })}
@@ -123,45 +116,30 @@ class CreateCampaign extends Component {
                 errorMessage={this.state.dateRange.error}
               />
             </div>
-          </CreateCampaign.Panel>
+          </CreatePromotion.Panel>
         </div>
 
         <div className="ph7 mt6">
-          <CreateCampaign.Panel
+          <CreatePromotion.Panel
             title={this.props.intl.formatMessage({
               id: 'input.label.audiences',
-            })}
-            subtitle={'0 Target Audiences'}>
-            <div style={{ maxWidth: 600 }}>
-              <SimpleConditions
-                showStrategySelector={false}
-                operator="all"
-                onChangeOperator={operator => this.setState({ operator })}
-                onChangeConditions={conditions => this.setState({ conditions })}
-                choices={[]}
-              />
-              <Button
-                size="small"
-                variation="secondary"
-                onClick={() => this.handleAddAudience()}>
-                Add target audience
-              </Button>
-            </div>
-          </CreateCampaign.Panel>
+            })}>
+            <Audience />
+          </CreatePromotion.Panel>
         </div>
 
         <div className="ph7 mt6">
-          <CreateCampaign.Panel
+          <CreatePromotion.Panel
             title={this.props.intl.formatMessage({
               id: 'input.label.benefits-list',
             })}
             subtitle={'0 Benefits'}>
             <BenefitsList />
-          </CreateCampaign.Panel>
+          </CreatePromotion.Panel>
         </div>
       </div>
     )
   }
 }
 
-export default injectIntl(CreateCampaign)
+export default injectIntl(CreatePromotion)

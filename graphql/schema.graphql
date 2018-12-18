@@ -1,6 +1,11 @@
 type Query {
+  getPaymentMethods: [PaymentMethod!]
   getCampaigns: ConditionList!
   getBenefits: [Benefit]
+}
+
+type Mutation {
+  translate(conditions: String!): String
 }
 
 type ConditionList {
@@ -32,5 +37,10 @@ type Benefit {
 }
 
 type Campaign {
+  name: String!
+}
+
+type PaymentMethod {
+  id: ID!
   name: String!
 }

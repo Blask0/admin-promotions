@@ -1,0 +1,3 @@
+mutation translate($condition: String!) {
+  translate(condition: $expression)
+}

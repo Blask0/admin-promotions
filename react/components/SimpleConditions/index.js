@@ -4,6 +4,19 @@ import { Button, IconPlus } from 'vtex.styleguide'
 import StrategySelector from './StrategySelector'
 import Statement from './Statement'
 
+const isOrNot = [
+  {
+    label: 'is',
+    value: '=',
+    objectId: 'default',
+  },
+  {
+    label: 'is not',
+    value: '!=',
+    objectId: 'default',
+  },
+]
+
 class SimpleConditions extends React.Component {
   constructor(props) {
     super(props)

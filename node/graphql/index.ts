@@ -7,7 +7,18 @@ const storages = {
 };
 
 export const resolvers = {
+  Mutation: {
+    translate: async (
+      _,
+      info,
+      { vtex: ioContext, request },
+      conditions
+    ) => {
+      return conditions
+    }
+  },
   Query: {
+    
     getBenefits: async (_, args, { vtex: ioContext }) => {
       // MOCK
       return [

@@ -3,14 +3,14 @@ import { Link } from 'render'
 
 import { Button } from 'vtex.styleguide'
 
-class CreatePromotion extends PureComponent {
+class CreateCampaign extends PureComponent {
   render() {
     return (
-      <Link to="/admin/campaigns/create-promotion">
-        <Button variation="primary">Create promotion</Button>
+      <Link to="/admin/campaigns/create-campaign">
+        <Button variation="primary">Create campaign</Button>
       </Link>
     )
   }
 }
 
-export default CreatePromotion
+export default CreateCampaign

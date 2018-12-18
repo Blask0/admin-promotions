@@ -1,13 +1,13 @@
 {
   "pages": {
     "admin/index": {
-      "path": "/admin/campaigns"
+      "path": "/admin/promotions"
     },
     "admin/create": {
-      "path": "/admin/campaigns/create-campaign"
+      "path": "/admin/promotions/create-promotion"
     },
     "admin/sandbox": {
-      "path": "/admin/campaigns/simple-conditions-sandbox"
+      "path": "/admin/promotions/simple-conditions-sandbox"
     }
   },
   "extensions": {
@@ -15,7 +15,7 @@
       "component": "index"
     },
     "admin/create": {
-      "component": "create-campaign"
+      "component": "create-promotion"
     },
     "admin/sandbox": {
       "component": "simple-conditions-sandbox"
