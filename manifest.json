@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "vtex.admin": "1.x",
-    "vtex.styleguide": "7.x"
+    "vtex.styleguide": "8.x"
   },
   "policies": [
     {

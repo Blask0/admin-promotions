@@ -11,7 +11,7 @@ describe('The Benefit List', () => {
   const mockCampaign = { name: 'mock' }
 
   describe('The Container Component', () => {
-    it('Should filter benefits associated with the context campaign', () => {
+    it('Should filter benefits associated with the context campaign'  , () => {
       const instance = renderer
         .create(
           <BenefitListContainer
