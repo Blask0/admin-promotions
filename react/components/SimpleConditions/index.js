@@ -33,10 +33,18 @@ class SimpleConditions extends React.Component {
   }
 
   static Separator = props => (
-    <div className="flex flex-row w-100 nowrap items-center mv3">
-      <hr className="ma0 b--black-10 bb bb-0 w-50" />
-      <span className="gray mh3">{props.label}</span>
-      <hr className="ma0 b--black-10 bb bb-0 w-50" />
+    <div>
+      <div
+        style={{
+          marginLeft: -17,
+          width: 'calc(100% + 34px)',
+        }}
+        className="flex flex-row w-100 nowrap items-center mv3">
+        <hr className="ma0 b--black-10 bb bb-0 w-100" />
+      </div>
+      <div className="w-100 tc" style={{ marginTop: -18 }}>
+        <span className="gray ph3 dib bg-white">{props.label}</span>
+      </div>
     </div>
   )
 

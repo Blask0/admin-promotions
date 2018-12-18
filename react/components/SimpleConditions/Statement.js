@@ -143,9 +143,6 @@ class Statement extends React.Component {
       return
     }
 
-    console.log('&&&&&&&&&&&&&')
-    console.dir(condition.objects)
-    console.log('&&&&&&&&&&&&&')
     return condition.objects[index]
   }
 
@@ -233,15 +230,17 @@ class Statement extends React.Component {
     }
 
     objects.map((Component, objectIndex) => {
+      const wrapperStyle = Component.props.wrapperStyle
+      const wrapperClassName = Component.props.wrapperClassName
+
       return entities.push(
         <div
           key={`custom-component-${row}-${objectIndex}`}
-          className="flex-auto flex-grow-1 mh3 mb3"
-          style={{ minWidth: '150px' }}>
+          className={wrapperClassName || '"flex-auto flex-grow-1 mh3 mb3"'}
+          style={wrapperStyle || { minWidth: '150px' }}>
           {React.cloneElement(Component, {
-            row,
             value: this.getObjectValue(objectIndex),
-            onChange: (e, value) =>
+            onChange: e =>
               this.handleChangeStatement(
                 e.target.value,
                 'objects',
@@ -250,27 +249,9 @@ class Statement extends React.Component {
           })}
         </div>
       )
-
-      // return entities.push(
-      //   <Statement.Object
-      //     widget={object}
-      //     choice={myChoice}
-      //     value={!condition.verb ? '' : object}
-      //     condition={condition}
-      //     isFullWidth={isFullWidth}
-      //   />
-      // )
     })
 
     return entities
-  }
-
-  withRow = (WrappedComponent, data) => {
-    return class Object extends React.Component {
-      render() {
-        return <WrappedComponent row={data.row} {...this.props} />
-      }
-    }
   }
 
   render() {
@@ -278,7 +259,6 @@ class Statement extends React.Component {
     const order = isRtl ? 'OVS' : 'SVO'
     let statementAtoms = []
 
-    console.log(`--------- ${this.props.condition}`)
     order.split('').map(entity => {
       if (entity === 'S') {
         statementAtoms = this.renderSubject(statementAtoms)

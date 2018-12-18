@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { injectIntl } from 'react-intl'
 import Statement from './components/SimpleConditions/Statement'
 import SimpleConditions from './components/SimpleConditions'
+import MultiSelectWrapper from './components/Input/MultiSelectWrapper'
 
 import './global.css'
 import { Box, PageHeader, Input, Dropdown } from 'vtex.styleguide'
@@ -98,10 +99,7 @@ class SimpleConditionsSandbox extends Component {
       choices: {},
       conditions: {
         single: [{ subject: '', verb: '', objects: [], errorMessage: null }],
-        full: [
-          { subject: 'aaaa', verb: '', objects: [], errorMessage: null },
-          { subject: 'vvvvv', verb: '', objects: [], errorMessage: null },
-        ],
+        full: [{ subject: '', verb: '', objects: [], errorMessage: null }],
       },
     }
   }
@@ -125,22 +123,12 @@ class SimpleConditionsSandbox extends Component {
   ) => {
     const conditions = this.state.conditions
 
-    console.log(
-      `conditionId ${conditionId} - statementIndex ${statementIndex} - mewValue${newValue} - structure ${structure} - paramIndex ${paramIndex}`
-    )
-
     if (paramIndex !== undefined) {
       if (!conditions[conditionId][statementIndex][structure]) {
         conditions[conditionId][statementIndex][structure] = []
       }
 
       conditions[conditionId][statementIndex][structure][paramIndex] = newValue
-
-      // conditions[conditionId][statementIndex][structure] = conditions[
-      //   conditionId
-      // ][statementIndex][structure].filter((elem, index) => {
-      //   return index < conditions.length - 1
-      // })
     } else {
       conditions[conditionId][statementIndex][structure] = newValue
     }
@@ -175,53 +163,6 @@ class SimpleConditionsSandbox extends Component {
 
   handleRemoveStatement = () => {
     alert('handleRemoveStatement')
-  }
-
-  generateInput = (conditionId, statementIndex, index) => {
-    return (
-      <div className="flex-auto flex-grow-1 mh3 mb3">
-        <Input
-          size="regular"
-          onChange={e =>
-            this.handleChangeStatement(
-              conditionId,
-              statementIndex,
-              e.target.value,
-              'objects',
-              index
-            )
-          }
-        />
-      </div>
-    )
-  }
-
-  getObjectValue = (conditionId, statementIndex, index) => {
-    if (this.state.conditions[conditionId] === undefined) {
-      // Condition with id `conditionId` does not exist
-      return
-    }
-
-    if (this.state.conditions[conditionId][statementIndex] === undefined) {
-      return
-    }
-
-    if (
-      this.state.conditions[conditionId][statementIndex].objects === undefined
-    ) {
-      // Condition has undefined objects
-      return
-    }
-
-    if (
-      this.state.conditions[conditionId][statementIndex].objects.length <
-      index + 1
-    ) {
-      // Condition objects do not have required index
-      return
-    }
-
-    return this.state.conditions[conditionId][statementIndex].objects[index]
   }
 
   render() {
@@ -310,33 +251,27 @@ class SimpleConditionsSandbox extends Component {
                         <Dropdown
                           options={this.colors}
                           placeholder="Select a color..."
-                          value={this.getObjectValue('single', 0, 0)}
                         />,
                       ],
                       double: [
                         <Dropdown
                           options={this.colors}
                           placeholder="Select a color..."
-                          value={this.getObjectValue('single', 0, 0)}
                         />,
                         <div
-                          className="c-muted-2 v-mid mv3 b mh3"
-                          style={{ maxWidth: '50px' }}
-                          key="and">
-                          {' '}
+                          className="c-muted-2 v-mid mt4 b mh3"
+                          wrapperStyle={{ maxWidth: '50px' }}>
                           and
                         </div>,
                         <Dropdown
                           options={this.colors}
                           placeholder="Select a color..."
-                          value={this.getObjectValue('single', 0, 1)}
                         />,
                       ],
                     },
                   },
                 ]}
                 onChangeStatement={(newValue, structure, objectIndex) => {
-                  console.log(`value: ${newValue}   structure:${structure}`)
                   this.handleChangeStatement(
                     'single',
                     0,
@@ -409,7 +344,9 @@ class SimpleConditionsSandbox extends Component {
                     objects: {
                       default: [
                         <Input />,
-                        <div className="c-muted-2 v-mid mt4 b mh3" key="and">
+                        <div
+                          className="c-muted-2 v-mid mt4 b mh3"
+                          wrapperStyle={{ maxWidth: '50px' }}>
                           and
                         </div>,
                         <Input />,
@@ -435,16 +372,27 @@ class SimpleConditionsSandbox extends Component {
                           placeholder="Select a color..."
                         />,
                         <div
-                          className="c-muted-2 v-mid mv3 b mh3"
-                          style={{ maxWidth: '50px' }}
-                          key="and">
-                          {' '}
+                          className="c-muted-2 v-mid mt4 b mh3"
+                          wrapperStyle={{ maxWidth: '50px' }}>
                           and
                         </div>,
-
                         <Dropdown
                           options={this.colors}
                           placeholder="Select a color..."
+                        />,
+                      ],
+                    },
+                  },
+                  {
+                    subject: {
+                      label: 'Multiselect',
+                      value: 'multiselect',
+                    },
+                    verbs: isOrNot,
+                    objects: {
+                      default: [
+                        <MultiSelectWrapper
+                          wrapperStyle={{ marginTop: -8 }} // Corrects the label height that does not disappear
                         />,
                       ],
                     },
