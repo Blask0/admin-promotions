@@ -5,6 +5,14 @@ import StrategySelector from './StrategySelector'
 import Statement from './Statement'
 
 class SimpleConditions extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      currentConditions: props.conditions,
+    }
+  }
+
   static defaultProps = {
     operator: 'any',
     showOperator: true,
@@ -77,12 +85,20 @@ class SimpleConditions extends React.Component {
     structure,
     objectIndex
   ) => {
-    this.props.onChangeStatement(
-      statementIndex,
-      newValue,
-      structure,
-      objectIndex
-    )
+    const { currentConditions } = this.state
+
+    if (objectIndex !== undefined) {
+      if (!currentConditions[statementIndex][structure]) {
+        currentConditions[statementIndex][structure] = []
+      }
+
+      currentConditions[statementIndex][structure][objectIndex] = newValue
+    } else {
+      currentConditions[statementIndex][structure] = newValue
+    }
+
+    this.setState({ currentConditions })
+    this.props.onChangeConditions(currentConditions)
   }
 
   render() {
@@ -215,8 +231,6 @@ SimpleConditions.propTypes = {
   ),
   /** Conditions change callback (conditions): array of conditions */
   onChangeConditions: PropTypes.func,
-  /** Statement change callback */
-  onChangeStatement: PropTypes.func,
   /** Operator change callback (conditions): array of conditions */
   onChangeOperator: PropTypes.func,
   /** isDebug shows the current state of the component in a box */

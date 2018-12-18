@@ -100,8 +100,10 @@ class SimpleConditionsSandbox extends Component {
       choices: {},
       conditions: {
         single: [{ subject: '', verb: '', objects: [], errorMessage: null }],
-        full: [{ subject: '', verb: '', objects: [], errorMessage: null }],
       },
+      currentConditions: [
+        { subject: '', verb: '', objects: [], errorMessage: null },
+      ],
     }
   }
 
@@ -306,10 +308,10 @@ class SimpleConditionsSandbox extends Component {
                 isDebug={false}
                 showOperator
                 operator={this.state.operator}
-                conditions={this.state.conditions.full}
+                conditions={this.state.currentConditions}
                 onChangeOperator={operator => this.setState({ operator })}
                 onChangeConditions={conditions =>
-                  this.setState({ simpleConditions: conditions })
+                  this.setState({ currentConditions: conditions })
                 }
                 onChangeStatement={(
                   statementIndex,
@@ -405,7 +407,7 @@ class SimpleConditionsSandbox extends Component {
                 <AceEditor
                   {...aceProps}
                   value={`${JSON.stringify(
-                    this.state.conditions.full,
+                    this.state.currentConditions,
                     null,
                     2
                   )}`}
