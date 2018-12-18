@@ -81,10 +81,8 @@ class Statement extends React.Component {
     </div>
   )
 
-  static Object = props => <div>{props.widget}</div>
-
-  handleChangeStatement = (newValue, structure) => {
-    this.props.onChangeStatement(newValue, structure)
+  handleChangeStatement = (newValue, structure, objectIndex) => {
+    this.props.onChangeStatement(newValue, structure, objectIndex)
   }
 
   handleRemoveStatement = () => {
@@ -132,6 +130,23 @@ class Statement extends React.Component {
     if (foundChoice.options && foundChoice.options.length === 1) {
       this.handleChangeStatement([foundChoice.options[0].value], 'objects')
     }
+  }
+
+  getObjectValue = index => {
+    const { condition } = this.props
+
+    if (condition.objects === undefined) {
+      return
+    }
+
+    if (condition.objects.length < index + 1) {
+      return
+    }
+
+    console.log('&&&&&&&&&&&&&')
+    console.dir(condition.objects)
+    console.log('&&&&&&&&&&&&&')
+    return condition.objects[index]
   }
 
   renderSubject = entities => {
@@ -185,8 +200,8 @@ class Statement extends React.Component {
     return entities
   }
 
-  renderObjects = entities => {
-    const { condition, isFullWidth, isRtl } = this.props
+  renderObjects = (entities, row) => {
+    const { condition, isRtl } = this.props
     const myChoice = this.getChoiceBySubject(condition.subject)
 
     if (!condition.verb) {
@@ -216,23 +231,50 @@ class Statement extends React.Component {
     if (isRtl) {
       objects = objects.reverse()
     }
-    objects.map(object => {
+
+    objects.map((Component, objectIndex) => {
       return entities.push(
-        <Statement.Object
-          widget={object}
-          choice={myChoice}
-          value={!condition.verb ? '' : object}
-          condition={condition}
-          isFullWidth={isFullWidth}
-        />
+        <div
+          key={`custom-component-${row}-${objectIndex}`}
+          className="flex-auto flex-grow-1 mh3 mb3"
+          style={{ minWidth: '150px' }}>
+          {React.cloneElement(Component, {
+            row,
+            value: this.getObjectValue(objectIndex),
+            onChange: (e, value) =>
+              this.handleChangeStatement(
+                e.target.value,
+                'objects',
+                objectIndex
+              ),
+          })}
+        </div>
       )
+
+      // return entities.push(
+      //   <Statement.Object
+      //     widget={object}
+      //     choice={myChoice}
+      //     value={!condition.verb ? '' : object}
+      //     condition={condition}
+      //     isFullWidth={isFullWidth}
+      //   />
+      // )
     })
 
     return entities
   }
 
+  withRow = (WrappedComponent, data) => {
+    return class Object extends React.Component {
+      render() {
+        return <WrappedComponent row={data.row} {...this.props} />
+      }
+    }
+  }
+
   render() {
-    const { canDelete, isRtl, isFullWidth, isDebug } = this.props
+    const { canDelete, isRtl, isFullWidth, isDebug, row } = this.props
     const order = isRtl ? 'OVS' : 'SVO'
     let statementAtoms = []
 
@@ -247,7 +289,7 @@ class Statement extends React.Component {
       }
 
       if (entity === 'O') {
-        statementAtoms = this.renderObjects(statementAtoms)
+        statementAtoms = this.renderObjects(statementAtoms, row)
       }
     })
 
@@ -316,8 +358,8 @@ Statement.defaultProps = {
   },
   isRtl: false,
   order: 'SVO',
-
   isFullWidth: false,
+  row: 0,
 }
 
 Statement.propTypes = {
@@ -358,6 +400,8 @@ Statement.propTypes = {
   onRemoveStatement: PropTypes.func,
   /** Widgets are custom inputs that can be used instead of the default ones */
   widget: PropTypes.any,
+  /** If there are multiple statements, in which row does this Statement belong to?  */
+  row: PropTypes.number,
 }
 
 export default Statement

@@ -32,12 +32,13 @@ class SimpleConditions extends React.Component {
     },
   }
 
-  static Separator = props => {
+  static Separator = props => (
     <div className="flex flex-row w-100 nowrap items-center mv3">
+      <hr className="ma0 b--black-10 bb bb-0 w-50" />
       <span className="gray mh3">{props.label}</span>
-      <hr className="ma0 b--black-10 bb bb-0 w-80" />
+      <hr className="ma0 b--black-10 bb bb-0 w-50" />
     </div>
-  }
+  )
 
   handleOperatorChange = event => {
     const newOperator = event.target.value
@@ -79,8 +80,18 @@ class SimpleConditions extends React.Component {
     this.props.onChangeConditions(currentConditions)
   }
 
-  handleChangeStatement = (statementIndex, newValue, structure) => {
-    this.props.onChangeStatement(statementIndex, newValue, structure)
+  handleChangeStatement = (
+    statementIndex,
+    newValue,
+    structure,
+    objectIndex
+  ) => {
+    this.props.onChangeStatement(
+      statementIndex,
+      newValue,
+      structure,
+      objectIndex
+    )
   }
 
   render() {
@@ -113,7 +124,6 @@ class SimpleConditions extends React.Component {
             </div>
           ) : (
             <div className="mv5">
-              {console.log(JSON.stringify(conditions))}
               {conditions.map((condition, statementIndex) => {
                 return (
                   <div
@@ -123,14 +133,13 @@ class SimpleConditions extends React.Component {
                       isDebug={isDebug}
                       condition={condition}
                       choices={choices}
-                      onChangeStatement={(newValue, structure) => {
-                        console.log(
-                          `newvalue ${newValue}strucvture${structure}`
-                        )
+                      row={statementIndex}
+                      onChangeStatement={(newValue, structure, objectIndex) => {
                         this.handleChangeStatement(
                           statementIndex,
                           newValue,
-                          structure
+                          structure,
+                          objectIndex
                         )
                       }}
                       onRemoveStatement={() =>
