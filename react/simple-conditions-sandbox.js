@@ -94,6 +94,7 @@ class SimpleConditionsSandbox extends Component {
       isFullWidth: 'false',
       canDelete: 'true',
       currentTab: 1,
+      operator: 'all',
       isEnabled: true,
       dateRange: { from: null, to: null, error: null },
       choices: {},
@@ -304,7 +305,7 @@ class SimpleConditionsSandbox extends Component {
               <SimpleConditions
                 isDebug={false}
                 showOperator
-                operator="all"
+                operator={this.state.operator}
                 conditions={this.state.conditions.full}
                 onChangeOperator={operator => this.setState({ operator })}
                 onChangeConditions={conditions =>

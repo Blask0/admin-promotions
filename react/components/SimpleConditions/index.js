@@ -5,14 +5,6 @@ import StrategySelector from './StrategySelector'
 import Statement from './Statement'
 
 class SimpleConditions extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      selectedOperator: props.operator,
-    }
-  }
-
   static defaultProps = {
     operator: 'any',
     showOperator: true,
@@ -47,15 +39,6 @@ class SimpleConditions extends React.Component {
       </div>
     </div>
   )
-
-  handleOperatorChange = event => {
-    const newOperator = event.target.value
-    const { selectedOperator } = this.state
-    if (selectedOperator !== newOperator) {
-      this.props.onChangeOperator(newOperator)
-      this.setState({ selectedOperator: newOperator })
-    }
-  }
 
   canAddNewCondition = () => {
     const { conditions } = this.props
@@ -111,7 +94,6 @@ class SimpleConditions extends React.Component {
       isDebug,
       conditions,
     } = this.props
-    const { selectedOperator } = this.state
 
     return (
       <div>
@@ -120,7 +102,9 @@ class SimpleConditions extends React.Component {
             <StrategySelector
               operator={operator}
               labels={labels}
-              onChangeOperator={operator => this.onChangeOperator({ operator })}
+              onChangeOperator={operator =>
+                this.props.onChangeOperator({ operator })
+              }
             />
           </div>
         )}
@@ -158,7 +142,7 @@ class SimpleConditions extends React.Component {
                     {statementIndex !== conditions.length - 1 && (
                       <SimpleConditions.Separator
                         label={
-                          selectedOperator === 'all'
+                          this.props.operator === 'all'
                             ? labels.operatorAnd
                             : labels.operatorOr
                         }
