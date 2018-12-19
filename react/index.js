@@ -28,7 +28,7 @@ class Campaigns extends Component {
         <div className="ph7">
           <Box>
             {campaigns.length === 0 && <GettingStarted />}
-            {campaigns.length !== 0 && <div>CAMPAIGNS LIST</div>}
+            {campaigns.length !== 0 && <div>PROMOTIONS LIST</div>}
           </Box>
         </div>
       </div>

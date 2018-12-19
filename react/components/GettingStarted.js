@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import CreatePromotionButton from './Button/CreatePromotion'
+import CreatePromotion from './Button/CreatePromotion'
 import Columns from './Icon/Columns'
 import { WrappedGift } from './Icon/Gift'
 import User from './Icon/User'
@@ -37,7 +37,7 @@ class GettingStarted extends PureComponent {
           />
         </div>
         <div className="pt6 tc">
-          <CreatePromotionButton />
+          <CreatePromotion />
           <a className="db pt4" href="https://www.google.com/">
             Learn More
           </a>
