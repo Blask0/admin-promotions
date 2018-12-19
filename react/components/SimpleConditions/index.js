@@ -54,21 +54,19 @@ class SimpleConditions extends React.Component {
 
     const hasIncompleteCondition = conditions.some(
       condition =>
-        condition.subject.value === '' ||
-        condition.operator === '' ||
-        (condition.objects && condition.objects.length === 0)
+        condition.subject === '' || condition.verb === '' || !condition.object
     )
     return !hasIncompleteCondition
   }
 
   handleAddNewCondition = () => {
     const currentConditions = this.props.conditions
-
     currentConditions.push({
       subject: '',
       verb: '',
-      objects: [],
+      object: null,
     })
+
     this.props.onChangeConditions(currentConditions)
   }
 
@@ -79,37 +77,17 @@ class SimpleConditions extends React.Component {
     this.props.onChangeConditions(currentConditions)
   }
 
-  handleChangeStatement = (
-    statementIndex,
-    newValue,
-    structure,
-    objectIndex
-  ) => {
+  handleChangeStatement = (statementIndex, newValue, structure) => {
     const { currentConditions } = this.state
 
-    if (objectIndex !== undefined) {
-      if (!currentConditions[statementIndex][structure]) {
-        currentConditions[statementIndex][structure] = []
-      }
-
-      currentConditions[statementIndex][structure][objectIndex] = newValue
-    } else {
-      currentConditions[statementIndex][structure] = newValue
-    }
+    currentConditions[statementIndex][structure] = newValue
 
     this.setState({ currentConditions })
     this.props.onChangeConditions(currentConditions)
   }
 
   render() {
-    const {
-      labels,
-      choices,
-      showOperator,
-      operator,
-      isDebug,
-      conditions,
-    } = this.props
+    const { labels, choices, showOperator, operator, conditions } = this.props
 
     return (
       <div>
@@ -138,16 +116,15 @@ class SimpleConditions extends React.Component {
                     className="flex flex-column w-100 mv3"
                     key={statementIndex}>
                     <Statement
-                      isDebug={isDebug}
+                      conditions={conditions}
                       condition={condition}
                       choices={choices}
                       row={statementIndex}
-                      onChangeStatement={(newValue, structure, objectIndex) => {
+                      onChangeStatement={(newValue, structure) => {
                         this.handleChangeStatement(
                           statementIndex,
                           newValue,
-                          structure,
-                          objectIndex
+                          structure
                         )
                       }}
                       onRemoveStatement={() =>
@@ -158,7 +135,7 @@ class SimpleConditions extends React.Component {
                     {statementIndex !== conditions.length - 1 && (
                       <SimpleConditions.Separator
                         label={
-                          this.props.operator === 'all'
+                          operator === 'all'
                             ? labels.operatorAnd
                             : labels.operatorOr
                         }
@@ -209,32 +186,16 @@ SimpleConditions.propTypes = {
     PropTypes.shape({
       subject: PropTypes.string,
       verb: PropTypes.string,
-      objects: PropTypes.arrayOf(PropTypes.any),
-      errorMessage: PropTypes.string,
+      object: PropTypes.any,
+      error: PropTypes.any,
     })
   ),
   /** Possible choices and respective data types, verb options */
-  choices: PropTypes.arrayOf(
-    PropTypes.shape({
-      subject: PropTypes.shape({
-        label: PropTypes.string,
-        value: PropTypes.string,
-      }),
-      verbs: PropTypes.arrayOf(
-        PropTypes.shape({
-          label: PropTypes.string,
-          value: PropTypes.string,
-        })
-      ),
-      objects: PropTypes.shape(PropTypes.arrayOf(PropTypes.any)),
-    })
-  ),
+  choices: PropTypes.object.isRequired,
   /** Conditions change callback (conditions): array of conditions */
   onChangeConditions: PropTypes.func,
   /** Operator change callback (conditions): array of conditions */
   onChangeOperator: PropTypes.func,
-  /** isDebug shows the current state of the component in a box */
-  isDebug: PropTypes.bool,
   /** Whether the order of elements and text if right to left */
   isRtl: PropTypes.bool,
   /** Show or hide the header that selects the operator (any vs all) */

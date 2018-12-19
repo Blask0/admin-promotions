@@ -9,7 +9,7 @@ class Statement extends React.Component {
     this.statementRef = React.createRef()
 
     this.state = {
-      errorMessage: '',
+      error: null,
     }
   }
 
@@ -36,24 +36,17 @@ class Statement extends React.Component {
   )
 
   static Dropdown = props => {
-    if (!props.options) {
-      return <Dropdown {...props} style={{ minWidth: '250px' }} />
-    }
-    return props.options.length === 1 && props.options[0].value ? (
-      <span className="dark-gray mh3">{props.options[0].label}</span>
-    ) : (
-      <Dropdown {...props} style={{ minWidth: '250px' }} />
-    )
+    return <Dropdown {...props} style={{ minWidth: '250px' }} />
   }
 
   static Subject = props => (
     <div className="flex-auto">
       <div className={`mh3 ${props.isFullWidth ? 'pb3' : ''}`}>
         <Statement.Dropdown
-          options={props.choices.map(choice => {
+          options={Object.keys(props.choices).map(choiceKey => {
             return {
-              value: choice.subject.value,
-              label: choice.subject.label,
+              value: choiceKey,
+              label: props.choices[choiceKey].label,
             }
           })}
           value={!props.condition.subject ? '' : props.condition.subject || ''}
@@ -65,85 +58,46 @@ class Statement extends React.Component {
 
   static Verb = props => (
     <div className={`mh3 ${props.isFullWidth ? 'pb3' : ''}`}>
-      {props.verbs.length === 1 && props.condition.subject ? (
-        <span className="dark-gray mh3">{props.verbs[0].label}</span>
-      ) : (
-        <Statement.Dropdown
-          disabled={!props.condition.subject}
-          options={props.verbs}
-          value={!props.condition.subject ? '' : props.condition.verb || ''}
-          onChange={(e, value) => {
-            const foundVerb = props.verbs.find(verb => verb.value === value)
-            props.onChange(foundVerb)
-          }}
-        />
-      )}
+      <Statement.Dropdown
+        disabled={!props.condition.subject}
+        options={props.verbs}
+        value={!props.condition.subject ? '' : props.condition.verb || ''}
+        onChange={(e, value) => {
+          const foundVerb = props.verbs.find(verb => verb.value === value)
+          props.onChange(foundVerb)
+        }}
+      />
     </div>
   )
 
-  handleChangeStatement = (newValue, structure, objectIndex) => {
-    this.props.onChangeStatement(newValue, structure, objectIndex)
+  handleChangeStatement = (newValue, structure) => {
+    this.props.onChangeStatement(newValue, structure)
   }
 
   handleRemoveStatement = () => {
     this.props.onRemoveStatement()
   }
 
-  getChoiceBySubject = subjectValue => {
+  getChoiceBySubject = subject => {
     const { choices } = this.props
-    const foundChoice = choices.find(
-      choice => choice.subject.value === subjectValue
-    )
-
-    if (!foundChoice) {
-      return { subject: '', verbs: [], objects: [] }
-    }
-
-    return foundChoice
+    return choices[subject]
   }
 
   clearPredicate = () => {
-    this.handleChangeStatement(Statement.defaultProps.verb, 'verb')
-    this.handleChangeStatement(Statement.defaultProps.objects, 'objects')
-    this.handleChangeStatement(null, 'errorMessage')
+    this.handleChangeStatement(Statement.defaultProps.condition.verb, 'verb')
+    this.handleChangeStatement(
+      Statement.defaultProps.condition.object,
+      'object'
+    )
+    this.handleChangeStatement(null, 'error')
   }
 
   clearObjects = () => {
-    this.handleChangeStatement(Statement.defaultProps.objects, 'objects')
-    this.handleChangeStatement(null, 'errorMessage')
-  }
-
-  checkObviousPredicates = subjectValue => {
-    const { choices } = this.props
-    const foundChoice = choices.find(
-      choice => choice.subject.value === subjectValue
+    this.handleChangeStatement(
+      Statement.defaultProps.condition.object,
+      'object'
     )
-
-    if (!foundChoice) {
-      return
-    }
-
-    if (foundChoice.verbs && foundChoice.verbs.length === 1) {
-      this.handleChangeStatement(foundChoice.verbs[0].value, 'verb')
-    }
-
-    if (foundChoice.options && foundChoice.options.length === 1) {
-      this.handleChangeStatement([foundChoice.options[0].value], 'objects')
-    }
-  }
-
-  getObjectValue = index => {
-    const { condition } = this.props
-
-    if (condition.objects === undefined) {
-      return
-    }
-
-    if (condition.objects.length < index + 1) {
-      return
-    }
-
-    return condition.objects[index]
+    this.handleChangeStatement(null, 'error')
   }
 
   renderSubject = entities => {
@@ -157,7 +111,6 @@ class Statement extends React.Component {
         onChange={selectedSubjectValue => {
           this.handleChangeStatement(selectedSubjectValue, 'subject')
           this.clearPredicate()
-          this.checkObviousPredicates(selectedSubjectValue)
         }}
       />
     )
@@ -198,7 +151,7 @@ class Statement extends React.Component {
   }
 
   renderObjects = (entities, row) => {
-    const { condition, isRtl } = this.props
+    const { condition, conditions } = this.props
     const myChoice = this.getChoiceBySubject(condition.subject)
 
     if (!condition.verb) {
@@ -215,47 +168,23 @@ class Statement extends React.Component {
       return entities
     }
 
-    const selectedObjectId = currentVerb.objectId
-      ? currentVerb.objectId
-      : 'default'
-
-    let objects = myChoice.objects[selectedObjectId]
-    if (objects.length === 0) {
-      entities.push(<Statement.EmptyObject />)
-      return entities
-    }
-
-    if (isRtl) {
-      objects = objects.reverse()
-    }
-
-    objects.map((Component, objectIndex) => {
-      const wrapperStyle = Component.props.wrapperStyle
-      const wrapperClassName = Component.props.wrapperClassName
-
-      return entities.push(
-        <div
-          key={`custom-component-${row}-${objectIndex}`}
-          className={wrapperClassName || '"flex-auto flex-grow-1 mh3 mb3"'}
-          style={wrapperStyle || { minWidth: '150px' }}>
-          {React.cloneElement(Component, {
-            value: this.getObjectValue(objectIndex),
-            onChange: e =>
-              this.handleChangeStatement(
-                e.target.value,
-                'objects',
-                objectIndex
-              ),
-          })}
-        </div>
-      )
-    })
+    console.dir(currentVerb)
+    entities.push(
+      <div className="mh3 flex-auto">
+        {currentVerb.object({
+          conditions: conditions,
+          value: condition.object,
+          conditionIndex: row,
+          error: null,
+        })}
+      </div>
+    )
 
     return entities
   }
 
   render() {
-    const { canDelete, isRtl, isFullWidth, isDebug, row } = this.props
+    const { canDelete, isRtl, isFullWidth, row } = this.props
     const order = isRtl ? 'OVS' : 'SVO'
     let statementAtoms = []
 
@@ -312,16 +241,12 @@ class Statement extends React.Component {
               </div>
             )}
           </div>
-          {this.props.condition.errorMessage && (
+          {this.props.condition.error && (
             <div className="red f6 mh3 lh-title">
-              {this.props.condition.errorMessage}
+              {this.props.condition.error}
             </div>
           )}
         </div>
-
-        {isDebug && (
-          <code>{`${JSON.stringify(this.props.condition, null, 2)}`}</code>
-        )}
       </div>
     )
   }
@@ -334,7 +259,7 @@ Statement.defaultProps = {
   condition: {
     subject: '',
     verb: '',
-    objects: [],
+    object: null,
   },
   isRtl: false,
   order: 'SVO',
@@ -349,27 +274,20 @@ Statement.propTypes = {
   condition: PropTypes.shape({
     subject: PropTypes.string,
     verb: PropTypes.string,
-    objects: PropTypes.arrayOf(PropTypes.any),
-    errorMessage: PropTypes.string,
+    object: PropTypes.any,
+    error: PropTypes.string,
   }),
-  /** Possible choices and respective data types, verb options */
-  choices: PropTypes.arrayOf(
+  /** Current selected options for this Statement */
+  conditions: PropTypes.arrayOf(
     PropTypes.shape({
-      subject: PropTypes.shape({
-        label: PropTypes.string,
-        value: PropTypes.string,
-      }),
-      verbs: PropTypes.arrayOf(
-        PropTypes.shape({
-          label: PropTypes.string,
-          value: PropTypes.string,
-        })
-      ),
-      objects: PropTypes.shape(PropTypes.arrayOf(PropTypes.any)),
+      subject: PropTypes.string,
+      verb: PropTypes.string,
+      object: PropTypes.any,
+      error: PropTypes.string,
     })
   ),
-  /** isDebug shows the current state of the component in a box */
-  isDebug: PropTypes.bool,
+  /** Possible choices and respective data types, verb options */
+  choices: PropTypes.object.isRequired,
   /** Wether to show this component stretched to the width */
   isFullWidth: PropTypes.bool,
   /** Whether the order of elements and text if right to left */
@@ -378,8 +296,6 @@ Statement.propTypes = {
   onChangeStatement: PropTypes.func,
   /** Statement remove callback */
   onRemoveStatement: PropTypes.func,
-  /** Widgets are custom inputs that can be used instead of the default ones */
-  widget: PropTypes.any,
   /** If there are multiple statements, in which row does this Statement belong to?  */
   row: PropTypes.number,
 }

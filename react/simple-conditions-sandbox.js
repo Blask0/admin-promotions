@@ -98,12 +98,58 @@ class SimpleConditionsSandbox extends Component {
       isEnabled: true,
       dateRange: { from: null, to: null, error: null },
       choices: {},
-      conditions: {
-        single: [{ subject: '', verb: '', objects: [], errorMessage: null }],
+      allConditions: {
+        single: [{ subject: '', verb: '', object: [], error: null }],
+        full: [{ subject: '', verb: '', object: [], error: null }],
       },
-      currentConditions: [
-        { subject: '', verb: '', objects: [], errorMessage: null },
-      ],
+    }
+
+    this.singleStatements = {
+      name: {
+        label: 'User name',
+        verbs: [
+          {
+            label: 'is',
+            value: '=',
+            object: ({ conditions, values, conditionIndex, error }) => {
+              return (
+                <Input
+                  value={values}
+                  onChange={e => {
+                    conditions[conditionIndex].object = e.target.value
+
+                    this.handleChangeCondition(conditions, 'single')
+                  }}
+                />
+              )
+            },
+          },
+        ],
+      },
+    }
+
+    this.statements = {
+      name: {
+        label: 'User name',
+        verbs: [
+          {
+            label: 'is',
+            value: '=',
+            object: ({ conditions, values, conditionIndex, error }) => {
+              return (
+                <Input
+                  value={values}
+                  onChange={e => {
+                    conditions[conditionIndex].object = e.target.value
+
+                    this.handleChangeCondition(conditions, 'full')
+                  }}
+                />
+              )
+            },
+          },
+        ],
+      },
     }
   }
 
@@ -117,52 +163,27 @@ class SimpleConditionsSandbox extends Component {
     })
   }
 
+  handleChangeCondition = (newCondition, conditionId) => {
+    const newAllConditions = this.state.allConditions
+    newAllConditions[conditionId] = newCondition
+    this.setState({ allConditions: newAllConditions })
+  }
+
   handleChangeStatement = (
     conditionId,
     statementIndex,
     newValue,
-    structure,
-    paramIndex
+    structure
   ) => {
-    const conditions = this.state.conditions
+    const conditions = this.state.allConditions
 
-    if (paramIndex !== undefined) {
-      if (!conditions[conditionId][statementIndex][structure]) {
-        conditions[conditionId][statementIndex][structure] = []
-      }
+    conditions[conditionId][statementIndex][structure] = newValue
 
-      conditions[conditionId][statementIndex][structure][paramIndex] = newValue
-    } else {
-      conditions[conditionId][statementIndex][structure] = newValue
-    }
-
+    console.log(
+      `new value is handling here ${newValue}${statementIndex} ${structure}`
+    )
     this.setState({ conditions: conditions })
-
-    //    this.validateCondition(index)
   }
-
-  // validateCondition = index => {
-  //   const conditions = this.state.conditions
-  //   const currentObjects = conditions[index]['objects']
-
-  //   if (!currentObjects) {
-  //     return
-  //   }
-
-  //   if (
-  //     currentObjects.length > 1 &&
-  //     new Set(currentObjects).size !== currentObjects.length
-  //   ) {
-  //     conditions[index]['errorMessage'] = 'Statement has duplicated inputs'
-  //     this.setState({ conditions: conditions })
-  //     return
-  //   }
-
-  //   delete conditions[index].errorMessage
-
-  //   this.setState({ conditions: conditions })
-  //   return
-  // }
 
   handleRemoveStatement = () => {
     alert('handleRemoveStatement')
@@ -213,75 +234,13 @@ class SimpleConditionsSandbox extends Component {
             <Box>
               <Statement
                 canDelete={this.state.canDelete === 'true'}
+                choices={this.singleStatements}
+                condition={this.state.allConditions.single[0]}
+                conditions={this.state.allConditions.single}
                 isRtl={this.state.isRtl === 'true'}
                 isFullWidth={this.state.isFullWidth === 'true'}
-                condition={this.state.conditions['single'][0]}
-                choices={[
-                  {
-                    subject: {
-                      label: 'One Input',
-                      value: 'custom-one-object',
-                    },
-                    verbs: isOrNot,
-                    objects: {
-                      default: [<Input />],
-                    },
-                  },
-                  {
-                    subject: {
-                      label: 'Two Inputs',
-                      value: 'custom-two-objects',
-                    },
-                    verbs: isOrNot,
-                    objects: {
-                      default: [
-                        <Input />,
-                        <div className="c-muted-2 v-mid mt4 b mh3" key="and">
-                          and
-                        </div>,
-                        <Input />,
-                      ],
-                    },
-                  },
-                  {
-                    subject: {
-                      label: 'Dropdown (one or two)',
-                      value: 'dropdown',
-                    },
-                    verbs: isOrNotBetween,
-                    objects: {
-                      default: [
-                        <Dropdown
-                          options={this.colors}
-                          placeholder="Select a color..."
-                        />,
-                      ],
-                      double: [
-                        <Dropdown
-                          options={this.colors}
-                          placeholder="Select a color..."
-                        />,
-                        <div
-                          className="c-muted-2 v-mid mt4 b mh3"
-                          wrapperStyle={{ maxWidth: '50px' }}>
-                          and
-                        </div>,
-                        <Dropdown
-                          options={this.colors}
-                          placeholder="Select a color..."
-                        />,
-                      ],
-                    },
-                  },
-                ]}
-                onChangeStatement={(newValue, structure, objectIndex) => {
-                  this.handleChangeStatement(
-                    'single',
-                    0,
-                    newValue,
-                    structure,
-                    objectIndex
-                  )
+                onChangeStatement={(newValue, structure) => {
+                  this.handleChangeStatement('single', 0, newValue, structure)
                 }}
                 onRemoveStatement={() => {
                   this.handleRemoveStatement()
@@ -292,7 +251,7 @@ class SimpleConditionsSandbox extends Component {
                 <AceEditor
                   {...aceProps}
                   value={`${JSON.stringify(
-                    this.state.conditions['single'],
+                    this.state.allConditions['single'],
                     null,
                     2
                   )}`}
@@ -305,109 +264,24 @@ class SimpleConditionsSandbox extends Component {
             <h4>Simple Conditions</h4>
             <Box>
               <SimpleConditions
-                isDebug={false}
-                showOperator
-                operator={this.state.operator}
-                conditions={this.state.currentConditions}
+                canDelete={this.state.canDelete === 'true'}
+                choices={this.statements}
+                conditions={this.state.allConditions.full}
+                isRtl={this.state.isRtl === 'true'}
+                isFullWidth={this.state.isFullWidth === 'true'}
                 onChangeOperator={operator => this.setState({ operator })}
                 onChangeConditions={conditions =>
-                  this.setState({ currentConditions: conditions })
+                  this.handleChangeCondition(conditions, 'full')
                 }
-                onChangeStatement={(
-                  statementIndex,
-                  newValue,
-                  structure,
-                  objectIndex
-                ) => {
-                  this.handleChangeStatement(
-                    'full',
-                    statementIndex,
-                    newValue,
-                    structure,
-                    objectIndex
-                  )
-                }}
-                choices={[
-                  {
-                    subject: {
-                      label: 'One Input',
-                      value: 'custom-one-object',
-                    },
-                    verbs: isOrNot,
-                    objects: {
-                      default: [<Input />],
-                    },
-                  },
-                  {
-                    subject: {
-                      label: 'Two Inputs',
-                      value: 'custom-two-objects',
-                    },
-                    verbs: isOrNot,
-                    objects: {
-                      default: [
-                        <Input />,
-                        <div
-                          className="c-muted-2 v-mid mt4 b mh3"
-                          wrapperStyle={{ maxWidth: '50px' }}>
-                          and
-                        </div>,
-                        <Input />,
-                      ],
-                    },
-                  },
-                  {
-                    subject: {
-                      label: 'Dropdown (one or two)',
-                      value: 'dropdown',
-                    },
-                    verbs: isOrNotBetween,
-                    objects: {
-                      default: [
-                        <Dropdown
-                          options={this.colors}
-                          placeholder="Select a color..."
-                        />,
-                      ],
-                      double: [
-                        <Dropdown
-                          options={this.colors}
-                          placeholder="Select a color..."
-                        />,
-                        <div
-                          className="c-muted-2 v-mid mt4 b mh3"
-                          wrapperStyle={{ maxWidth: '50px' }}>
-                          and
-                        </div>,
-                        <Dropdown
-                          options={this.colors}
-                          placeholder="Select a color..."
-                        />,
-                      ],
-                    },
-                  },
-                  {
-                    subject: {
-                      label: 'Multiselect',
-                      value: 'multiselect',
-                    },
-                    verbs: isOrNot,
-                    objects: {
-                      default: [
-                        <MultiSelectWrapper
-                          wrapperStyle={{ marginTop: -8 }} // Corrects the label height that does not disappear
-                        />,
-                      ],
-                    },
-                  },
-                ]}
+                operator={this.state.operator}
+                showOperator
               />
 
               <div className="ph3 mt5">
                 <AceEditor
                   {...aceProps}
                   value={`${JSON.stringify(
-                    this.state.currentConditions,
+                    this.state.allConditions.full,
                     null,
                     2
                   )}`}
