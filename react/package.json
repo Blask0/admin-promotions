@@ -1,7 +1,7 @@
 {
-  "name": "campaigns",
+  "name": "promotions",
   "version": "1.0.0",
-  "description": "Campaigns Admin",
+  "description": "Promotions Admin",
   "main": "index.js",
   "dependencies": {
     "@vtex/styleguide": "^8.4.0",
@@ -50,14 +50,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/vtex/campaigns-admin-ui"
+    "url": "https://github.com/vtex/promotions-admin"
   },
   "keywords": [
+    "promotions",
     "campaigns"
   ],
   "author": "Pricing & RnB Team",
   "bugs": {
-    "url": "https://github.com/vtex/campaigns-admin-ui/issues"
+    "url": "https://github.com/vtex/promotions-admin/issues"
   },
-  "homepage": "https://github.com/vtex/campaigns-admin-ui#readme"
+  "homepage": "https://github.com/vtex/promotions-admin#readme"
 }
