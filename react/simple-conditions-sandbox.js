@@ -22,57 +22,9 @@ const aceProps = {
   width: '100%',
 }
 
-const isOrNot = [
-  {
-    label: 'is',
-    value: '=',
-    objectId: 'default',
-  },
-  {
-    label: 'is not',
-    value: '!=',
-    objectId: 'default',
-  },
-]
-
-const isOrNotBetween = [
-  {
-    label: 'is',
-    value: '=',
-    objectId: 'default',
-  },
-  {
-    label: 'is not',
-    value: '!=',
-    objectId: 'default',
-  },
-  {
-    label: 'is between',
-    value: 'between',
-    objectId: 'double',
-  },
-]
-
 class SimpleConditionsSandbox extends Component {
   constructor(props) {
     super(props)
-
-    this.colors = [
-      { label: 'White', value: 'white' },
-      { label: 'Black', value: 'black' },
-      { label: 'Grey', value: 'grey' },
-      { label: 'Yellow', value: 'yellow' },
-      { label: 'Red', value: 'red' },
-      { label: 'Blue', value: 'blue' },
-      { label: 'Green', value: 'green' },
-      { label: 'Brown', value: 'brown' },
-      { label: 'Pink', value: 'pink' },
-      { label: 'Orange', value: 'orange' },
-      { label: 'Purple', value: 'purple' },
-      { label: 'Dark-blue', value: 'dark-blue' },
-      { label: 'Dark-red', value: 'dark-red' },
-      { label: 'Light-blue', value: 'light-blue' },
-    ]
 
     this.rtlOptions = [
       { label: 'Right to Left', value: 'true' },
@@ -135,7 +87,13 @@ class SimpleConditionsSandbox extends Component {
           {
             label: 'is',
             value: '=',
-            object: ({ conditions, values, conditionIndex, error }) => {
+            object: ({
+              conditions,
+              values,
+              conditionIndex,
+              isFullWidth,
+              error,
+            }) => {
               return (
                 <Input
                   value={values}
@@ -145,6 +103,103 @@ class SimpleConditionsSandbox extends Component {
                     this.handleChangeCondition(conditions, 'full')
                   }}
                 />
+              )
+            },
+          },
+        ],
+      },
+      bin: {
+        label: 'BIN (Bank Identification Number)',
+        verbs: [
+          {
+            label: 'is between',
+            value: 'between',
+            object: ({
+              conditions,
+              values,
+              conditionIndex,
+              isFullWidth,
+              error,
+            }) => {
+              console.dir(values)
+              return (
+                <div className={isFullWidth ? '' : 'flex'}>
+                  <Input
+                    placeholder="123456"
+                    errorMessage={
+                      conditions[conditionIndex].object &&
+                      conditions[conditionIndex].object.first ===
+                        conditions[conditionIndex].object.last
+                        ? 'duplicated BIN'
+                        : ''
+                    }
+                    value={values && values.first ? values.first : ''}
+                    onChange={e => {
+                      const currentObject =
+                        conditions[conditionIndex].object || {}
+                      currentObject.first = e.target.value
+                        .replace(/\D/g, '')
+                        .substring(0, 6)
+                      conditions[conditionIndex].object = currentObject
+                      this.handleChangeCondition(conditions, 'full')
+                    }}
+                  />
+
+                  <div className="mv4 mh3 c-muted-2 b">and</div>
+
+                  <Input
+                    placeholder="123456"
+                    errorMessage={
+                      conditions[conditionIndex].object &&
+                      conditions[conditionIndex].object.first ===
+                        conditions[conditionIndex].object.last
+                        ? 'duplicated BIN'
+                        : ''
+                    }
+                    value={values && values.last ? values.last : ''}
+                    onChange={e => {
+                      const currentObject =
+                        conditions[conditionIndex].object || {}
+                      currentObject.last = e.target.value
+                        .replace(/\D/g, '')
+                        .substring(0, 6)
+
+                      conditions[conditionIndex].object = currentObject
+
+                      this.handleChangeCondition(conditions, 'full')
+                    }}
+                  />
+                </div>
+              )
+            },
+          },
+          {
+            label: 'is',
+            value: 'is',
+            object: ({
+              conditions,
+              values,
+              conditionIndex,
+              isFullWidth,
+              error,
+            }) => {
+              console.dir(values)
+              return (
+                <div className={isFullWidth ? '' : 'flex'}>
+                  <Input
+                    placeholder="123456"
+                    value={values && values.first ? values.first : ''}
+                    onChange={e => {
+                      const currentObject =
+                        conditions[conditionIndex].object || {}
+                      currentObject.first = e.target.value
+                        .replace(/\D/g, '')
+                        .substring(0, 6)
+                      conditions[conditionIndex].object = currentObject
+                      this.handleChangeCondition(conditions, 'full')
+                    }}
+                  />
+                </div>
               )
             },
           },
@@ -166,7 +221,7 @@ class SimpleConditionsSandbox extends Component {
   handleChangeCondition = (newCondition, conditionId) => {
     const newAllConditions = this.state.allConditions
     newAllConditions[conditionId] = newCondition
-    this.setState({ allConditions: newAllConditions }) 
+    this.setState({ allConditions: newAllConditions })
   }
 
   handleChangeStatement = (
@@ -179,9 +234,6 @@ class SimpleConditionsSandbox extends Component {
 
     conditions[conditionId][statementIndex][structure] = newValue
 
-    console.log(
-      `new value is handling here ${newValue}${statementIndex} ${structure}`
-    )
     this.setState({ conditions: conditions })
   }
 

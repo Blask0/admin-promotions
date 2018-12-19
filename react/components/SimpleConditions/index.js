@@ -87,7 +87,16 @@ class SimpleConditions extends React.Component {
   }
 
   render() {
-    const { labels, choices, showOperator, operator, conditions } = this.props
+    const {
+      canDelete,
+      conditions,
+      choices,
+      isFullWidth,
+      isRtl,
+      labels,
+      showOperator,
+      operator,
+    } = this.props
 
     return (
       <div>
@@ -116,8 +125,11 @@ class SimpleConditions extends React.Component {
                     className="flex flex-column w-100 mv3"
                     key={statementIndex}>
                     <Statement
+                      canDelete={canDelete}
                       conditions={conditions}
                       choices={choices}
+                      isRtl={isRtl}
+                      isFullWidth={isFullWidth}
                       statementIndex={statementIndex}
                       onChangeStatement={(newValue, structure) => {
                         this.handleChangeStatement(
@@ -191,6 +203,8 @@ SimpleConditions.propTypes = {
   ),
   /** Possible choices and respective data types, verb options */
   choices: PropTypes.object.isRequired,
+  /** Wether to show this component stretched to the width */
+  isFullWidth: PropTypes.bool,
   /** Conditions change callback (conditions): array of conditions */
   onChangeConditions: PropTypes.func,
   /** Operator change callback (conditions): array of conditions */

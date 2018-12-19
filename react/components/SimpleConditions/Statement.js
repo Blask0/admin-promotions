@@ -6,8 +6,6 @@ class Statement extends React.Component {
   constructor(props) {
     super(props)
 
-    this.statementRef = React.createRef()
-
     this.state = {
       error: null,
     }
@@ -155,7 +153,7 @@ class Statement extends React.Component {
   }
 
   renderObjects = entities => {
-    const { conditions, statementIndex } = this.props
+    const { conditions, statementIndex, isFullWidth } = this.props
     const condition = conditions[statementIndex]
     const myChoice = this.getChoiceBySubject(condition.subject)
 
@@ -176,9 +174,10 @@ class Statement extends React.Component {
     entities.push(
       <div className="mh3 flex-auto">
         {currentVerb.object({
-          conditions: conditions,
-          value: condition.object,
           conditionIndex: statementIndex,
+          conditions: conditions,
+          isFullWidth: isFullWidth,
+          values: condition.object,
           error: null,
         })}
       </div>
@@ -214,7 +213,7 @@ class Statement extends React.Component {
     })
 
     return (
-      <div ref={this.statementRef}>
+      <div>
         <div className="flex-column w-100 mv3">
           <div
             className={`flex w-100 items-start ${
@@ -253,7 +252,9 @@ class Statement extends React.Component {
             )}
           </div>
           {condition.error && condition.error.message && (
-            <div className="red f6 mh3 lh-title">{condition.error.message}</div>
+            <div className="red f6 mh3 mt2 lh-title">
+              {condition.error.message}
+            </div>
           )}
         </div>
       </div>
@@ -286,7 +287,7 @@ Statement.propTypes = {
   ),
   /** Possible choices and respective data types, verb options */
   choices: PropTypes.object.isRequired,
-  /** Wether to show this component stretched to the width */
+  /** Stretch component to 100% of the width */
   isFullWidth: PropTypes.bool,
   /** Whether the order of elements and text if right to left */
   isRtl: PropTypes.bool,
