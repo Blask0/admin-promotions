@@ -166,7 +166,7 @@ class SimpleConditionsSandbox extends Component {
   handleChangeCondition = (newCondition, conditionId) => {
     const newAllConditions = this.state.allConditions
     newAllConditions[conditionId] = newCondition
-    this.setState({ allConditions: newAllConditions })
+    this.setState({ allConditions: newAllConditions }) 
   }
 
   handleChangeStatement = (

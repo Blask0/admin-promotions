@@ -117,9 +117,8 @@ class SimpleConditions extends React.Component {
                     key={statementIndex}>
                     <Statement
                       conditions={conditions}
-                      condition={condition}
                       choices={choices}
-                      row={statementIndex}
+                      statementIndex={statementIndex}
                       onChangeStatement={(newValue, structure) => {
                         this.handleChangeStatement(
                           statementIndex,

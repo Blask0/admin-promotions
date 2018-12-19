@@ -84,9 +84,12 @@ class Statement extends React.Component {
   }
 
   clearPredicate = () => {
-    this.handleChangeStatement(Statement.defaultProps.condition.verb, 'verb')
     this.handleChangeStatement(
-      Statement.defaultProps.condition.object,
+      Statement.defaultProps.conditions[0].verb,
+      'verb'
+    )
+    this.handleChangeStatement(
+      Statement.defaultProps.conditions[0].object,
       'object'
     )
     this.handleChangeStatement(null, 'error')
@@ -94,15 +97,15 @@ class Statement extends React.Component {
 
   clearObjects = () => {
     this.handleChangeStatement(
-      Statement.defaultProps.condition.object,
+      Statement.defaultProps.conditions[0].object,
       'object'
     )
     this.handleChangeStatement(null, 'error')
   }
 
   renderSubject = entities => {
-    const { condition, choices, isFullWidth } = this.props
-
+    const { choices, conditions, isFullWidth, statementIndex } = this.props
+    const condition = conditions[statementIndex]
     entities.push(
       <Statement.Subject
         condition={condition}
@@ -119,7 +122,8 @@ class Statement extends React.Component {
   }
 
   renderVerbs = entities => {
-    const { condition, choices, isFullWidth } = this.props
+    const { conditions, choices, isFullWidth, statementIndex } = this.props
+    const condition = conditions[statementIndex]
     const myChoice = this.getChoiceBySubject(condition.subject)
     const desiredVerbs = []
 
@@ -150,8 +154,9 @@ class Statement extends React.Component {
     return entities
   }
 
-  renderObjects = (entities, row) => {
-    const { condition, conditions } = this.props
+  renderObjects = entities => {
+    const { conditions, statementIndex } = this.props
+    const condition = conditions[statementIndex]
     const myChoice = this.getChoiceBySubject(condition.subject)
 
     if (!condition.verb) {
@@ -168,13 +173,12 @@ class Statement extends React.Component {
       return entities
     }
 
-    console.dir(currentVerb)
     entities.push(
       <div className="mh3 flex-auto">
         {currentVerb.object({
           conditions: conditions,
           value: condition.object,
-          conditionIndex: row,
+          conditionIndex: statementIndex,
           error: null,
         })}
       </div>
@@ -184,7 +188,14 @@ class Statement extends React.Component {
   }
 
   render() {
-    const { canDelete, isRtl, isFullWidth, row } = this.props
+    const {
+      canDelete,
+      conditions,
+      isRtl,
+      isFullWidth,
+      statementIndex,
+    } = this.props
+    const condition = conditions[statementIndex]
     const order = isRtl ? 'OVS' : 'SVO'
     let statementAtoms = []
 
@@ -198,7 +209,7 @@ class Statement extends React.Component {
       }
 
       if (entity === 'O') {
-        statementAtoms = this.renderObjects(statementAtoms, row)
+        statementAtoms = this.renderObjects(statementAtoms)
       }
     })
 
@@ -241,10 +252,8 @@ class Statement extends React.Component {
               </div>
             )}
           </div>
-          {this.props.condition.error && (
-            <div className="red f6 mh3 lh-title">
-              {this.props.condition.error}
-            </div>
+          {condition.error && condition.error.message && (
+            <div className="red f6 mh3 lh-title">{condition.error.message}</div>
           )}
         </div>
       </div>
@@ -256,27 +265,16 @@ Statement.defaultProps = {
   onRemoveStatement: () => {},
   onChangeStatement: () => {},
   canDelete: true,
-  condition: {
-    subject: '',
-    verb: '',
-    object: null,
-  },
+  conditions: [{ subject: '', verb: '', object: null }],
   isRtl: false,
   order: 'SVO',
   isFullWidth: false,
-  row: 0,
+  statementIndex: 0,
 }
 
 Statement.propTypes = {
   /** Shows or hides the delete button */
   canDelete: PropTypes.bool,
-  /** Current options for this Statement */
-  condition: PropTypes.shape({
-    subject: PropTypes.string,
-    verb: PropTypes.string,
-    object: PropTypes.any,
-    error: PropTypes.string,
-  }),
   /** Current selected options for this Statement */
   conditions: PropTypes.arrayOf(
     PropTypes.shape({
@@ -296,8 +294,8 @@ Statement.propTypes = {
   onChangeStatement: PropTypes.func,
   /** Statement remove callback */
   onRemoveStatement: PropTypes.func,
-  /** If there are multiple statements, in which row does this Statement belong to?  */
-  row: PropTypes.number,
+  /** In which row does this Statement belong to?  */
+  statementIndex: PropTypes.number,
 }
 
 export default Statement
