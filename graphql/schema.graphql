@@ -1,6 +1,7 @@
 type Query {
   getCampaigns: ConditionList!
   getBenefits: [Benefit]
+  getCategories: [ProductCategory]
 }
 
 type ConditionList {
@@ -33,4 +34,9 @@ type Benefit {
 
 type Campaign {
   name: String!
+}
+
+type ProductCategory {
+  id: ID!
+  name: String
 }
