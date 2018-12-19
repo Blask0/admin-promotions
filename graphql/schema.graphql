@@ -5,7 +5,7 @@ type Query {
 }
 
 type Mutation {
-  translate(conditions: String!): String
+  translate(statementDefinitions: String!, operator: String!): String
 }
 
 type ConditionList {

@@ -1,0 +1,3 @@
+mutation translate($statementDefinitions: String!, $operator: String!) {
+  translate(statementDefinitions: $statementDefinitions, operator: $operator)
+}

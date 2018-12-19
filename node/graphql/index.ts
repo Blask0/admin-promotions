@@ -6,15 +6,47 @@ const storages = {
   pages: "pages"
 };
 
+const statementTypes = ["bin", "name"]
+const transpilers = {
+  bin: (statementDefinition) => { 
+    if( statementDefinition.verb === "between") {
+      //TODO remove between, it makes no sense
+      return "TODO remove between, it makes no sense"
+    }
+    const connector = statementDefinition.verb === 'is' ? '==' : '!='
+    return `(first (.params[]? | select(.name=="restrictionsBins")) | (.value | tonumber) ${connector} ${statementDefinition.object})`
+  },
+  name: (statementDefinition) => { 
+    return "nameeeee"
+  }
+}
+
 export const resolvers = {
   Mutation: {
     translate: async (
       _,
       info,
-      { vtex: ioContext, request },
-      conditions
+      { vtex: ioContext, request }
     ) => {
-      return conditions
+      const statementDefinitions = JSON.parse(info.statementDefinitions)
+      const { operator } = info
+      const conjunction = (operator === "any") ? " or " : " and "
+
+      // TODO create validateSubject function
+      const containsInvalidSubject = statementDefinitions.some(statementDefinition => {
+          return statementTypes.indexOf(statementDefinition.subject) === -1
+      })
+
+      if (containsInvalidSubject) {
+        throw new Error(`Invalid statement subject`)
+      }
+
+      const expression = statementDefinitions.reduce((currentExpression = "", statementDefinition, index) => {
+        return `${currentExpression}${(index === 0 ? "" : conjunction )}${transpilers[statementDefinition.subject](statementDefinition)}`
+      }, "")
+      
+      return expression
+
     }
   },
   Query: {

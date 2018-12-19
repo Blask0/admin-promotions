@@ -4,7 +4,9 @@ import Statement from './components/SimpleConditions/Statement'
 import SimpleConditions from './components/SimpleConditions'
 
 import './global.css'
-import { Box, PageHeader, Input, Dropdown } from 'vtex.styleguide'
+import { Box, PageHeader, Input, Dropdown, Button } from 'vtex.styleguide'
+import { compose, graphql } from 'react-apollo'
+import translate from './queries/translate.graphql'
 
 import AceEditor from 'react-ace'
 import 'brace/mode/json'
@@ -13,7 +15,7 @@ import 'brace/ext/searchbox'
 
 const aceProps = {
   readOnly: true,
-  maxLines: '30',
+  maxLines: 12,
   className: 'code',
   mode: 'json',
   tabSize: 2,
@@ -49,6 +51,7 @@ class SimpleConditionsSandbox extends Component {
       isEnabled: true,
       dateRange: { from: null, to: null, error: null },
       choices: {},
+      translatedResult: '',
       allConditions: {
         single: [{ subject: '', verb: '', object: [], error: null }],
         full: [{ subject: '', verb: '', object: [], error: null }],
@@ -120,7 +123,6 @@ class SimpleConditionsSandbox extends Component {
               isFullWidth,
               error,
             }) => {
-              console.dir(values)
               return (
                 <div className={isFullWidth ? '' : 'flex'}>
                   <Input
@@ -182,16 +184,44 @@ class SimpleConditionsSandbox extends Component {
               isFullWidth,
               error,
             }) => {
-              console.dir(values)
               return (
                 <div className={isFullWidth ? '' : 'flex'}>
                   <Input
                     placeholder="123456"
-                    value={values && values.first ? values.first : ''}
+                    value={values || ''}
                     onChange={e => {
-                      const currentObject =
+                      let currentObject =
                         conditions[conditionIndex].object || {}
-                      currentObject.first = e.target.value
+                      currentObject = e.target.value
+                        .replace(/\D/g, '')
+                        .substring(0, 6)
+                      conditions[conditionIndex].object = currentObject
+                      this.handleChangeCondition(conditions, 'full')
+                    }}
+                  />
+                </div>
+              )
+            },
+          },
+          {
+            label: 'is not',
+            value: 'is-not',
+            object: ({
+              conditions,
+              values,
+              conditionIndex,
+              isFullWidth,
+              error,
+            }) => {
+              return (
+                <div className={isFullWidth ? '' : 'flex'}>
+                  <Input
+                    placeholder="123456"
+                    value={values || ''}
+                    onChange={e => {
+                      let currentObject =
+                        conditions[conditionIndex].object || ''
+                      currentObject = e.target.value
                         .replace(/\D/g, '')
                         .substring(0, 6)
                       conditions[conditionIndex].object = currentObject
@@ -238,6 +268,25 @@ class SimpleConditionsSandbox extends Component {
 
   handleRemoveStatement = () => {
     alert('handleRemoveStatement')
+  }
+
+  translate = (statementDefinitions, operator) => {
+    this.props
+      .mutate({
+        variables: {
+          statementDefinitions: JSON.stringify(statementDefinitions),
+          operator: operator,
+        },
+      })
+      .then(
+        result => {
+          console.dir(result)
+          this.setState({ translatedResult: result })
+        },
+        error => {
+          console.error(error)
+        }
+      )
   }
 
   render() {
@@ -312,7 +361,7 @@ class SimpleConditionsSandbox extends Component {
           </div>
 
           <div className="ph7">
-            <h4>Simple Conditions</h4>
+            <h4>Simple Conditionsaaa</h4>
             <Box>
               <SimpleConditions
                 canDelete={this.state.canDelete === 'true'}
@@ -338,6 +387,27 @@ class SimpleConditionsSandbox extends Component {
                   )}`}
                 />
               </div>
+
+              <div className="ph3 mt5">
+                <Button
+                  onClick={event =>
+                    this.translate(
+                      this.state.allConditions.full,
+                      this.state.operator
+                    )
+                  }>
+                  TRANSLATE
+                </Button>
+
+                <AceEditor
+                  {...aceProps}
+                  value={`${JSON.stringify(
+                    this.state.translatedResult,
+                    null,
+                    2
+                  )}`}
+                />
+              </div>
             </Box>
           </div>
         </div>
@@ -346,4 +416,4 @@ class SimpleConditionsSandbox extends Component {
   }
 }
 
-export default injectIntl(SimpleConditionsSandbox)
+export default compose(graphql(translate))(injectIntl(SimpleConditionsSandbox))
