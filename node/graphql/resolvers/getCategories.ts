@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ApolloError } from 'apollo-server-errors'
+import { HttpError } from '../errors/httpError'
 
 const getCategories = async (_, info, { vtex: ioContext, request }, query) => {
   const categoriesURL = `http://${
@@ -21,20 +21,7 @@ const getCategories = async (_, info, { vtex: ioContext, request }, query) => {
       ),
       error => {
         const errorMsg = 'Error querying for all product categories'
-        switch (error.response.status) {
-          case 404:
-            throw new ApolloError(errorMsg, 'NOT_FOUND', {
-              error: {
-                message: error.message,
-                response: error.response
-              }
-            })
-          case 500:
-            throw new ApolloError(errorMsg, 'INTERNAL_SERVER_ERROR', {
-              message: error.message,
-              response: error.response
-            })
-        }
+        throw new HttpError(errorMsg, error);
       }
     )
 }
