@@ -4,7 +4,7 @@ import { HttpError } from '../errors/httpError'
 const getCategories = async (_, info, { vtex: ioContext, request }, query) => {
   const categoriesURL = `http://${
     ioContext.account
-    }.vtexcommercestable.com.br/api/catalog_system/pub/category/listall`
+  }.vtexcommercestable.com.br/api/catalog_system/pub/category/listall`
 
   return await axios
     .get(categoriesURL, {
