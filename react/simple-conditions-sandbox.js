@@ -50,6 +50,7 @@ class SimpleConditionsSandbox extends Component {
     ]
 
     this.state = {
+      isTranslating: false,
       isRtl: 'false',
       isFullWidth: 'false',
       canDelete: 'true',
@@ -120,6 +121,34 @@ class SimpleConditionsSandbox extends Component {
       paymentMethod: {
         label: 'Payment method',
         verbs: [
+          {
+            label: 'is',
+            value: 'is',
+            object: ({
+              conditions,
+              values,
+              conditionIndex,
+              isFullWidth,
+              error,
+            }) => {
+              return (
+                <Dropdown
+                  value={values}
+                  options={[
+                    { label: 'White', value: 'white' },
+                    { label: 'Black', value: 'black' },
+                    { label: 'Grey', value: 'grey' },
+                    { label: 'Yellow', value: 'yellow' },
+                  ]}
+                  onChange={(e, value) => {
+                    conditions[conditionIndex].object = value
+
+                    this.handleChangeCondition(conditions, 'full')
+                  }}
+                />
+              )
+            },
+          },
           {
             label: 'is any of',
             value: 'any-of',
@@ -314,6 +343,7 @@ class SimpleConditionsSandbox extends Component {
   }
 
   translate = (statementDefinitions, operator) => {
+    this.setState({ isTranslating: true })
     this.props
       .mutate({
         variables: {
@@ -324,10 +354,11 @@ class SimpleConditionsSandbox extends Component {
       .then(
         result => {
           console.dir(result)
-          this.setState({ translatedResult: result })
+          this.setState({ translatedResult: result, isTranslating: false })
         },
         error => {
           console.error(error)
+          this.setState({ isTranslating: false })
         }
       )
   }
@@ -433,15 +464,20 @@ class SimpleConditionsSandbox extends Component {
 
               <div className="ph3 mt5">
                 <Button
+                  disabled={this.state.isTranslating}
                   onClick={event =>
                     this.translate(
                       this.state.allConditions.full,
                       this.state.operator
                     )
                   }>
-                  TRANSLATE
+                  {this.state.isTranslating
+                    ? 'TRANSLATING TO JQ...'
+                    : 'TRANSLATE TO JQ'}
                 </Button>
-
+              </div>
+              <div className="ph3 mt5">
+                <h3>Translation</h3>
                 <AceEditor
                   {...aceProps}
                   value={`${JSON.stringify(

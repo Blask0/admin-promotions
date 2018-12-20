@@ -6,7 +6,6 @@ const storages = {
   pages: "pages"
 };
 
-const statementTypes = ["bin", "name"]
 const transpilers = {
   bin: (statementDefinition) => { 
     if( statementDefinition.verb === "between") {
@@ -18,7 +17,56 @@ const transpilers = {
   },
   name: (statementDefinition) => { 
     return "nameeeee"
+  },
+  paymentMethod: (statementDefinition) => { 
+    if ( statementDefinition.verb === "is" ) {
+      return `(first (.params[]? | select(.name == "paymentMethodId")) | (.value | tonumber) == ${statementDefinition.object})`
+    }
+
+    if ( statementDefinition.verb === "any-of" ) {
+      const paymentMethods = statementDefinition.object || []
+
+      const paymentMethodIds = paymentMethods.map(method => {
+        return `"${method.value}"`
+      }).join(',')
+
+      return `(first (.params[]? | select(.name == "paymentMethodId")) | .value as $paymentMethodId | any([${paymentMethodIds}]; .[] == $paymentMethodId))`
+    }
+    
   }
+}
+
+const validatePossibleTranspilers = (statementDefinitions, transpilers) => {
+      const statementTypes = Object.keys(transpilers)
+      const invalidSubjects = []
+
+      const containsInvalidSubject = statementDefinitions.some(statementDefinition => {
+        const isInvalid = statementTypes.indexOf(statementDefinition.subject) === -1
+
+        if (isInvalid) {
+          invalidSubjects.push(statementDefinition.subject)
+        }
+
+        return isInvalid
+      })
+
+      if (containsInvalidSubject) {
+        return {valid: false, error: new Error(`Invalid subjects: '${invalidSubjects.join(", ")}'`)} 
+      }
+
+      return {valid: true, error: null}
+}
+
+const transpile = (statementDefinitions, conjunction, transpilers) => {
+  return statementDefinitions.reduce((currentExpression, statementDefinition, index) => {
+    const statementExpression = transpilers[statementDefinition.subject](statementDefinition)
+
+    if (index === 0) {
+      return statementExpression
+    }
+    
+    return `${currentExpression} ${conjunction} ${statementExpression}`
+  }, "")
 }
 
 export const resolvers = {
@@ -32,19 +80,13 @@ export const resolvers = {
       const { operator } = info
       const conjunction = (operator === "any") ? " or " : " and "
 
-      // TODO create validateSubject function
-      const containsInvalidSubject = statementDefinitions.some(statementDefinition => {
-          return statementTypes.indexOf(statementDefinition.subject) === -1
-      })
-
-      if (containsInvalidSubject) {
-        throw new Error(`Invalid statement subject`)
+      const { valid, error } = validatePossibleTranspilers(statementDefinitions, transpilers)
+      if (error) {
+        throw error
       }
+    
+      const expression = transpile(statementDefinitions, conjunction, transpilers)
 
-      const expression = statementDefinitions.reduce((currentExpression = "", statementDefinition, index) => {
-        return `${currentExpression}${(index === 0 ? "" : conjunction )}${transpilers[statementDefinition.subject](statementDefinition)}`
-      }, "")
-      
       return expression
 
     }
