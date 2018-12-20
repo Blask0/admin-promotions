@@ -4,34 +4,21 @@ import { Button, IconPlus } from 'vtex.styleguide'
 import StrategySelector from './StrategySelector'
 import Statement from './Statement'
 
-const isOrNot = [
-  {
-    label: 'is',
-    value: '=',
-    objectId: 'default',
-  },
-  {
-    label: 'is not',
-    value: '!=',
-    objectId: 'default',
-  },
-]
-
-class SimpleConditions extends React.Component {
+class Conditions extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      currentConditions: props.conditions,
+      currentStatements: props.statements,
     }
   }
 
   static defaultProps = {
     operator: 'any',
     showOperator: true,
-    conditions: [],
+    statements: [],
     onChangeOperator: () => {},
-    onChangeConditions: () => {},
+    onChangeStatements: () => {},
     labels: {
       operatorAll: 'all',
       operatorAnd: 'and',
@@ -62,10 +49,10 @@ class SimpleConditions extends React.Component {
   )
 
   canAddNewCondition = () => {
-    const { conditions } = this.props
-    if (conditions.length === 0) return true
+    const { statements } = this.props
+    if (statements.length === 0) return true
 
-    const hasIncompleteCondition = conditions.some(
+    const hasIncompleteCondition = statements.some(
       condition =>
         condition.subject === '' || condition.verb === '' || !condition.object
     )
@@ -73,36 +60,36 @@ class SimpleConditions extends React.Component {
   }
 
   handleAddNewCondition = () => {
-    const currentConditions = this.props.conditions
-    currentConditions.push({
+    const currentStatements = this.props.statements
+    currentStatements.push({
       subject: '',
       verb: '',
       object: null,
     })
 
-    this.props.onChangeConditions(currentConditions)
+    this.props.onChangeStatements(currentStatements)
   }
 
   handleRemoveStatement = index => {
-    const currentConditions = this.props.conditions
-    currentConditions.splice(index, 1)
+    const currentStatements = this.props.statements
+    currentStatements.splice(index, 1)
 
-    this.props.onChangeConditions(currentConditions)
+    this.props.onChangeStatements(currentStatements)
   }
 
   handleChangeStatement = (statementIndex, newValue, structure) => {
-    const { currentConditions } = this.state
+    const { currentStatements } = this.state
 
-    currentConditions[statementIndex][structure] = newValue
+    currentStatements[statementIndex][structure] = newValue
 
-    this.setState({ currentConditions })
-    this.props.onChangeConditions(currentConditions)
+    this.setState({ currentStatements })
+    this.props.onChangeStatements(currentStatements)
   }
 
   render() {
     const {
       canDelete,
-      conditions,
+      statements,
       choices,
       isFullWidth,
       isRtl,
@@ -126,24 +113,22 @@ class SimpleConditions extends React.Component {
         )}
 
         <div className="t-body c-on-base ph5 mt4 br3 b--muted-4 ba">
-          {this.props.conditions.length === 0 ? (
+          {this.props.statements.length === 0 ? (
             <div className="mv6 mh3">
               <span className="light-gray">{labels.noConditions}</span>
             </div>
           ) : (
             <div className="mv5">
-              {conditions.map((condition, statementIndex) => {
+              {statements.map((statement, statementIndex) => {
                 return (
                   <div
                     className="flex flex-column w-100 mv3"
                     key={statementIndex}>
                     <Statement
                       canDelete={canDelete}
-                      conditions={conditions}
                       choices={choices}
                       isRtl={isRtl}
                       isFullWidth={isFullWidth}
-                      statementIndex={statementIndex}
                       onChangeStatement={(newValue, structure) => {
                         this.handleChangeStatement(
                           statementIndex,
@@ -154,10 +139,13 @@ class SimpleConditions extends React.Component {
                       onRemoveStatement={() =>
                         this.handleRemoveStatement(statementIndex)
                       }
+                      statements={statements}
+                      statementIndex={statementIndex}
+                      labels={labels}
                     />
 
-                    {statementIndex !== conditions.length - 1 && (
-                      <SimpleConditions.Separator
+                    {statementIndex !== statements.length - 1 && (
+                      <Conditions.Separator
                         label={
                           operator === 'all'
                             ? labels.operatorAnd
@@ -200,13 +188,13 @@ class SimpleConditions extends React.Component {
   }
 }
 
-SimpleConditions.propTypes = {
+Conditions.propTypes = {
   /** Shows or hides the delete button */
   canDelete: PropTypes.bool,
-  /** Operator indicates whether all the conditions should be met or any of them */
+  /** Operator indicates whether all the statements should be met or any of them */
   operator: PropTypes.oneOf(['all', 'any']),
-  /** Current selected options for this Statement */
-  conditions: PropTypes.arrayOf(
+  /** Current selected options for all statements */
+  statements: PropTypes.arrayOf(
     PropTypes.shape({
       subject: PropTypes.string,
       verb: PropTypes.string,
@@ -218,9 +206,9 @@ SimpleConditions.propTypes = {
   choices: PropTypes.object.isRequired,
   /** Wether to show this component stretched to the width */
   isFullWidth: PropTypes.bool,
-  /** Conditions change callback (conditions): array of conditions */
-  onChangeConditions: PropTypes.func,
-  /** Operator change callback (conditions): array of conditions */
+  /** Conditions change callback: array of statement definitions */
+  onChangeStatements: PropTypes.func,
+  /** Operator (any, all) change callback  */
   onChangeOperator: PropTypes.func,
   /** Whether the order of elements and text if right to left */
   isRtl: PropTypes.bool,
@@ -228,16 +216,17 @@ SimpleConditions.propTypes = {
   showOperator: PropTypes.bool,
   /** Labels for the controls and texts, default is english */
   labels: PropTypes.shape({
+    addNewCondition: PropTypes.string,
+    addConditionBtn: PropTypes.string,
+    delete: PropTypes.string,
+    noConditions: PropTypes.string,
     operatorAll: PropTypes.string,
     operatorAnd: PropTypes.string,
     operatorAny: PropTypes.string,
     operatorOr: PropTypes.string,
     headerPrefix: PropTypes.string,
     headerSufix: PropTypes.string,
-    addConditionBtn: PropTypes.string,
-    noConditions: PropTypes.string,
-    addNewCondition: PropTypes.string,
   }),
 }
 
-export default SimpleConditions
+export default Conditions

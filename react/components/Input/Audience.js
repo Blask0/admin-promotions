@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import SimpleConditions from '../SimpleConditions'
+import Conditions from '../Conditions'
 import MultiSelectWrapper from './MultiSelectWrapper'
 
 import translate from '../../graphql/translate.graphql'
@@ -31,7 +31,7 @@ class Audience extends Component {
 
   render() {
     return (
-      <SimpleConditions
+      <Conditions
         isDebug={false}
         showOperator={false}
         operator={'all'}

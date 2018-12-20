@@ -69,6 +69,7 @@ class Statement extends React.Component {
   )
 
   handleChangeStatement = (newValue, structure) => {
+    console.log('handleChangeStatement', newValue, structure)
     this.props.onChangeStatement(newValue, structure)
   }
 
@@ -83,11 +84,11 @@ class Statement extends React.Component {
 
   clearPredicate = () => {
     this.handleChangeStatement(
-      Statement.defaultProps.conditions[0].verb,
+      Statement.defaultProps.statements[0].verb,
       'verb'
     )
     this.handleChangeStatement(
-      Statement.defaultProps.conditions[0].object,
+      Statement.defaultProps.statements[0].object,
       'object'
     )
     this.handleChangeStatement(null, 'error')
@@ -95,15 +96,15 @@ class Statement extends React.Component {
 
   clearObjects = () => {
     this.handleChangeStatement(
-      Statement.defaultProps.conditions[0].object,
+      Statement.defaultProps.statements[0].object,
       'object'
     )
     this.handleChangeStatement(null, 'error')
   }
 
   renderSubject = entities => {
-    const { choices, conditions, isFullWidth, statementIndex } = this.props
-    const condition = conditions[statementIndex]
+    const { choices, statements, isFullWidth, statementIndex } = this.props
+    const condition = statements[statementIndex]
     entities.push(
       <Statement.Subject
         condition={condition}
@@ -120,8 +121,8 @@ class Statement extends React.Component {
   }
 
   renderVerbs = entities => {
-    const { conditions, choices, isFullWidth, statementIndex } = this.props
-    const condition = conditions[statementIndex]
+    const { statements, choices, isFullWidth, statementIndex } = this.props
+    const condition = statements[statementIndex]
     const myChoice = this.getChoiceBySubject(condition.subject)
     const desiredVerbs = []
 
@@ -153,8 +154,8 @@ class Statement extends React.Component {
   }
 
   renderObjects = entities => {
-    const { conditions, statementIndex, isFullWidth } = this.props
-    const condition = conditions[statementIndex]
+    const { statements, statementIndex, isFullWidth } = this.props
+    const condition = statements[statementIndex]
     const myChoice = this.getChoiceBySubject(condition.subject)
 
     if (!condition.verb) {
@@ -174,8 +175,8 @@ class Statement extends React.Component {
     entities.push(
       <div className="mh3 flex-auto">
         {currentVerb.object({
-          conditionIndex: statementIndex,
-          conditions: conditions,
+          statementIndex: statementIndex,
+          statements: statements,
           isFullWidth: isFullWidth,
           values: condition.object,
           error: null,
@@ -189,12 +190,13 @@ class Statement extends React.Component {
   render() {
     const {
       canDelete,
-      conditions,
+      statements,
       isRtl,
       isFullWidth,
       statementIndex,
+      labels,
     } = this.props
-    const condition = conditions[statementIndex]
+    const condition = statements[statementIndex]
     const order = isRtl ? 'OVS' : 'SVO'
     let statementAtoms = []
 
@@ -245,7 +247,7 @@ class Statement extends React.Component {
                   </div>
 
                   <div className="dib mb1 v-mid" style={{ lineHeight: '10px' }}>
-                    DELETE
+                    {labels.delete}
                   </div>
                 </Button>
               </div>
@@ -266,18 +268,19 @@ Statement.defaultProps = {
   onRemoveStatement: () => {},
   onChangeStatement: () => {},
   canDelete: true,
-  conditions: [{ subject: '', verb: '', object: null }],
+  statements: [{ subject: '', verb: '', object: null }],
   isRtl: false,
   order: 'SVO',
   isFullWidth: false,
   statementIndex: 0,
+  labels: { delete: 'DELETE' },
 }
 
 Statement.propTypes = {
   /** Shows or hides the delete button */
   canDelete: PropTypes.bool,
   /** Current selected options for this Statement */
-  conditions: PropTypes.arrayOf(
+  statements: PropTypes.arrayOf(
     PropTypes.shape({
       subject: PropTypes.string,
       verb: PropTypes.string,
@@ -297,6 +300,10 @@ Statement.propTypes = {
   onRemoveStatement: PropTypes.func,
   /** In which row does this Statement belong to?  */
   statementIndex: PropTypes.number,
+  /** Labels for the controls and texts, default is english */
+  labels: PropTypes.shape({
+    delete: PropTypes.string,
+  }),
 }
 
 export default Statement

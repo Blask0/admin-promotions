@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { injectIntl } from 'react-intl'
-import Statement from './components/SimpleConditions/Statement'
-import SimpleConditions from './components/SimpleConditions'
+import Statement from './components/Conditions/Statement'
+import Conditions from './components/Conditions'
 
 import './global.css'
 import {
@@ -30,7 +30,7 @@ const aceProps = {
   width: '100%',
 }
 
-class SimpleConditionsSandbox extends Component {
+class ConditionsSandbox extends Component {
   constructor(props) {
     super(props)
 
@@ -73,14 +73,13 @@ class SimpleConditionsSandbox extends Component {
           {
             label: 'is',
             value: '=',
-            object: ({ conditions, values, conditionIndex, error }) => {
+            object: ({ statements, values, statementIndex, error }) => {
               return (
                 <Input
                   value={values}
                   onChange={e => {
-                    conditions[conditionIndex].object = e.target.value
-
-                    this.handleChangeCondition(conditions, 'single')
+                    statements[statementIndex].object = e.target.value
+                    this.handleChangeCondition(statements, 'single')
                   }}
                 />
               )
@@ -98,9 +97,9 @@ class SimpleConditionsSandbox extends Component {
             label: 'is',
             value: '=',
             object: ({
-              conditions,
+              statements,
               values,
-              conditionIndex,
+              statementIndex,
               isFullWidth,
               error,
             }) => {
@@ -108,9 +107,9 @@ class SimpleConditionsSandbox extends Component {
                 <Input
                   value={values}
                   onChange={e => {
-                    conditions[conditionIndex].object = e.target.value
+                    statements[statementIndex].object = e.target.value
 
-                    this.handleChangeCondition(conditions, 'full')
+                    this.handleChangeCondition(statements, 'full')
                   }}
                 />
               )
@@ -125,9 +124,9 @@ class SimpleConditionsSandbox extends Component {
             label: 'is',
             value: 'is',
             object: ({
-              conditions,
+              statements,
               values,
-              conditionIndex,
+              statementIndex,
               isFullWidth,
               error,
             }) => {
@@ -141,9 +140,9 @@ class SimpleConditionsSandbox extends Component {
                     { label: 'Yellow', value: 'yellow' },
                   ]}
                   onChange={(e, value) => {
-                    conditions[conditionIndex].object = value
+                    statements[statementIndex].object = value
 
-                    this.handleChangeCondition(conditions, 'full')
+                    this.handleChangeCondition(statements, 'full')
                   }}
                 />
               )
@@ -153,30 +152,32 @@ class SimpleConditionsSandbox extends Component {
             label: 'is any of',
             value: 'any-of',
             object: ({
-              conditions,
+              statements,
               values,
-              conditionIndex,
+              statementIndex,
               isFullWidth,
               error,
             }) => {
               return (
-                <MultiSelect
-                  emptyState={term => {
-                    return `Your search for the payment method "${term}" did not find any results.`
-                  }}
-                  options={[
-                    { label: 'White', value: 'white' },
-                    { label: 'Black', value: 'black' },
-                    { label: 'Grey', value: 'grey' },
-                    { label: 'Yellow', value: 'yellow' },
-                  ]}
-                  onChange={selected => {
-                    conditions[conditionIndex].object = selected
+                <div style={{ marginTop: -8 }}>
+                  <MultiSelect
+                    emptyState={term => {
+                      return `Your search for the payment method "${term}" did not find any results.`
+                    }}
+                    options={[
+                      { label: 'White', value: 'white' },
+                      { label: 'Black', value: 'black' },
+                      { label: 'Grey', value: 'grey' },
+                      { label: 'Yellow', value: 'yellow' },
+                    ]}
+                    onChange={selected => {
+                      statements[statementIndex].object = selected
 
-                    this.handleChangeCondition(conditions, 'full')
-                  }}
-                  selected={values || []}
-                />
+                      this.handleChangeCondition(statements, 'full')
+                    }}
+                    selected={values || []}
+                  />
+                </div>
               )
             },
           },
@@ -189,9 +190,9 @@ class SimpleConditionsSandbox extends Component {
             label: 'is between',
             value: 'between',
             object: ({
-              conditions,
+              statements,
               values,
-              conditionIndex,
+              statementIndex,
               isFullWidth,
               error,
             }) => {
@@ -200,21 +201,21 @@ class SimpleConditionsSandbox extends Component {
                   <Input
                     placeholder="123456"
                     errorMessage={
-                      conditions[conditionIndex].object &&
-                      conditions[conditionIndex].object.first ===
-                        conditions[conditionIndex].object.last
+                      statements[statementIndex].object &&
+                      statements[statementIndex].object.first ===
+                        statements[statementIndex].object.last
                         ? 'duplicated BIN'
                         : ''
                     }
                     value={values && values.first ? values.first : ''}
                     onChange={e => {
                       const currentObject =
-                        conditions[conditionIndex].object || {}
+                        statements[statementIndex].object || {}
                       currentObject.first = e.target.value
                         .replace(/\D/g, '')
                         .substring(0, 6)
-                      conditions[conditionIndex].object = currentObject
-                      this.handleChangeCondition(conditions, 'full')
+                      statements[statementIndex].object = currentObject
+                      this.handleChangeCondition(statements, 'full')
                     }}
                   />
 
@@ -223,23 +224,23 @@ class SimpleConditionsSandbox extends Component {
                   <Input
                     placeholder="123456"
                     errorMessage={
-                      conditions[conditionIndex].object &&
-                      conditions[conditionIndex].object.first ===
-                        conditions[conditionIndex].object.last
+                      statements[statementIndex].object &&
+                      statements[statementIndex].object.first ===
+                        statements[statementIndex].object.last
                         ? 'duplicated BIN'
                         : ''
                     }
                     value={values && values.last ? values.last : ''}
                     onChange={e => {
                       const currentObject =
-                        conditions[conditionIndex].object || {}
+                        statements[statementIndex].object || {}
                       currentObject.last = e.target.value
                         .replace(/\D/g, '')
                         .substring(0, 6)
 
-                      conditions[conditionIndex].object = currentObject
+                      statements[statementIndex].object = currentObject
 
-                      this.handleChangeCondition(conditions, 'full')
+                      this.handleChangeCondition(statements, 'full')
                     }}
                   />
                 </div>
@@ -250,9 +251,9 @@ class SimpleConditionsSandbox extends Component {
             label: 'is',
             value: 'is',
             object: ({
-              conditions,
+              statements,
               values,
-              conditionIndex,
+              statementIndex,
               isFullWidth,
               error,
             }) => {
@@ -263,12 +264,12 @@ class SimpleConditionsSandbox extends Component {
                     value={values || ''}
                     onChange={e => {
                       let currentObject =
-                        conditions[conditionIndex].object || {}
+                        statements[statementIndex].object || {}
                       currentObject = e.target.value
                         .replace(/\D/g, '')
                         .substring(0, 6)
-                      conditions[conditionIndex].object = currentObject
-                      this.handleChangeCondition(conditions, 'full')
+                      statements[statementIndex].object = currentObject
+                      this.handleChangeCondition(statements, 'full')
                     }}
                   />
                 </div>
@@ -279,9 +280,9 @@ class SimpleConditionsSandbox extends Component {
             label: 'is not',
             value: 'is-not',
             object: ({
-              conditions,
+              statements,
               values,
-              conditionIndex,
+              statementIndex,
               isFullWidth,
               error,
             }) => {
@@ -292,12 +293,12 @@ class SimpleConditionsSandbox extends Component {
                     value={values || ''}
                     onChange={e => {
                       let currentObject =
-                        conditions[conditionIndex].object || ''
+                        statements[statementIndex].object || ''
                       currentObject = e.target.value
                         .replace(/\D/g, '')
                         .substring(0, 6)
-                      conditions[conditionIndex].object = currentObject
-                      this.handleChangeCondition(conditions, 'full')
+                      statements[statementIndex].object = currentObject
+                      this.handleChangeCondition(statements, 'full')
                     }}
                   />
                 </div>
@@ -409,16 +410,16 @@ class SimpleConditionsSandbox extends Component {
               <Statement
                 canDelete={this.state.canDelete === 'true'}
                 choices={this.singleStatements}
-                condition={this.state.allConditions.single[0]}
-                conditions={this.state.allConditions.single}
                 isRtl={this.state.isRtl === 'true'}
                 isFullWidth={this.state.isFullWidth === 'true'}
                 onChangeStatement={(newValue, structure) => {
+                  console.log(`on change statement ${newValue} ${structure}`)
                   this.handleChangeStatement('single', 0, newValue, structure)
                 }}
                 onRemoveStatement={() => {
                   this.handleRemoveStatement()
                 }}
+                statements={this.state.allConditions.single}
               />
 
               <div className="ph3 mt5">
@@ -435,17 +436,17 @@ class SimpleConditionsSandbox extends Component {
           </div>
 
           <div className="ph7">
-            <h4>Simple Conditionsaaa</h4>
+            <h4>Conditions</h4>
             <Box>
-              <SimpleConditions
+              <Conditions
                 canDelete={this.state.canDelete === 'true'}
                 choices={this.statements}
-                conditions={this.state.allConditions.full}
+                statements={this.state.allConditions.full}
                 isRtl={this.state.isRtl === 'true'}
                 isFullWidth={this.state.isFullWidth === 'true'}
                 onChangeOperator={operator => this.setState({ operator })}
-                onChangeConditions={conditions =>
-                  this.handleChangeCondition(conditions, 'full')
+                onChangeStatements={statements =>
+                  this.handleChangeCondition(statements, 'full')
                 }
                 operator={this.state.operator}
                 showOperator
@@ -495,4 +496,4 @@ class SimpleConditionsSandbox extends Component {
   }
 }
 
-export default compose(graphql(translate))(injectIntl(SimpleConditionsSandbox))
+export default compose(graphql(translate))(injectIntl(ConditionsSandbox))
