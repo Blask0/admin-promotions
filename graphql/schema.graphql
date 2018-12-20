@@ -1,13 +1,24 @@
 type Query {
-  getCampaigns: ConditionList!
   getBenefits: [Benefit]
+  getCampaigns: ConditionList!
   getCategories: [ProductCategory]
+  getCollections: [Collection!]
 }
 
-type ConditionList {
-  conditionsLimit: Int!
-  conditions: [Condition!]
-  error: String
+type Benefit {
+  name: String!
+  isActive: Boolean!
+  campaigns: [Campaign]!
+  effectType: String
+}
+
+type Campaign {
+  name: String!
+}
+
+type Collection {
+  id: ID!
+  name: String
 }
 
 type Condition {
@@ -20,20 +31,15 @@ type Condition {
   dateRange: DateRange
 }
 
+type ConditionList {
+  conditionsLimit: Int!
+  conditions: [Condition!]
+  error: String
+}
+
 type DateRange {
   from: String
   to: String
-}
-
-type Benefit {
-  name: String!
-  isActive: Boolean!
-  campaigns: [Campaign]!
-  effectType: String
-}
-
-type Campaign {
-  name: String!
 }
 
 type ProductCategory {
