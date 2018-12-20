@@ -4,7 +4,14 @@ import Statement from './components/SimpleConditions/Statement'
 import SimpleConditions from './components/SimpleConditions'
 
 import './global.css'
-import { Box, PageHeader, Input, Dropdown, Button } from 'vtex.styleguide'
+import {
+  Box,
+  PageHeader,
+  Input,
+  Dropdown,
+  Button,
+  MultiSelect,
+} from 'vtex.styleguide'
 import { compose, graphql } from 'react-apollo'
 import translate from './queries/translate.graphql'
 
@@ -104,6 +111,42 @@ class SimpleConditionsSandbox extends Component {
 
                     this.handleChangeCondition(conditions, 'full')
                   }}
+                />
+              )
+            },
+          },
+        ],
+      },
+      paymentMethod: {
+        label: 'Payment method',
+        verbs: [
+          {
+            label: 'is any of',
+            value: 'any-of',
+            object: ({
+              conditions,
+              values,
+              conditionIndex,
+              isFullWidth,
+              error,
+            }) => {
+              return (
+                <MultiSelect
+                  emptyState={term => {
+                    return `Your search for the payment method "${term}" did not find any results.`
+                  }}
+                  options={[
+                    { label: 'White', value: 'white' },
+                    { label: 'Black', value: 'black' },
+                    { label: 'Grey', value: 'grey' },
+                    { label: 'Yellow', value: 'yellow' },
+                  ]}
+                  onChange={selected => {
+                    conditions[conditionIndex].object = selected
+
+                    this.handleChangeCondition(conditions, 'full')
+                  }}
+                  selected={values || []}
                 />
               )
             },
