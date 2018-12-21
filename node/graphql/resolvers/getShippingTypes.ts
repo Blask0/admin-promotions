@@ -9,7 +9,7 @@ const getShippingTypes = async (_, info, { vtex: ioContext, request }, query) =>
   return await axios
     .get(shippingTypesURL, {
       headers: {
-        VtexIdclientAutCookie: ioContext.authToken,
+        Authorization: ioContext.authToken,
       },
     })
     .then(
