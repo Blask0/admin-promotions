@@ -2,14 +2,14 @@ import axios from 'axios'
 import { HttpError } from '../errors/httpError'
 
 const getCollections = async (_, info, { vtex: ioContext, request }, query) => {
-  const brandsURL = `https://${
+  const collectionsURL = `https://${
     ioContext.account
   }.vtexcommercestable.com.br/api/catalog_system/pvt/collection/list/7`
 
   return await axios
-    .get(brandsURL, {
+    .get(collectionsURL, {
       headers: {
-        Authorization: `${ioContext.authToken}`,
+        Authorization: ioContext.authToken,
       },
     })
     .then(
