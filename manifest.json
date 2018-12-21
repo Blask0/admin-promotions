@@ -39,6 +39,13 @@
         "host": "{{account}}.vtexcommercestable.com.br",
         "path": "/api/catalog_system/*"
       }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "logistics.vtexcommercestable.com.br",
+        "path": "/api/logistics/*"
+      }
     }
   ],
   "billingOptions": {

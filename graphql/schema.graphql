@@ -3,6 +3,7 @@ type Query {
   getCampaigns: ConditionList!
   getCategories: [ProductCategory]
   getCollections: [Collection!]
+  getShippingTypes: [ShipppingType]
 }
 
 type Benefit {
@@ -44,5 +45,9 @@ type DateRange {
 
 type ProductCategory {
   id: ID!
+  name: String
+}
+
+type ShipppingType {
   name: String
 }
