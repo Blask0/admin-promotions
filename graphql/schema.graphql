@@ -1,9 +1,21 @@
 type Query {
+  getAffiliates: [Affiliate]
   getBenefits: [Benefit]
   getCampaigns: ConditionList!
   getCategories: [ProductCategory]
   getCollections: [Collection!]
   getShippingTypes: [ShipppingType]
+}
+
+type Affiliate {
+  id: ID!
+  name: String
+  salesChannel: String
+  followUpEmail: String
+  searchURIEndPoint: String
+  searchURIEndpointAvailableVersions: [String]
+  searchURIEndpointVersion: String
+  useSellerPaymentMethod: Boolean
 }
 
 type Benefit {
