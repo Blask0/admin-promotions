@@ -4,6 +4,7 @@ type Query {
   getCampaigns: ConditionList!
   getCategories: [ProductCategory]
   getCollections: [Collection!]
+  getProducts(q: String!, page: Int = 1, itemsPerPage: Int = 10): PaginatedProducts
   getShippingTypes: [ShipppingType]
 }
 
@@ -55,6 +56,26 @@ type DateRange {
   to: String
 }
 
+type PaginatedProducts {
+  products: [Product]
+  pagination: Pagination
+}
+
+type Pagination {
+  page: Int
+  itemsPerPage: Int
+  totalItems: Int
+  totalPages: Int
+}
+
+type Product {
+  id: ID!
+  name: String
+  detailUrl: String
+  imageUrl: String
+  skus: [Sku!]
+}
+
 type ProductCategory {
   id: ID!
   name: String
@@ -62,4 +83,11 @@ type ProductCategory {
 
 type ShipppingType {
   name: String
+}
+
+type Sku {
+  id: ID!
+  name: String
+  isKit: Boolean
+  kitItems: [String]
 }
