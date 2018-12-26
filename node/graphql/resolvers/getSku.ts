@@ -15,9 +15,12 @@ const getProducts = async (_, args, { vtex: ioContext, request }, query) => {
       },
     })
     .then(
-      response => (
-        response.data
-      ),
+      response => ({
+        id: response.data.Id,
+        name: response.data.SkuName,
+        isKit: response.data.IsKit,
+        kitItems: response.data.KitItems,
+      }),
       error => {
         const errorMsg = 'Error fetching sku'
         throw new HttpError(errorMsg, error)
