@@ -6,7 +6,9 @@ type Query {
   getCollections: [Collection!]
   getProducts(q: String!, page: Int = 1, itemsPerPage: Int = 10): PaginatedProducts
   getShippingTypes: [ShipppingType]
+  getSku(sku: Int!): Sku
 }
+
 
 type Affiliate {
   id: ID!
