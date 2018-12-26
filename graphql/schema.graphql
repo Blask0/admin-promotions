@@ -4,6 +4,7 @@ type Query {
   getCampaigns: ConditionList!
   getCategories: [ProductCategory]
   getCollections: [Collection!]
+  getPaymentMethods: [PaymentMethod!]
   getProducts(q: String!, page: Int = 1, itemsPerPage: Int = 10): PaginatedProducts
   getShippingTypes: [ShipppingType]
   getSku(sku: Int!): Sku
@@ -68,6 +69,12 @@ type Pagination {
   itemsPerPage: Int
   totalItems: Int
   totalPages: Int
+}
+
+type PaymentMethod {
+  id: ID!
+  name: String!
+  description: String
 }
 
 type Product {
