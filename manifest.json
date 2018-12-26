@@ -46,6 +46,13 @@
         "host": "logistics.vtexcommercestable.com.br",
         "path": "/api/logistics/*"
       }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "{{account}}.vtexpayments.com.br",
+        "path": "/api/pvt/merchants/payment-systems"
+      }
     }
   ],
   "billingOptions": {
