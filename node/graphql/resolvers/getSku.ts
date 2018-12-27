@@ -1,15 +1,15 @@
 import axios from 'axios'
 import { HttpError } from '../errors/httpError'
 
-const getProducts = async (_, args, { vtex: ioContext, request }, query) => {
-  const productsURL = `https://${
+const getSku = async (_, args, { vtex: ioContext, request }, query) => {
+  const skuURL = `https://${
     ioContext.account
   }.vtexcommercestable.com.br/api/catalog_system/pvt/sku/stockkeepingunitbyid/${
     args.sku
   }`
 
   return await axios
-    .get(productsURL, {
+    .get(skuURL, {
       headers: {
         Authorization: ioContext.authToken,
       },
@@ -27,4 +27,4 @@ const getProducts = async (_, args, { vtex: ioContext, request }, query) => {
       })
 }
 
-export default getProducts
+export default getSku
