@@ -1,6 +1,7 @@
 type Query {
   getAffiliates: [Affiliate]
   getBenefits: [Benefit]
+  getBrands(q: String): [Brand!]
   getCampaigns: ConditionList!
   getCategories: [ProductCategory]
   getCollections: [Collection!]
@@ -9,7 +10,6 @@ type Query {
   getShippingTypes: [ShipppingType]
   getSku(sku: Int!): Sku
 }
-
 
 type Affiliate {
   id: ID!
@@ -27,6 +27,14 @@ type Benefit {
   isActive: Boolean!
   campaigns: [Campaign]!
   effectType: String
+}
+
+type Brand {
+  id: ID!
+  name: String
+  isActive: String
+  title: String
+  metaTagDescription: String
 }
 
 type Campaign {
