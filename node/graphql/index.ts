@@ -1,5 +1,6 @@
 import getAffiliates from './resolvers/getAffiliates'
 import getBenefits from './resolvers/getBenefits'
+import getBrands from "./resolvers/getBrands";
 import getCampaigns from './resolvers/getCampaigns'
 import getCategories from './resolvers/getCategories'
 import getCollections from './resolvers/getCollections'
@@ -12,6 +13,7 @@ export const resolvers = {
   Query: {
     getAffiliates: getAffiliates,
     getBenefits: getBenefits,
+    getBrands: getBrands,
     getCampaigns: getCampaigns,
     getCategories: getCategories,
     getCollections: getCollections,
