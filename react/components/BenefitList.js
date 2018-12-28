@@ -2,9 +2,7 @@ import React, { PureComponent, Component } from 'react'
 import { compose, graphql } from 'react-apollo'
 import PropTypes from 'prop-types'
 
-import Tag from '@vtex/styleguide/lib/Tag'
-import Button from '@vtex/styleguide/lib/Button'
-import Table from '@vtex/styleguide/lib/Table'
+import { Tag, Button, Table } from 'vtex.styleguide'
 
 import getBenefits from '../graphql/getBenefits.graphql'
 

@@ -1,10 +1,12 @@
+/* eslint-disable react/jsx-pascal-case */
 import React, { Component } from 'react'
-import Conditions from '../Conditions'
 import MultiSelectWrapper from './MultiSelectWrapper'
 
 import translate from '../../graphql/translate.graphql'
 
 import { compose, graphql } from 'react-apollo'
+
+import { EXPERIMENTAL_Conditions } from 'vtex.styleguide'
 
 const isOrNot = [
   {
@@ -25,33 +27,72 @@ class Audience extends Component {
 
     this.state = {
       operator: 'all',
-      audience: [{ subject: '', verb: '', objects: [], errorMessage: null }],
+      statements: [],
+    }
+
+    const options = {
+      age: {
+        unique: true,
+        label: 'User age',
+        verbs: [
+          {
+            label: 'is',
+            value: '=',
+            object: this.complexNumericInputObject,
+          },
+          {
+            label: 'is between',
+            value: 'between',
+            object: this.complexNumericInputRangeObject,
+          },
+        ],
+      },
+      color: {
+        unique: true,
+        label: 'User favorite color',
+        verbs: [
+          {
+            label: 'is',
+            value: '=',
+            object: this.complexDropdownObject,
+          },
+          {
+            label: 'is any of',
+            value: 'any',
+            object: this.complexMultiselectObject,
+          },
+        ],
+      },
+      birthday: {
+        unique: true,
+        label: 'User birthday',
+        verbs: [
+          {
+            label: 'is',
+            value: '=',
+            object: this.complexDatePickerObject,
+          },
+          {
+            label: 'is between',
+            value: 'between',
+            object: this.complexDatePickerRangeObject,
+          },
+        ],
+      },
     }
   }
 
   render() {
     return (
-      <Conditions
-        isDebug={false}
+      <EXPERIMENTAL_Conditions
         showOperator={false}
-        operator={'all'}
-        conditions={this.state.audience}
-        onChangeOperator={operator => this.setState({ operator })}
-        onChangeConditions={conditions =>
-          this.setState({ audience: conditions })
-        }
-        choices={[
-          {
-            subject: {
-              label: 'Payment method',
-              value: 'payment-method',
-            },
-            verbs: isOrNot,
-            objects: {
-              default: [<MultiSelectWrapper />],
-            },
-          },
-        ]}
+        options={options}
+        statements={this.state.statements}
+        operator={this.state.operator}
+        onChangeOperator={this.handleToggleOperator}
+        onChangeStatements={statements => {
+          this.setState({ statements })
+        }}
       />
     )
   }

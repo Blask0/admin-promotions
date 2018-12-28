@@ -3,8 +3,7 @@ import { injectIntl, intlShape } from 'react-intl'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 
-import Input from '@vtex/styleguide/lib/Input'
-import Toggle from '@vtex/styleguide/lib/Toggle'
+import { Input, Toggle } from 'vtex.styleguide'
 
 import DatePicker from 'react-datepicker'
 import { RenderContextConsumer } from 'render'

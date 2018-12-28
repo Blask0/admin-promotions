@@ -5,9 +5,6 @@
     },
     "admin/create": {
       "path": "/admin/promotions/create-promotion"
-    },
-    "admin/sandbox": {
-      "path": "/admin/promotions/simple-conditions-sandbox"
     }
   },
   "extensions": {
@@ -16,9 +13,6 @@
     },
     "admin/create": {
       "component": "create-promotion"
-    },
-    "admin/sandbox": {
-      "component": "simple-conditions-sandbox"
     }
   }
 }
