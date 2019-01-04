@@ -1,13 +1,13 @@
 import axios from 'axios'
 import { HttpError } from '../errors/httpError'
 
-const getCollections = async (_, info, { vtex: ioContext, request }, query) => {
-  const collectionsURL = `https://${
+const getPaymentMethods = async (_, info, { vtex: ioContext, request }, query) => {
+  const paymentMethodsURL = `https://${
     ioContext.account
   }.vtexpayments.com.br/api/pvt/merchants/payment-systems`
 
   return await axios
-    .get(collectionsURL, {
+    .get(paymentMethodsURL, {
       headers: {
         Authorization: ioContext.authToken,
       },
@@ -27,4 +27,4 @@ const getCollections = async (_, info, { vtex: ioContext, request }, query) => {
     )
 }
 
-export default getCollections
+export default getPaymentMethods
