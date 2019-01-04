@@ -7,6 +7,7 @@ import getCollections from './resolvers/getCollections'
 import getPaymentmethods from './resolvers/getPaymentMethods'
 import getProducts from './resolvers/getProducts'
 import getSalesChannels from "./resolvers/getSalesChannels";
+import getSellers from "./resolvers/getSellers";
 import getShippingTypes from './resolvers/getShippingTypes'
 import getSku from './resolvers/getSku'
 
@@ -21,6 +22,7 @@ export const resolvers = {
     getPaymentMethods: getPaymentmethods,
     getProducts: getProducts,
     getSalesChannels: getSalesChannels,
+    getSellers: getSellers,
     getShippingTypes: getShippingTypes,
     getSku: getSku,
   }
