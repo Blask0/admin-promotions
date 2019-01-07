@@ -6,7 +6,7 @@ import Tag from '@vtex/styleguide/lib/Tag'
 import Button from '@vtex/styleguide/lib/Button'
 import Table from '@vtex/styleguide/lib/Table'
 
-import getBenefits from '../graphql/getBenefits.graphql'
+import getBenefits from '../graphql/getPromotions.graphql'
 
 export class BenefitListContainer extends Component {
   constructor(props) {

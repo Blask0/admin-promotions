@@ -1,0 +1,13 @@
+query {
+  getPromotions {
+    name
+    beginDate
+    endDate
+    isActive
+    description
+    effectType
+    campaigns {
+      name
+    }
+  }
+}
