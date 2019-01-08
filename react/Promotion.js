@@ -76,13 +76,13 @@ class CreateCampaign extends Component {
     return (
       <div>
         <PageHeader
-          linkLabel="Campaigns"
+          linkLabel="Promotions"
           onLinkClick={() => {
             navigate({
               page: 'admin/index',
             })
           }}
-          title="Create Campaign">
+          title="Create Promotion">
           <SaveCampaignButton />
         </PageHeader>
 
