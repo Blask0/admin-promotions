@@ -10,6 +10,7 @@
     "postreleasy": "vtex publish --public"
   },
   "builders": {
+    "messages": "0.x",
     "node": "3.x",
     "graphql": "1.x",
     "react": "2.x",

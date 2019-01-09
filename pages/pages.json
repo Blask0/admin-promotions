@@ -4,7 +4,7 @@
       "path": "/admin/campaigns"
     },
     "admin/create": {
-      "path": "/admin/campaigns/create-campaign"
+      "path": "/admin/promotions/:id"
     },
     "admin/sandbox": {
       "path": "/admin/campaigns/simple-conditions-sandbox"
@@ -15,7 +15,7 @@
       "component": "index"
     },
     "admin/create": {
-      "component": "create-campaign"
+      "component": "Promotion"
     },
     "admin/sandbox": {
       "component": "simple-conditions-sandbox"
