@@ -5,7 +5,7 @@ import { Layout, PageHeader, PageBlock } from 'vtex.styleguide'
 
 import PromotionsTable from './components/Promotions/PromotionsTable';
 
-class Promotions extends Component {
+class PromotionsPage extends Component {
   componentDidMount = () => {
     window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
   }
@@ -25,9 +25,9 @@ class Promotions extends Component {
   }
 }
 
-Promotions.propTypes = {
+PromotionsPage.propTypes = {
   data: PropTypes.object,
   mutate: PropTypes.func,
 }
 
-export default Promotions
+export default PromotionsPage

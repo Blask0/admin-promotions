@@ -19,7 +19,7 @@ import Gift from './components/Icon/Gift'
 import Shipping from './components/Icon/Shipping'
 import Reward from './components/Icon/Reward'
 
-class Promotion extends Component {
+class PromotionPage extends Component {
   constructor(props) {
     super(props)
 
@@ -177,4 +177,4 @@ class Promotion extends Component {
   }
 }
 
-export default injectIntl(Promotion)
+export default injectIntl(PromotionPage)

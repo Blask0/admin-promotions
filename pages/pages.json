@@ -9,10 +9,10 @@
   },
   "extensions": {
     "admin/index": {
-      "component": "index"
+      "component": "PromotionsPage"
     },
     "admin/create": {
-      "component": "Promotion"
+      "component": "PromotionPage"
     }
   }
 }
