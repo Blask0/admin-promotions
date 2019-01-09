@@ -7,6 +7,7 @@ type Query {
   getCollections: [Collection!]
   getPaymentMethods: [PaymentMethod!]
   getProducts(q: String!, page: Int = 1, itemsPerPage: Int = 10): PaginatedProducts
+  getSalesChannels: [SalesChannel!]
   getShippingTypes: [ShipppingType]
   getSku(sku: Int!): Sku
 }
@@ -96,6 +97,12 @@ type Product {
 type ProductCategory {
   id: ID!
   name: String
+}
+
+type SalesChannel {
+  id: ID!
+  name: String
+  isActive: Boolean
 }
 
 type ShipppingType {
