@@ -4,7 +4,7 @@
       "path": "/admin/campaigns"
     },
     "admin/create": {
-      "path": "/admin/promotions/promotion/:id"
+      "path": "/admin/promotions/:id"
     },
     "admin/sandbox": {
       "path": "/admin/campaigns/simple-conditions-sandbox"
