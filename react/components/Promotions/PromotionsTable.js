@@ -7,7 +7,7 @@ import Price from '../Icon/Price'
 import { toDate, format } from 'date-fns'
 import withPromotions from '../../connectors/withPromotions';
 
-class PromotionsList extends Component {
+class PromotionsTable extends Component {
   constructor(props) {
     super(props)
 
@@ -142,8 +142,8 @@ class PromotionsList extends Component {
   }
 }
 
-PromotionsList.contextTypes = {
+PromotionsTable.contextTypes = {
   navigate: PropTypes.func,
 }
 
-export default withPromotions(PromotionsList)
+export default withPromotions(PromotionsTable)

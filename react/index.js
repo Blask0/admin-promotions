@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Layout, PageHeader, PageBlock } from 'vtex.styleguide'
 
-import PromotionsList from './components/Promotions/PromotionsList';
+import PromotionsTable from './components/Promotions/PromotionsTable';
 
 class Promotions extends Component {
   componentDidMount = () => {
@@ -18,7 +18,7 @@ class Promotions extends Component {
           <PageHeader title="Promotions" />
         }>
         <PageBlock>
-          <PromotionsList />
+          <PromotionsTable />
         </PageBlock>
       </Layout>
     )
