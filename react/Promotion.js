@@ -27,6 +27,7 @@ class Promotion extends Component {
     this.state = {
       canSave: true,
       hasEndDate: false, // temporary, this should be on promotion json
+      selectedEffect: null, // oneOf ['price', 'gift', 'shipping', 'reward']
       allCustomersElligible: true ,
     }
   }
@@ -43,9 +44,15 @@ class Promotion extends Component {
     window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
   }
 
+  selectEffect = effect => {
+    this.setState({ selectedEffect: effect })
+  }
+
+  isEffectSelected = effect => this.state.selectedEffect === effect
+
   render() {
     const { navigate } = this.context
-    const { canSave, hasEndDate, allCustomersElligible } = this.state
+    const { canSave, hasEndDate, selectedEffect, allCustomersElligible } = this.state
     const { intl, params: { id } } = this.props
 
     return (
@@ -98,40 +105,40 @@ class Promotion extends Component {
           </h4>
           <div className="flex flex-row">
             <div className="mh3" style={{ width: 132 }}>
-              <SelectableCard selected>
+              <SelectableCard selected={this.isEffectSelected('price')} onClick={() => this.selectEffect('price')}>
                 <div className="flex flex-column items-center center tc ph5">
-                  <Discount color="#fff" />
-                  <div className="t-heading-4 b mt5 white">
+                  <Discount color={this.isEffectSelected('price') ? '#fff' : '#111'} />
+                  <div className={`t-heading-4 b mt5 ${this.isEffectSelected('price') ? 'white': ''}`}>
                     <FormattedMessage id="promotions.promotion.effects.price" />
                   </div>
                 </div>
               </SelectableCard>
             </div>
             <div className="mh3" style={{ width: 132 }}>
-              <SelectableCard>
+              <SelectableCard selected={this.isEffectSelected('gift')} onClick={() => this.selectEffect('gift')}>
                 <div className="flex flex-column items-center center tc ph5">
-                  <Present />
-                  <div className="t-heading-4 b mt5">
+                  <Present color={this.isEffectSelected('gift') ? '#fff' : '#111'} />
+                  <div className={`t-heading-4 b mt5 ${this.isEffectSelected('gift') ? 'white': ''}`}>
                     <FormattedMessage id="promotions.promotion.effects.gift" />
                   </div>
                 </div>
               </SelectableCard>
             </div>
             <div className="mh3" style={{ width: 132 }}>
-              <SelectableCard>
+              <SelectableCard selected={this.isEffectSelected('shipping')} onClick={() => this.selectEffect('shipping')}>
                 <div className="flex flex-column items-center center tc ph5">
-                  <Truck />
-                  <div className="t-heading-4 b mt5">
+                  <Truck color={this.isEffectSelected('shipping') ? '#fff' : '#111'} />
+                  <div className={`t-heading-4 b mt5 ${this.isEffectSelected('shipping') ? 'white': ''}`}>
                     <FormattedMessage id="promotions.promotion.effects.shipping" />
                   </div>
                 </div>
               </SelectableCard>
             </div>
             <div className="mh3" style={{ width: 132 }}>
-              <SelectableCard>
+              <SelectableCard selected={this.isEffectSelected('reward')} onClick={() => this.selectEffect('reward')}>
                 <div className="flex flex-column items-center center tc ph5">
-                  <Reward />
-                  <div className="t-heading-4 b mt5">
+                  <Reward color={this.isEffectSelected('reward') ? '#fff' : '#111'} />
+                  <div className={`t-heading-4 b mt5 ${this.isEffectSelected('reward') ? 'white': ''}`}>
                     <FormattedMessage id="promotions.promotion.effects.reward" />
                   </div>
                 </div>
