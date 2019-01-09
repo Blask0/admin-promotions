@@ -1,12 +1,6 @@
-import React, { PureComponent, Component } from 'react'
-import { Query } from 'react-apollo'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 
-import Tag from '@vtex/styleguide/lib/Tag'
-import Button from '@vtex/styleguide/lib/Button'
-import Table from '@vtex/styleguide/lib/Table'
-
-import getPromotions from '../../graphql/getPromotions.graphql'
+import { Tag, Table } from 'vtex.styleguide'
 
 import Price from '../Icon/Price'
 
