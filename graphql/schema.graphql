@@ -8,6 +8,7 @@ type Query {
   getPaymentMethods: [PaymentMethod!]
   getProducts(q: String!, page: Int = 1, itemsPerPage: Int = 10): PaginatedProducts
   getSalesChannels: [SalesChannel!]
+  getSellers: [Seller]
   getShippingTypes: [ShipppingType]
   getSku(sku: Int!): Sku
 }
@@ -99,9 +100,17 @@ type ProductCategory {
   name: String
 }
 
+<<<<<<< HEAD
 type SalesChannel {
   id: ID!
   name: String
+=======
+type Seller {
+  id: ID!
+  name: String
+  email: String
+  description: String
+>>>>>>> Add resolver to fetch sellers
   isActive: Boolean
 }
 
