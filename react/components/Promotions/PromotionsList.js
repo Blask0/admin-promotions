@@ -104,6 +104,11 @@ class PromotionsList extends Component {
         items={this.props.promotions || []}
         density="low"
         loading={this.props.loading}
+        onRowClick={({ rowData: { id } }) => {
+          navigate({
+            page: `admin/promotions/${id}`,
+          })
+        }}
         toolbar={{
           inputSearch: {
             value: this.props.inputSearchValue,

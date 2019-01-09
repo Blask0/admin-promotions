@@ -1,5 +1,6 @@
 query GetPromotions($name: String, $effect: String) {
   getPromotions(name: $name, effect: $effect) {
+    id
     name
     beginDate
     endDate
