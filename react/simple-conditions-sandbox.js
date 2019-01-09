@@ -4,7 +4,6 @@ import Statement from './components/SimpleConditions/Statement'
 import SimpleConditions from './components/SimpleConditions'
 import MultiSelectWrapper from './components/Input/MultiSelectWrapper'
 
-import './global.css'
 import { Box, PageHeader, Input, Dropdown } from 'vtex.styleguide'
 
 import AceEditor from 'react-ace'
