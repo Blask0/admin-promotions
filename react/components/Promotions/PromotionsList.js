@@ -106,7 +106,10 @@ class PromotionsList extends Component {
         loading={this.props.loading}
         onRowClick={({ rowData: { id } }) => {
           navigate({
-            page: `admin/promotions/${id}`,
+            page: `admin/create`,
+            params: {
+              id: id
+            }
           })
         }}
         toolbar={{
@@ -125,7 +128,10 @@ class PromotionsList extends Component {
             label: 'New promotion',
             handleCallback: () => {
               navigate({
-                page: 'admin/promotions/new',
+                page: 'admin/create',
+                params: {
+                  id: 'new'
+                }
               })
             },
           },
