@@ -1,30 +1,33 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { injectIntl } from 'react-intl'
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
 import {
-  Box,
-  Input,
+  Layout,
+  PageBlock,
   PageHeader,
-  Textarea,
-  Toggle,
   Button,
+  Checkbox,
+  Input,
+  DatePicker,
+  Radio,
 } from 'vtex.styleguide'
 
+import SelectableCard from './components/SelectableCard'
+import Present from './components/Icon/Present'
+import Reward from './components/Icon/Reward'
+import Truck from './components/Icon/Truck'
+import Discount from './components/Icon/Discount'
 import './global.css'
 
-import SaveCampaignButton from './components/Button/SaveCampaign'
-import Scheduling from './components/Input/Scheduling'
-import BenefitsList from './components/BenefitList'
-import SimpleConditions from './components/SimpleConditions'
-
-class CreateCampaign extends Component {
+class Promotion extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      isEnabled: true,
-      dateRange: { from: null, to: null, error: null },
+      canSave: true,
+      hasEndDate: false, // temporary, this should be on promotion json
+      allCustomersElligible: true ,
     }
   }
 
@@ -32,136 +35,140 @@ class CreateCampaign extends Component {
     navigate: PropTypes.func,
   }
 
-  static Panel = props => (
-    <Box>
-      <h1 className="f4 normal ma0">
-        {props.title} <span className="ml3 f5 fw2s gray">{props.subtitle}</span>
-      </h1>
-      <div className="mt5">{props.children}</div>
-    </Box>
-  )
+  static propTypes = {
+    intl: intlShape,
+  }
 
   componentDidMount = () => {
     window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
   }
 
-  handleScheduleChange = (date, type, valid) => {
-    const newRange = { ...this.state.dateRange, [type]: date }
-    ;(newRange.error = valid ? undefined : 'error.dateRange.validation'),
-    this.setState({
-      dateRange: newRange,
-    })
-  }
-
-  handleAddAudience = () => {
-    return alert('Add audience')
-  }
-
-  getTimezoneOffset = () => {
-    const offset = new Date().getTimezoneOffset()
-    const absOffset = Math.abs(offset)
-    const sign = offset < 0 ? '+' : '-'
-
-    let gmtOffset = absOffset / 60
-    if (Math.round(gmtOffset) !== gmtOffset) {
-      gmtOffset = gmtOffset.toFixed(2)
-    }
-
-    return sign + absOffset / 60
-  }
-
   render() {
     const { navigate } = this.context
-    const { isEnabled } = this.state
+    const { canSave, hasEndDate, allCustomersElligible } = this.state
+    const { intl, params: { id } } = this.props
+
     return (
-      <div>
-        <PageHeader
-          linkLabel="Promotions"
-          onLinkClick={() => {
-            navigate({
-              page: 'admin/index',
-            })
-          }}
-          title="Create Promotion">
-          <SaveCampaignButton />
-        </PageHeader>
-
-        <div className="ph7">
-          <CreateCampaign.Panel title="General">
-            <div style={{ maxWidth: 600 }}>
-              <Input label="Name" />
-              <div className="pt5">
-                <span className="db mb3 w-100 f6">Description</span>
-                <Textarea />
+      <Layout
+        pageHeader={
+          <PageHeader
+            linkLabel={intl.formatMessage({ id: 'promotions.promotion.linkLabel' })}
+            onLinkClick={() => {
+              navigate({
+                page: 'admin/index',
+              })
+            }}
+            title={id
+              ? intl.formatMessage({ id: 'promotions.promotion.title' })
+              : intl.formatMessage({ id: 'promotions.promotion.titleNew' })
+            }>
+          </PageHeader>
+        }>
+        <PageBlock>
+          <h4 className="t-heading-4 mt0">
+            <FormattedMessage id="promotions.promotion.info.title" />
+          </h4>
+          <Input label={intl.formatMessage({ id: "promotions.promotion.info.name" })} />
+          <div className="mv4">
+            <DatePicker
+              locale={intl.locale}
+              onChange={() => {}}
+              value={new Date()}
+              label={intl.formatMessage({ id: "promotions.promotion.info.startDate" })} />
+          </div>
+          <Checkbox
+            checked={hasEndDate}
+            label={intl.formatMessage({ id: "promotions.promotion.info.endDateCheck" })}
+            onChange={e => this.setState({ hasEndDate: !hasEndDate })}
+          />
+          {hasEndDate
+            ? <div className="mt4">
+                <DatePicker
+                  locale={intl.locale}
+                  onChange={() => {}}
+                  value={new Date() + 7 * 24 * 60 * 60 * 1000}
+                  label={intl.formatMessage({ id: "promotions.promotion.info.startDate" })} />
               </div>
-              <div className="pt5">
-                <Toggle
-                  label="Enable campaign"
-                  size="small"
-                  checked={isEnabled}
-                  onChange={() =>
-                    this.setState(prevState => ({
-                      isEnabled: !prevState.isEnabled,
-                    }))
-                  }
-                />
+            : null
+          }
+        </PageBlock>
+        <PageBlock>
+          <h4 className="t-heading-4 mt0">
+            <FormattedMessage id="promotions.promotion.effects.title" />
+          </h4>
+          <div className="flex flex-row">
+            <div className="mh3" style={{ width: 132 }}>
+              <SelectableCard selected>
+                <div className="flex flex-column items-center center tc ph5">
+                  <Discount color="#fff" />
+                  <div className="t-heading-4 b mt5 white">
+                    <FormattedMessage id="promotions.promotion.effects.price" />
+                  </div>
+                </div>
+              </SelectableCard>
+            </div>
+            <div className="mh3" style={{ width: 132 }}>
+              <SelectableCard>
+                <div className="flex flex-column items-center center tc ph5">
+                  <Present />
+                  <div className="t-heading-4 b mt5">
+                    <FormattedMessage id="promotions.promotion.effects.gift" />
+                  </div>
+                </div>
+              </SelectableCard>
+            </div>
+            <div className="mh3" style={{ width: 132 }}>
+              <SelectableCard>
+                <div className="flex flex-column items-center center tc ph5">
+                  <Truck />
+                  <div className="t-heading-4 b mt5">
+                    <FormattedMessage id="promotions.promotion.effects.shipping" />
+                  </div>
+                </div>
+              </SelectableCard>
+            </div>
+            <div className="mh3" style={{ width: 132 }}>
+              <SelectableCard>
+                <div className="flex flex-column items-center center tc ph5">
+                  <Reward />
+                  <div className="t-heading-4 b mt5">
+                    <FormattedMessage id="promotions.promotion.effects.reward" />
+                  </div>
+                </div>
+              </SelectableCard>
+            </div>
+          </div>
+        </PageBlock>
+        <PageBlock>
+          <h4 className="t-heading-4 mt0">
+            <FormattedMessage id="promotions.promotion.elligibility.title" />
+          </h4>
+          <Radio
+            checked={allCustomersElligible}
+            label={intl.formatMessage({ id: "promotions.promotion.elligibility.selectAll" })}
+            onChange={e => this.setState({ allCustomersElligible: true })}
+          />
+          <Radio
+            checked={!allCustomersElligible}
+            label={intl.formatMessage({ id: "promotions.promotion.elligibility.selectSpecific" })}
+            onChange={e => this.setState({ allCustomersElligible: false })}
+          />
+        </PageBlock>
+        {
+          canSave
+            ? <div className="flex flex-row">
+                <Button variation="primary">
+                  <FormattedMessage id="promotions.promotion.save" />
+                </Button>
+                <Button variation="tertiary">
+                  <FormattedMessage id="promotions.promotion.cancel" />
+                </Button>
               </div>
-            </div>
-          </CreateCampaign.Panel>
-        </div>
-
-        <div className="ph7 mt6">
-          <CreateCampaign.Panel
-            title={this.props.intl.formatMessage({
-              id: 'input.label.scheduling',
-            })}
-            subtitle={`${this.getTimezoneOffset()}GMT`}>
-            <div style={{ maxWidth: 600 }}>
-              <Scheduling
-                onChange={this.handleScheduleChange}
-                dateRange={this.state.dateRange}
-                errorMessage={this.state.dateRange.error}
-              />
-            </div>
-          </CreateCampaign.Panel>
-        </div>
-
-        <div className="ph7 mt6">
-          <CreateCampaign.Panel
-            title={this.props.intl.formatMessage({
-              id: 'input.label.audiences',
-            })}
-            subtitle={'0 Target Audiences'}>
-            <div style={{ maxWidth: 600 }}>
-              <SimpleConditions
-                showStrategySelector={false}
-                operator="all"
-                onChangeOperator={operator => this.setState({ operator })}
-                onChangeConditions={conditions => this.setState({ conditions })}
-                choices={[]}
-              />
-              <Button
-                size="small"
-                variation="secondary"
-                onClick={() => this.handleAddAudience()}>
-                Add target audience
-              </Button>
-            </div>
-          </CreateCampaign.Panel>
-        </div>
-
-        <div className="ph7 mt6">
-          <CreateCampaign.Panel
-            title={this.props.intl.formatMessage({
-              id: 'input.label.benefits-list',
-            })}
-            subtitle={'0 Benefits'}>
-            <BenefitsList />
-          </CreateCampaign.Panel>
-        </div>
-      </div>
+            : null
+        }
+      </Layout>
     )
   }
 }
 
-export default injectIntl(CreateCampaign)
+export default injectIntl(Promotion)
