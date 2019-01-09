@@ -1,12 +1,19 @@
 type Query {
   getAffiliates: [Affiliate]
-  getBenefits: [Benefit]
   getBrands(q: String): [Brand!]
   getCampaigns: ConditionList!
   getCategories: [ProductCategory]
   getCollections: [Collection!]
   getPaymentMethods: [PaymentMethod!]
-  getProducts(q: String!, page: Int = 1, itemsPerPage: Int = 10): PaginatedProducts
+  getProducts(
+    q: String!, 
+    page: Int = 1, 
+    itemsPerPage: Int = 10
+  ): PaginatedProducts
+  getPromotions(
+    name: String, 
+    effect: String
+  ): [Promotions!] @cacheControl(scope: PRIVATE)
   getSalesChannels: [SalesChannel!]
   getSellers: [Seller]
   getShippingTypes: [ShipppingType]
@@ -22,13 +29,6 @@ type Affiliate {
   searchURIEndpointAvailableVersions: [String]
   searchURIEndpointVersion: String
   useSellerPaymentMethod: Boolean
-}
-
-type Benefit {
-  name: String!
-  isActive: Boolean!
-  campaigns: [Campaign]!
-  effectType: String
 }
 
 type Brand {
@@ -100,18 +100,29 @@ type ProductCategory {
   name: String
 }
 
-<<<<<<< HEAD
 type SalesChannel {
   id: ID!
   name: String
-=======
+  isActive: Boolean
+}
+
 type Seller {
   id: ID!
   name: String
   email: String
   description: String
->>>>>>> Add resolver to fetch sellers
   isActive: Boolean
+}
+
+type Promotions {
+  id: ID!
+  name: String!
+  beginDate: String
+  endDate: String
+  isActive: Boolean!
+  description: String
+  effectType: String
+  campaigns: [Campaign]!
 }
 
 type ShipppingType {

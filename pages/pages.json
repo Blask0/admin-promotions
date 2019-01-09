@@ -1,7 +1,7 @@
 {
   "pages": {
     "admin/index": {
-      "path": "/admin/campaigns"
+      "path": "/admin/promotions"
     },
     "admin/create": {
       "path": "/admin/promotions/:id"
