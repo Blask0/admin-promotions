@@ -1,5 +1,5 @@
-query {
-  getPromotions {
+query GetPromotions($name: String, $effect: String) {
+  getPromotions(name: $name, effect: $effect) {
     name
     beginDate
     endDate

@@ -19,9 +19,7 @@ class Campaigns extends Component {
   render() {
     return (
       <div>
-        <PageHeader title="Promotion">
-          <CreateCampaignButton />
-        </PageHeader>
+        <PageHeader title="Promotion"></PageHeader>
         <div className="ph7">
           <Box>
             <PromotionsList />

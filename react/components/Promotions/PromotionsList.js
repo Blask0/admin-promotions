@@ -8,66 +8,14 @@ import Table from '@vtex/styleguide/lib/Table'
 
 import getPromotions from '../../graphql/getPromotions.graphql'
 
+import Price from '../Icon/Price'
+
 import { toDate, format } from 'date-fns'
+import withPromotions from '../../connectors/withPromotions';
 
 class PromotionsList extends Component {
   constructor(props) {
     super(props)
-
-    this.promotions = [
-      {
-        "name": "Teste Usage",
-        "beginDate": "2018-05-22T17:00:00Z",
-        "endDate": "2020-05-31T17:00:00Z",
-        "isActive": false,
-        "description": "",
-        "effectType": null,
-        "campaigns": [
-          {
-            "name": "Teste validacao cupom"
-          }
-        ]
-      },
-      {
-        "name": "Teste Usage 2",
-        "beginDate": "2018-05-22T17:00:00Z",
-        "endDate": null,
-        "isActive": false,
-        "description": "",
-        "effectType": null,
-        "campaigns": [
-          {
-            "name": "Teste validacao cupom"
-          }
-        ]
-      },
-      {
-        "name": "Teste Usage 3",
-        "beginDate": "2018-05-22",
-        "endDate": "2020-05-31",
-        "isActive": false,
-        "description": "",
-        "effectType": null,
-        "campaigns": [
-          {
-            "name": "Teste validacao cupom"
-          }
-        ]
-      },
-      {
-        "name": "Teste Usage 4",
-        "beginDate": "2018-05-22",
-        "endDate": null,
-        "isActive": false,
-        "description": "",
-        "effectType": null,
-        "campaigns": [
-          {
-            "name": "Teste validacao cupom"
-          }
-        ]
-      }
-    ]
 
     this.state = {
       schema: {
@@ -75,19 +23,24 @@ class PromotionsList extends Component {
           name: {
             type: 'string',
             title: 'Name',
-            width: 300,
+            width: 400,
           },
           effectType: {
             type: 'string',
             title: 'Effect',
-            cellRenderer: data => {
-              const type = data.cellData
+            cellRenderer: ({ cellData: effectType }) => {
               return (
                 <div className="dt">
-                  <span className="dtc v-mid pl3">{type}</span>
+                  <Price />
+                  <span className="dtc v-mid pl3">{effectType}</span>
                 </div>
               )
             },
+          },
+          scope: {
+            type: 'string',
+            title: 'Applies to',
+            width: 300,
           },
           beginDate: {
             type: 'string',
@@ -95,18 +48,42 @@ class PromotionsList extends Component {
             cellRenderer: ({ cellData: beginDate }) => {
               const date = format(toDate(beginDate), 'PP')
               const time = format(toDate(beginDate), 'p')
-              console.log(beginDate, date, time)
               return (
                 <div>
                   <div className="dt">
-                    <span className="dtc v-mid pl3">{date}</span>
+                    <span className="dtc v-mid">{date}</span>
                   </div>
                   <div className="dt">
-                    <span className="dtc v-mid pl3">{time}</span>
+                    <span className="dtc v-mid">{time}</span>
                   </div>
                 </div>
               )
-            }
+            },
+          },
+          endDate: {
+            type: 'string',
+            title: 'To',
+            cellRenderer: ({ cellData: endDate }) => {
+              if (!endDate) {
+                return (
+                  <div className="dt">
+                    <span className="dtc v-mid">-</span>
+                  </div>
+                )
+              }
+              const date = format(toDate(endDate), 'PP')
+              const time = format(toDate(endDate), 'p')
+              return (
+                <div>
+                  <div className="dt">
+                    <span className="dtc v-mid">{date}</span>
+                  </div>
+                  <div className="dt">
+                    <span className="dtc v-mid">{time}</span>
+                  </div>
+                </div>
+              )
+            },
           },
           isActive: {
             type: 'boolean',
@@ -117,7 +94,7 @@ class PromotionsList extends Component {
                 : { bgColor: '#727273', color: '#FFFFFF', children: 'Inactive' }
               return <Tag {...badgeProps} />
             },
-          }
+          },
         },
       },
     }
@@ -125,47 +102,33 @@ class PromotionsList extends Component {
 
   render() {
     const { schema } = this.state
-    // const promotions = this.props.data.getPromotions || []
     return (
-      <Query query={getPromotions}>
-      {({ loading, error, data = {} }) => {
-        debugger
-      return <Table 
-        schema={schema} 
-        items={data.getPromotions || []} 
+      <Table
+        schema={schema}
+        items={this.props.promotions || []}
+        density="low"
+        loading={this.props.loading}
         toolbar={{
           inputSearch: {
-            value: this.state.searchValue,
-            placeholder: 'Search stuff...',
-            onChange: this.handleInputSearchChange,
-            onClear: this.handleInputSearchClear,
-            onSubmit: this.handleInputSearchSubmit,
-          },
-          density: {
-            buttonLabel: 'Density',
-            lowOptionLabel: 'Low',
-            mediumOptionLabel: 'Medium',
-            highOptionLabel: 'High',
+            value: this.props.inputSearchValue,
+            placeholder: 'Search promotions by name or effect...',
+            onChange: this.props.handleSearchChange,
+            onClear: this.props.handleSearchClear,
+            onSubmit: this.props.handleSearchSubmit,
           },
           download: {
             label: 'Export',
             handleCallback: () => alert('Callback()'),
           },
-          fields: {
-            label: 'Fields',
-            showAllLabel: 'Show All',
-            hideAllLabel: 'Hide All',
-          },
           newLine: {
             label: 'New',
-            handleCallback: () => alert('handle new line callback')
+            handleCallback: () => alert('handle new line callback'),
           },
-        }} />
-      }
-      }
-      </Query>
+        }}
+        fullWidth
+      />
     )
   }
 }
 
-export default PromotionsList
+export default withPromotions(PromotionsList)

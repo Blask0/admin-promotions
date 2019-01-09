@@ -5,10 +5,17 @@ type Query {
   getCategories: [ProductCategory]
   getCollections: [Collection!]
   getPaymentMethods: [PaymentMethod!]
-  getProducts(q: String!, page: Int = 1, itemsPerPage: Int = 10): PaginatedProducts
+  getProducts(
+    q: String!, 
+    page: Int = 1, 
+    itemsPerPage: Int = 10
+  ): PaginatedProducts
+  getPromotions(
+    name: String, 
+    effect: String
+  ): [Promotions!] @cacheControl(scope: PRIVATE)
   getSalesChannels: [SalesChannel!]
   getSellers: [Seller]
-  getPromotions: [Promotions!]
   getShippingTypes: [ShipppingType]
   getSku(sku: Int!): Sku
 }
