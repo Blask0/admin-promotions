@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 import { Tag, Table } from 'vtex.styleguide'
 
 import Price from '../Icon/Price'
 
 import { toDate, format } from 'date-fns'
-import withPromotions from '../../connectors/withPromotions';
 
 class PromotionsTable extends Component {
   constructor(props) {
@@ -101,7 +101,7 @@ class PromotionsTable extends Component {
     return (
       <Table
         schema={schema}
-        items={this.props.promotions || []}
+        items={this.props.promotions}
         density="low"
         loading={this.props.loading}
         onRowClick={({ rowData: { id } }) => {
@@ -146,4 +146,13 @@ PromotionsTable.contextTypes = {
   navigate: PropTypes.func,
 }
 
-export default withPromotions(PromotionsTable)
+PromotionsTable.propTypes = {
+  promotions: PropTypes.arrayOf(PropTypes.object),
+  loading: PropTypes.bool,
+  inputSearchValue: PropTypes.string,
+  handleSearchChange: PropTypes.func,
+  handleSearchClear: PropTypes.func,
+  handleSearchSubmit: PropTypes.func,
+}
+
+export default PromotionsTable

@@ -9,51 +9,29 @@ function withPromotions(WrappedComponent) {
       super(props)
 
       this.state = {
-        inputSearchValue: '',
-        searchValue: ''
+        name: '',
+        effect: ''
       }
     }
 
-    handleSearchChange = (e) => {
-      this.setState({ 
-        inputSearchValue: e.target.value 
-      })
-    }
-
-    handleSearchClear = (e) => {
-      this.setState({ 
-        inputSearchValue: '',
-        searchValue: ''
-      })
-    }
-
-    handleSearchSubmit = (e) => {
-      this.setState({ 
-        searchValue: this.state.inputSearchValue 
-      })
-      e.preventDefault()
+    updateQueryParams = ({ name, effect }) => {
+      this.setState({ name, effect })
     }
 
     render() {
-      const { searchValue } = this.state
+      const { name, effect } = this.state
 
       return (
         <Query 
           query={getPromotions}
-          variables={{
-            name: searchValue,
-            effect: searchValue
-          }}>
+          variables={{ name, effect }}>
           {({ loading, error, data }) => (
             <WrappedComponent
               {...this.props}
               loading={loading}
               error={error}
               promotions={data ? data.getPromotions : []}
-              inputSearchValue={this.state.inputSearchValue}
-              handleSearchChange={this.handleSearchChange}
-              handleSearchClear={this.handleSearchClear}
-              handleSearchSubmit={this.handleSearchSubmit}
+              updateQueryParams={this.updateQueryParams}
             />
           )}
         </Query>
