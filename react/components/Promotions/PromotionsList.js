@@ -95,7 +95,9 @@ class PromotionsList extends Component {
   }
 
   render() {
+    const { navigate } = this.context
     const { schema } = this.state
+    
     return (
       <Table
         schema={schema}
@@ -110,19 +112,27 @@ class PromotionsList extends Component {
             onClear: this.props.handleSearchClear,
             onSubmit: this.props.handleSearchSubmit,
           },
-          download: {
-            label: 'Export',
-            handleCallback: () => alert('Callback()'),
-          },
+          // download: {
+          //   label: 'Export',
+          //   handleCallback: () => alert('Export not implemented yet'),
+          // },
           newLine: {
-            label: 'New',
-            handleCallback: () => alert('handle new line callback'),
+            label: 'New promotion',
+            handleCallback: () => {
+              navigate({
+                page: 'admin/promotions/new',
+              })
+            },
           },
         }}
         fullWidth
       />
     )
   }
+}
+
+PromotionsList.contextTypes = {
+  navigate: PropTypes.func,
 }
 
 export default withPromotions(PromotionsList)
