@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
 import { Tag, Table } from 'vtex.styleguide'
 
@@ -11,17 +12,19 @@ class PromotionsTable extends Component {
   constructor(props) {
     super(props)
 
+    const { intl } = props
+
     this.state = {
       schema: {
         properties: {
           name: {
             type: 'string',
-            title: 'Name',
+            title: intl.formatMessage({ id: 'promotions.promotion.info.name' }),
             width: 400,
           },
           effectType: {
             type: 'string',
-            title: 'Effect',
+            title: intl.formatMessage({ id: 'promotions.promotion.effects.title' }),
             cellRenderer: ({ cellData: effectType }) => {
               return (
                 <div className="dt">
@@ -33,12 +36,12 @@ class PromotionsTable extends Component {
           },
           scope: {
             type: 'string',
-            title: 'Applies to',
+            title: intl.formatMessage({ id: 'promotions.promotion.effects.scope.title' }),
             width: 300,
           },
           beginDate: {
             type: 'string',
-            title: 'From',
+            title: intl.formatMessage({ id: 'promotions.promotion.info.startDate' }),
             cellRenderer: ({ cellData: beginDate }) => {
               const date = format(toDate(beginDate), 'PP')
               const time = format(toDate(beginDate), 'p')
@@ -56,7 +59,7 @@ class PromotionsTable extends Component {
           },
           endDate: {
             type: 'string',
-            title: 'To',
+            title: intl.formatMessage({ id: 'promotions.promotion.info.endDate' }),
             cellRenderer: ({ cellData: endDate }) => {
               if (!endDate) {
                 return (
@@ -97,6 +100,7 @@ class PromotionsTable extends Component {
   render() {
     const { navigate } = this.context
     const { schema } = this.state
+    const { intl } = this.props
     
     return (
       <Table
@@ -115,7 +119,7 @@ class PromotionsTable extends Component {
         toolbar={{
           inputSearch: {
             value: this.props.inputSearchValue,
-            placeholder: 'Search promotions by name or effect...',
+            placeholder: intl.formatMessage({ id: 'promotions.promotions.search' }),
             onChange: this.props.handleSearchChange,
             onClear: this.props.handleSearchClear,
             onSubmit: this.props.handleSearchSubmit,
@@ -125,7 +129,7 @@ class PromotionsTable extends Component {
           //   handleCallback: () => alert('Export not implemented yet'),
           // },
           newLine: {
-            label: 'New promotion',
+            label: intl.formatMessage({ id: 'promotions.promotions.newPromotion' }),
             handleCallback: () => {
               navigate({
                 page: 'admin/create',
@@ -147,6 +151,7 @@ PromotionsTable.contextTypes = {
 }
 
 PromotionsTable.propTypes = {
+  intl: intlShape,
   promotions: PropTypes.arrayOf(PropTypes.object),
   loading: PropTypes.bool,
   inputSearchValue: PropTypes.string,
@@ -155,4 +160,4 @@ PromotionsTable.propTypes = {
   handleSearchSubmit: PropTypes.func,
 }
 
-export default PromotionsTable
+export default injectIntl(PromotionsTable)
