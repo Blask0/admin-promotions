@@ -5,6 +5,9 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import { Tag, Table } from 'vtex.styleguide'
 
 import Price from '../Icon/Price'
+import Gift from '../Icon/Gift'
+import Shipping from '../Icon/Shipping'
+import Reward from '../Icon/Reward'
 
 import { toDate, format } from 'date-fns'
 
@@ -28,7 +31,7 @@ class PromotionsTable extends Component {
             cellRenderer: ({ cellData: effectType }) => {
               return (
                 <div className="dt">
-                  <Price />
+                  {this.getEffectIcon(effectType)}
                   <span className="dtc v-mid pl3">{effectType}</span>
                 </div>
               )
@@ -94,6 +97,19 @@ class PromotionsTable extends Component {
           },
         },
       },
+    }
+  }
+
+  getEffectIcon(effectType) {
+    switch (effectType) {
+      case 'Price':
+        return <Price />
+      case 'Gift':
+        return <Gift />
+      case 'Shipping':
+        return <Shipping />
+      case 'Reward':
+        return <Reward />
     }
   }
 
