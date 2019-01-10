@@ -12,6 +12,7 @@
   "promotions.promotion.effects.gift": "Gift",
   "promotions.promotion.effects.shipping": "Shipping",
   "promotions.promotion.effects.reward": "Reward",
+  "promotions.promotion.effects.scope.title": "Applies to",
   "promotions.promotion.elligibility.title": "Elligibility",
   "promotions.promotion.elligibility.selectAll": "All customers",
   "promotions.promotion.elligibility.selectSpecific": "specific customers",
