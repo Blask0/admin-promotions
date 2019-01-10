@@ -14,88 +14,86 @@ import { toDate, format } from 'date-fns'
 class PromotionsTable extends Component {
   constructor(props) {
     super(props)
-
-    const { intl } = props
-
-    this.state = {
-      schema: {
-        properties: {
-          name: {
-            type: 'string',
+  }
+  
+  getTableSchema(intl) {
+    return {
+      properties: {
+        name: {
+          type: 'string',
             title: intl.formatMessage({ id: 'promotions.promotion.info.name' }),
-            width: 400,
+              width: 400,
           },
-          effectType: {
-            type: 'string',
+        effectType: {
+          type: 'string',
             title: intl.formatMessage({ id: 'promotions.promotion.effects.title' }),
-            cellRenderer: ({ cellData: effectType }) => {
-              return (
-                <div className="dt">
-                  {this.getEffectIcon(effectType)}
-                  <span className="dtc v-mid pl3">{effectType}</span>
-                </div>
-              )
-            },
-          },
-          scope: {
-            type: 'string',
-            title: intl.formatMessage({ id: 'promotions.promotion.effects.scope.title' }),
-            width: 300,
-          },
-          beginDate: {
-            type: 'string',
-            title: intl.formatMessage({ id: 'promotions.promotion.info.startDate' }),
-            cellRenderer: ({ cellData: beginDate }) => {
-              const date = format(toDate(beginDate), 'PP')
-              const time = format(toDate(beginDate), 'p')
-              return (
-                <div>
-                  <div className="dt">
-                    <span className="dtc v-mid">{date}</span>
-                  </div>
-                  <div className="dt">
-                    <span className="dtc v-mid">{time}</span>
-                  </div>
-                </div>
-              )
-            },
-          },
-          endDate: {
-            type: 'string',
-            title: intl.formatMessage({ id: 'promotions.promotion.info.endDate' }),
-            cellRenderer: ({ cellData: endDate }) => {
-              if (!endDate) {
+              cellRenderer: ({ cellData: effectType }) => {
                 return (
                   <div className="dt">
-                    <span className="dtc v-mid">-</span>
+                    {this.getEffectIcon(effectType)}
+                    <span className="dtc v-mid pl3">{effectType}</span>
                   </div>
                 )
-              }
-              const date = format(toDate(endDate), 'PP')
-              const time = format(toDate(endDate), 'p')
-              return (
-                <div>
-                  <div className="dt">
-                    <span className="dtc v-mid">{date}</span>
-                  </div>
-                  <div className="dt">
-                    <span className="dtc v-mid">{time}</span>
-                  </div>
-                </div>
-              )
-            },
+              },
           },
-          isActive: {
-            type: 'boolean',
+        scope: {
+          type: 'string',
+            title: intl.formatMessage({ id: 'promotions.promotion.effects.scope.title' }),
+              width: 300,
+          },
+        beginDate: {
+          type: 'string',
+            title: intl.formatMessage({ id: 'promotions.promotion.info.startDate' }),
+              cellRenderer: ({ cellData: beginDate }) => {
+                const date = format(toDate(beginDate), 'PP')
+                const time = format(toDate(beginDate), 'p')
+                return (
+                  <div>
+                    <div className="dt">
+                      <span className="dtc v-mid">{date}</span>
+                    </div>
+                    <div className="dt">
+                      <span className="dtc v-mid">{time}</span>
+                    </div>
+                  </div>
+                )
+              },
+          },
+        endDate: {
+          type: 'string',
+            title: intl.formatMessage({ id: 'promotions.promotion.info.endDate' }),
+              cellRenderer: ({ cellData: endDate }) => {
+                if (!endDate) {
+                  return (
+                    <div className="dt">
+                      <span className="dtc v-mid">-</span>
+                    </div>
+                  )
+                }
+                const date = format(toDate(endDate), 'PP')
+                const time = format(toDate(endDate), 'p')
+                return (
+                  <div>
+                    <div className="dt">
+                      <span className="dtc v-mid">{date}</span>
+                    </div>
+                    <div className="dt">
+                      <span className="dtc v-mid">{time}</span>
+                    </div>
+                  </div>
+                )
+              },
+          },
+        isActive: {
+          type: 'boolean',
             title: 'Status',
-            cellRenderer: ({ cellData: isActive }) => {
-              const badgeProps = isActive
-                ? { bgColor: '#8BC34A', color: '#FFFFFF', children: 'Active' }
-                : { bgColor: '#727273', color: '#FFFFFF', children: 'Inactive' }
-              return <Tag {...badgeProps} />
-            },
+              cellRenderer: ({ cellData: isActive }) => {
+                const badgeProps = isActive
+                  ? { bgColor: '#8BC34A', color: '#FFFFFF', children: 'Active' }
+                  : { bgColor: '#727273', color: '#FFFFFF', children: 'Inactive' }
+                return <Tag {...badgeProps} />
+              },
           },
-        },
       },
     }
   }
@@ -115,8 +113,8 @@ class PromotionsTable extends Component {
 
   render() {
     const { navigate } = this.context
-    const { schema } = this.state
     const { intl } = this.props
+    const schema = this.getTableSchema(intl)
     
     return (
       <Table
