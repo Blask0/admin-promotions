@@ -1,9 +1,9 @@
 {
-  "name": "campaigns-admin-ui",
+  "name": "promotions-admin",
   "vendor": "vtex",
   "version": "0.1.0",
-  "title": "Campaigns",
-  "description": "Admin interface for Campaigns",
+  "title": "Promotions Admin",
+  "description": "Admin interface for Promotions",
   "mustUpdateAt": "2019-08-27",
   "registries": ["smartcheckout"],
   "scripts": {
