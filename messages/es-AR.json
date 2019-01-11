@@ -12,9 +12,13 @@
   "promotions.promotion.effects.gift": "Gift",
   "promotions.promotion.effects.shipping": "Shipping",
   "promotions.promotion.effects.reward": "Reward",
+  "promotions.promotion.effects.scope.title": "Applies to",
   "promotions.promotion.elligibility.title": "Elligibility",
   "promotions.promotion.elligibility.selectAll": "All customers",
   "promotions.promotion.elligibility.selectSpecific": "specific customers",
   "promotions.promotion.save": "save",
-  "promotions.promotion.cancel": "cancel"
+  "promotions.promotion.cancel": "cancel",
+  "promotions.promotions.title": "Promotions",
+  "promotions.promotions.search": "Search promotions by name of effect",
+  "promotions.promotions.newPromotion": "New Promotion"
 }

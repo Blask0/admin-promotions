@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "apollo-server-errors": "^2.2.0",
-    "axios": "^0.18.0",
-    "graphql": "^14.0.2"
-  }
-}

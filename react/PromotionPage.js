@@ -14,12 +14,12 @@ import {
 } from 'vtex.styleguide'
 
 import SelectableCard from './components/SelectableCard'
-import Present from './components/Icon/Present'
+import Price from './components/Icon/Price'
+import Gift from './components/Icon/Gift'
+import Shipping from './components/Icon/Shipping'
 import Reward from './components/Icon/Reward'
-import Truck from './components/Icon/Truck'
-import Discount from './components/Icon/Discount'
 
-class Promotion extends Component {
+class PromotionPage extends Component {
   constructor(props) {
     super(props)
 
@@ -106,7 +106,7 @@ class Promotion extends Component {
             <div className="mh3">
               <SelectableCard selected={this.isEffectSelected('price')} onClick={() => this.selectEffect('price')}>
                 <div className="flex flex-column items-center center tc ph5">
-                  <Discount />
+                  <Price />
                   <div className="t-heading-4 b mt5">
                     <FormattedMessage id="promotions.promotion.effects.price" />
                   </div>
@@ -116,7 +116,7 @@ class Promotion extends Component {
             <div className="mh3">
               <SelectableCard selected={this.isEffectSelected('gift')} onClick={() => this.selectEffect('gift')}>
                 <div className="flex flex-column items-center center tc ph5">
-                  <Present />
+                  <Gift />
                   <div className="t-heading-4 b mt5">
                     <FormattedMessage id="promotions.promotion.effects.gift" />
                   </div>
@@ -126,7 +126,7 @@ class Promotion extends Component {
             <div className="mh3">
               <SelectableCard selected={this.isEffectSelected('shipping')} onClick={() => this.selectEffect('shipping')}>
                 <div className="flex flex-column items-center center tc ph5">
-                  <Truck />
+                  <Shipping />
                   <div className="t-heading-4 b mt5">
                     <FormattedMessage id="promotions.promotion.effects.shipping" />
                   </div>
@@ -177,4 +177,4 @@ class Promotion extends Component {
   }
 }
 
-export default injectIntl(Promotion)
+export default injectIntl(PromotionPage)

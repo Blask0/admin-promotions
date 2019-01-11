@@ -5,20 +5,14 @@
     },
     "admin/create": {
       "path": "/admin/promotions/:id"
-    },
-    "admin/sandbox": {
-      "path": "/admin/campaigns/simple-conditions-sandbox"
     }
   },
   "extensions": {
     "admin/index": {
-      "component": "index"
+      "component": "PromotionsPage"
     },
     "admin/create": {
-      "component": "Promotion"
-    },
-    "admin/sandbox": {
-      "component": "simple-conditions-sandbox"
+      "component": "PromotionPage"
     }
   }
 }
