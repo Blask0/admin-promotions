@@ -18,7 +18,9 @@ import Price from './components/Icon/Price'
 import Gift from './components/Icon/Gift'
 import Shipping from './components/Icon/Shipping'
 import Reward from './components/Icon/Reward'
+
 import EligibilitySection from './components/Promotion/EligibilitySection'
+import GeneralSection from './components/Promotion/GeneralSection'
 
 import savingPromotion from './connectors/savingPromotion'
 
@@ -107,41 +109,7 @@ class PromotionPage extends Component {
           />
         }>
         <PageBlock>
-          <h4 className="t-heading-4 mt0">
-            <FormattedMessage id="promotions.promotion.info.title" />
-          </h4>
-          <Input
-            label={intl.formatMessage({ id: 'promotions.promotion.info.name' })}
-          />
-          <div className="mv4">
-            <DatePicker
-              locale={intl.locale}
-              onChange={() => {}}
-              value={new Date()}
-              label={intl.formatMessage({
-                id: 'promotions.promotion.info.startDate',
-              })}
-            />
-          </div>
-          <Checkbox
-            checked={hasEndDate}
-            label={intl.formatMessage({
-              id: 'promotions.promotion.info.endDateCheck',
-            })}
-            onChange={e => this.setState({ hasEndDate: !hasEndDate })}
-          />
-          {hasEndDate ? (
-            <div className="mt4">
-              <DatePicker
-                locale={intl.locale}
-                onChange={() => {}}
-                value={new Date() + 7 * 24 * 60 * 60 * 1000}
-                label={intl.formatMessage({
-                  id: 'promotions.promotion.info.startDate',
-                })}
-              />
-            </div>
-          ) : null}
+          <GeneralSection/>
         </PageBlock>
         <PageBlock>
           <h4 className="t-heading-4 mt0">
