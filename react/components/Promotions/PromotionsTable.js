@@ -21,7 +21,7 @@ class PromotionsTable extends Component {
       properties: {
         name: {
           type: 'string',
-            title: intl.formatMessage({ id: 'promotions.promotion.info.name' }),
+            title: intl.formatMessage({ id: 'promotions.promotion.generalInfo.name' }),
               width: 400,
           },
         effectType: {
@@ -43,7 +43,7 @@ class PromotionsTable extends Component {
           },
         beginDate: {
           type: 'string',
-            title: intl.formatMessage({ id: 'promotions.promotion.info.startDate' }),
+            title: intl.formatMessage({ id: 'promotions.promotion.generalInfo.startDate' }),
               cellRenderer: ({ cellData: beginDate }) => {
                 const date = format(toDate(beginDate), 'PP')
                 const time = format(toDate(beginDate), 'p')
@@ -61,7 +61,7 @@ class PromotionsTable extends Component {
           },
         endDate: {
           type: 'string',
-            title: intl.formatMessage({ id: 'promotions.promotion.info.endDate' }),
+            title: intl.formatMessage({ id: 'promotions.promotion.generalInfo.endDate' }),
               cellRenderer: ({ cellData: endDate }) => {
                 if (!endDate) {
                   return (

@@ -1,18 +1,19 @@
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
+import {
+    Checkbox,
+    Input,
+    DatePicker,
+  } from 'vtex.styleguide'
 
 class GeneralSection extends Component {
   constructor(props) {
     super(props)
-
-    this.state = {
-      canSave: true,
-      hasEndDate: false, // temporary, this should be on promotion json
-      selectedEffect: null, // oneOf ['price', 'gift', 'shipping', 'reward']
-      allCustomersElligible: true ,
-    }
   }
 
   static contextTypes = {
-    navigate: PropTypes.func,
+    navigate : PropTypes.func,
   }
 
   static propTypes = {
@@ -30,40 +31,41 @@ class GeneralSection extends Component {
   isEffectSelected = effect => this.state.selectedEffect === effect
 
   render() {
-    const { hasEndDate } = this.state
-    const { intl } = this.props
+    const { intl, generalInfo } = this.props
 
     return (
-        <PageBlock>
+        <Fragment>
           <h4 className="t-heading-4 mt0">
-            <FormattedMessage id="promotions.promotion.info.title" />
+            <FormattedMessage id="promotions.promotion.generalInfo.title" />
           </h4>
-          <Input label={intl.formatMessage({ id: "promotions.promotion.info.name" })} />
+          <Input label={intl.formatMessage({ id: "promotions.promotion.generalInfo.name" })} />
           <div className="mv4">
             <DatePicker
               locale={intl.locale}
               onChange={() => {}}
               value={new Date()}
-              label={intl.formatMessage({ id: "promotions.promotion.info.startDate" })} />
+              label={intl.formatMessage({ id: "promotions.promotion.generalInfo.startDate" })} />
           </div>
           <Checkbox
-            checked={hasEndDate}
-            label={intl.formatMessage({ id: "promotions.promotion.info.endDateCheck" })}
-            onChange={e => this.setState({ hasEndDate: !hasEndDate })}
-          />
-          {hasEndDate
+            checked={generalInfo.hasEndDate}
+            label={intl.formatMessage({ id: "promotions.promotion.generalInfo.endDateCheck" })}
+            onChange={e => {
+                generalInfo.hasEndDate = !generalInfo.hasEndDate
+                this.props.onChange(generalInfo)
+            }}/>
+          {generalInfo.hasEndDate
             ? <div className="mt4">
                 <DatePicker
                   locale={intl.locale}
                   onChange={() => {}}
                   value={new Date() + 7 * 24 * 60 * 60 * 1000}
-                  label={intl.formatMessage({ id: "promotions.promotion.info.startDate" })} />
+                  label={intl.formatMessage({ id: "promotions.promotion.generalInfo.startDate" })} />
               </div>
             : null
           }
-        </PageBlock>
+        </Fragment>
     )
   }
 }
 
-export default GeneralSection
+export default injectIntl(GeneralSection)

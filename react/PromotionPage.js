@@ -30,13 +30,15 @@ class PromotionPage extends Component {
 
     this.state = {
       promotion: {
-        hasEndDate: false, // temporary, this should be on promotion json
+        generalInfo: {
+          hasEndDate: false, // temporary, this should be on promotion json
+        },
         effectType: null, // oneOf ['price', 'gift', 'shipping', 'reward']
         eligibility: {
           allCustomers: true,
           statements: [],
           operator: 'all',
-        },
+        }
       },
     }
   }
@@ -48,6 +50,10 @@ class PromotionPage extends Component {
   static propTypes = {
     intl: intlShape,
     savePromotion: PropTypes.func,
+  }
+
+  handleChangeGeneralInfo = (generalInfo) => {
+    this.setState({generalInfo})
   }
 
   componentDidMount = () => {
@@ -81,6 +87,7 @@ class PromotionPage extends Component {
 
   render() {
     const { navigate } = this.context
+<<<<<<< HEAD
     const { promotion } = this.state
     const { hasEndDate, effect, eligibility } = promotion
     const {
@@ -88,6 +95,10 @@ class PromotionPage extends Component {
       params: { id },
       savePromotion,
     } = this.props
+=======
+    const { canSave, generalInfo, selectedEffect, allCustomersElligible } = this.state
+    const { intl, params: { id } } = this.props
+>>>>>>> General Section exported as a component
 
     return (
       <Layout
@@ -109,7 +120,12 @@ class PromotionPage extends Component {
           />
         }>
         <PageBlock>
+<<<<<<< HEAD
           <GeneralSection/>
+=======
+          <GeneralSection generalInfo={generalInfo}
+              onChange={this.handleChangeGeneralInfo}/>
+>>>>>>> General Section exported as a component
         </PageBlock>
         <PageBlock>
           <h4 className="t-heading-4 mt0">
