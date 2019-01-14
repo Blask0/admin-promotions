@@ -18,17 +18,9 @@ class GeneralSection extends Component {
 
   static propTypes = {
     intl: intlShape,
+    generalInfo: PropTypes.object,
+    onChange: PropTypes.func
   }
-
-  componentDidMount = () => {
-    window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
-  }
-
-  selectEffect = effect => {
-    this.setState({ selectedEffect: effect })
-  }
-
-  isEffectSelected = effect => this.state.selectedEffect === effect
 
   render() {
     const { intl, generalInfo } = this.props
@@ -38,28 +30,41 @@ class GeneralSection extends Component {
           <h4 className="t-heading-4 mt0">
             <FormattedMessage id="promotions.promotion.generalInfo.title" />
           </h4>
-          <Input label={intl.formatMessage({ id: "promotions.promotion.generalInfo.name" })} />
+          <Input label={intl.formatMessage({ id: "promotions.promotion.generalInfo.name" })}
+          value={generalInfo.name}
+          onChange={e => {
+            this.props.onChange({
+                name: e.target.value
+            })
+          }} />
           <div className="mv4">
             <DatePicker
               locale={intl.locale}
-              onChange={() => {}}
-              value={new Date()}
+              onChange={e => {
+                this.props.onChange({
+                    startDate: e
+                })
+              }}
+              value={generalInfo.startDate}
               label={intl.formatMessage({ id: "promotions.promotion.generalInfo.startDate" })} />
           </div>
           <Toggle
             checked={generalInfo.hasEndDate}
             label={intl.formatMessage({ id: "promotions.promotion.generalInfo.endDateCheck" })}
             onChange={e => {
-                generalInfo.hasEndDate = !generalInfo.hasEndDate
-                this.props.onChange(generalInfo)
+                this.props.onChange({hasEndDate: !generalInfo.hasEndDate})
             }}/>
           {generalInfo.hasEndDate
             ? <div className="mt4">
                 <DatePicker
                   locale={intl.locale}
-                  onChange={() => {}}
-                  value={new Date() + 7 * 24 * 60 * 60 * 1000}
-                  label={intl.formatMessage({ id: "promotions.promotion.generalInfo.startDate" })} />
+                  onChange={e => {
+                    this.props.onChange({
+                        endDate: e
+                    })
+                  }}                  
+                  value={generalInfo.endDate}
+                  label={intl.formatMessage({ id: "promotions.promotion.generalInfo.endDate" })} />
               </div>
             : null
           }

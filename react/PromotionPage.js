@@ -87,18 +87,13 @@ class PromotionPage extends Component {
 
   render() {
     const { navigate } = this.context
-<<<<<<< HEAD
     const { promotion } = this.state
-    const { hasEndDate, effect, eligibility } = promotion
+    const { generalInfo, eligibility } = promotion
     const {
       intl,
       params: { id },
       savePromotion,
     } = this.props
-=======
-    const { canSave, generalInfo, selectedEffect, allCustomersElligible } = this.state
-    const { intl, params: { id } } = this.props
->>>>>>> General Section exported as a component
 
     return (
       <Layout
@@ -120,12 +115,8 @@ class PromotionPage extends Component {
           />
         }>
         <PageBlock>
-<<<<<<< HEAD
-          <GeneralSection/>
-=======
           <GeneralSection generalInfo={generalInfo}
               onChange={this.handleChangeGeneralInfo}/>
->>>>>>> General Section exported as a component
         </PageBlock>
         <PageBlock>
           <h4 className="t-heading-4 mt0">
