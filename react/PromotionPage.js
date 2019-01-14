@@ -7,9 +7,6 @@ import {
   PageBlock,
   PageHeader,
   Button,
-  Checkbox,
-  Input,
-  DatePicker,
   Radio,
 } from 'vtex.styleguide'
 
@@ -31,7 +28,11 @@ class PromotionPage extends Component {
     this.state = {
       promotion: {
         generalInfo: {
+          name: undefined,
+          status: undefined,
           hasEndDate: false, // temporary, this should be on promotion json
+          startDate: new Date(),
+          endDate: addDays(new Date(), 1)
         },
         effectType: null, // oneOf ['price', 'gift', 'shipping', 'reward']
         eligibility: {
@@ -39,7 +40,7 @@ class PromotionPage extends Component {
           statements: [],
           operator: 'all',
         }
-      },
+      }
     }
   }
 

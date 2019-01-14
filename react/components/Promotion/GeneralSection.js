@@ -30,13 +30,24 @@ class GeneralSection extends Component {
           <h4 className="t-heading-4 mt0">
             <FormattedMessage id="promotions.promotion.generalInfo.title" />
           </h4>
-          <Input label={intl.formatMessage({ id: "promotions.promotion.generalInfo.name" })}
-          value={generalInfo.name}
-          onChange={e => {
-            this.props.onChange({
-                name: e.target.value
-            })
-          }} />
+          <div className="mv4">
+            <Input label={intl.formatMessage({ id: "promotions.promotion.generalInfo.status" })}
+            value={generalInfo.status}
+            onChange={e => {
+                this.props.onChange({
+                    status: e.target.value
+                })
+            }} />
+          </div>
+          <div className="mv4">
+            <Input label={intl.formatMessage({ id: "promotions.promotion.generalInfo.name" })}
+            value={generalInfo.name}
+            onChange={e => {
+                this.props.onChange({
+                    name: e.target.value
+                })
+            }} />
+          </div>
           <div className="mv4">
             <DatePicker
               locale={intl.locale}
