@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import {
-    Checkbox,
+    Toggle,
     Input,
     DatePicker,
   } from 'vtex.styleguide'
@@ -34,7 +34,7 @@ class GeneralSection extends Component {
     const { intl, generalInfo } = this.props
 
     return (
-        <Fragment>
+        <React.Fragment>
           <h4 className="t-heading-4 mt0">
             <FormattedMessage id="promotions.promotion.generalInfo.title" />
           </h4>
@@ -46,7 +46,7 @@ class GeneralSection extends Component {
               value={new Date()}
               label={intl.formatMessage({ id: "promotions.promotion.generalInfo.startDate" })} />
           </div>
-          <Checkbox
+          <Toggle
             checked={generalInfo.hasEndDate}
             label={intl.formatMessage({ id: "promotions.promotion.generalInfo.endDateCheck" })}
             onChange={e => {
@@ -63,7 +63,7 @@ class GeneralSection extends Component {
               </div>
             : null
           }
-        </Fragment>
+        </React.Fragment>
     )
   }
 }
