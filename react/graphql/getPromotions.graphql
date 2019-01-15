@@ -7,8 +7,5 @@ query GetPromotions($name: String, $effect: String) {
     isActive
     description
     effectType
-    campaigns {
-      name
-    }
   }
 }
