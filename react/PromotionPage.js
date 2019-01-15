@@ -27,12 +27,14 @@ class PromotionPage extends Component {
     super(props)
 
     this.state = {
-      hasEndDate: false, // temporary, this should be on promotion json
-      effectType: null, // oneOf ['price', 'gift', 'shipping', 'reward']
-      eligibility: {
-        allCustomers: true,
-        statements: [],
-        operator: 'all',
+      promotion: {
+        hasEndDate: false, // temporary, this should be on promotion json
+        effectType: null, // oneOf ['price', 'gift', 'shipping', 'reward']
+        eligibility: {
+          allCustomers: true,
+          statements: [],
+          operator: 'all',
+        }
       }
     }
   }
@@ -51,25 +53,34 @@ class PromotionPage extends Component {
   }
 
   selectEffect = effect => {
-    this.setState({ effectType: effect })
+    this.setState(prevState => ({
+      promotion: {
+        ...prevState.promotion,
+        effectType: effect
+      }
+    }))
   }
 
-  isEffectSelected = effect => this.state.effectType === effect
+  isEffectSelected = effect => this.state.promotion.effectType === effect
 
   canSave = () => true
 
   handleEligibilitySectionChange = eligibility => {
     this.setState(prevState => ({
-      eligibility: {
-        ...prevState.eligibility,
-        ...eligibility
+      promotion: {
+        ...prevState.promotion,
+        eligibility: {
+          ...prevState.promotion.eligibility,
+          ...eligibility
+        }
       }
     }))
   }
 
   render() {
     const { navigate } = this.context
-    const { hasEndDate, effect, eligibility } = this.state
+    const { promotion } = this.state
+    const { hasEndDate, effect, eligibility } = promotion
     const { intl, params: { id }, savePromotion } = this.props
 
     return (
@@ -175,16 +186,21 @@ class PromotionPage extends Component {
                 <Button
                   variation="primary"
                   onClick={() => {
+                    console.log({
+                      ...promotion,
+                      eligibility: {
+                        ...eligibility,
+                        statements: JSON.stringify(eligibility.statements)
+                      }
+                    })
                     savePromotion({
                       variables: {
                         promotion: {
-                          ...this.state,
+                          ...promotion,
                           eligibility: {
                             ...eligibility,
-                            statements: JSON.stringify(
-                              eligibility.statements
-                            ),
-                          },
+                            statements: JSON.stringify(eligibility.statements)
+                          }
                         },
                       },
                     })
