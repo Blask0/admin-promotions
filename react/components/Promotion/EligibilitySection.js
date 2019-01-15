@@ -80,6 +80,7 @@ class EligibilitySection extends Component {
           <FormattedMessage id="promotions.promotion.elligibility.title" />
         </h4>
         <Radio
+          id="promotions.promotion.elligibility.selectAll"
           checked={allCustomers}
           label={intl.formatMessage({
             id: 'promotions.promotion.elligibility.selectAll',
@@ -91,6 +92,7 @@ class EligibilitySection extends Component {
           }
         />
         <Radio
+          id="promotions.promotion.elligibility.selectSpecific"
           checked={!allCustomers}
           label={intl.formatMessage({
             id: 'promotions.promotion.elligibility.selectSpecific',
