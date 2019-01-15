@@ -1,0 +1,11 @@
+mutation SavePromotions($promotion: PromotionInput!) {
+  savePromotion(promotion: $promotion) {
+    id
+    name
+    beginDate
+    endDate
+    isActive
+    description
+    effectType
+  }
+}

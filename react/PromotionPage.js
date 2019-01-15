@@ -18,16 +18,22 @@ import Price from './components/Icon/Price'
 import Gift from './components/Icon/Gift'
 import Shipping from './components/Icon/Shipping'
 import Reward from './components/Icon/Reward'
+import EligibilitySection from './components/Promotion/EligibilitySection';
+
+import savingPromotion from './connectors/savingPromotion';
 
 class PromotionPage extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      canSave: true,
       hasEndDate: false, // temporary, this should be on promotion json
-      selectedEffect: null, // oneOf ['price', 'gift', 'shipping', 'reward']
-      allCustomersElligible: true ,
+      effectType: null, // oneOf ['price', 'gift', 'shipping', 'reward']
+      eligibility: {
+        allCustomers: true,
+        statements: [],
+        operator: 'all',
+      }
     }
   }
 
@@ -37,6 +43,7 @@ class PromotionPage extends Component {
 
   static propTypes = {
     intl: intlShape,
+    savePromotion: PropTypes.func
   }
 
   componentDidMount = () => {
@@ -44,15 +51,26 @@ class PromotionPage extends Component {
   }
 
   selectEffect = effect => {
-    this.setState({ selectedEffect: effect })
+    this.setState({ effectType: effect })
   }
 
-  isEffectSelected = effect => this.state.selectedEffect === effect
+  isEffectSelected = effect => this.state.effectType === effect
+
+  canSave = () => true
+
+  handleEligibilitySectionChange = eligibility => {
+    this.setState(prevState => ({
+      eligibility: {
+        ...prevState.eligibility,
+        ...eligibility
+      }
+    }))
+  }
 
   render() {
     const { navigate } = this.context
-    const { canSave, hasEndDate, selectedEffect, allCustomersElligible } = this.state
-    const { intl, params: { id } } = this.props
+    const { hasEndDate, effect, eligibility } = this.state
+    const { intl, params: { id }, savePromotion } = this.props
 
     return (
       <Layout
@@ -146,24 +164,31 @@ class PromotionPage extends Component {
           </div>
         </PageBlock>
         <PageBlock>
-          <h4 className="t-heading-4 mt0">
-            <FormattedMessage id="promotions.promotion.elligibility.title" />
-          </h4>
-          <Radio
-            checked={allCustomersElligible}
-            label={intl.formatMessage({ id: "promotions.promotion.elligibility.selectAll" })}
-            onChange={e => this.setState({ allCustomersElligible: true })}
-          />
-          <Radio
-            checked={!allCustomersElligible}
-            label={intl.formatMessage({ id: "promotions.promotion.elligibility.selectSpecific" })}
-            onChange={e => this.setState({ allCustomersElligible: false })}
+          <EligibilitySection
+            eligibility={eligibility}
+            updatePageState={this.handleEligibilitySectionChange}
           />
         </PageBlock>
         {
-          canSave
+          this.canSave()
             ? <div className="flex flex-row">
-                <Button variation="primary">
+                <Button
+                  variation="primary"
+                  onClick={() => {
+                    savePromotion({
+                      variables: {
+                        promotion: {
+                          ...this.state,
+                          eligibility: {
+                            ...this.state.eligibility,
+                            statements: JSON.stringify(
+                              this.state.eligibility.statements
+                            ),
+                          },
+                        },
+                      },
+                    })
+                  }}>
                   <FormattedMessage id="promotions.promotion.save" />
                 </Button>
                 <Button variation="tertiary">
@@ -177,4 +202,4 @@ class PromotionPage extends Component {
   }
 }
 
-export default injectIntl(PromotionPage)
+export default savingPromotion(injectIntl(PromotionPage))
