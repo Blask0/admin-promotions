@@ -2,25 +2,19 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-import {
-  Layout,
-  PageBlock,
-  PageHeader,
-  Button,
-  Checkbox,
-  Input,
-  DatePicker,
-  Radio,
-} from 'vtex.styleguide'
+import { Layout, PageBlock, PageHeader, Button, Radio } from 'vtex.styleguide'
 
 import SelectableCard from './components/SelectableCard'
 import Price from './components/Icon/Price'
 import Gift from './components/Icon/Gift'
 import Shipping from './components/Icon/Shipping'
 import Reward from './components/Icon/Reward'
+
 import EligibilitySection from './components/Promotion/EligibilitySection'
+import GeneralSection from './components/Promotion/GeneralSection'
 
 import savingPromotion from './connectors/savingPromotion'
+import { addDays } from 'date-fns'
 
 class PromotionPage extends Component {
   constructor(props) {
@@ -28,14 +22,20 @@ class PromotionPage extends Component {
 
     this.state = {
       promotion: {
-        hasEndDate: false, // temporary, this should be on promotion json
+        generalInfo: {
+          name: undefined,
+          status: undefined,
+          startDate: new Date(),
+          hasEndDate: false, // temporary, this should be on promotion json
+          endDate: addDays(new Date(), 1),
+        },
         effectType: null, // oneOf ['price', 'gift', 'shipping', 'reward']
         eligibility: {
           allCustomers: true,
           statements: [],
           operator: 'all',
-        },
-      },
+        }
+      }
     }
   }
 
@@ -46,6 +46,32 @@ class PromotionPage extends Component {
   static propTypes = {
     intl: intlShape,
     savePromotion: PropTypes.func,
+  }
+
+  handleGeneralInfoChange = generalInfo => {
+    this.setState(prevState => {
+      return {
+        promotion: {
+          ...prevState.promotion,
+          generalInfo: {
+            ...prevState.promotion.generalInfo,
+            ...generalInfo,
+          },
+        },
+      }
+    })
+  }
+
+  handleEligibilitySectionChange = eligibility => {
+    this.setState(prevState => ({
+      promotion: {
+        ...prevState.promotion,
+        eligibility: {
+          ...prevState.promotion.eligibility,
+          ...eligibility,
+        },
+      },
+    }))
   }
 
   componentDidMount = () => {
@@ -65,22 +91,10 @@ class PromotionPage extends Component {
 
   canSave = () => true
 
-  handleEligibilitySectionChange = eligibility => {
-    this.setState(prevState => ({
-      promotion: {
-        ...prevState.promotion,
-        eligibility: {
-          ...prevState.promotion.eligibility,
-          ...eligibility,
-        },
-      },
-    }))
-  }
-
   render() {
     const { navigate } = this.context
     const { promotion } = this.state
-    const { hasEndDate, effect, eligibility } = promotion
+    const { generalInfo, eligibility } = promotion
     const {
       intl,
       params: { id },
@@ -107,41 +121,10 @@ class PromotionPage extends Component {
           />
         }>
         <PageBlock>
-          <h4 className="t-heading-4 mt0">
-            <FormattedMessage id="promotions.promotion.info.title" />
-          </h4>
-          <Input
-            label={intl.formatMessage({ id: 'promotions.promotion.info.name' })}
+          <GeneralSection
+            generalInfo={generalInfo}
+            updatePageState={this.handleGeneralInfoChange}
           />
-          <div className="mv4">
-            <DatePicker
-              locale={intl.locale}
-              onChange={() => {}}
-              value={new Date()}
-              label={intl.formatMessage({
-                id: 'promotions.promotion.info.startDate',
-              })}
-            />
-          </div>
-          <Checkbox
-            checked={hasEndDate}
-            label={intl.formatMessage({
-              id: 'promotions.promotion.info.endDateCheck',
-            })}
-            onChange={e => this.setState({ hasEndDate: !hasEndDate })}
-          />
-          {hasEndDate ? (
-            <div className="mt4">
-              <DatePicker
-                locale={intl.locale}
-                onChange={() => {}}
-                value={new Date() + 7 * 24 * 60 * 60 * 1000}
-                label={intl.formatMessage({
-                  id: 'promotions.promotion.info.startDate',
-                })}
-              />
-            </div>
-          ) : null}
         </PageBlock>
         <PageBlock>
           <h4 className="t-heading-4 mt0">
