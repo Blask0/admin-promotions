@@ -2,13 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-import {
-  Layout,
-  PageBlock,
-  PageHeader,
-  Button,
-  Radio,
-} from 'vtex.styleguide'
+import { Layout, PageBlock, PageHeader, Button, Radio } from 'vtex.styleguide'
 
 import SelectableCard from './components/SelectableCard'
 import Price from './components/Icon/Price'
@@ -54,16 +48,16 @@ class PromotionPage extends Component {
     savePromotion: PropTypes.func,
   }
 
-  handleChangeGeneralInfo = (generalInfo) => {
+  handleChangeGeneralInfo = generalInfo => {
     this.setState(prevState => {
       return {
         promotion: {
-          ... prevState.promotion,
+          ...prevState.promotion,
           generalInfo: {
             ...prevState.promotion.generalInfo,
-            ...generalInfo
-          }
-        }
+            ...generalInfo,
+          },
+        },
       }
     })
   }
@@ -127,8 +121,10 @@ class PromotionPage extends Component {
           />
         }>
         <PageBlock>
-          <GeneralSection generalInfo={generalInfo}
-              updatePageState={this.handleChangeGeneralInfo}/>
+          <GeneralSection
+            generalInfo={generalInfo}
+            updatePageState={this.handleChangeGeneralInfo}
+          />
         </PageBlock>
         <PageBlock>
           <h4 className="t-heading-4 mt0">
