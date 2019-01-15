@@ -128,7 +128,7 @@ class PromotionPage extends Component {
         }>
         <PageBlock>
           <GeneralSection generalInfo={generalInfo}
-              onChange={this.handleChangeGeneralInfo}/>
+              updatePageState={this.handleChangeGeneralInfo}/>
         </PageBlock>
         <PageBlock>
           <h4 className="t-heading-4 mt0">

@@ -34,7 +34,7 @@ class GeneralSection extends Component {
             <Input label={intl.formatMessage({ id: "promotions.promotion.generalInfo.status" })}
             value={generalInfo.status}
             onChange={e => {
-                this.props.onChange({
+                this.props.updatePageState({
                     status: e.target.value
                 })
             }} />
@@ -43,7 +43,7 @@ class GeneralSection extends Component {
             <Input label={intl.formatMessage({ id: "promotions.promotion.generalInfo.name" })}
             value={generalInfo.name}
             onChange={e => {
-                this.props.onChange({
+                this.props.updatePageState({
                     name: e.target.value
                 })
             }} />
@@ -52,7 +52,7 @@ class GeneralSection extends Component {
             <DatePicker
               locale={intl.locale}
               onChange={date => {
-                this.props.onChange({
+                this.props.updatePageState({
                     startDate: date
                 })
               }}
@@ -63,14 +63,14 @@ class GeneralSection extends Component {
             checked={generalInfo.hasEndDate}
             label={intl.formatMessage({ id: "promotions.promotion.generalInfo.hasEndDate" })}
             onChange={() => {
-                this.props.onChange({hasEndDate: !generalInfo.hasEndDate})
+                this.props.updatePageState({hasEndDate: !generalInfo.hasEndDate})
             }}/>
           {generalInfo.hasEndDate
             ? <div className="mt4">
                 <DatePicker
                   locale={intl.locale}
                   onChange={date => {
-                    this.props.onChange({
+                    this.props.updatePageState({
                         endDate: date
                     })
                   }}                  
