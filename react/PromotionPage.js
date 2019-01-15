@@ -180,9 +180,9 @@ class PromotionPage extends Component {
                         promotion: {
                           ...this.state,
                           eligibility: {
-                            ...this.state.eligibility,
+                            ...eligibility,
                             statements: JSON.stringify(
-                              this.state.eligibility.statements
+                              eligibility.statements
                             ),
                           },
                         },
