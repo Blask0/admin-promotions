@@ -48,7 +48,7 @@ class PromotionPage extends Component {
     savePromotion: PropTypes.func,
   }
 
-  handleChangeGeneralInfo = generalInfo => {
+  handleGeneralInfoChange = generalInfo => {
     this.setState(prevState => {
       return {
         promotion: {
@@ -60,6 +60,18 @@ class PromotionPage extends Component {
         },
       }
     })
+  }
+
+  handleEligibilitySectionChange = eligibility => {
+    this.setState(prevState => ({
+      promotion: {
+        ...prevState.promotion,
+        eligibility: {
+          ...prevState.promotion.eligibility,
+          ...eligibility,
+        },
+      },
+    }))
   }
 
   componentDidMount = () => {
@@ -78,18 +90,6 @@ class PromotionPage extends Component {
   isEffectSelected = effect => this.state.promotion.effectType === effect
 
   canSave = () => true
-
-  handleEligibilitySectionChange = eligibility => {
-    this.setState(prevState => ({
-      promotion: {
-        ...prevState.promotion,
-        eligibility: {
-          ...prevState.promotion.eligibility,
-          ...eligibility,
-        },
-      },
-    }))
-  }
 
   render() {
     const { navigate } = this.context
@@ -123,7 +123,7 @@ class PromotionPage extends Component {
         <PageBlock>
           <GeneralSection
             generalInfo={generalInfo}
-            updatePageState={this.handleChangeGeneralInfo}
+            updatePageState={this.handleGeneralInfoChange}
           />
         </PageBlock>
         <PageBlock>
