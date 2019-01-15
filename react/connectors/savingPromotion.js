@@ -5,10 +5,6 @@ import savePromotion from '../graphql/savePromotion.graphql';
 
 function savingPromotion(WrappedComponent) {
   class SavingPromotion extends Component {
-    constructor(props) {
-      super(props)
-    }
-
     render() {
       return (
         <Mutation mutation={savePromotion}>
