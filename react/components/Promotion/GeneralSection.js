@@ -51,9 +51,9 @@ class GeneralSection extends Component {
           <div className="mv4">
             <DatePicker
               locale={intl.locale}
-              onChange={e => {
+              onChange={date => {
                 this.props.onChange({
-                    startDate: e
+                    startDate: date
                 })
               }}
               value={generalInfo.startDate}
@@ -61,17 +61,17 @@ class GeneralSection extends Component {
           </div>
           <Toggle
             checked={generalInfo.hasEndDate}
-            label={intl.formatMessage({ id: "promotions.promotion.generalInfo.endDateCheck" })}
-            onChange={e => {
+            label={intl.formatMessage({ id: "promotions.promotion.generalInfo.hasEndDate" })}
+            onChange={() => {
                 this.props.onChange({hasEndDate: !generalInfo.hasEndDate})
             }}/>
           {generalInfo.hasEndDate
             ? <div className="mt4">
                 <DatePicker
                   locale={intl.locale}
-                  onChange={e => {
+                  onChange={date => {
                     this.props.onChange({
-                        endDate: e
+                        endDate: date
                     })
                   }}                  
                   value={generalInfo.endDate}

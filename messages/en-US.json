@@ -6,7 +6,7 @@
   "promotions.promotion.generalInfo.name": "Promotion name",
   "promotions.promotion.generalInfo.status": "Status",
   "promotions.promotion.generalInfo.startDate": "Start date and time (UTC)",
-  "promotions.promotion.generalInfo.endDateCheck": "Set end date",
+  "promotions.promotion.generalInfo.hasEndDate": "Set end date",
   "promotions.promotion.generalInfo.endDate": "End date and time (UTC)",
   "promotions.promotion.effects.title": "Effects",
   "promotions.promotion.effects.price": "Price",

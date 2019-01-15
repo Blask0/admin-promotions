@@ -20,6 +20,7 @@ import EligibilitySection from './components/Promotion/EligibilitySection'
 import GeneralSection from './components/Promotion/GeneralSection'
 
 import savingPromotion from './connectors/savingPromotion'
+import { addDays } from 'date-fns'
 
 class PromotionPage extends Component {
   constructor(props) {
@@ -54,7 +55,14 @@ class PromotionPage extends Component {
   }
 
   handleChangeGeneralInfo = (generalInfo) => {
-    this.setState({generalInfo})
+    this.setState(prevState => {
+      return {
+        generalInfo: {
+          ...prevState.generalInfo,
+          ...generalInfo
+        }
+      }
+    })
   }
 
   componentDidMount = () => {
