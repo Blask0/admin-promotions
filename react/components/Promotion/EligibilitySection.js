@@ -9,7 +9,7 @@ class EligibilitySection extends Component {
     super(props)
   }
 
-  simpleInputObject = ({ statements, values, statementIndex, error }) => {
+  renderInputObject = ({ statements, values, statementIndex, error }) => {
     const { updatePageState } = this.props
 
     return (
