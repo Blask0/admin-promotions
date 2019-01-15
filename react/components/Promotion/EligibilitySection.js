@@ -58,17 +58,17 @@ class EligibilitySection extends Component {
           {
             label: 'contains',
             value: 'contains',
-            object: this.simpleInputObject,
+            object: this.renderInputObject,
           },
           {
             label: 'is',
             value: '==',
-            object: this.simpleInputObject,
+            object: this.renderInputObject,
           },
           {
             label: 'is not',
             value: '!=',
-            object: this.simpleInputObject,
+            object: this.renderInputObject,
           },
         ],
       },
