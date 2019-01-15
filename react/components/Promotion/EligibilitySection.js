@@ -43,7 +43,7 @@ class EligibilitySection extends Component {
           {
             label: 'is',
             value: '==',
-            object: this.simpleInputObject,
+            object: this.renderInputObject,
           },
           {
             label: 'is not',
