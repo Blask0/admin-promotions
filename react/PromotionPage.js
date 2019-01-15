@@ -57,9 +57,12 @@ class PromotionPage extends Component {
   handleChangeGeneralInfo = (generalInfo) => {
     this.setState(prevState => {
       return {
-        generalInfo: {
-          ...prevState.generalInfo,
-          ...generalInfo
+        promotion: {
+          ... prevState.promotion,
+          generalInfo: {
+            ...prevState.promotion.generalInfo,
+            ...generalInfo
+          }
         }
       }
     })
