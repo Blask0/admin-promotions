@@ -25,9 +25,9 @@ class PromotionPage extends Component {
         generalInfo: {
           name: undefined,
           status: undefined,
-          hasEndDate: false, // temporary, this should be on promotion json
           startDate: new Date(),
-          endDate: addDays(new Date(), 1)
+          hasEndDate: false, // temporary, this should be on promotion json
+          endDate: addDays(new Date(), 1),
         },
         effectType: null, // oneOf ['price', 'gift', 'shipping', 'reward']
         eligibility: {

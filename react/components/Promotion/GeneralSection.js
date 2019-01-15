@@ -8,16 +8,6 @@ class GeneralSection extends Component {
     super(props)
   }
 
-  static contextTypes = {
-    navigate: PropTypes.func,
-  }
-
-  static propTypes = {
-    intl: intlShape,
-    generalInfo: PropTypes.object,
-    onChange: PropTypes.func,
-  }
-
   render() {
     const { intl, generalInfo } = this.props
 
@@ -94,6 +84,22 @@ class GeneralSection extends Component {
       </Fragment>
     )
   }
+}
+
+GeneralSection.contextTypes = {
+  navigate: PropTypes.func,
+}
+
+GeneralSection.propTypes = {
+  intl: intlShape,
+  generalInfo: PropTypes.shape({
+    name: PropTypes.string,
+    status: PropTypes.string,
+    startDate: PropTypes.instanceOf(Date),
+    hasEndDate: PropTypes.bool,
+    endDate: PropTypes.instanceOf(Date),
+  }),
+  updatePageState: PropTypes.func,
 }
 
 export default injectIntl(GeneralSection)
