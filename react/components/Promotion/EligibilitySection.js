@@ -5,6 +5,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import { Radio, EXPERIMENTAL_Conditions, Input } from 'vtex.styleguide'
 
 import { shippingMethods } from '../../utils/conditions/options'
+import  withPaymentMethods from '../../connectors/withPaymentMethods' 
 
 class EligibilitySection extends Component {
   constructor(props) {
@@ -27,6 +28,57 @@ class EligibilitySection extends Component {
     )
   }
 
+  renderRangeInputObject = ({ statements, values, statementIndex, error }) => {
+    const { updatePageState } = this.props
+
+    return (
+      <div className='flex'>
+
+        <Input
+          placeholder=""
+          errorMessage={
+            statements[statementIndex].object &&
+            parseInt(statements[statementIndex].object.first) >=
+              parseInt(statements[statementIndex].object.last)
+              ? 'Must be smaller than other input'
+              : ''
+          }
+          value={values && values.first ? values.first : ''}
+          onChange={e => {
+            const currentObject =
+              statements[statementIndex].object || {}
+            currentObject.first = e.target.value.replace(/\D/g, '')
+
+            statements[statementIndex].object = currentObject
+            
+            updatePageState({
+              statements: statements
+            })
+          }}
+        />
+
+        <div className="mv4 mh3 c-muted-2 b">and</div>
+
+        <Input
+          placeholder=""
+          value={values && values.last ? values.last : ''}
+          onChange={e => {
+            const currentObject =
+              statements[statementIndex].object || {}
+            currentObject.last = e.target.value.replace(/\D/g, '')
+
+            statements[statementIndex].object = currentObject
+
+            updatePageState({
+              statements: statements
+            })
+          }}
+        />
+        
+      </div>
+    )
+  }
+
   render() {
     const {
       intl,
@@ -35,7 +87,120 @@ class EligibilitySection extends Component {
     } = this.props
 
     const options = {
+<<<<<<< HEAD
       shippingMethods: shippingMethods(intl, updatePageState),
+=======
+      name: {
+        label: 'User name',
+        verbs: [
+          {
+            label: 'is',
+            value: '==',
+            object: this.renderInputObject,
+          },
+          {
+            label: 'is not',
+            value: '!=',
+            object: this.renderInputObject,
+          },
+        ],
+      },
+      email: {
+        label: 'Email',
+        verbs: [
+          {
+            label: 'contains',
+            value: 'contains',
+            object: this.renderInputObject,
+          },
+          {
+            label: 'is',
+            value: '==',
+            object: this.renderInputObject,
+          },
+          {
+            label: 'is not',
+            value: '!=',
+            object: this.renderInputObject,
+          },
+        ],
+      },
+      paymentMethod: {
+        label: "Payment method",
+        verbs: [
+          {
+            label: 'is',
+            value: '==',
+            object: {
+              renderFn: this.renderInputObject,
+              extraParams: {
+                connector: withPaymentMethods,
+                isMulti: false
+              }
+            }
+
+          },
+          {
+            label: 'is not',
+            value: '!=',
+            object: {
+              renderFn: this.renderInputObject,
+              extraParams: {
+                connector: withPaymentMethods
+              }
+            }
+          },
+          {
+            label: 'is any of',
+            value: '',
+            object: {
+              renderFn: this.renderInputObject,
+              extraParams: {
+                connector: withPaymentMethods
+              }
+            }
+          }
+        ]
+      },
+      itemValue: {
+        label: "Item value",
+        verbs: [
+          {
+            label: 'is greater than',
+            value: '>',
+            object: {
+              renderFn: this.renderInputObject,
+              extraParams: {
+                connector: withPaymentMethods,
+                isMulti: false
+              }
+            }
+          },
+          {
+            label: 'is smaller than',
+            value: '<',
+            object: {
+              renderFn: this.renderInputObject,
+              extraParams: {
+                connector: withPaymentMethods,
+                isMulti: false
+              }
+            }
+          },
+          {
+            label: 'is between',
+            value: 'between',
+            object: {
+              renderFn: this.renderInputObject,
+              extraParams: {
+                connector: withPaymentMethods,
+                isMulti: false
+              }
+            }
+          }
+        ]
+      }
+>>>>>>> [WIP] payment methods and item value
     }
 
     return (
