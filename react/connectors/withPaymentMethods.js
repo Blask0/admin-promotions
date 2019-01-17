@@ -14,12 +14,13 @@ function withPaymentMethods(WrappedComponent) {
         <Query 
           query={getPaymentMethods}>
           {({ loading, error, data }) => {
+              const paymentMethodsOptions = data ? data.getPaymentMethods: []  
             return ( 
                 <WrappedComponent
                 {...this.props}
                 loading={loading}
                 error={error}
-                paymentMethods={data.getPaymentMethods}
+                paymentMethods={paymentMethodsOptions}
                 />)
             }
           } 

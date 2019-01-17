@@ -173,9 +173,9 @@ class EligibilitySection extends Component {
               extraParams: {
                 queryInfo: {
                   connector: withPaymentMethods,
-                  dataGetter: ({ paymentMethods }) => (paymentMethods.map(self.mapToSelect)),
+                  dataGetter: ({ paymentMethods = [] }) => (paymentMethods.map(self.mapToSelect)),
                 },
-                isMulti: false
+                multi: false
               }
             }
           },
@@ -189,7 +189,7 @@ class EligibilitySection extends Component {
                   connector: withPaymentMethods,
                   propName: 'paymentMethods'
                 },
-                isMulti: false
+                multi: false
               }
             }
           },
@@ -200,7 +200,7 @@ class EligibilitySection extends Component {
               renderFn: this.renderSelectObject,
               extraParams: {
                 connector: withPaymentMethods,
-                isMulti: true
+                multi: true
               }
             }
           }
