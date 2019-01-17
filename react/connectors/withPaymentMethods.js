@@ -14,21 +14,12 @@ function withPaymentMethods(WrappedComponent) {
         <Query 
           query={getPaymentMethods}>
           {({ loading, error, data }) => {
-            let paymentMethodsOptions = []
-
-            if (!loading) {
-                paymentMethodsOptions = data.getPaymentMethods.map(paymentMethod => ({
-                    label: paymentMethod.name,
-                    value: paymentMethod.id
-                }))
-            }
-
             return ( 
                 <WrappedComponent
                 {...this.props}
                 loading={loading}
                 error={error}
-                paymentMethods={paymentMethodsOptions}
+                paymentMethods={data.getPaymentMethods}
                 />)
             }
           } 

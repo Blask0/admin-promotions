@@ -28,35 +28,40 @@ class EligibilitySection extends Component {
     )
   }
 
-  renderDropdownObject = ({
+  mapToSelect = dataPoint => ({
+    label: dataPoint.name ,
+    value: dataPoint.id
+  })
+
+  renderSelectObject = ({
     statements,
     values,
     statementIndex,
     error,
     extraParams,
   }) => {
-    const { updatePageState } = this.props
+    const { intl, updatePageState } = this.props
 
-    const DropdownObject = extraParams.queryInfo.connector(props => {
-      const options = props[extraParams.queryInfo.propName]
-
+    const SelectObject = extraParams.queryInfo.connector(props => {
+      const options = extraParams.queryInfo.dataGetter(props)
+      
       return (
-        <Dropdown
-          placeholder={""}
-          value={values}
+        <Select
+          placeholder={"select.."}
           options={options}
-          isMulti={extraParams.isMulti}
-          onChange={(e,value) => {
+          value={statements[statementIndex].object}
+          isMulti={extraParams.multi}
+          onChange={value => {
             statements[statementIndex].object = value
             updatePageState({
-              statements: statements
+              statements,
             })
           }}
         />
       )
     })
 
-    return <DropdownObject />
+    return <SelectObject />
   }
 
   renderRangeInputObject = ({ statements, values, statementIndex, error, extraParams }) => {
@@ -116,6 +121,7 @@ class EligibilitySection extends Component {
       eligibility: { allCustomers, statements, operator },
       updatePageState,
     } = this.props
+    let self = this
 
     const options = {
 <<<<<<< HEAD
@@ -163,11 +169,11 @@ class EligibilitySection extends Component {
             label: 'is',
             value: '==',
             object: {
-              renderFn: this.renderDropdownObject,
+              renderFn: this.renderSelectObject,
               extraParams: {
                 queryInfo: {
                   connector: withPaymentMethods,
-                  propName: 'paymentMethods'
+                  dataGetter: ({ paymentMethods }) => (paymentMethods.map(self.mapToSelect)),
                 },
                 isMulti: false
               }
@@ -177,7 +183,7 @@ class EligibilitySection extends Component {
             label: 'is not',
             value: '!=',
             object: {
-              renderFn: this.renderDropdownObject,
+              renderFn: this.renderSelectObject,
               extraParams: {
                 queryInfo: {
                   connector: withPaymentMethods,
@@ -191,7 +197,7 @@ class EligibilitySection extends Component {
             label: 'is any of',
             value: '',
             object: {
-              renderFn: this.renderDropdownObject,
+              renderFn: this.renderSelectObject,
               extraParams: {
                 connector: withPaymentMethods,
                 isMulti: true
