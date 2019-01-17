@@ -109,6 +109,10 @@ class EligibilitySection extends Component {
                       value: shippingMethod,
                     })),
                 },
+                placeholder: intl.formatMessage({
+                  id:
+                    'promotions.promotion.elligibility.shippingMethod.placeholder',
+                }),
                 multi: true,
               },
             },
