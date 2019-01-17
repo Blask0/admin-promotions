@@ -40,17 +40,19 @@ class EligibilitySection extends Component {
     error,
     extraParams,
   }) => {
-    const { intl, updatePageState } = this.props
+    const { updatePageState } = this.props
 
     const SelectObject = extraParams.queryInfo.connector(props => {
       const options = extraParams.queryInfo.dataGetter(props)
-      
+      const { placeholder, multi } = extraParams
+      const { loading } = props
       return (
         <Select
-          placeholder={"select.."}
+          placeholder={placeholder}
           options={options}
           value={statements[statementIndex].object}
-          isMulti={extraParams.multi}
+          isMulti={multi}
+          isLoading={loading}
           onChange={value => {
             statements[statementIndex].object = value
             updatePageState({
@@ -175,6 +177,10 @@ class EligibilitySection extends Component {
                   connector: withPaymentMethods,
                   dataGetter: ({ paymentMethods = [] }) => (paymentMethods.map(self.mapToSelect)),
                 },
+                placeholder: intl.formatMessage({
+                  id:
+                    'promotions.promotion.elligibility.paymentMethods.placeholder',
+                }),
                 multi: false
               }
             }
@@ -189,17 +195,28 @@ class EligibilitySection extends Component {
                   connector: withPaymentMethods,
                   propName: 'paymentMethods'
                 },
+                placeholder: intl.formatMessage({
+                  id:
+                    'promotions.promotion.elligibility.paymentMethods.placeholder',
+                }),
                 multi: false
               }
             }
           },
           {
             label: 'is any of',
-            value: '',
+            value: 'any',
             object: {
               renderFn: this.renderSelectObject,
               extraParams: {
-                connector: withPaymentMethods,
+                queryInfo: {
+                  connector: withPaymentMethods,
+                  propName: 'paymentMethods'
+                },
+                placeholder: intl.formatMessage({
+                  id:
+                    'promotions.promotion.elligibility.paymentMethods.placeholder',
+                }),
                 multi: true
               }
             }
