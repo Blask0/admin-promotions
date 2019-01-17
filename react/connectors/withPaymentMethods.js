@@ -3,37 +3,35 @@ import { Query } from 'react-apollo'
 
 import getPaymentMethods from '../graphql/getPaymentMethods.graphql';
 
-function WithPaymentMethods(WrappedComponent) {
+function withPaymentMethods(WrappedComponent) {
   class WithPaymentMethods extends Component {
     constructor(props) {
       super(props)
-
-      this.state = {
-        name: '',
-        effect: ''
-      }
-    }
-
-    updateQueryParams = ({ name, effect }) => {
-      this.setState({ name, effect })
     }
 
     render() {
-      const { name, effect } = this.state
-
       return (
         <Query 
-          query={getPaymentMethods}
-          variables={{ name, effect }}>
-          {({ loading, error, data }) => (
-            <WrappedComponent
-              {...this.props}
-              loading={loading}
-              error={error}
-              paymentMethods={data ? data.getPaymentMethods : []}
-              updateQueryParams={this.updateQueryParams}
-            />
-          )}
+          query={getPaymentMethods}>
+          {({ loading, error, data }) => {
+            let paymentMethodsOptions = []
+
+            if (!loading) {
+                paymentMethodsOptions = data.getPaymentMethods.map(paymentMethod => ({
+                    label: paymentMethod.name,
+                    value: paymentMethod.id
+                }))
+            }
+
+            return ( 
+                <WrappedComponent
+                {...this.props}
+                loading={loading}
+                error={error}
+                paymentMethods={paymentMethodsOptions}
+                />)
+            }
+          } 
         </Query>
       )
     }
@@ -42,4 +40,4 @@ function WithPaymentMethods(WrappedComponent) {
   return WithPaymentMethods
 }
 
-export default WithPaymentMethods
+export default withPaymentMethods

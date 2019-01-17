@@ -2,17 +2,17 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-import { Radio, EXPERIMENTAL_Conditions, Input } from 'vtex.styleguide'
+import { Radio, EXPERIMENTAL_Conditions, Input, Select, Dropdown } from 'vtex.styleguide'
 
 import { shippingMethods } from '../../utils/conditions/options'
-import  withPaymentMethods from '../../connectors/withPaymentMethods' 
+import withPaymentMethods from '../../connectors/withPaymentMethods' 
 
 class EligibilitySection extends Component {
   constructor(props) {
     super(props)
   }
 
-  renderInputObject = ({ statements, values, statementIndex, error }) => {
+  renderInputObject = ({ statements, values, statementIndex, error, extraParams }) => {
     const { updatePageState } = this.props
 
     return (
@@ -28,7 +28,37 @@ class EligibilitySection extends Component {
     )
   }
 
-  renderRangeInputObject = ({ statements, values, statementIndex, error }) => {
+  renderDropdownObject = ({
+    statements,
+    values,
+    statementIndex,
+    error,
+    extraParams,
+  }) => {
+    const { updatePageState } = this.props
+
+    const DropdownObject = extraParams.queryInfo.connector(props => {
+      const options = props[extraParams.queryInfo.propName]
+
+      return (
+        <Dropdown
+          placeholder={""}
+          options={options}
+          isMulti={extraParams.isMulti}
+          onChange={selected => {
+            statements[statementIndex].object = selected.name
+            updatePageState({
+              statements: statements
+            })
+          }}
+        />
+      )
+    })
+
+    return <DropdownObject />
+  }
+
+  renderRangeInputObject = ({ statements, values, statementIndex, error, extraParams }) => {
     const { updatePageState } = this.props
 
     return (
@@ -102,7 +132,7 @@ class EligibilitySection extends Component {
             label: 'is not',
             value: '!=',
             object: this.renderInputObject,
-          },
+          }
         ],
       },
       email: {
@@ -122,7 +152,7 @@ class EligibilitySection extends Component {
             label: 'is not',
             value: '!=',
             object: this.renderInputObject,
-          },
+          }
         ],
       },
       paymentMethod: {
@@ -132,21 +162,27 @@ class EligibilitySection extends Component {
             label: 'is',
             value: '==',
             object: {
-              renderFn: this.renderInputObject,
+              renderFn: this.renderDropdownObject,
               extraParams: {
-                connector: withPaymentMethods,
+                queryInfo: {
+                  connector: withPaymentMethods,
+                  propName: 'paymentMethods'
+                },
                 isMulti: false
               }
             }
-
           },
           {
             label: 'is not',
             value: '!=',
             object: {
-              renderFn: this.renderInputObject,
+              renderFn: this.renderDropdownObject,
               extraParams: {
-                connector: withPaymentMethods
+                queryInfo: {
+                  connector: withPaymentMethods,
+                  propName: 'paymentMethods'
+                },
+                isMulti: false
               }
             }
           },
@@ -154,47 +190,10 @@ class EligibilitySection extends Component {
             label: 'is any of',
             value: '',
             object: {
-              renderFn: this.renderInputObject,
-              extraParams: {
-                connector: withPaymentMethods
-              }
-            }
-          }
-        ]
-      },
-      itemValue: {
-        label: "Item value",
-        verbs: [
-          {
-            label: 'is greater than',
-            value: '>',
-            object: {
-              renderFn: this.renderInputObject,
+              renderFn: this.renderDropdownObject,
               extraParams: {
                 connector: withPaymentMethods,
-                isMulti: false
-              }
-            }
-          },
-          {
-            label: 'is smaller than',
-            value: '<',
-            object: {
-              renderFn: this.renderInputObject,
-              extraParams: {
-                connector: withPaymentMethods,
-                isMulti: false
-              }
-            }
-          },
-          {
-            label: 'is between',
-            value: 'between',
-            object: {
-              renderFn: this.renderInputObject,
-              extraParams: {
-                connector: withPaymentMethods,
-                isMulti: false
+                isMulti: true
               }
             }
           }
