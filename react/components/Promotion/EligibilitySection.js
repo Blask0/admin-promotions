@@ -34,7 +34,7 @@ class EligibilitySection extends Component {
     error,
     extraParams,
   }) => {
-    const { intl, updatePageState } = this.props
+    const { updatePageState } = this.props
 
     const SelectObject = extraParams.queryInfo.connector(props => {
       const options = extraParams.queryInfo.dataGetter(props)
