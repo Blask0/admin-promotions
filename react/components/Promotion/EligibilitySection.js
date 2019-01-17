@@ -38,16 +38,16 @@ class EligibilitySection extends Component {
 
     const SelectObject = extraParams.queryInfo.connector(props => {
       const options = extraParams.queryInfo.dataGetter(props)
+      const { placeholder, multi } = extraParams
+      const { loading } = props
       return (
         <Select
-          placeholder={intl.formatMessage({
-            id: 'promotions.promotion.elligibility.shippingMethod.placeholder',
-          })}
+          placeholder={placeholder}
           options={options}
           value={statements[statementIndex].object}
-          isMulti={extraParams.multi}
+          isMulti={multi}
+          isLoading={loading}
           onChange={value => {
-            console.log(value)
             statements[statementIndex].object = value
             updatePageState({
               statements,
@@ -87,6 +87,10 @@ class EligibilitySection extends Component {
                       value: shippingMethod,
                     })),
                 },
+                placeholder: intl.formatMessage({
+                  id:
+                    'promotions.promotion.elligibility.shippingMethod.placeholder',
+                }),
                 multi: false,
               },
             },
