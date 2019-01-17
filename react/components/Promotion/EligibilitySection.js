@@ -43,10 +43,11 @@ class EligibilitySection extends Component {
       return (
         <Dropdown
           placeholder={""}
+          value={values}
           options={options}
           isMulti={extraParams.isMulti}
-          onChange={selected => {
-            statements[statementIndex].object = selected.name
+          onChange={(e,value) => {
+            statements[statementIndex].object = value
             updatePageState({
               statements: statements
             })
