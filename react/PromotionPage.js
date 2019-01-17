@@ -34,8 +34,8 @@ class PromotionPage extends Component {
           allCustomers: true,
           statements: [],
           operator: 'all',
-        }
-      }
+        },
+      },
     }
   }
 

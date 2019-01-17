@@ -1,0 +1,7 @@
+query GetShippingMethods {
+  getShippingMethods {
+    id
+    name
+    slaType
+  }
+}

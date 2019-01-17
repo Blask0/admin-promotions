@@ -17,6 +17,8 @@
   "promotions.promotion.elligibility.title": "Elegibilidade",
   "promotions.promotion.elligibility.selectAll": "Todos os clientes",
   "promotions.promotion.elligibility.selectSpecific": "Clientes específicos",
+  "promotions.promotion.elligibility.shippingMethod.label": "Método de envio",
+  "promotions.promotion.elligibility.shippingMethod.placeholder": "Selecione o método de envio...",
   "promotions.promotion.save": "Salvar",
   "promotions.promotion.cancel": "Cancelar",
   "promotions.promotions.title": "Promoções",

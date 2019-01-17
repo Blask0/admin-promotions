@@ -2,7 +2,9 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-import { Radio, EXPERIMENTAL_Conditions, Input } from 'vtex.styleguide'
+import { Radio, EXPERIMENTAL_Conditions, Input, Select } from 'vtex.styleguide'
+
+import withShippingMethods from '../../connectors/withShippingMethods'
 
 class EligibilitySection extends Component {
   constructor(props) {
@@ -18,37 +20,113 @@ class EligibilitySection extends Component {
         onChange={e => {
           statements[statementIndex].object = e.target.value
           updatePageState({
-            statements: statements
+            statements: statements,
           })
         }}
       />
     )
   }
 
+  renderSelectObject = ({
+    statements,
+    values,
+    statementIndex,
+    error,
+    extraParams,
+  }) => {
+    const { intl, updatePageState } = this.props
+
+    const SelectObject = extraParams.queryInfo.connector(props => {
+      const options = extraParams.queryInfo.dataGetter(props)
+      return (
+        <Select
+          placeholder={intl.formatMessage({
+            id: 'promotions.promotion.elligibility.shippingMethod.placeholder',
+          })}
+          options={options}
+          value={statements[statementIndex].object}
+          isMulti={extraParams.multi}
+          onChange={value => {
+            console.log(value)
+            statements[statementIndex].object = value
+            updatePageState({
+              statements,
+            })
+          }}
+        />
+      )
+    })
+
+    return <SelectObject />
+  }
+
   render() {
-    const { 
+    const {
       intl,
-      eligibility: {
-        allCustomers,
-        statements,
-        operator
-      }, 
-      updatePageState
+      eligibility: { allCustomers, statements, operator },
+      updatePageState,
     } = this.props
 
     const options = {
+      shippingMethod: {
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.shippingMethod.label',
+        }),
+        verbs: [
+          {
+            label: 'is',
+            value: '==',
+            object: {
+              renderFn: this.renderSelectObject,
+              extraParams: {
+                queryInfo: {
+                  connector: withShippingMethods,
+                  dataGetter: ({ shippingMethods = [] }) =>
+                    shippingMethods.map(shippingMethod => ({
+                      label: shippingMethod.name,
+                      value: shippingMethod,
+                    })),
+                },
+                multi: false,
+              },
+            },
+          },
+          {
+            label: 'is any of',
+            value: 'any',
+            object: {
+              renderFn: this.renderSelectObject,
+              extraParams: {
+                queryInfo: {
+                  connector: withShippingMethods,
+                  dataGetter: ({ shippingMethods = [] }) =>
+                    shippingMethods.map(shippingMethod => ({
+                      label: shippingMethod.name,
+                      value: shippingMethod,
+                    })),
+                },
+                multi: true,
+              },
+            },
+          },
+        ],
+      },
       name: {
         label: 'User name',
         verbs: [
           {
             label: 'is',
             value: '==',
-            object: this.renderInputObject,
+            object: {
+              renderFn: this.renderInputObject,
+            },
           },
           {
             label: 'is not',
             value: '!=',
-            object: this.renderInputObject,
+            object: {
+              renderFn: this.renderInputObject,
+            },
           },
         ],
       },
@@ -58,17 +136,23 @@ class EligibilitySection extends Component {
           {
             label: 'contains',
             value: 'contains',
-            object: this.renderInputObject,
+            object: {
+              renderFn: this.renderInputObject,
+            },
           },
           {
             label: 'is',
             value: '==',
-            object: this.renderInputObject,
+            object: {
+              renderFn: this.renderInputObject,
+            },
           },
           {
             label: 'is not',
             value: '!=',
-            object: this.renderInputObject,
+            object: {
+              renderFn: this.renderInputObject,
+            },
           },
         ],
       },
@@ -107,6 +191,7 @@ class EligibilitySection extends Component {
           <div className="mt6">
             <EXPERIMENTAL_Conditions
               options={options}
+              subjectPlaceholder="Select subject"
               statements={statements}
               operator={operator}
               onChangeOperator={({ operator }) => {
@@ -130,7 +215,7 @@ EligibilitySection.contextTypes = {
 EligibilitySection.propTypes = {
   intl: intlShape,
   eligibility: PropTypes.shape({
-    allCustomers: PropTypes.bool.isRequired
+    allCustomers: PropTypes.bool.isRequired,
   }).isRequired,
   updatePageState: PropTypes.func.isRequired,
 }
