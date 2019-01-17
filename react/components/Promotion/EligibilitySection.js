@@ -193,7 +193,7 @@ class EligibilitySection extends Component {
               extraParams: {
                 queryInfo: {
                   connector: withPaymentMethods,
-                  propName: 'paymentMethods'
+                  dataGetter: ({ paymentMethods = [] }) => (paymentMethods.map(self.mapToSelect)),
                 },
                 placeholder: intl.formatMessage({
                   id:
@@ -211,7 +211,7 @@ class EligibilitySection extends Component {
               extraParams: {
                 queryInfo: {
                   connector: withPaymentMethods,
-                  propName: 'paymentMethods'
+                  dataGetter: ({ paymentMethods = [] }) => (paymentMethods.map(self.mapToSelect)),
                 },
                 placeholder: intl.formatMessage({
                   id:
