@@ -34,6 +34,25 @@ const shippingMethods = (intl, update) => {
         },
       },
       {
+        label: 'is not',
+        value: '!=',
+        object: {
+          renderFn: renderSelectObject,
+          extraParams: {
+            queryInfo: {
+              connector: withShippingMethods,
+              dataGetter: ({ shippingMethods = [] }) => map(shippingMethods),
+            },
+            placeholder: intl.formatMessage({
+              id:
+                'promotions.promotion.elligibility.shippingMethod.placeholder',
+            }),
+            multi: false,
+            update: update,
+          },
+        },
+      },
+      {
         label: 'is any of',
         value: 'any',
         object: {
