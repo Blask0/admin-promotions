@@ -2,9 +2,9 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-import { Radio, EXPERIMENTAL_Conditions, Input, Select } from 'vtex.styleguide'
+import { Radio, EXPERIMENTAL_Conditions, Input } from 'vtex.styleguide'
 
-import withShippingMethods from '../../connectors/withShippingMethods'
+import { shippingMethods } from '../../utils/conditions/options'
 
 class EligibilitySection extends Component {
   constructor(props) {
@@ -27,39 +27,6 @@ class EligibilitySection extends Component {
     )
   }
 
-  renderSelectObject = ({
-    statements,
-    values,
-    statementIndex,
-    error,
-    extraParams,
-  }) => {
-    const { updatePageState } = this.props
-
-    const SelectObject = extraParams.queryInfo.connector(props => {
-      const options = extraParams.queryInfo.dataGetter(props)
-      const { placeholder, multi } = extraParams
-      const { loading } = props
-      return (
-        <Select
-          placeholder={placeholder}
-          options={options}
-          value={statements[statementIndex].object}
-          isMulti={multi}
-          isLoading={loading}
-          onChange={value => {
-            statements[statementIndex].object = value
-            updatePageState({
-              statements,
-            })
-          }}
-        />
-      )
-    })
-
-    return <SelectObject />
-  }
-
   render() {
     const {
       intl,
@@ -68,57 +35,7 @@ class EligibilitySection extends Component {
     } = this.props
 
     const options = {
-      shippingMethod: {
-        label: intl.formatMessage({
-          id: 'promotions.promotion.elligibility.shippingMethod.label',
-        }),
-        verbs: [
-          {
-            label: 'is',
-            value: '==',
-            object: {
-              renderFn: this.renderSelectObject,
-              extraParams: {
-                queryInfo: {
-                  connector: withShippingMethods,
-                  dataGetter: ({ shippingMethods = [] }) =>
-                    shippingMethods.map(shippingMethod => ({
-                      label: shippingMethod.name,
-                      value: shippingMethod,
-                    })),
-                },
-                placeholder: intl.formatMessage({
-                  id:
-                    'promotions.promotion.elligibility.shippingMethod.placeholder',
-                }),
-                multi: false,
-              },
-            },
-          },
-          {
-            label: 'is any of',
-            value: 'any',
-            object: {
-              renderFn: this.renderSelectObject,
-              extraParams: {
-                queryInfo: {
-                  connector: withShippingMethods,
-                  dataGetter: ({ shippingMethods = [] }) =>
-                    shippingMethods.map(shippingMethod => ({
-                      label: shippingMethod.name,
-                      value: shippingMethod,
-                    })),
-                },
-                placeholder: intl.formatMessage({
-                  id:
-                    'promotions.promotion.elligibility.shippingMethod.placeholder',
-                }),
-                multi: true,
-              },
-            },
-          },
-        ],
-      },
+      shippingMethods: shippingMethods(intl, updatePageState),
       name: {
         label: 'User name',
         verbs: [
