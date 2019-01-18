@@ -2,6 +2,12 @@ import { renderSelectObject } from '../../renders'
 
 import withShippingMethods from '../../../../connectors/withShippingMethods'
 
+const map = shippingMethods =>
+  shippingMethods.map(shippingMethod => ({
+    label: shippingMethod.name,
+    value: shippingMethod.id,
+  }))
+
 const shippingMethods = (intl, update) => {
   return {
     label: intl.formatMessage({
@@ -16,11 +22,7 @@ const shippingMethods = (intl, update) => {
           extraParams: {
             queryInfo: {
               connector: withShippingMethods,
-              dataGetter: ({ shippingMethods = [] }) =>
-                shippingMethods.map(shippingMethod => ({
-                  label: shippingMethod.name,
-                  value: shippingMethod.id,
-                })),
+              dataGetter: ({ shippingMethods = [] }) => map(shippingMethods),
             },
             placeholder: intl.formatMessage({
               id:
@@ -39,11 +41,7 @@ const shippingMethods = (intl, update) => {
           extraParams: {
             queryInfo: {
               connector: withShippingMethods,
-              dataGetter: ({ shippingMethods = [] }) =>
-                shippingMethods.map(shippingMethod => ({
-                  label: shippingMethod.name,
-                  value: shippingMethod.id,
-                })),
+              dataGetter: ({ shippingMethods = [] }) => map(shippingMethods),
             },
             placeholder: intl.formatMessage({
               id:
