@@ -42,7 +42,7 @@ class EligibilitySection extends Component {
 
     const options = {
       shippingMethods: shippingMethods(intl, updatePageState),
-      paymentMethod: paymentMethods(intl, updatePageState),
+      paymentMethods: paymentMethods(intl, updatePageState),
     }
 
     return (
