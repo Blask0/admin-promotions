@@ -24,5 +24,7 @@
   "promotions.promotion.cancel": "cancel",
   "promotions.promotions.title": "Promotions",
   "promotions.promotions.search": "Search promotions by name of effect",
-  "promotions.promotions.newPromotion": "New Promotion"
+  "promotions.promotions.newPromotion": "New Promotion",
+  "promotions.promotion.elligibility.paymentMethods.placeholder": "Seleccione una forma de pagamento…",
+  "promotions.promotion.elligibility.paymentMethods.label": "Forma de pagamento"
 }

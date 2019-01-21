@@ -1,0 +1,6 @@
+query GetPaymentMethods {
+  getPaymentMethods {
+    id
+    name
+  }
+}
