@@ -126,9 +126,6 @@ class EligibilitySection extends Component {
     let self = this
 
     const options = {
-<<<<<<< HEAD
-      shippingMethods: shippingMethods(intl, updatePageState),
-=======
       name: {
         label: 'User name',
         verbs: [
@@ -223,7 +220,6 @@ class EligibilitySection extends Component {
           }
         ]
       }
->>>>>>> [WIP] payment methods and item value
     }
 
     return (
