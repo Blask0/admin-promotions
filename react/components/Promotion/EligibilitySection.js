@@ -71,7 +71,10 @@ class EligibilitySection extends Component {
           <div className="mt6">
             <EXPERIMENTAL_Conditions
               options={options}
-              subjectPlaceholder="Select subject"
+              subjectPlaceholder={intl.formatMessage({
+                id:
+                  'promotions.promotion.elligibility.conditionSubjectPlaceholder',
+              })}
               statements={statements}
               operator={operator}
               onChangeOperator={({ operator }) => {
