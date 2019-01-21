@@ -1,9 +1,9 @@
 import { renderSelectObject } from '../../renders'
 
-import withPaymentMethods from '../../../../connectors/withPaymentMethods' 
+import withPaymentMethods from '../../../../connectors/withPaymentMethods'
 
 const map = paymentMethods =>
-    paymentMethods.map(paymentMethod => ({
+  paymentMethods.map(paymentMethod => ({
     label: paymentMethod.name,
     value: paymentMethod.id,
   }))
@@ -14,64 +14,64 @@ const paymentMethods = (intl, update) => {
       id: 'promotions.promotion.elligibility.paymentMethods.label',
     }),
     verbs: [
-        {
-          label: 'is',
-          value: '==',
-          object: {
-            renderFn: renderSelectObject,
-            extraParams: {
-              queryInfo: {
-                connector: withPaymentMethods,
-                dataGetter: ({ paymentMethods = [] }) => map(paymentMethods),
-              },
-              placeholder: intl.formatMessage({
-                id:
-                  'promotions.promotion.elligibility.paymentMethods.placeholder',
-              }),
-              multi: false,
-              update: update,
-            }
-          }
+      {
+        label: 'is',
+        value: '==',
+        object: {
+          renderFn: renderSelectObject,
+          extraParams: {
+            queryInfo: {
+              connector: withPaymentMethods,
+              dataGetter: ({ paymentMethods = [] }) => map(paymentMethods),
+            },
+            placeholder: intl.formatMessage({
+              id:
+                'promotions.promotion.elligibility.paymentMethods.placeholder',
+            }),
+            multi: false,
+            update: update,
+          },
         },
-        {
-          label: 'is not',
-          value: '!=',
-          object: {
-            renderFn: renderSelectObject,
-            extraParams: {
-              queryInfo: {
-                connector: withPaymentMethods,
-                dataGetter: ({ paymentMethods = [] }) => map(paymentMethods),
-              },
-              placeholder: intl.formatMessage({
-                id:
-                  'promotions.promotion.elligibility.paymentMethods.placeholder',
-              }),
-              multi: false,
-              update: update,
-            }
-          }
+      },
+      {
+        label: 'is not',
+        value: '!=',
+        object: {
+          renderFn: renderSelectObject,
+          extraParams: {
+            queryInfo: {
+              connector: withPaymentMethods,
+              dataGetter: ({ paymentMethods = [] }) => map(paymentMethods),
+            },
+            placeholder: intl.formatMessage({
+              id:
+                'promotions.promotion.elligibility.paymentMethods.placeholder',
+            }),
+            multi: false,
+            update: update,
+          },
         },
-        {
-          label: 'is any of',
-          value: 'any',
-          object: {
-            renderFn: renderSelectObject,
-            extraParams: {
-              queryInfo: {
-                connector: withPaymentMethods,
-                dataGetter: ({ paymentMethods = [] }) => map(paymentMethods),
-              },
-              placeholder: intl.formatMessage({
-                id:
-                  'promotions.promotion.elligibility.paymentMethods.placeholder',
-              }),
-              multi: true,
-              update: update,
-            }
-          }
-        }
-      ]
+      },
+      {
+        label: 'is any of',
+        value: 'any',
+        object: {
+          renderFn: renderSelectObject,
+          extraParams: {
+            queryInfo: {
+              connector: withPaymentMethods,
+              dataGetter: ({ paymentMethods = [] }) => map(paymentMethods),
+            },
+            placeholder: intl.formatMessage({
+              id:
+                'promotions.promotion.elligibility.paymentMethods.placeholder',
+            }),
+            multi: true,
+            update: update,
+          },
+        },
+      },
+    ],
   }
 }
 

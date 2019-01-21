@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Query } from 'react-apollo'
 
-import getPaymentMethods from '../graphql/getPaymentMethods.graphql';
+import getPaymentMethods from '../graphql/getPaymentMethods.graphql'
 
 function withPaymentMethods(WrappedComponent) {
   class WithPaymentMethods extends Component {
@@ -11,19 +11,18 @@ function withPaymentMethods(WrappedComponent) {
 
     render() {
       return (
-        <Query 
-          query={getPaymentMethods}>
+        <Query query={getPaymentMethods}>
           {({ loading, error, data }) => {
-              const paymentMethodsOptions = data ? data.getPaymentMethods: []  
-            return ( 
-                <WrappedComponent
+            const paymentMethodsOptions = data ? data.getPaymentMethods : []
+            return (
+              <WrappedComponent
                 {...this.props}
                 loading={loading}
                 error={error}
                 paymentMethods={paymentMethodsOptions}
-                />)
-            }
-          } 
+              />
+            )
+          }}
         </Query>
       )
     }
