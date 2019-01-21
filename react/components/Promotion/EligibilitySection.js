@@ -11,6 +11,9 @@ import {
   utm,
   zipCodeRange,
   totalPriceRange,
+  affiliates,
+  paymentMethods,
+  shippingMethods,
 } from '../../utils/conditions/options'
 
 class EligibilitySection extends Component {
@@ -27,6 +30,7 @@ class EligibilitySection extends Component {
 
     const options = {
       installments: installments(intl, updatePageState),
+      affiliates: affiliates(intl, updatePageState),
       shippingMethods: shippingMethods(intl, updatePageState),
       paymentMethods: paymentMethods(intl, updatePageState),
       utmSource: utm(intl, updatePageState, 'Source'),

@@ -28,6 +28,8 @@
   "promotions.promotion.elligibility.totalPriceRange.label": "Rango de precio total",
   "promotions.promotion.elligibility.installments.label": "Número de plazos",
   "promotions.promotion.elligibility.installments.placeholder": "Número deseado de cuotas",
+  "promotions.promotion.elligibility.affiliates.label": "Affiliates",
+  "promotions.promotion.elligibility.affiliates.placeholder": "Select affiliates…",
   "promotions.promotion.save": "save",
   "promotions.promotion.cancel": "cancel",
   "promotions.promotions.title": "Promotions",
