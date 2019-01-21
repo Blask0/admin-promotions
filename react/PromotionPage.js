@@ -34,8 +34,8 @@ class PromotionPage extends Component {
           allCustomers: true,
           statements: [],
           operator: 'all',
-        }
-      }
+        },
+      },
     }
   }
 
@@ -199,6 +199,7 @@ class PromotionPage extends Component {
                     statements: JSON.stringify(eligibility.statements),
                   },
                 })
+
                 savePromotion({
                   variables: {
                     promotion: {

@@ -4,6 +4,8 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
 import { Radio, EXPERIMENTAL_Conditions, Input } from 'vtex.styleguide'
 
+import { shippingMethods } from '../../utils/conditions/options'
+
 class EligibilitySection extends Component {
   constructor(props) {
     super(props)
@@ -18,7 +20,7 @@ class EligibilitySection extends Component {
         onChange={e => {
           statements[statementIndex].object = e.target.value
           updatePageState({
-            statements: statements
+            statements: statements,
           })
         }}
       />
@@ -26,52 +28,14 @@ class EligibilitySection extends Component {
   }
 
   render() {
-    const { 
+    const {
       intl,
-      eligibility: {
-        allCustomers,
-        statements,
-        operator
-      }, 
-      updatePageState
+      eligibility: { allCustomers, statements, operator },
+      updatePageState,
     } = this.props
 
     const options = {
-      name: {
-        label: 'User name',
-        verbs: [
-          {
-            label: 'is',
-            value: '==',
-            object: this.renderInputObject,
-          },
-          {
-            label: 'is not',
-            value: '!=',
-            object: this.renderInputObject,
-          },
-        ],
-      },
-      email: {
-        label: 'Email',
-        verbs: [
-          {
-            label: 'contains',
-            value: 'contains',
-            object: this.renderInputObject,
-          },
-          {
-            label: 'is',
-            value: '==',
-            object: this.renderInputObject,
-          },
-          {
-            label: 'is not',
-            value: '!=',
-            object: this.renderInputObject,
-          },
-        ],
-      },
+      shippingMethods: shippingMethods(intl, updatePageState),
     }
 
     return (
@@ -107,6 +71,10 @@ class EligibilitySection extends Component {
           <div className="mt6">
             <EXPERIMENTAL_Conditions
               options={options}
+              subjectPlaceholder={intl.formatMessage({
+                id:
+                  'promotions.promotion.elligibility.conditionSubjectPlaceholder',
+              })}
               statements={statements}
               operator={operator}
               onChangeOperator={({ operator }) => {
@@ -130,7 +98,7 @@ EligibilitySection.contextTypes = {
 EligibilitySection.propTypes = {
   intl: intlShape,
   eligibility: PropTypes.shape({
-    allCustomers: PropTypes.bool.isRequired
+    allCustomers: PropTypes.bool.isRequired,
   }).isRequired,
   updatePageState: PropTypes.func.isRequired,
 }

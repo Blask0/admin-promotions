@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Query } from 'react-apollo'
 
-import getPromotions from '../graphql/getPromotions.graphql';
+import getPromotions from '../graphql/getPromotions.graphql'
 
 function withPromotions(WrappedComponent) {
   class WithPromotions extends Component {
@@ -10,7 +10,7 @@ function withPromotions(WrappedComponent) {
 
       this.state = {
         name: '',
-        effect: ''
+        effect: '',
       }
     }
 
@@ -22,9 +22,7 @@ function withPromotions(WrappedComponent) {
       const { name, effect } = this.state
 
       return (
-        <Query 
-          query={getPromotions}
-          variables={{ name, effect }}>
+        <Query query={getPromotions} variables={{ name, effect }}>
           {({ loading, error, data }) => (
             <WrappedComponent
               {...this.props}
