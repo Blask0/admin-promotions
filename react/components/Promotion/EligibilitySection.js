@@ -36,51 +36,6 @@ class EligibilitySection extends Component {
 
     const options = {
       shippingMethods: shippingMethods(intl, updatePageState),
-      name: {
-        label: 'User name',
-        verbs: [
-          {
-            label: 'is',
-            value: '==',
-            object: {
-              renderFn: this.renderInputObject,
-            },
-          },
-          {
-            label: 'is not',
-            value: '!=',
-            object: {
-              renderFn: this.renderInputObject,
-            },
-          },
-        ],
-      },
-      email: {
-        label: 'Email',
-        verbs: [
-          {
-            label: 'contains',
-            value: 'contains',
-            object: {
-              renderFn: this.renderInputObject,
-            },
-          },
-          {
-            label: 'is',
-            value: '==',
-            object: {
-              renderFn: this.renderInputObject,
-            },
-          },
-          {
-            label: 'is not',
-            value: '!=',
-            object: {
-              renderFn: this.renderInputObject,
-            },
-          },
-        ],
-      },
     }
 
     return (
