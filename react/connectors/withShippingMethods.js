@@ -5,10 +5,6 @@ import getShippingMethods from '../graphql/getShippingMethods.graphql'
 
 function withShippingMethods(WrappedComponent) {
   class WithShippingMethods extends Component {
-    constructor(props) {
-      super(props)
-    }
-
     render = () => {
       return (
         <Query query={getShippingMethods}>
