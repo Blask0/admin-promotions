@@ -2,10 +2,9 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-import { Radio, EXPERIMENTAL_Conditions, Input, Select, Dropdown } from 'vtex.styleguide'
+import { Radio, EXPERIMENTAL_Conditions, Input } from 'vtex.styleguide'
 
-import { shippingMethods } from '../../utils/conditions/options'
-import withPaymentMethods from '../../connectors/withPaymentMethods' 
+import { shippingMethods, paymentMethods } from '../../utils/conditions/options'
 
 class EligibilitySection extends Component {
   constructor(props) {
@@ -27,45 +26,7 @@ class EligibilitySection extends Component {
       />
     )
   }
-
-  mapToSelect = dataPoint => ({
-    label: dataPoint.name ,
-    value: dataPoint.id
-  })
-
-  renderSelectObject = ({
-    statements,
-    values,
-    statementIndex,
-    error,
-    extraParams,
-  }) => {
-    const { updatePageState } = this.props
-
-    const SelectObject = extraParams.queryInfo.connector(props => {
-      const options = extraParams.queryInfo.dataGetter(props)
-      const { placeholder, multi } = extraParams
-      const { loading } = props
-      return (
-        <Select
-          placeholder={placeholder}
-          options={options}
-          value={statements[statementIndex].object}
-          isMulti={multi}
-          isLoading={loading}
-          onChange={value => {
-            statements[statementIndex].object = value
-            updatePageState({
-              statements,
-            })
-          }}
-        />
-      )
-    })
-
-    return <SelectObject />
-  }
-
+  
   renderRangeInputObject = ({ statements, values, statementIndex, error, extraParams }) => {
     const { updatePageState } = this.props
 
@@ -126,100 +87,8 @@ class EligibilitySection extends Component {
     let self = this
 
     const options = {
-      name: {
-        label: 'User name',
-        verbs: [
-          {
-            label: 'is',
-            value: '==',
-            object: this.renderInputObject,
-          },
-          {
-            label: 'is not',
-            value: '!=',
-            object: this.renderInputObject,
-          }
-        ],
-      },
-      email: {
-        label: 'Email',
-        verbs: [
-          {
-            label: 'contains',
-            value: 'contains',
-            object: this.renderInputObject,
-          },
-          {
-            label: 'is',
-            value: '==',
-            object: this.renderInputObject,
-          },
-          {
-            label: 'is not',
-            value: '!=',
-            object: this.renderInputObject,
-          }
-        ],
-      },
-      paymentMethod: {
-        label: "Payment method",
-        verbs: [
-          {
-            label: 'is',
-            value: '==',
-            object: {
-              renderFn: this.renderSelectObject,
-              extraParams: {
-                queryInfo: {
-                  connector: withPaymentMethods,
-                  dataGetter: ({ paymentMethods = [] }) => (paymentMethods.map(self.mapToSelect)),
-                },
-                placeholder: intl.formatMessage({
-                  id:
-                    'promotions.promotion.elligibility.paymentMethods.placeholder',
-                }),
-                multi: false
-              }
-            }
-          },
-          {
-            label: 'is not',
-            value: '!=',
-            object: {
-              renderFn: this.renderSelectObject,
-              extraParams: {
-                queryInfo: {
-                  connector: withPaymentMethods,
-                  dataGetter: ({ paymentMethods = [] }) => (paymentMethods.map(self.mapToSelect)),
-                },
-                placeholder: intl.formatMessage({
-                  id:
-                    'promotions.promotion.elligibility.paymentMethods.placeholder',
-                }),
-                multi: false
-              }
-            }
-          },
-          {
-            label: 'is any of',
-            value: 'any',
-            object: {
-              renderFn: this.renderSelectObject,
-              extraParams: {
-                queryInfo: {
-                  connector: withPaymentMethods,
-                  dataGetter: ({ paymentMethods = [] }) => (paymentMethods.map(self.mapToSelect)),
-                },
-                placeholder: intl.formatMessage({
-                  id:
-                    'promotions.promotion.elligibility.paymentMethods.placeholder',
-                }),
-                multi: true
-              }
-            }
-          }
-        ]
-      }
+      shippingMethods: shippingMethods(intl, updatePageState),
+      paymentMethod: paymentMethods(intl, updatePageState)
     }
 
     return (
