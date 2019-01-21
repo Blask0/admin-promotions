@@ -84,7 +84,6 @@ class EligibilitySection extends Component {
       eligibility: { allCustomers, statements, operator },
       updatePageState,
     } = this.props
-    let self = this
 
     const options = {
       shippingMethods: shippingMethods(intl, updatePageState),
