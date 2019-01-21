@@ -192,6 +192,14 @@ class PromotionPage extends Component {
             <Button
               variation="primary"
               onClick={() => {
+                console.log({
+                  ...promotion,
+                  eligibility: {
+                    ...eligibility,
+                    statements: JSON.stringify(eligibility.statements),
+                  },
+                })
+
                 savePromotion({
                   variables: {
                     promotion: {
