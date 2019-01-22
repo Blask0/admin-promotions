@@ -1,9 +1,11 @@
 import { renderInputObject } from '../../renders'
 
-const utmSource = (intl, update) => {
+const utm = (intl, update, type) => {
+  const label = `promotions.promotion.elligibility.utm${type}.label`
+
   return {
     label: intl.formatMessage({
-      id: 'promotions.promotion.elligibility.utmSource.label',
+      id: label,
     }),
     verbs: [
       {
@@ -30,4 +32,4 @@ const utmSource = (intl, update) => {
   }
 }
 
-export default utmSource
+export default utm

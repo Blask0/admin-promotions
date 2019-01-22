@@ -1,5 +1,5 @@
 import shippingMethods from './shippingMethods'
 import paymentMethods from './paymentMethods'
-import utmSource from './utmSource'
+import utm from './utm'
 
-export { shippingMethods, paymentMethods, utmSource }
+export { shippingMethods, paymentMethods, utm }

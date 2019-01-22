@@ -7,7 +7,7 @@ import { Radio, EXPERIMENTAL_Conditions, Input } from 'vtex.styleguide'
 import {
   shippingMethods,
   paymentMethods,
-  utmSource,
+  utm,
 } from '../../utils/conditions/options'
 
 class EligibilitySection extends Component {
@@ -47,7 +47,8 @@ class EligibilitySection extends Component {
     const options = {
       shippingMethods: shippingMethods(intl, updatePageState),
       paymentMethods: paymentMethods(intl, updatePageState),
-      utmSource: utmSource(intl, updatePageState),
+      utmSource: utm(intl, updatePageState, 'Source'),
+      utmCampaign: utm(intl, updatePageState, 'Campaign'),
     }
 
     return (

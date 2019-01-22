@@ -27,5 +27,6 @@
   "promotions.promotions.newPromotion": "New Promotion",
   "promotions.promotion.elligibility.paymentMethods.placeholder": "Select a payment method…",
   "promotions.promotion.elligibility.paymentMethods.label": "Payment Method",
-  "promotions.promotion.elligibility.utmSource.label": "Utm source"
+  "promotions.promotion.elligibility.utmSource.label": "Utm source",
+  "promotions.promotion.elligibility.utmCampaign.label": "Utm campaign"
 }
