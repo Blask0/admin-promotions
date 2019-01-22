@@ -8,33 +8,12 @@ import {
   shippingMethods,
   paymentMethods,
   utm,
+  zipCodeRange,
 } from '../../utils/conditions/options'
 
 class EligibilitySection extends Component {
   constructor(props) {
     super(props)
-  }
-
-  renderInputObject = ({
-    statements,
-    values,
-    statementIndex,
-    error,
-    extraParams,
-  }) => {
-    const { updatePageState } = this.props
-
-    return (
-      <Input
-        value={values || ''}
-        onChange={e => {
-          statements[statementIndex].object = e.target.value
-          updatePageState({
-            statements: statements,
-          })
-        }}
-      />
-    )
   }
 
   render() {
@@ -49,6 +28,7 @@ class EligibilitySection extends Component {
       paymentMethods: paymentMethods(intl, updatePageState),
       utmSource: utm(intl, updatePageState, 'Source'),
       utmCampaign: utm(intl, updatePageState, 'Campaign'),
+      zipCodeRange: zipCodeRange(intl, updatePageState),
     }
 
     return (
