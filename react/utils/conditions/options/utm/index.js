@@ -41,7 +41,7 @@ const utm = (intl, update, type) => {
       },
       {
         label: 'starts with',
-        value: 'starts',
+        value: 'startswith',
         object: {
           renderFn: renderInputObject,
           extraParams: {
@@ -51,7 +51,17 @@ const utm = (intl, update, type) => {
       },
       {
         label: 'ends with',
-        value: 'ends',
+        value: 'endswith',
+        object: {
+          renderFn: renderInputObject,
+          extraParams: {
+            update: update,
+          },
+        },
+      },
+      {
+        label: 'contains',
+        value: 'contains',
         object: {
           renderFn: renderInputObject,
           extraParams: {
