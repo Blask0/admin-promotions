@@ -9,6 +9,7 @@ import {
   paymentMethods,
   utm,
   zipCodeRange,
+  totalPriceRange,
 } from '../../utils/conditions/options'
 
 class EligibilitySection extends Component {
@@ -29,6 +30,7 @@ class EligibilitySection extends Component {
       utmSource: utm(intl, updatePageState, 'Source'),
       utmCampaign: utm(intl, updatePageState, 'Campaign'),
       zipCodeRange: zipCodeRange(intl, updatePageState),
+      totalPriceRange: totalPriceRange(intl, updatePageState),
     }
 
     return (

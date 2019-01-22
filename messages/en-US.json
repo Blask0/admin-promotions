@@ -29,5 +29,6 @@
   "promotions.promotion.elligibility.paymentMethods.label": "Payment Method",
   "promotions.promotion.elligibility.utmSource.label": "Utm source",
   "promotions.promotion.elligibility.utmCampaign.label": "Utm campaign",
-  "promotions.promotion.elligibility.zipCodeRange.label": "Zip code range"
+  "promotions.promotion.elligibility.zipCodeRange.label": "Zip code range",
+  "promotions.promotion.elligibility.totalPriceRange.label": "Total price range"
 }
