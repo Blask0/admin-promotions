@@ -8,7 +8,7 @@ const renderRangeInputObject = ({
   error,
   extraParams,
 }) => {
-  const { updatePageState } = this.props
+  const { update } = extraParams
 
   return (
     <div className="flex">
@@ -27,9 +27,8 @@ const renderRangeInputObject = ({
           currentObject.first = e.target.value.replace(/\D/g, '')
 
           statements[statementIndex].object = currentObject
-
-          updatePageState({
-            statements: statements,
+          update({
+            statements,
           })
         }}
       />
@@ -44,9 +43,8 @@ const renderRangeInputObject = ({
           currentObject.last = e.target.value.replace(/\D/g, '')
 
           statements[statementIndex].object = currentObject
-
-          updatePageState({
-            statements: statements,
+          update({
+            statements,
           })
         }}
       />

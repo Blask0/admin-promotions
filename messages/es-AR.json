@@ -28,5 +28,7 @@
   "promotions.promotion.elligibility.paymentMethods.placeholder": "Seleccione una forma de pagamento…",
   "promotions.promotion.elligibility.paymentMethods.label": "Forma de pagamento",
   "promotions.promotion.elligibility.utmSource.label": "Utm source",
-  "promotions.promotion.elligibility.utmCampaign.label": "Utm campaign"
+  "promotions.promotion.elligibility.utmCampaign.label": "Utm campaign",
+  "promotions.promotion.elligibility.zipCodeRange.label": "Rango de código postal",
+  "promotions.promotion.elligibility.totalPriceRange.label": "Rango de precio total"
 }

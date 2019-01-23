@@ -1,11 +1,9 @@
 import { renderInputObject, renderSelectObject } from '../../renders'
 
 const utm = (intl, update, type) => {
-  const label = `promotions.promotion.elligibility.utm${type}.label`
-
   return {
     label: intl.formatMessage({
-      id: label,
+      id: `promotions.promotion.elligibility.utm${type}.label`,
     }),
     verbs: [
       {
@@ -19,53 +17,20 @@ const utm = (intl, update, type) => {
         },
       },
       {
-        label: 'is not',
-        value: '!=',
-        object: {
-          renderFn: renderInputObject,
-          extraParams: {
-            update: update,
-          },
-        },
-      },
-      {
-        // TODO
         label: 'is any of',
         value: 'any',
         object: {
-          renderFn: renderInputObject,
+          renderFn: renderSelectObject,
           extraParams: {
+            queryInfo: {
+              connector: WrappedComponent => props => (
+                <WrappedComponent {...props} />
+              ),
+              dataGetter: () => [],
+            },
+            creatable: true,
             update: update,
-          },
-        },
-      },
-      {
-        label: 'starts with',
-        value: 'startswith',
-        object: {
-          renderFn: renderInputObject,
-          extraParams: {
-            update: update,
-          },
-        },
-      },
-      {
-        label: 'ends with',
-        value: 'endswith',
-        object: {
-          renderFn: renderInputObject,
-          extraParams: {
-            update: update,
-          },
-        },
-      },
-      {
-        label: 'contains',
-        value: 'contains',
-        object: {
-          renderFn: renderInputObject,
-          extraParams: {
-            update: update,
+            multi: true,
           },
         },
       },
