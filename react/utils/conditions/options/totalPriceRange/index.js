@@ -18,7 +18,7 @@ const totalPriceRange = (intl, update) => {
       },
       {
         label: 'is smaller than',
-        value: 'not between',
+        value: '<',
         object: {
           renderFn: renderInputObject,
           extraParams: {
