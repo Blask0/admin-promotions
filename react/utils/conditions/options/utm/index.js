@@ -22,6 +22,12 @@ const utm = (intl, update, type) => {
         object: {
           renderFn: renderSelectObject,
           extraParams: {
+            queryInfo: {
+              connector: WrappedComponent => props => (
+                <WrappedComponent {...props} />
+              ),
+              dataGetter: () => [],
+            },
             creatable: true,
             update: update,
             multi: true,

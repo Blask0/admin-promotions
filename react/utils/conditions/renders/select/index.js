@@ -37,9 +37,23 @@ const multiSelectObject = (
   creatable,
   handleChange
 ) => {
-  const values = options.filter(option => {
+  const selectedValues = options.filter(option => {
     return selected && selected.includes(option.value)
   })
+
+  const createdValues =
+    creatable && selected
+      ? selected
+        .filter(createdValue => {
+          return (
+            options.filter(option => option.value === createdValue).length ===
+              0
+          )
+        })
+        .map(createdValue => ({ label: createdValue, value: createdValue }))
+      : []
+
+  const values = selectedValues.concat(createdValues)
 
   return (
     <Select
