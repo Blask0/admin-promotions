@@ -4,7 +4,11 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
 import { Radio, EXPERIMENTAL_Conditions, Input } from 'vtex.styleguide'
 
-import { shippingMethods, paymentMethods } from '../../utils/conditions/options'
+import {
+  shippingMethods,
+  paymentMethods,
+  utm,
+} from '../../utils/conditions/options'
 
 class EligibilitySection extends Component {
   constructor(props) {
@@ -43,6 +47,8 @@ class EligibilitySection extends Component {
     const options = {
       shippingMethods: shippingMethods(intl, updatePageState),
       paymentMethods: paymentMethods(intl, updatePageState),
+      utmSource: utm(intl, updatePageState, 'Source'),
+      utmCampaign: utm(intl, updatePageState, 'Campaign'),
     }
 
     return (
