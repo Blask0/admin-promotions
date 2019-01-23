@@ -33,11 +33,23 @@ class PromotionPage extends Component {
           activeEffectType: null, // oneOf ['price', 'gift', 'shipping', 'reward']
           price: {
             discountType: 'nominal', // oneOf ['nominal', 'percentual', 'priceTables']
-            appliesTo: null, // type: statements, if null: applies to All products
+            discount: '',
+            appliesTo: null, // type: statements[], if null: applies to All products
           },
-          gift: {},
-          shipping: {},
-          reward: {},
+          gift: {
+            products: [],
+            multiplier: null,
+            limitQuantityPerPurchase: null,
+          },
+          shipping: {
+            discountType: 'nominal', // oneOf ['nominal', 'percentual', 'maximumValue']
+            discount: '',
+          },
+          reward: {
+            discountType: 'nominal', // oneOf ['nominal', 'percentual']
+            discount: '',
+            applyByOrderStatus: '', // oneOf possible order status
+          },
         },
       },
     }
