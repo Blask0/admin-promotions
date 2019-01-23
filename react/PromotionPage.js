@@ -4,12 +4,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
 import { Layout, PageBlock, PageHeader, Button, Radio } from 'vtex.styleguide'
 
-import SelectableCard from './components/SelectableCard'
-import Price from './components/Icon/Price'
-import Gift from './components/Icon/Gift'
-import Shipping from './components/Icon/Shipping'
-import Reward from './components/Icon/Reward'
-
+import EffectsSection from './components/Promotion/EffectsSection'
 import EligibilitySection from './components/Promotion/EligibilitySection'
 import GeneralSection from './components/Promotion/GeneralSection'
 
@@ -29,11 +24,20 @@ class PromotionPage extends Component {
           hasEndDate: false, // temporary, this should be on promotion json
           endDate: addDays(new Date(), 1),
         },
-        effectType: null, // oneOf ['price', 'gift', 'shipping', 'reward']
         eligibility: {
           allCustomers: true,
           statements: [],
           operator: 'all',
+        },
+        effects: {
+          activeEffectType: null, // oneOf ['price', 'gift', 'shipping', 'reward']
+          price: {
+            discountType: 'nominal', // oneOf ['nominal', 'percentual', 'priceTables']
+            appliesTo: null, // type: statements, if null: applies to All products
+          },
+          gift: {},
+          shipping: {},
+          reward: {},
         },
       },
     }
@@ -46,6 +50,10 @@ class PromotionPage extends Component {
   static propTypes = {
     intl: intlShape,
     savePromotion: PropTypes.func,
+  }
+
+  componentDidMount = () => {
+    window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
   }
 
   handleGeneralInfoChange = generalInfo => {
@@ -74,27 +82,24 @@ class PromotionPage extends Component {
     }))
   }
 
-  componentDidMount = () => {
-    window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
-  }
-
-  selectEffect = effect => {
+  handleEffectsSectionChange = effects => {
     this.setState(prevState => ({
       promotion: {
         ...prevState.promotion,
-        effectType: effect,
+        effects: {
+          ...prevState.promotion.effects,
+          ...effects,
+        },
       },
     }))
   }
-
-  isEffectSelected = effect => this.state.promotion.effectType === effect
 
   canSave = () => true
 
   render() {
     const { navigate } = this.context
     const { promotion } = this.state
-    const { generalInfo, eligibility } = promotion
+    const { generalInfo, eligibility, effects } = promotion
     const {
       intl,
       params: { id },
@@ -127,59 +132,10 @@ class PromotionPage extends Component {
           />
         </PageBlock>
         <PageBlock>
-          <h4 className="t-heading-4 mt0">
-            <FormattedMessage id="promotions.promotion.effects.title" />
-          </h4>
-          <div className="flex flex-row">
-            <div className="mh3">
-              <SelectableCard
-                selected={this.isEffectSelected('price')}
-                onClick={() => this.selectEffect('price')}>
-                <div className="flex flex-column items-center center tc ph5">
-                  <Price />
-                  <div className="t-heading-4 b mt5">
-                    <FormattedMessage id="promotions.promotion.effects.price" />
-                  </div>
-                </div>
-              </SelectableCard>
-            </div>
-            <div className="mh3">
-              <SelectableCard
-                selected={this.isEffectSelected('gift')}
-                onClick={() => this.selectEffect('gift')}>
-                <div className="flex flex-column items-center center tc ph5">
-                  <Gift />
-                  <div className="t-heading-4 b mt5">
-                    <FormattedMessage id="promotions.promotion.effects.gift" />
-                  </div>
-                </div>
-              </SelectableCard>
-            </div>
-            <div className="mh3">
-              <SelectableCard
-                selected={this.isEffectSelected('shipping')}
-                onClick={() => this.selectEffect('shipping')}>
-                <div className="flex flex-column items-center center tc ph5">
-                  <Shipping />
-                  <div className="t-heading-4 b mt5">
-                    <FormattedMessage id="promotions.promotion.effects.shipping" />
-                  </div>
-                </div>
-              </SelectableCard>
-            </div>
-            <div className="mh3">
-              <SelectableCard
-                selected={this.isEffectSelected('reward')}
-                onClick={() => this.selectEffect('reward')}>
-                <div className="flex flex-column items-center center tc ph5">
-                  <Reward />
-                  <div className="t-heading-4 b mt5">
-                    <FormattedMessage id="promotions.promotion.effects.reward" />
-                  </div>
-                </div>
-              </SelectableCard>
-            </div>
-          </div>
+          <EffectsSection
+            effects={effects}
+            updatePageState={this.handleEffectsSectionChange}
+          />
         </PageBlock>
         <PageBlock>
           <EligibilitySection
