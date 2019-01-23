@@ -1,5 +1,5 @@
-import renderSelectObject from './select'
-import renderRangeInputObject from './rangeInput'
 import renderInputObject from './input'
+import renderRangeInputObject from './rangeInput'
+import renderSelectObject from './select'
 
-export { renderSelectObject, renderInputObject, renderRangeInputObject }
+export { renderInputObject, renderRangeInputObject, renderSelectObject }
