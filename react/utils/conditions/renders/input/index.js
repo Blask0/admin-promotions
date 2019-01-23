@@ -17,7 +17,6 @@ const renderInputObject = ({
         value={values}
         onChange={e => {
           statements[statementIndex].object = e.target.value
-
           update({
             statements,
           })
