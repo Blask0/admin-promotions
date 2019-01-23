@@ -27,7 +27,6 @@ const renderRangeInputObject = ({
           currentObject.first = e.target.value.replace(/\D/g, '')
 
           statements[statementIndex].object = currentObject
-
           update({
             statements,
           })
@@ -44,7 +43,6 @@ const renderRangeInputObject = ({
           currentObject.last = e.target.value.replace(/\D/g, '')
 
           statements[statementIndex].object = currentObject
-
           update({
             statements,
           })
