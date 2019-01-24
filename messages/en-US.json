@@ -20,15 +20,17 @@
   "promotions.promotion.elligibility.conditionSubjectPlaceholder": "Select condition for eligibility…",
   "promotions.promotion.elligibility.shippingMethod.label": "Shipping method",
   "promotions.promotion.elligibility.shippingMethod.placeholder": "Select shipping method…",
-  "promotions.promotion.save": "save",
-  "promotions.promotion.cancel": "cancel",
-  "promotions.promotions.title": "Promotions",
-  "promotions.promotions.search": "Search promotions by name of effect",
-  "promotions.promotions.newPromotion": "New Promotion",
   "promotions.promotion.elligibility.paymentMethods.placeholder": "Select a payment method…",
   "promotions.promotion.elligibility.paymentMethods.label": "Payment Method",
   "promotions.promotion.elligibility.utmSource.label": "Utm source",
   "promotions.promotion.elligibility.utmCampaign.label": "Utm campaign",
   "promotions.promotion.elligibility.zipCodeRange.label": "Zip code range",
-  "promotions.promotion.elligibility.totalPriceRange.label": "Total price range"
+  "promotions.promotion.elligibility.totalPriceRange.label": "Total price range",
+  "promotions.promotion.elligibility.installments.label": "Number of installments",
+  "promotions.promotion.elligibility.installments.placeholder": "Desired number of installments",
+  "promotions.promotion.save": "save",
+  "promotions.promotion.cancel": "cancel",
+  "promotions.promotions.title": "Promotions",
+  "promotions.promotions.search": "Search promotions by name of effect",
+  "promotions.promotions.newPromotion": "New Promotion"
 }

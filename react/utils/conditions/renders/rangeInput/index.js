@@ -8,12 +8,13 @@ const renderRangeInputObject = ({
   error,
   extraParams,
 }) => {
-  const { update } = extraParams
+  const { placeholder, type, update } = extraParams
 
   return (
     <div className="flex">
       <Input
-        placeholder=""
+        type={type}
+        placeholder={placeholder}
         errorMessage={
           statements[statementIndex].object &&
           parseInt(statements[statementIndex].object.first) >=
@@ -36,7 +37,8 @@ const renderRangeInputObject = ({
       <div className="mv4 mh3 c-muted-2 b">and</div>
 
       <Input
-        placeholder=""
+        type={type}
+        placeholder={placeholder}
         value={values && values.last ? values.last : ''}
         onChange={e => {
           const currentObject = statements[statementIndex].object || {}

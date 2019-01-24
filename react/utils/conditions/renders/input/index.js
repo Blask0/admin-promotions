@@ -8,13 +8,14 @@ const renderInputObject = ({
   error,
   extraParams,
 }) => {
-  const { update } = extraParams
+  const { placeholder, type, update } = extraParams
 
   return (
     <div className="flex">
       <Input
-        placeholder=""
-        value={values}
+        type={type}
+        placeholder={placeholder}
+        value={values || ''}
         onChange={e => {
           statements[statementIndex].object = e.target.value
           update({

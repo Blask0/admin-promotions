@@ -2,9 +2,10 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-import { Radio, EXPERIMENTAL_Conditions, Input } from 'vtex.styleguide'
+import { Radio, EXPERIMENTAL_Conditions } from 'vtex.styleguide'
 
 import {
+  installments,
   shippingMethods,
   paymentMethods,
   utm,
@@ -25,6 +26,7 @@ class EligibilitySection extends Component {
     } = this.props
 
     const options = {
+      installments: installments(intl, updatePageState),
       shippingMethods: shippingMethods(intl, updatePageState),
       paymentMethods: paymentMethods(intl, updatePageState),
       utmSource: utm(intl, updatePageState, 'Source'),
