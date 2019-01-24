@@ -7,6 +7,7 @@ import { Layout, PageBlock, PageHeader, Button } from 'vtex.styleguide'
 import EffectsSection from './components/Promotion/EffectsSection'
 import EligibilitySection from './components/Promotion/EligibilitySection'
 import GeneralSection from './components/Promotion/GeneralSection'
+import RestrictionSection from './components/Promotion/RestrictionSection'
 
 import withSalesChannels from './connectors/withSalesChannels'
 import savingPromotion from './connectors/savingPromotion'
@@ -53,6 +54,18 @@ class PromotionPage extends Component {
             discount: '',
             applyByOrderStatus: '', // oneOf possible order status
           },
+        restriction: {
+          limitedUsage: false,
+          limitPerActivations: false,
+          limitPerAffectedItems: false,
+          perStore: undefined,
+          perClient: undefined,
+          maxNumOfAffectedItems: undefined,
+          accumulate: false,
+          accumulateWithPromotions: false,
+          accumulateWithManualPrices: false,
+          externalMarketplaces: false,
+          restrictTradePolicies: false,
         },
       },
     }
@@ -88,7 +101,26 @@ class PromotionPage extends Component {
     }))
   }
 
-  handleEffectsSectionChange = effects => {
+  handleRestrictionSectionChange = restriction => {
+    this.setState(
+      prevState => ({
+        promotion: {
+          ...prevState.promotion,
+          restriction: {
+            ...prevState.promotion.restriction,
+            ...restriction,
+          },
+        },
+      }),
+      () => console.log(this.state.promotion.restriction)
+    )
+  }
+
+  componentDidMount = () => {
+    window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
+  }
+
+  selectEffect = effect => {
     this.setState(prevState => ({
       promotion: {
         ...prevState.promotion,
@@ -114,7 +146,7 @@ class PromotionPage extends Component {
   render() {
     const { navigate } = this.context
     const { promotion } = this.state
-    const { generalInfo, eligibility, effects } = promotion
+    const { generalInfo, eligibility, effects, restriction} = promotion
     const {
       intl,
       params: { id },
@@ -160,6 +192,12 @@ class PromotionPage extends Component {
             eligibility={eligibility}
             updatePageState={this.handleEligibilitySectionChange}
             currencyCode={currencyCode}
+          />
+        </PageBlock>
+        <PageBlock>
+          <RestrictionSection
+            restriction={restriction}
+            updatePageState={this.handleRestrictionSectionChange}
           />
         </PageBlock>
         {this.canSave() ? (
