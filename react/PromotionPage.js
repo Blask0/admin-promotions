@@ -103,18 +103,15 @@ class PromotionPage extends Component {
   }
 
   handleRestrictionSectionChange = restriction => {
-    this.setState(
-      prevState => ({
-        promotion: {
-          ...prevState.promotion,
-          restriction: {
-            ...prevState.promotion.restriction,
-            ...restriction,
-          },
+    this.setState(prevState => ({
+      promotion: {
+        ...prevState.promotion,
+        restriction: {
+          ...prevState.promotion.restriction,
+          ...restriction,
         },
-      }),
-      () => console.log(this.state.promotion.restriction)
-    )
+      },
+    }))
   }
 
   componentDidMount = () => {

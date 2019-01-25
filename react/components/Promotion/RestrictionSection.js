@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
-import { restrictTradePoliciesStatement } from '../../utils/conditions/options'
 import { Checkbox, Input, Select } from 'vtex.styleguide'
+import withSalesChannels from '../../connectors/withSalesChannels'
 
 class RestrictionSection extends Component {
   constructor(props) {
@@ -26,8 +26,15 @@ class RestrictionSection extends Component {
         restrictTradePolicies,
         restrictedTradePolicies,
       },
+      salesChannels = [],
+      loading,
       updatePageState,
     } = this.props
+
+    const mappedSalesChannels = salesChannels.map(salesChannel => ({
+      label: salesChannel.name,
+      value: salesChannel.id,
+    }))
 
     return (
       <Fragment>
@@ -215,11 +222,10 @@ class RestrictionSection extends Component {
                 id:
                   'promotions.promotion.restriction.restrictTradePolicies.placeholder',
               })}
-              options={[]}
+              options={mappedSalesChannels}
               value={restrictedTradePolicies}
               isMulti
-              // isLoading={loading}
-              creatable
+              isLoading={loading}
               onChange={selected => {
                 updatePageState({ restrictedTradePolicies: selected })
               }}
@@ -250,4 +256,4 @@ RestrictionSection.propTypes = {
   updatePageState: PropTypes.func.isRequired,
 }
 
-export default injectIntl(RestrictionSection)
+export default withSalesChannels(injectIntl(RestrictionSection))
