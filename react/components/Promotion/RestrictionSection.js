@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
-
-import { Checkbox, Input } from 'vtex.styleguide'
+import { restrictTradePoliciesStatement } from '../../utils/conditions/options'
+import { Checkbox, Input, Select } from 'vtex.styleguide'
 
 class RestrictionSection extends Component {
   constructor(props) {
@@ -24,6 +24,7 @@ class RestrictionSection extends Component {
         accumulateWithManualPrices,
         externalMarketplaces,
         restrictTradePolicies,
+        restrictedTradePolicies,
       },
       updatePageState,
     } = this.props
@@ -33,19 +34,21 @@ class RestrictionSection extends Component {
         <h4 className="t-heading-4 mt0">
           <FormattedMessage id="promotions.promotion.restriction.title" />
         </h4>
-        <Checkbox
-          className="pv4"
-          checked={limitedUsage}
-          id="limitUsage"
-          label={intl.formatMessage({
-            id: 'promotions.promotion.restriction.limitUsage.label',
-          })}
-          name="default-checkbox-group"
-          onChange={e => updatePageState({ limitedUsage: !limitedUsage })}
-          value="limitUsage"
-        />
+        <div className="pv3">
+          <Checkbox
+            checked={limitedUsage}
+            id="limitUsage"
+            label={intl.formatMessage({
+              id: 'promotions.promotion.restriction.limitUsage.label',
+            })}
+            name="default-checkbox-group"
+            onChange={e => updatePageState({ limitedUsage: !limitedUsage })}
+            value="limitUsage"
+          />
+        </div>
+
         {limitedUsage && (
-          <div className="pl5 pv4">
+          <div className="pl5 pv3">
             <Checkbox
               checked={limitPerActivations}
               id="limitPerActivation"
@@ -62,51 +65,55 @@ class RestrictionSection extends Component {
             />
 
             {limitPerActivations && (
-              <div className="pl7 w-20 pv4">
-                <Input
-                  placeholder=""
-                  type="number"
-                  value={perStore}
-                  label={intl.formatMessage({
-                    id: 'promotions.promotion.restriction.limit.perStore',
-                  })}
-                  onChange={e => {
-                    updatePageState({ perStore })
-                  }}
-                />
-                <Input
-                  placeholder=""
-                  type="number"
-                  value={perClient}
-                  label={intl.formatMessage({
-                    id: 'promotions.promotion.restriction.limit.perClient',
-                  })}
-                  onChange={e => {
-                    updatePageState({ perClient })
-                  }}
-                />
+              <div className="pl7 w-20">
+                <div className="pv3">
+                  <Input
+                    placeholder=""
+                    type="number"
+                    value={perStore}
+                    label={intl.formatMessage({
+                      id: 'promotions.promotion.restriction.limit.perStore',
+                    })}
+                    onChange={e => {
+                      updatePageState({ perStore })
+                    }}
+                  />
+                </div>
+                <div className="pv3">
+                  <Input
+                    placeholder=""
+                    type="number"
+                    value={perClient}
+                    label={intl.formatMessage({
+                      id: 'promotions.promotion.restriction.limit.perClient',
+                    })}
+                    onChange={e => {
+                      updatePageState({ perClient })
+                    }}
+                  />
+                </div>
               </div>
             )}
-
-            <Checkbox
-              className="pv4"
-              checked={limitPerAffectedItems}
-              id="limitPerAffectedItems"
-              label={intl.formatMessage({
-                id:
-                  'promotions.promotion.restriction.limitPerAffectedItems.label',
-              })}
-              name="limitPerAffectedItems-checkbox-group"
-              onChange={e =>
-                updatePageState({
-                  limitPerAffectedItems: !limitPerAffectedItems,
-                })
-              }
-              value="limitPerAffectedItems"
-            />
+            <div className="pv3">
+              <Checkbox
+                checked={limitPerAffectedItems}
+                id="limitPerAffectedItems"
+                label={intl.formatMessage({
+                  id:
+                    'promotions.promotion.restriction.limitPerAffectedItems.label',
+                })}
+                name="limitPerAffectedItems-checkbox-group"
+                onChange={e =>
+                  updatePageState({
+                    limitPerAffectedItems: !limitPerAffectedItems,
+                  })
+                }
+                value="limitPerAffectedItems"
+              />
+            </div>
 
             {limitPerAffectedItems && (
-              <div className="pl7 w-20 pv4">
+              <div className="pl7 w-20 pv3">
                 <Input
                   placeholder=""
                   type="number"
@@ -119,19 +126,21 @@ class RestrictionSection extends Component {
             )}
           </div>
         )}
-        <Checkbox
-          className="pv4"
-          checked={accumulate}
-          id="accumulate"
-          label={intl.formatMessage({
-            id: 'promotions.promotion.restriction.accumulate.label',
-          })}
-          name="accumulate-checkbox-group"
-          onChange={e => updatePageState({ accumulate: !accumulate })}
-          value="accumulate"
-        />
+        <div className="pv3">
+          <Checkbox
+            checked={accumulate}
+            id="accumulate"
+            label={intl.formatMessage({
+              id: 'promotions.promotion.restriction.accumulate.label',
+            })}
+            name="accumulate-checkbox-group"
+            onChange={e => updatePageState({ accumulate: !accumulate })}
+            value="accumulate"
+          />
+        </div>
+
         {accumulate && (
-          <div className="pl5 pv4">
+          <div className="pl5 pv3">
             <Checkbox
               checked={accumulateWithPromotions}
               id="accumulateWithPromotions"
@@ -164,37 +173,59 @@ class RestrictionSection extends Component {
             />
           </div>
         )}
-        <Checkbox
-          className="pv4"
-          checked={externalMarketplaces}
-          id="externalMarketplaces"
-          label={intl.formatMessage({
-            id: 'promotions.promotion.restriction.externalMarketplaces.label',
-          })}
-          name="externalMarketplaces-checkbox-group"
-          onChange={e =>
-            updatePageState({
-              externalMarketplaces: !externalMarketplaces,
-            })
-          }
-          value="externalMarketplaces"
-        />
-        <Checkbox
-          className="pv4"
-          checked={restrictTradePolicies}
-          id="restrictTradePolicies"
-          label={intl.formatMessage({
-            id: 'promotions.promotion.restriction.restrictTradePolicies.label',
-          })}
-          name="restrictTradePolicies-checkbox-group"
-          onChange={e =>
-            updatePageState({
-              restrictTradePolicies: !restrictTradePolicies,
-            })
-          }
-          value="restrictTradePolicies"
-        />
-        {restrictTradePolicies && 'soon'}
+        <div className="pv3">
+          <Checkbox
+            checked={externalMarketplaces}
+            id="externalMarketplaces"
+            label={intl.formatMessage({
+              id: 'promotions.promotion.restriction.externalMarketplaces.label',
+            })}
+            name="externalMarketplaces-checkbox-group"
+            onChange={e =>
+              updatePageState({
+                externalMarketplaces: !externalMarketplaces,
+              })
+            }
+            value="externalMarketplaces"
+          />
+        </div>
+        <div className="pv3">
+          <Checkbox
+            className="pv4"
+            checked={restrictTradePolicies}
+            id="restrictTradePolicies"
+            label={intl.formatMessage({
+              id:
+                'promotions.promotion.restriction.restrictTradePolicies.label',
+            })}
+            name="restrictTradePolicies-checkbox-group"
+            onChange={e =>
+              updatePageState({
+                restrictTradePolicies: !restrictTradePolicies,
+              })
+            }
+            value="restrictTradePolicies"
+          />
+        </div>
+
+        {restrictTradePolicies && (
+          <div className="w-40 pl5 pv3">
+            <Select
+              placeholder={intl.formatMessage({
+                id:
+                  'promotions.promotion.restriction.restrictTradePolicies.placeholder',
+              })}
+              options={[]}
+              value={restrictedTradePolicies}
+              isMulti
+              // isLoading={loading}
+              creatable
+              onChange={selected => {
+                updatePageState({ restrictedTradePolicies: selected })
+              }}
+            />
+          </div>
+        )}
       </Fragment>
     )
   }

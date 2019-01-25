@@ -10,6 +10,7 @@ import totalPriceRange from './totalPriceRange'
 import clusterExpressions from './clusterExpressions'
 import creditCardBin from './creditCardBin'
 import marketingTags from './marketingTags'
+import restrictTradePoliciesStatement from './restrictTradePolicies'
 
 export {
   affiliates,
@@ -24,4 +25,5 @@ export {
   clusterExpressions,
   creditCardBin,
   marketingTags,
+  restrictTradePoliciesStatement,
 }

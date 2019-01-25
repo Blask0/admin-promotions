@@ -78,5 +78,6 @@
   "promotions.promotion.restriction.accumulateWithPromotions.label": "Com outras promoções",
   "promotions.promotion.restriction.accumulateWithManualPrices.label": "Com preços manuais",
   "promotions.promotion.restriction.externalMarketplaces.label": "Habilitar Marketplaces externos",
-  "promotions.promotion.restriction.restrictTradePolicies.label": "Restringir políticas comerciais"
+  "promotions.promotion.restriction.restrictTradePolicies.label": "Restringir políticas comerciais",
+  "promotions.promotion.restriction.restrictTradePolicies.placeholder": "Selecione uma política comercial"
 }
