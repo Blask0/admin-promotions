@@ -216,7 +216,7 @@ class RestrictionSection extends Component {
         </div>
 
         {restrictTradePolicies && (
-          <div className="w-40 pl5 pv3">
+          <div className="w-50 pl5 pv3">
             <Select
               placeholder={intl.formatMessage({
                 id:
