@@ -5,15 +5,13 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import { Radio, EXPERIMENTAL_Conditions } from 'vtex.styleguide'
 
 import {
+  affiliates,
   installments,
   shippingMethods,
   paymentMethods,
   utm,
   zipCodeRange,
   totalPriceRange,
-  affiliates,
-  paymentMethods,
-  shippingMethods,
 } from '../../utils/conditions/options'
 
 class EligibilitySection extends Component {
