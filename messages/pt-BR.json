@@ -20,15 +20,17 @@
   "promotions.promotion.elligibility.conditionSubjectPlaceholder": "Selecione a condição de elegibilidade…",
   "promotions.promotion.elligibility.shippingMethod.label": "Método de envio",
   "promotions.promotion.elligibility.shippingMethod.placeholder": "Selecione o método de envio…",
-  "promotions.promotion.save": "Salvar",
-  "promotions.promotion.cancel": "Cancelar",
-  "promotions.promotions.title": "Promoções",
-  "promotions.promotions.search": "Busque promoções por nome ou efeito",
-  "promotions.promotions.newPromotion": "Nova Promoção",
   "promotions.promotion.elligibility.paymentMethods.placeholder": "Selecione uma forma de pagamento…",
   "promotions.promotion.elligibility.paymentMethods.label": "Forma de pagamento",
   "promotions.promotion.elligibility.utmSource.label": "Utm source",
   "promotions.promotion.elligibility.utmCampaign.label": "Utm campaign",
   "promotions.promotion.elligibility.zipCodeRange.label": "Faixa de código postal",
-  "promotions.promotion.elligibility.totalPriceRange.label": "Faixa de preço total"
+  "promotions.promotion.elligibility.totalPriceRange.label": "Faixa de preço total",
+  "promotions.promotion.elligibility.installments.label": "Número de parcelas",
+  "promotions.promotion.elligibility.installments.placeholder": "Número de parcelas desejado",
+  "promotions.promotion.save": "Salvar",
+  "promotions.promotion.cancel": "Cancelar",
+  "promotions.promotions.title": "Promoções",
+  "promotions.promotions.search": "Busque promoções por nome ou efeito",
+  "promotions.promotions.newPromotion": "Nova Promoção"
 }
