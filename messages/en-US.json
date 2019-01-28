@@ -28,6 +28,8 @@
   "promotions.promotion.elligibility.totalPriceRange.label": "Total price range",
   "promotions.promotion.elligibility.installments.label": "Number of installments",
   "promotions.promotion.elligibility.installments.placeholder": "Desired number of installments",
+  "promotions.promotion.elligibility.affiliates.label": "Affiliates",
+  "promotions.promotion.elligibility.affiliates.placeholder": "Select affiliates…",
   "promotions.promotion.save": "save",
   "promotions.promotion.cancel": "cancel",
   "promotions.promotions.title": "Promotions",

@@ -5,6 +5,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import { Radio, EXPERIMENTAL_Conditions } from 'vtex.styleguide'
 
 import {
+  affiliates,
   installments,
   shippingMethods,
   paymentMethods,
@@ -27,6 +28,7 @@ class EligibilitySection extends Component {
 
     const options = {
       installments: installments(intl, updatePageState),
+      affiliates: affiliates(intl, updatePageState),
       shippingMethods: shippingMethods(intl, updatePageState),
       paymentMethods: paymentMethods(intl, updatePageState),
       utmSource: utm(intl, updatePageState, 'Source'),

@@ -1,0 +1,6 @@
+query GetAffiliates {
+  getAffiliates {
+    id
+    name
+  }
+}
