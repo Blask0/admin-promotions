@@ -36,6 +36,8 @@
   "promotions.promotion.elligibility.firstBuy.false": "Falso",
   "promotions.promotion.elligibility.clusterExpressions.label": "Customer cluster",
   "promotions.promotion.elligibility.clusterExpressions.placeholder": "Nombre del cluster",
+  "promotions.promotion.elligibility.cartProduct.label": "Produto en carrito",
+  "promotions.promotion.elligibility.cartProduct.itemPriceRange.placeholder": "Valor deseado del producto",
   "promotions.promotion.save": "save",
   "promotions.promotion.cancel": "cancel",
   "promotions.promotions.title": "Promotions",

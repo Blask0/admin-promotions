@@ -8,6 +8,7 @@ import {
   affiliates,
   installments,
   firstBuy,
+  cartProduct,
   shippingMethods,
   paymentMethods,
   utm,
@@ -16,9 +17,20 @@ import {
   clusterExpressions,
 } from '../../utils/conditions/options'
 
+import withSalesChannels from '../../connectors/withSalesChannels'
+
 class EligibilitySection extends Component {
   constructor(props) {
     super(props)
+  }
+
+  getAffectedSalesChannels = () => {
+    const { restrictedSalesChannelsIds, salesChannels } = this.props
+    return restrictedSalesChannelsIds && restrictedSalesChannelsIds.length > 0
+      ? salesChannels.filter(({ id }) =>
+        restrictedSalesChannelsIds.includes(id)
+      )
+      : salesChannels.filter(({ id }) => id === '1')
   }
 
   render() {
@@ -28,10 +40,13 @@ class EligibilitySection extends Component {
       updatePageState,
     } = this.props
 
+    const [{ currencyCode } = {}] = this.getAffectedSalesChannels()
+
     const options = {
       installments: installments(intl, updatePageState),
       affiliates: affiliates(intl, updatePageState),
       firstBuy: firstBuy(intl, updatePageState),
+      cartProduct: cartProduct(intl, updatePageState, currencyCode),
       shippingMethods: shippingMethods(intl, updatePageState),
       paymentMethods: paymentMethods(intl, updatePageState),
       utmSource: utm(intl, updatePageState, 'Source'),
@@ -106,4 +121,4 @@ EligibilitySection.propTypes = {
   updatePageState: PropTypes.func.isRequired,
 }
 
-export default injectIntl(EligibilitySection)
+export default injectIntl(withSalesChannels(EligibilitySection))

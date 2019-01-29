@@ -1,0 +1,7 @@
+query GetSalesChannels {
+  getSalesChannels {
+    id
+    name
+    currencyCode
+  }
+}
