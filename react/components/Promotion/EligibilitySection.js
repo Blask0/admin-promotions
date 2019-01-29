@@ -13,6 +13,7 @@ import {
   utm,
   zipCodeRange,
   totalPriceRange,
+  clusterExpressions,
 } from '../../utils/conditions/options'
 
 class EligibilitySection extends Component {
@@ -37,6 +38,7 @@ class EligibilitySection extends Component {
       utmCampaign: utm(intl, updatePageState, 'Campaign'),
       zipCodeRange: zipCodeRange(intl, updatePageState),
       totalPriceRange: totalPriceRange(intl, updatePageState),
+      clusterExpressions: clusterExpressions(intl, updatePageState),
     }
 
     return (

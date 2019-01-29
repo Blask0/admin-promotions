@@ -34,6 +34,8 @@
   "promotions.promotion.elligibility.firstBuy.placeholder": "Selecione…",
   "promotions.promotion.elligibility.firstBuy.true": "Verdadeiro",
   "promotions.promotion.elligibility.firstBuy.false": "Falso",
+  "promotions.promotion.elligibility.clusterExpressions.label": "Customer cluster",
+  "promotions.promotion.elligibility.clusterExpressions.placeholder": "Nome do cluster",
   "promotions.promotion.save": "Salvar",
   "promotions.promotion.cancel": "Cancelar",
   "promotions.promotions.title": "Promoções",
