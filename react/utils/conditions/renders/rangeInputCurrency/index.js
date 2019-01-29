@@ -18,16 +18,15 @@ const renderRangeInputCurrencyObject = ({
         currencyCode={currencyCode}
         errorMessage={
           statements[statementIndex].object &&
-          parseInt(statements[statementIndex].object.first) >=
-            parseInt(statements[statementIndex].object.last)
+          statements[statementIndex].object.first >=
+            statements[statementIndex].object.last
             ? 'Must be smaller than other input'
             : ''
         }
         value={values && values.first ? values.first : ''}
         onChange={e => {
           const currentObject = statements[statementIndex].object || {}
-          currentObject.first = e.target.value.replace(/\D/g, '')
-
+          currentObject.first = e.target.value
           statements[statementIndex].object = currentObject
           update({
             statements,
@@ -44,8 +43,7 @@ const renderRangeInputCurrencyObject = ({
         value={values && values.last ? values.last : ''}
         onChange={e => {
           const currentObject = statements[statementIndex].object || {}
-          currentObject.last = e.target.value.replace(/\D/g, '')
-
+          currentObject.last = e.target.value
           statements[statementIndex].object = currentObject
           update({
             statements,
