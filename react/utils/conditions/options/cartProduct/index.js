@@ -1,6 +1,7 @@
 import { renderInputObject, renderRangeInputObject } from '../../renders'
 
 const cartProduct = (intl, update) => {
+  console.log(intl)
   return {
     label: intl.formatMessage({
       id: 'promotions.promotion.elligibility.cartProduct.label',
