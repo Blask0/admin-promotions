@@ -7,6 +7,7 @@ import { Radio, EXPERIMENTAL_Conditions } from 'vtex.styleguide'
 import {
   affiliates,
   installments,
+  firstBuy,
   shippingMethods,
   paymentMethods,
   utm,
@@ -29,6 +30,7 @@ class EligibilitySection extends Component {
     const options = {
       installments: installments(intl, updatePageState),
       affiliates: affiliates(intl, updatePageState),
+      firstBuy: firstBuy(intl, updatePageState),
       shippingMethods: shippingMethods(intl, updatePageState),
       paymentMethods: paymentMethods(intl, updatePageState),
       utmSource: utm(intl, updatePageState, 'Source'),
