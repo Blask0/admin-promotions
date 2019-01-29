@@ -1,7 +1,9 @@
-import { renderInputObject, renderRangeInputObject } from '../../renders'
+import {
+  renderInputCurrencyObject,
+  renderRangeInputCurrencyObject,
+} from '../../renders'
 
-const cartProduct = (intl, update) => {
-  console.log(intl)
+const cartProduct = (intl, update, currencyCode) => {
   return {
     label: intl.formatMessage({
       id: 'promotions.promotion.elligibility.cartProduct.label',
@@ -12,12 +14,14 @@ const cartProduct = (intl, update) => {
         label: 'with price greater than',
         value: '>',
         object: {
-          renderFn: renderInputObject,
+          renderFn: renderInputCurrencyObject,
           extraParams: {
             placeholder: intl.formatMessage({
               id:
                 'promotions.promotion.elligibility.cartProduct.itemPriceRange.placeholder',
             }),
+            locale: intl.locale,
+            currencyCode: currencyCode,
             update: update,
           },
         },
@@ -26,12 +30,14 @@ const cartProduct = (intl, update) => {
         label: 'with price less than',
         value: '<',
         object: {
-          renderFn: renderInputObject,
+          renderFn: renderInputCurrencyObject,
           extraParams: {
             placeholder: intl.formatMessage({
               id:
                 'promotions.promotion.elligibility.cartProduct.itemPriceRange.placeholder',
             }),
+            locale: intl.locale,
+            currencyCode: currencyCode,
             update: update,
           },
         },
@@ -40,12 +46,14 @@ const cartProduct = (intl, update) => {
         label: 'with price between',
         value: 'between',
         object: {
-          renderFn: renderRangeInputObject,
+          renderFn: renderRangeInputCurrencyObject,
           extraParams: {
             placeholder: intl.formatMessage({
               id:
                 'promotions.promotion.elligibility.cartProduct.itemPriceRange.placeholder',
             }),
+            locale: intl.locale,
+            currencyCode: currencyCode,
             update: update,
           },
         },

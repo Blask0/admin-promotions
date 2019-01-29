@@ -8,12 +8,14 @@ const renderInputCurrencyObject = ({
   error,
   extraParams,
 }) => {
-  const { placeholder, update } = extraParams
+  const { placeholder, locale, currencyCode, update } = extraParams
 
   return (
     <div className="flex">
       <InputCurrency
         placeholder={placeholder}
+        locale={locale}
+        currencyCode={currencyCode}
         value={values}
         onChange={e => {
           statements[statementIndex].object = e.target.value

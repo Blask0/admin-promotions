@@ -8,12 +8,14 @@ const renderRangeInputCurrencyObject = ({
   error,
   extraParams,
 }) => {
-  const { placeholder, update } = extraParams
+  const { placeholder, locale, currencyCode, update } = extraParams
 
   return (
     <div className="flex">
       <InputCurrency
         placeholder={placeholder}
+        locale={locale}
+        currencyCode={currencyCode}
         errorMessage={
           statements[statementIndex].object &&
           parseInt(statements[statementIndex].object.first) >=
@@ -37,6 +39,8 @@ const renderRangeInputCurrencyObject = ({
 
       <InputCurrency
         placeholder={placeholder}
+        locale={locale}
+        currencyCode={currencyCode}
         value={values && values.last ? values.last : ''}
         onChange={e => {
           const currentObject = statements[statementIndex].object || {}
