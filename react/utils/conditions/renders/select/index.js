@@ -1,5 +1,5 @@
 import React from 'react'
-import { Select } from 'vtex.styleguide'
+import { EXPERIMENTAL_Select } from 'vtex.styleguide'
 
 const singleSelectObject = (
   selected,
@@ -14,7 +14,7 @@ const singleSelectObject = (
   })
 
   return (
-    <Select
+    <EXPERIMENTAL_Select
       placeholder={placeholder}
       options={options}
       value={value}
@@ -56,7 +56,7 @@ const multiSelectObject = (
   const values = selectedValues.concat(createdValues)
 
   return (
-    <Select
+    <EXPERIMENTAL_Select
       placeholder={placeholder}
       options={options}
       value={values}
