@@ -1,3 +1,6 @@
+import affiliates from './affiliates'
+import installments from './installments'
+import firstBuy from './firstBuy'
 import cartProduct from './cartProduct'
 import shippingMethods from './shippingMethods'
 import paymentMethods from './paymentMethods'
