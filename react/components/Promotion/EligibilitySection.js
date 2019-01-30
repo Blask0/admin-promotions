@@ -15,6 +15,7 @@ import {
   zipCodeRange,
   totalPriceRange,
   clusterExpressions,
+  creditCardBin,
 } from '../../utils/conditions/options'
 
 import withSalesChannels from '../../connectors/withSalesChannels'
@@ -54,6 +55,7 @@ class EligibilitySection extends Component {
       zipCodeRange: zipCodeRange(intl, updatePageState),
       totalPriceRange: totalPriceRange(intl, updatePageState),
       clusterExpressions: clusterExpressions(intl, updatePageState),
+      creditCardBin: creditCardBin(intl, updatePageState),
     }
 
     return (

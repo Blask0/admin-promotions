@@ -38,6 +38,8 @@
   "promotions.promotion.elligibility.clusterExpressions.placeholder": "Cluster's name",
   "promotions.promotion.elligibility.cartProduct.label": "Product in cart",
   "promotions.promotion.elligibility.cartProduct.itemPriceRange.placeholder": "Product desired value",
+  "promotions.promotion.elligibility.creditCardBin.label": "Credit card bin",
+  "promotions.promotion.elligibility.creditCardBin.placeholder": "Type a bin number…",
   "promotions.promotion.save": "save",
   "promotions.promotion.cancel": "cancel",
   "promotions.promotions.title": "Promotions",
