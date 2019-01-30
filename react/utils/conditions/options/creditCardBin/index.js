@@ -1,4 +1,4 @@
-import { renderSelectObject, renderRangeInputObject } from '../../renders'
+import { renderSelectObject } from '../../renders'
 
 const creditCardBin = (intl, update) => {
   return {
@@ -6,21 +6,6 @@ const creditCardBin = (intl, update) => {
       id: 'promotions.promotion.elligibility.creditCardBin.label',
     }),
     verbs: [
-      {
-        label: 'is between',
-        value: 'between',
-        object: {
-          renderFn: renderRangeInputObject,
-          extraParams: {
-            placeholder: intl.formatMessage({
-              id: 'promotions.promotion.elligibility.creditCardBin.placeholder',
-            }),
-            multi: false,
-            type: 'number',
-            update: update,
-          },
-        },
-      },
       {
         label: 'is any of',
         value: 'any',
