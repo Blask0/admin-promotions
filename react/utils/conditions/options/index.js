@@ -9,6 +9,7 @@ import zipCodeRange from './zipCodeRange'
 import totalPriceRange from './totalPriceRange'
 import clusterExpressions from './clusterExpressions'
 import creditCardBin from './creditCardBin'
+import marketingTags from './marketingTags'
 
 export {
   affiliates,
@@ -22,4 +23,5 @@ export {
   totalPriceRange,
   clusterExpressions,
   creditCardBin,
+  marketingTags,
 }

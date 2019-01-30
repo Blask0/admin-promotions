@@ -16,6 +16,7 @@ import {
   totalPriceRange,
   clusterExpressions,
   creditCardBin,
+  marketingTags,
 } from '../../utils/conditions/options'
 
 import withSalesChannels from '../../connectors/withSalesChannels'
@@ -56,6 +57,7 @@ class EligibilitySection extends Component {
       totalPriceRange: totalPriceRange(intl, updatePageState, currencyCode),
       clusterExpressions: clusterExpressions(intl, updatePageState),
       creditCardBin: creditCardBin(intl, updatePageState),
+      marketingTags: marketingTags(intl, updatePageState),
     }
 
     return (
