@@ -5,11 +5,18 @@ import {
 } from '../../renders'
 
 import withBrands from '../../../../connectors/withBrands'
+import withSellers from '../../../../connectors/withSellers'
 
-const map = brands =>
+const mapBrands = brands =>
   brands.map(brand => ({
     label: brand.name,
     value: brand.id,
+  }))
+
+const mapSellers = sellers =>
+  sellers.map(seller => ({
+    label: seller.name,
+    value: seller.id,
   }))
 
 const cartProduct = (intl, update, currencyCode) => {
@@ -27,7 +34,7 @@ const cartProduct = (intl, update, currencyCode) => {
           extraParams: {
             queryInfo: {
               connector: withBrands,
-              dataGetter: ({ brands = [] }) => map(brands),
+              dataGetter: ({ brands = [] }) => mapBrands(brands),
             },
             placeholder: intl.formatMessage({
               id:
@@ -46,7 +53,7 @@ const cartProduct = (intl, update, currencyCode) => {
           extraParams: {
             queryInfo: {
               connector: withBrands,
-              dataGetter: ({ brands = [] }) => map(brands),
+              dataGetter: ({ brands = [] }) => mapBrands(brands),
             },
             placeholder: intl.formatMessage({
               id:
@@ -138,6 +145,45 @@ const cartProduct = (intl, update, currencyCode) => {
               id:
                 'promotions.promotion.elligibility.cartProduct.fromToPrices.placeholder',
             }),
+            update: update,
+          },
+        },
+      },
+      // HAS SELLER
+      {
+        label: 'is from one of these Sellers',
+        value: 'any',
+        object: {
+          renderFn: renderSelectObject,
+          extraParams: {
+            queryInfo: {
+              connector: withSellers,
+              dataGetter: ({ sellers = [] }) => mapSellers(sellers),
+            },
+            placeholder: intl.formatMessage({
+              id:
+                'promotions.promotion.elligibility.cartProduct.hasSellers.placeholder',
+            }),
+            multi: true,
+            update: update,
+          },
+        },
+      },
+      {
+        label: 'is not from one of these Sellers',
+        value: '!any',
+        object: {
+          renderFn: renderSelectObject,
+          extraParams: {
+            queryInfo: {
+              connector: withSellers,
+              dataGetter: ({ sellers = [] }) => mapSellers(sellers),
+            },
+            placeholder: intl.formatMessage({
+              id:
+                'promotions.promotion.elligibility.cartProduct.hasSellers.placeholder',
+            }),
+            multi: true,
             update: update,
           },
         },

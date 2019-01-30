@@ -1,0 +1,6 @@
+query GetSellers {
+  getSellers {
+    id
+    name
+  }
+}
