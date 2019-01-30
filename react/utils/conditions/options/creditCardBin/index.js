@@ -37,6 +37,7 @@ const creditCardBin = (intl, update) => {
               id: 'promotions.promotion.elligibility.creditCardBin.placeholder',
             }),
             multi: true,
+            creatable: true,
             update: update,
           },
         },
