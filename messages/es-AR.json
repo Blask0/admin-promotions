@@ -38,6 +38,8 @@
   "promotions.promotion.elligibility.clusterExpressions.placeholder": "Nombre del cluster",
   "promotions.promotion.elligibility.cartProduct.label": "Produto en carrito",
   "promotions.promotion.elligibility.cartProduct.itemPriceRange.placeholder": "Valor deseado del producto",
+  "promotions.promotion.elligibility.creditCardBin.label": "BIN de tarjeta de crédito",
+  "promotions.promotion.elligibility.creditCardBin.placeholder": "Número de BIN…",
   "promotions.promotion.save": "save",
   "promotions.promotion.cancel": "cancel",
   "promotions.promotions.title": "Promotions",

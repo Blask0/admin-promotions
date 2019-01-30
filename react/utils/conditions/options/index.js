@@ -8,6 +8,7 @@ import utm from './utm'
 import zipCodeRange from './zipCodeRange'
 import totalPriceRange from './totalPriceRange'
 import clusterExpressions from './clusterExpressions'
+import creditCardBin from './creditCardBin'
 
 export {
   affiliates,
@@ -20,4 +21,5 @@ export {
   zipCodeRange,
   totalPriceRange,
   clusterExpressions,
+  creditCardBin,
 }
