@@ -18,8 +18,8 @@ const singleSelectObject = (
       placeholder={placeholder}
       options={options}
       value={value}
-      isMulti={false}
-      isLoading={loading}
+      multi={false}
+      loading={loading}
       creatable={creatable}
       onChange={selected => {
         const { value } = selected || {}
@@ -60,8 +60,8 @@ const multiSelectObject = (
       placeholder={placeholder}
       options={options}
       value={values}
-      isMulti
-      isLoading={loading}
+      multi
+      loading={loading}
       creatable={creatable}
       onChange={selected => {
         const values = selected.map(s => s.value)

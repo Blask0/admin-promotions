@@ -1,6 +1,7 @@
 import {
   renderInputCurrencyObject,
   renderRangeInputCurrencyObject,
+  renderSelectObject,
 } from '../../renders'
 
 const cartProduct = (intl, update, currencyCode) => {
@@ -54,6 +55,42 @@ const cartProduct = (intl, update, currencyCode) => {
             }),
             locale: intl.locale,
             currencyCode: currencyCode,
+            update: update,
+          },
+        },
+      },
+      // LIST PRICE (NOT) EQUALS PRICE
+      {
+        label: 'with "from" and "to" prices',
+        value: 'from/to',
+        object: {
+          renderFn: renderSelectObject,
+          extraParams: {
+            queryInfo: {
+              connector: WrappedComponent => props => (
+                <WrappedComponent {...props} />
+              ),
+              dataGetter: () => [
+                {
+                  label: intl.formatMessage({
+                    id:
+                      'promotions.promotion.elligibility.cartProduct.fromToPrices.equals',
+                  }),
+                  value: true,
+                },
+                {
+                  label: intl.formatMessage({
+                    id:
+                      'promotions.promotion.elligibility.cartProduct.fromToPrices.notEquals',
+                  }),
+                  value: false,
+                },
+              ],
+            },
+            placeholder: intl.formatMessage({
+              id:
+                'promotions.promotion.elligibility.cartProduct.fromToPrices.placeholder',
+            }),
             update: update,
           },
         },
