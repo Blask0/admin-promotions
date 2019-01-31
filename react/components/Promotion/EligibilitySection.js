@@ -53,7 +53,7 @@ class EligibilitySection extends Component {
       utmSource: utm(intl, updatePageState, 'Source'),
       utmCampaign: utm(intl, updatePageState, 'Campaign'),
       zipCodeRange: zipCodeRange(intl, updatePageState),
-      totalPriceRange: totalPriceRange(intl, updatePageState),
+      totalPriceRange: totalPriceRange(intl, updatePageState, currencyCode),
       clusterExpressions: clusterExpressions(intl, updatePageState),
       creditCardBin: creditCardBin(intl, updatePageState),
     }
