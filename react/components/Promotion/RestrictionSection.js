@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
-import { Checkbox, Input, Select } from 'vtex.styleguide'
+import { Checkbox, Input, EXPERIMENTAL_Select } from 'vtex.styleguide'
 import withSalesChannels from '../../connectors/withSalesChannels'
 
 class RestrictionSection extends Component {
@@ -24,6 +24,7 @@ class RestrictionSection extends Component {
         accumulateWithManualPrices,
         externalMarketplaces,
         restrictTradePolicies,
+        restrictionVerb,
         restrictedTradePolicies,
       },
       salesChannels = [],
@@ -35,6 +36,17 @@ class RestrictionSection extends Component {
       label: salesChannel.name,
       value: salesChannel.id,
     }))
+
+    const verbs = [
+      {
+        label: 'is any of',
+        value: 'any',
+      },
+      {
+        label: 'is not any of',
+        value: 'not_any',
+      },
+    ]
 
     return (
       <Fragment>
@@ -216,20 +228,32 @@ class RestrictionSection extends Component {
         </div>
 
         {restrictTradePolicies && (
-          <div className="w-50 pl5 pv3">
-            <Select
-              placeholder={intl.formatMessage({
-                id:
-                  'promotions.promotion.restriction.restrictTradePolicies.placeholder',
-              })}
-              options={mappedSalesChannels}
-              value={restrictedTradePolicies}
-              isMulti
-              isLoading={loading}
-              onChange={selected => {
-                updatePageState({ restrictedTradePolicies: selected })
-              }}
-            />
+          <div className="w-100 pl5 pv3 flex flex-row">
+            <div className="w-30 ph2">
+              <EXPERIMENTAL_Select
+                options={verbs}
+                value={restrictionVerb || verbs[0]}
+                loading={loading}
+                multi={false}
+                onChange={selected => {
+                  updatePageState({ restrictionVerb: selected })
+                }}
+              />
+            </div>
+            <div className="flex-grow-1">
+              <EXPERIMENTAL_Select
+                placeholder={intl.formatMessage({
+                  id:
+                    'promotions.promotion.restriction.restrictTradePolicies.placeholder',
+                })}
+                options={mappedSalesChannels}
+                value={restrictedTradePolicies}
+                loading={loading}
+                onChange={selected => {
+                  updatePageState({ restrictedTradePolicies: selected })
+                }}
+              />
+            </div>
           </div>
         )}
       </Fragment>

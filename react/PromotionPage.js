@@ -66,6 +66,7 @@ class PromotionPage extends Component {
           accumulateWithManualPrices: false,
           externalMarketplaces: false,
           restrictTradePolicies: false,
+          restrictionVerb: undefined,
           restrictedTradePolicies: [],
         },
       },
