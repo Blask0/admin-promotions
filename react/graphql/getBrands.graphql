@@ -1,0 +1,6 @@
+query GetBrands($name: String) {
+  getBrands(q: $name) {
+    id
+    name
+  }
+}

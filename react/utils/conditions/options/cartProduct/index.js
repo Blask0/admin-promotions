@@ -4,12 +4,59 @@ import {
   renderSelectObject,
 } from '../../renders'
 
+import withBrands from '../../../../connectors/withBrands'
+
+const map = brands =>
+  brands.map(brand => ({
+    label: brand.name,
+    value: brand.id,
+  }))
+
 const cartProduct = (intl, update, currencyCode) => {
   return {
     label: intl.formatMessage({
       id: 'promotions.promotion.elligibility.cartProduct.label',
     }),
     verbs: [
+      // HAS BRAND
+      {
+        label: 'belongs to any of these brand',
+        value: 'brand.any',
+        object: {
+          renderFn: renderSelectObject,
+          extraParams: {
+            queryInfo: {
+              connector: withBrands,
+              dataGetter: ({ brands = [] }) => map(brands),
+            },
+            placeholder: intl.formatMessage({
+              id:
+                'promotions.promotion.elligibility.cartProduct.hasBrand.placeholder',
+            }),
+            multi: true,
+            update: update,
+          },
+        },
+      },
+      {
+        label: 'does not belong to any of these brand',
+        value: 'brand.not.any',
+        object: {
+          renderFn: renderSelectObject,
+          extraParams: {
+            queryInfo: {
+              connector: withBrands,
+              dataGetter: ({ brands = [] }) => map(brands),
+            },
+            placeholder: intl.formatMessage({
+              id:
+                'promotions.promotion.elligibility.cartProduct.hasBrand.placeholder',
+            }),
+            multi: true,
+            update: update,
+          },
+        },
+      },
       // ITEM PRICE RANGE
       {
         label: 'with price greater than',
