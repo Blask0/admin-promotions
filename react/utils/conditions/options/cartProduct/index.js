@@ -20,7 +20,7 @@ const cartProduct = (intl, update, currencyCode) => {
     verbs: [
       // HAS BRAND
       {
-        label: 'belongs to any of these brand',
+        label: 'belongs to any of these brands',
         value: 'brand.any',
         object: {
           renderFn: renderSelectObject,
@@ -39,7 +39,7 @@ const cartProduct = (intl, update, currencyCode) => {
         },
       },
       {
-        label: 'does not belong to any of these brand',
+        label: 'does not belong to any of these brands',
         value: 'brand.not.any',
         object: {
           renderFn: renderSelectObject,
