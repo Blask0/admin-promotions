@@ -171,7 +171,7 @@ const cartProduct = (intl, update, currencyCode) => {
       },
       {
         label: 'is not from one of these Sellers',
-        value: '!any',
+        value: 'not.any',
         object: {
           renderFn: renderSelectObject,
           extraParams: {
