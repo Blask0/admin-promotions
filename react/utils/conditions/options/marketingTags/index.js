@@ -36,7 +36,7 @@ const marketingTags = (intl, update) => {
       },
       {
         label: 'is not any of',
-        value: '!any',
+        value: 'not.any',
         object: {
           renderFn: renderSelectObject,
           extraParams: {
