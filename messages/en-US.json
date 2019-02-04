@@ -47,6 +47,8 @@
   "promotions.promotion.elligibility.marketingTags.label": "Marketing tags",
   "promotions.promotion.elligibility.marketingTags.placeholder": "Type the desired marketing tags",
   "promotions.promotion.elligibility.marketingTags.errorMessage": "Invalid format. Please enter a marketing tag in the following format: 'key'='value'",
+  "promotions.promotion.elligibility.cartProduct.hasSellers.placeholder": "Select Sellers…",
+  "promotions.promotion.elligibility.cartProduct.hasSellers.placeholder": "Select sellers…",
   "promotions.promotion.save": "save",
   "promotions.promotion.cancel": "cancel",
   "promotions.promotions.title": "Promotions",

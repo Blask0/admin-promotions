@@ -47,6 +47,8 @@
   "promotions.promotion.elligibility.marketingTags.label": "Tags de marketing",
   "promotions.promotion.elligibility.marketingTags.placeholder": "Digite as tags de marketing desejadas",
   "promotions.promotion.elligibility.marketingTags.errorMessage": "Formato inválido: Por favor, digite uma tag de marketing no seguinte formato: 'chave'='valor'",
+  "promotions.promotion.elligibility.cartProduct.hasSellers.placeholder": "Selecione os Sellers…",
+  "promotions.promotion.elligibility.cartProduct.hasSellers.placeholder": "Selecione os sellers…",
   "promotions.promotion.save": "Salvar",
   "promotions.promotion.cancel": "Cancelar",
   "promotions.promotions.title": "Promoções",
