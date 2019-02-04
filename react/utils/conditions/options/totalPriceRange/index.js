@@ -1,6 +1,9 @@
-import { renderRangeInputObject, renderInputObject } from '../../renders'
+import {
+  renderInputCurrencyObject,
+  renderRangeInputCurrencyObject,
+} from '../../renders'
 
-const totalPriceRange = (intl, update) => {
+const totalPriceRange = (intl, update, currencyCode) => {
   return {
     label: intl.formatMessage({
       id: 'promotions.promotion.elligibility.totalPriceRange.label',
@@ -10,8 +13,10 @@ const totalPriceRange = (intl, update) => {
         label: 'is greather than',
         value: '>',
         object: {
-          renderFn: renderInputObject,
+          renderFn: renderInputCurrencyObject,
           extraParams: {
+            locale: intl.locale,
+            currencyCode: currencyCode,
             update: update,
           },
         },
@@ -20,8 +25,10 @@ const totalPriceRange = (intl, update) => {
         label: 'is smaller than',
         value: '<',
         object: {
-          renderFn: renderInputObject,
+          renderFn: renderInputCurrencyObject,
           extraParams: {
+            locale: intl.locale,
+            currencyCode: currencyCode,
             update: update,
           },
         },
@@ -30,8 +37,10 @@ const totalPriceRange = (intl, update) => {
         label: 'is between',
         value: 'between',
         object: {
-          renderFn: renderRangeInputObject,
+          renderFn: renderRangeInputCurrencyObject,
           extraParams: {
+            locale: intl.locale,
+            currencyCode: currencyCode,
             update: update,
           },
         },
