@@ -22,7 +22,9 @@ const marketingTags = (intl, update) => {
               id: 'promotions.promotion.elligibility.marketingTags.placeholder',
             }),
             validation: {
-              execute: value => !!value.match(/^\w+=\w+/g),
+              execute: selected =>
+                selected.filter(({ value }) => !value.match(/^\w+=\w+/g))
+                  .length === 0,
               errorMessage: intl.formatMessage({
                 id:
                   'promotions.promotion.elligibility.marketingTags.errorMessage',
@@ -50,7 +52,9 @@ const marketingTags = (intl, update) => {
               id: 'promotions.promotion.elligibility.marketingTags.placeholder',
             }),
             validation: {
-              execute: value => !!value.match(/^\w+=\w+/g),
+              execute: selected =>
+                selected.filter(({ value }) => !value.match(/^\w+=\w+/g))
+                  .length === 0,
               errorMessage: intl.formatMessage({
                 id:
                   'promotions.promotion.elligibility.marketingTags.errorMessage',
