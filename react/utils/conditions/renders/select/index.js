@@ -14,13 +14,14 @@ const renderSelectObject = ({
     placeholder,
     multi,
     queryInfo: { connector, dataGetter },
+    validation: { execute: isValid, errorMessage: validationErrorMessage },
   } = extraParams
 
   const SelectObject = connector(props => {
     const options = dataGetter(props)
     const { loading, updateQueryParams } = props
 
-    const { object: selected } = statements[statementIndex]
+    const { object: selected, error: errorMessage } = statements[statementIndex]
 
     return (
       <EXPERIMENTAL_Select
@@ -30,8 +31,14 @@ const renderSelectObject = ({
         multi={multi}
         loading={loading}
         creatable={creatable}
+        errorMessage={errorMessage}
         onChange={selected => {
-          statements[statementIndex].object = selected
+          if (isValid && isValid(selected)) {
+            statements[statementIndex].object = selected
+            statements[statementIndex].error = null
+          } else {
+            statements[statementIndex].error = validationErrorMessage
+          }
           update({
             statements,
           })
