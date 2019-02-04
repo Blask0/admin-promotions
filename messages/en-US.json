@@ -43,6 +43,7 @@
   "promotions.promotion.elligibility.cartProduct.fromToPrices.placeholder": "Select…",
   "promotions.promotion.elligibility.cartProduct.fromToPrices.equals": "Equals",
   "promotions.promotion.elligibility.cartProduct.fromToPrices.notEquals": "Different",
+  "promotions.promotion.elligibility.cartProduct.hasBrand.placeholder": "Select the desired brands…",
   "promotions.promotion.save": "save",
   "promotions.promotion.cancel": "cancel",
   "promotions.promotions.title": "Promotions",
