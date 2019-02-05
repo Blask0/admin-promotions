@@ -46,6 +46,7 @@
   "promotions.promotion.elligibility.cartProduct.hasBrand.placeholder": "Seleccione las marcas deseadas…",
   "promotions.promotion.elligibility.cartProduct.hasCollections.placeholder": "Seleccione las colecciones deseadas…",
   "promotions.promotion.elligibility.cartProduct.hasCategories.placeholder": "Seleccione las categorías deseadas…",
+  "promotions.promotion.elligibility.cartProduct.hasProducts.placeholder": "Seleccione los productos deseados…",
   "promotions.promotion.elligibility.cartProduct.hasSellers.placeholder": "Seleccione los Sellers…",
   "promotions.promotion.elligibility.marketingTags.label": "Etiquetas de marketing",
   "promotions.promotion.elligibility.marketingTags.placeholder": "Escriba las etiquetas de marketing deseadas",

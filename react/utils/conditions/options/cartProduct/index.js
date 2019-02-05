@@ -7,6 +7,7 @@ import {
 import withBrands from '../../../../connectors/withBrands'
 import withCollections from '../../../../connectors/withCollections'
 import withCategories from '../../../../connectors/withCategories'
+import withProducts from '../../../../connectors/withProducts'
 import withSellers from '../../../../connectors/withSellers'
 
 const mapBrands = brands =>
@@ -25,6 +26,12 @@ const mapCategories = categories =>
   categories.map(category => ({
     label: category.name,
     value: category.id,
+  }))
+
+const mapProducts = products =>
+  products.map(product => ({
+    label: product.name,
+    value: product.id,
   }))
 
 const mapSellers = sellers =>
@@ -150,6 +157,45 @@ const cartProduct = (intl, update, currencyCode) => {
             placeholder: intl.formatMessage({
               id:
                 'promotions.promotion.elligibility.cartProduct.hasCategories.placeholder',
+            }),
+            multi: true,
+            update: update,
+          },
+        },
+      },
+      // HAS PRODUCTS
+      {
+        label: 'is any of these SKUs',
+        value: 'product.any',
+        object: {
+          renderFn: renderSelectObject,
+          extraParams: {
+            queryInfo: {
+              connector: withProducts,
+              dataGetter: ({ products = [] }) => mapProducts(products),
+            },
+            placeholder: intl.formatMessage({
+              id:
+                'promotions.promotion.elligibility.cartProduct.hasProducts.placeholder',
+            }),
+            multi: true,
+            update: update,
+          },
+        },
+      },
+      {
+        label: 'is not any of these SKUs',
+        value: 'product.not.any',
+        object: {
+          renderFn: renderSelectObject,
+          extraParams: {
+            queryInfo: {
+              connector: withProducts,
+              dataGetter: ({ products = [] }) => mapProducts(products),
+            },
+            placeholder: intl.formatMessage({
+              id:
+                'promotions.promotion.elligibility.cartProduct.hasProducts.placeholder',
             }),
             multi: true,
             update: update,
