@@ -24,7 +24,10 @@ class EffectSection extends Component {
     this.props.updatePageState({
       ...this.props.effects,
       activeEffectType: 'price',
-      price,
+      price: {
+        ...this.props.effects.price,
+        ...price,
+      },
     })
   }
 
@@ -32,7 +35,10 @@ class EffectSection extends Component {
     this.props.updatePageState({
       ...this.props.effects,
       activeEffectType: 'gift',
-      gift,
+      gift: {
+        ...this.props.effects.gift,
+        ...gift,
+      },
     })
   }
 
@@ -40,7 +46,10 @@ class EffectSection extends Component {
     this.props.updatePageState({
       ...this.props.effects,
       activeEffectType: 'shipping',
-      shipping,
+      shipping: {
+        ...this.props.effects.shipping,
+        ...shipping,
+      },
     })
   }
 
@@ -48,7 +57,10 @@ class EffectSection extends Component {
     this.props.updatePageState({
       ...this.props.effects,
       activeEffectType: 'reward',
-      reward,
+      reward: {
+        ...this.props.effects.reward,
+        ...reward,
+      },
     })
   }
 

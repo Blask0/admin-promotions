@@ -2,24 +2,21 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-import { Radio, Input } from 'vtex.styleguide'
+import { Radio, Input, EXPERIMENTAL_Conditions } from 'vtex.styleguide'
 
 class PriceForm extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      discountType: 'nominal', // oneOf['nominal','percentual','priceTables']
-    }
-  }
 
-  isDiscountTypeSelected = discountType => this.state.discountType === discountType
+  isDiscountTypeSelected = discountType => this.props.priceEffect.discountType === discountType
 
-  changeDiscountType = discountType => this.setState({ discountType })
+  changeDiscountType = discountType => this.props.onChange({ discountType })
+
+  changeDiscount = discount => this.props.onChange({ discount })
+
+  changeAppliesTo = appliesTo => this.props.onChange({ appliesTo })
 
   render() {
     console.log('rendering effect section!')
-    const { effects, intl } = this.props
-    const { discountType } = this.state
+    const { priceEffect, intl } = this.props
 
     return (
       <Fragment>
@@ -39,7 +36,9 @@ class PriceForm extends Component {
           {
             this.isDiscountTypeSelected('nominal')
             ? (<div className="mv4 mh7">
-                <Input size="small" />
+                <Input
+                  onChange={e => this.changeDiscount(e.target.value)}
+                  size="small" />
               </div>)
             : null
           }
@@ -55,7 +54,11 @@ class PriceForm extends Component {
           {
             this.isDiscountTypeSelected('percentual')
             ? (<div className="mv4 mh7">
-                <Input size="small" />
+                <Input
+                  type="number"
+                  onChange={e => this.changeDiscount(e.target.value)}
+                  prefix={<span className="b f6">%</span>}
+                  size="small" />
               </div>)
             : null
           }
@@ -71,7 +74,53 @@ class PriceForm extends Component {
           {
             this.isDiscountTypeSelected('priceTables')
             ? (<div className="mv4 mh7">
-                <Input size="small" />
+                <Input
+                  onChange={e => this.changeDiscount(e.target.value)}
+                  size="small" />
+              </div>)
+            : null
+          }
+        </div>
+        <h4 className="t-heading-4 mt7">
+          <FormattedMessage id="promotions.promotion.effects.priceForm.appliesTo.title" />
+        </h4>
+        <div className="mh4">
+          <Radio
+            id="promotions.promotion.effects.priceForm.appliesTo.all"
+            name="applies-to-all-products"
+            checked={!priceEffect.appliesTo}
+            label={intl.formatMessage({
+              id: 'promotions.promotion.effects.priceForm.appliesTo.all',
+            })}
+            onChange={() => this.changeAppliesTo(null)}
+          />
+          <Radio
+            id="promotions.promotion.effects.priceForm.appliesTo.specific"
+            name="applies-to-specific-products"
+            checked={priceEffect.appliesTo}
+            label={intl.formatMessage({
+              id: 'promotions.promotion.effects.priceForm.appliesTo.specific',
+            })}
+            onChange={() => this.changeAppliesTo([])}
+          />
+          {
+            priceEffect.appliesTo
+            ? (<div className="mv4 mh7">
+                <EXPERIMENTAL_Conditions
+                  options={[]} // WIP
+                  subjectPlaceholder={intl.formatMessage({
+                    id:
+                      'promotions.promotion.effects.priceForm.appliesTo.specific.placeholder',
+                  })}
+                  statements={priceEffect.appliesTo}
+                  operator={'all'} // WIP
+                  onChangeOperator={({ operator }) => {
+                    console.log('OPERATOR CHANGE: ', operator)
+                  }}
+                  onChangeStatements={statements => {
+                    this.changeAppliesTo(statements)
+                  }}
+                />
               </div>)
             : null
           }
@@ -83,10 +132,12 @@ class PriceForm extends Component {
 
 PriceForm.propTypes = {
   intl: intlShape,
-  effects: PropTypes.shape({
-    effectType: PropTypes.string,
+  priceEffect: PropTypes.shape({
+    discountType: PropTypes.string,
+    discount: PropTypes.string,
+    appliesTo: PropTypes.any,
   }).isRequired,
-  updateProceForm: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
 }
 
 export default injectIntl(PriceForm)
