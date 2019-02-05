@@ -15,7 +15,9 @@ const affiliates = (intl, update) => {
     }),
     verbs: [
       {
-        label: 'is',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.affiliates.verb.==',
+        }),
         value: '==',
         object: {
           renderFn: renderSelectObject,
@@ -33,7 +35,9 @@ const affiliates = (intl, update) => {
         },
       },
       {
-        label: 'is not',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.affiliates.verb.!=',
+        }),
         value: '!=',
         object: {
           renderFn: renderSelectObject,
@@ -51,7 +55,9 @@ const affiliates = (intl, update) => {
         },
       },
       {
-        label: 'is any of',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.affiliates.verb.any',
+        }),
         value: 'any',
         object: {
           renderFn: renderSelectObject,

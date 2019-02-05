@@ -48,7 +48,9 @@ const cartProduct = (intl, update, currencyCode) => {
     verbs: [
       // HAS BRAND
       {
-        label: 'belongs to any of these brands',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.cartProduct.verb.brand.any',
+        }),
         value: 'brand.any',
         object: {
           renderFn: renderSelectObject,
@@ -67,7 +69,10 @@ const cartProduct = (intl, update, currencyCode) => {
         },
       },
       {
-        label: 'does not belong to any of these brands',
+        label: intl.formatMessage({
+          id:
+            'promotions.promotion.elligibility.cartProduct.verb.brand.not.any',
+        }),
         value: 'brand.not.any',
         object: {
           renderFn: renderSelectObject,
@@ -204,7 +209,10 @@ const cartProduct = (intl, update, currencyCode) => {
       },
       // ITEM PRICE RANGE
       {
-        label: 'with price greater than',
+        label: intl.formatMessage({
+          id:
+            'promotions.promotion.elligibility.cartProduct.verb.itemPriceRange.gt',
+        }),
         value: '>',
         object: {
           renderFn: renderInputCurrencyObject,
@@ -220,7 +228,10 @@ const cartProduct = (intl, update, currencyCode) => {
         },
       },
       {
-        label: 'with price less than',
+        label: intl.formatMessage({
+          id:
+            'promotions.promotion.elligibility.cartProduct.verb.itemPriceRange.lt',
+        }),
         value: '<',
         object: {
           renderFn: renderInputCurrencyObject,
@@ -236,7 +247,10 @@ const cartProduct = (intl, update, currencyCode) => {
         },
       },
       {
-        label: 'with price between',
+        label: intl.formatMessage({
+          id:
+            'promotions.promotion.elligibility.cartProduct.verb.itemPriceRange.between',
+        }),
         value: 'between',
         object: {
           renderFn: renderRangeInputCurrencyObject,
@@ -253,7 +267,9 @@ const cartProduct = (intl, update, currencyCode) => {
       },
       // LIST PRICE (NOT) EQUALS PRICE
       {
-        label: 'with "from" and "to" prices',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.cartProduct.verb.fromToPrices',
+        }),
         value: 'from/to',
         object: {
           renderFn: renderSelectObject,
@@ -289,7 +305,9 @@ const cartProduct = (intl, update, currencyCode) => {
       },
       // HAS SELLER
       {
-        label: 'is from one of these Sellers',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.cartProduct.verb.seller.any',
+        }),
         value: 'any',
         object: {
           renderFn: renderSelectObject,
@@ -308,7 +326,10 @@ const cartProduct = (intl, update, currencyCode) => {
         },
       },
       {
-        label: 'is not from one of these Sellers',
+        label: intl.formatMessage({
+          id:
+            'promotions.promotion.elligibility.cartProduct.verb.seller.not.any',
+        }),
         value: 'not.any',
         object: {
           renderFn: renderSelectObject,

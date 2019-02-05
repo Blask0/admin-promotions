@@ -7,7 +7,9 @@ const creditCardBin = (intl, update) => {
     }),
     verbs: [
       {
-        label: 'is any of',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.creditCardBin.verb.any',
+        }),
         value: 'any',
         object: {
           renderFn: renderSelectObject,
