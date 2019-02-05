@@ -1,0 +1,6 @@
+query GetCollections($name: String) {
+  getCollections(name: $name) {
+    id
+    name
+  }
+}

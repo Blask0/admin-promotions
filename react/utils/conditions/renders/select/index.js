@@ -14,7 +14,7 @@ const renderSelectObject = ({
     placeholder,
     multi,
     queryInfo: { connector, dataGetter },
-    validation: { execute: isValid, errorMessage: validationErrorMessage },
+    validation: { execute: isValid, errorMessage: validationErrorMessage } = {},
   } = extraParams
 
   const SelectObject = connector(props => {
@@ -33,7 +33,7 @@ const renderSelectObject = ({
         creatable={creatable}
         errorMessage={errorMessage}
         onChange={selected => {
-          if (isValid && isValid(selected)) {
+          if ((isValid && isValid(selected)) || !isValid) {
             statements[statementIndex].object = selected
             statements[statementIndex].error = null
           } else {
