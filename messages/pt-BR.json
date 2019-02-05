@@ -45,6 +45,7 @@
   "promotions.promotion.elligibility.cartProduct.fromToPrices.notEquals": "Diferentes",
   "promotions.promotion.elligibility.cartProduct.hasBrand.placeholder": "Selecione as marcas desejadas…",
   "promotions.promotion.elligibility.cartProduct.hasCollections.placeholder": "Selecione as coleções desejadas…",
+  "promotions.promotion.elligibility.cartProduct.hasCategories.placeholder": "Selecione as categorias desejadas…",
   "promotions.promotion.elligibility.cartProduct.hasSellers.placeholder": "Selecione os Sellers…",
   "promotions.promotion.elligibility.marketingTags.label": "Tags de marketing",
   "promotions.promotion.elligibility.marketingTags.placeholder": "Digite as tags de marketing desejadas",

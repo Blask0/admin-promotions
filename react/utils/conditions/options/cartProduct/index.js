@@ -6,6 +6,7 @@ import {
 
 import withBrands from '../../../../connectors/withBrands'
 import withCollections from '../../../../connectors/withCollections'
+import withCategories from '../../../../connectors/withCategories'
 import withSellers from '../../../../connectors/withSellers'
 
 const mapBrands = brands =>
@@ -18,6 +19,12 @@ const mapCollections = collections =>
   collections.map(collection => ({
     label: collection.name,
     value: collection.id,
+  }))
+
+const mapCategories = categories =>
+  categories.map(category => ({
+    label: category.name,
+    value: category.id,
   }))
 
 const mapSellers = sellers =>
@@ -104,6 +111,45 @@ const cartProduct = (intl, update, currencyCode) => {
             placeholder: intl.formatMessage({
               id:
                 'promotions.promotion.elligibility.cartProduct.hasCollections.placeholder',
+            }),
+            multi: true,
+            update: update,
+          },
+        },
+      },
+      // HAS CATEGORY
+      {
+        label: 'belongs to any of these categories',
+        value: 'category.any',
+        object: {
+          renderFn: renderSelectObject,
+          extraParams: {
+            queryInfo: {
+              connector: withCategories,
+              dataGetter: ({ categories = [] }) => mapCategories(categories),
+            },
+            placeholder: intl.formatMessage({
+              id:
+                'promotions.promotion.elligibility.cartProduct.hasCategories.placeholder',
+            }),
+            multi: true,
+            update: update,
+          },
+        },
+      },
+      {
+        label: 'does not belong to any of these categories',
+        value: 'category.not.any',
+        object: {
+          renderFn: renderSelectObject,
+          extraParams: {
+            queryInfo: {
+              connector: withCategories,
+              dataGetter: ({ categories = [] }) => mapCategories(categories),
+            },
+            placeholder: intl.formatMessage({
+              id:
+                'promotions.promotion.elligibility.cartProduct.hasCategories.placeholder',
             }),
             multi: true,
             update: update,
