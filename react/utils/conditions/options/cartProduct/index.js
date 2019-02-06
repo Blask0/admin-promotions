@@ -30,7 +30,7 @@ const mapCategories = categories =>
 
 const mapProducts = products =>
   products.map(product => ({
-    label: product.name,
+    label: `${product.id} - ${product.name}</span>`,
     value: product.id,
   }))
 
