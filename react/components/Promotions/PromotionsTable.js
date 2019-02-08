@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape } from 'react-intl'
 
-import { Tag, Table } from 'vtex.styleguide'
+import { Tag, Table, ModalDialog } from 'vtex.styleguide'
 
 import Price from '../Icon/Price'
 import Gift from '../Icon/Gift'
@@ -10,6 +10,8 @@ import Shipping from '../Icon/Shipping'
 import Reward from '../Icon/Reward'
 
 import { toDate, format } from 'date-fns'
+
+import archivingPromotionById from '../../connectors/archivingPromotionById'
 
 class PromotionsTable extends Component {
   constructor(props) {
@@ -23,6 +25,7 @@ class PromotionsTable extends Component {
         sortedBy: null,
         sortOrder: null,
       },
+      isPromotionModalOpened: false,
     }
   }
 
@@ -152,11 +155,19 @@ class PromotionsTable extends Component {
   }
 
   sortEffectAlphapeticallyASC = (a, b) => {
-    return a.effectType < b.effectType ? -1 : a.effectType > b.effectType ? 1 : 0
+    return a.effectType < b.effectType
+      ? -1
+      : a.effectType > b.effectType
+        ? 1
+        : 0
   }
 
   sortEffectAlphapeticallyDESC = (a, b) => {
-    return a.effectType < b.effectType ? 1 : a.effectType > b.effectType ? -1 : 0
+    return a.effectType < b.effectType
+      ? 1
+      : a.effectType > b.effectType
+        ? -1
+        : 0
   }
 
   sortStartDateASC = (a, b) => {
@@ -206,9 +217,18 @@ class PromotionsTable extends Component {
         },
       })
     } else if (sortedBy === 'effectType') {
+<<<<<<< HEAD
       const orderedPromotions = sortOrder === 'ASC'
         ? this.props.promotions.slice().sort(this.sortEffectAlphapeticallyASC)
         : this.props.promotions.slice().sort(this.sortEffectAlphapeticallyDESC)
+=======
+      const orderedPromotions =
+        sortOrder === 'ASC'
+          ? this.props.promotions.slice().sort(this.sortEffectAlphapeticallyASC)
+          : this.props.promotions
+            .slice()
+            .sort(this.sortEffectAlphapeticallyDESC)
+>>>>>>> Add delete action to promotions table
 
       this.setState({
         orderedPromotions,
@@ -218,9 +238,16 @@ class PromotionsTable extends Component {
         },
       })
     } else if (sortedBy === 'beginDate') {
+<<<<<<< HEAD
       const orderedPromotions = sortOrder === 'ASC'
         ? this.props.promotions.slice().sort(this.sortStartDateASC)
         : this.props.promotions.slice().sort(this.sortStartDateDESC)
+=======
+      const orderedPromotions =
+        sortOrder === 'ASC'
+          ? this.props.promotions.slice().sort(this.sortStartDateASC)
+          : this.props.promotions.slice().sort(this.sortStartDateDESC)
+>>>>>>> Add delete action to promotions table
 
       this.setState({
         orderedPromotions,
@@ -230,9 +257,16 @@ class PromotionsTable extends Component {
         },
       })
     } else if (sortedBy === 'endDate') {
+<<<<<<< HEAD
       const orderedPromotions = sortOrder === 'ASC'
         ? this.props.promotions.slice().sort(this.sortEndDateASC)
         : this.props.promotions.slice().sort(this.sortEndDateDESC)
+=======
+      const orderedPromotions =
+        sortOrder === 'ASC'
+          ? this.props.promotions.slice().sort(this.sortEndDateASC)
+          : this.props.promotions.slice().sort(this.sortEndDateDESC)
+>>>>>>> Add delete action to promotions table
 
       this.setState({
         orderedPromotions,
@@ -244,79 +278,147 @@ class PromotionsTable extends Component {
     }
   }
 
+  handlePromotionDeletionModalConfirmed = () => {
+    const {
+      promotionToBeDeleted: { id, name },
+    } = this.state
+    const { archivePromotionById, handlePromotionDeletion } = this.props
+    const archive = archivePromotionById({
+      variables: {
+        id,
+      },
+    })
+    archive.then(response => {
+      handlePromotionDeletion()
+      this.setState({
+        isPromotionModalOpened: false,
+        promotionToBeDeleted: undefined,
+      })
+    })
+  }
+
+  handlePromotionDeletionModalCanceled = () => {
+    this.setState({
+      isPromotionModalOpened: false,
+      promotionToBeDeleted: undefined,
+    })
+  }
+
   render() {
     const { navigate } = this.context
     const {
       intl,
+      promotions,
       loading,
       inputSearchValue,
       handleSearchChange,
       handleSearchClear,
-      handleSearchSubmit
+      handleSearchSubmit,
     } = this.props
-    const { orderedPromotions } = this.state
+    const {
+      isPromotionModalOpened,
+      promotionToBeDeleted: { name: promotionToBeDeletedName } = {},
+    } = this.state
     const schema = this.getTableSchema(intl)
 
     return (
-      <Table
-        schema={schema}
-        items={orderedPromotions}
-        density="low"
-        loading={loading}
-        onRowClick={({ rowData: { id } }) => {
-          navigate({
-            page: 'admin/promotion',
-            params: {
-              id: id,
+      <div>
+        <Table
+          schema={schema}
+          items={this.state.orderedPromotions}
+          density="low"
+          loading={this.props.loading}
+          onRowClick={({ rowData: { id } }) => {
+            navigate({
+              page: 'admin/create',
+              params: {
+                id: id,
+              },
+            })
+          }}
+          toolbar={{
+            inputSearch: {
+              value: this.props.inputSearchValue,
+              placeholder: intl.formatMessage({
+                id: 'promotions.promotions.search',
+              }),
+              onChange: this.props.handleSearchChange,
+              onClear: this.props.handleSearchClear,
+              onSubmit: this.props.handleSearchSubmit,
             },
-          })
-        }}
-        toolbar={{
-          inputSearch: {
-            value: inputSearchValue,
-            placeholder: intl.formatMessage({
-              id: 'promotions.promotions.search',
-            }),
-            onChange: handleSearchChange,
-            onClear: handleSearchClear,
-            onSubmit: handleSearchSubmit,
-          },
-          // download: {
-          //   label: 'Export',
-          //   handleCallback: () => alert('Export not implemented yet'),
-          // },
-          fields: {
-            label: intl.formatMessage({
-              id: 'promotions.promotions.table.filter.label',
-            }),
-            showAllLabel: intl.formatMessage({
-              id: 'promotions.promotions.table.filter.showAll',
-            }),
-            hideAllLabel: intl.formatMessage({
-              id: 'promotions.promotions.table.filter.hideAll',
-            }),
-          },
-          newLine: {
-            label: intl.formatMessage({
-              id: 'promotions.promotions.newPromotion',
-            }),
-            handleCallback: () => {
-              navigate({
-                page: 'admin/promotion',
-                params: {
-                  id: 'new',
-                },
-              })
+            // download: {
+            //   label: 'Export',
+            //   handleCallback: () => alert('Export not implemented yet'),
+            // },
+            fields: {
+              label: intl.formatMessage({
+                id: 'promotions.promotions.table.filter.label',
+              }),
+              showAllLabel: intl.formatMessage({
+                id: 'promotions.promotions.table.filter.showAll',
+              }),
+              hideAllLabel: intl.formatMessage({
+                id: 'promotions.promotions.table.filter.hideAll',
+              }),
             },
-          },
-        }}
-        sort={{
-          sortedBy: this.state.dataSort.sortedBy,
-          sortOrder: this.state.dataSort.sortOrder,
-        }}
-        onSort={this.handleSort}
-        fullWidth
-      />
+            newLine: {
+              label: intl.formatMessage({
+                id: 'promotions.promotions.newPromotion',
+              }),
+              handleCallback: () => {
+                navigate({
+                  page: 'admin/create',
+                  params: {
+                    id: 'new',
+                  },
+                })
+              },
+            },
+          }}
+          sort={{
+            sortedBy: this.state.dataSort.sortedBy,
+            sortOrder: this.state.dataSort.sortOrder,
+          }}
+          onSort={this.handleSort}
+          lineActions={[
+            {
+              label: 'Delete',
+              isDangerous: true,
+              onClick: ({ rowData: { id, name } }) => {
+                this.setState({
+                  isPromotionModalOpened: true,
+                  promotionToBeDeleted: {
+                    id,
+                    name,
+                  },
+                })
+              },
+            },
+          ]}
+          fullWidth
+        />
+
+        <ModalDialog
+          centered
+          confirmation={{
+            onClick: this.handlePromotionDeletionModalConfirmed,
+            label: 'Ok',
+          }}
+          cancelation={{
+            onClick: this.handlePromotionDeletionModalCanceled,
+            label: 'Cancel',
+          }}
+          isOpen={isPromotionModalOpened}
+          showCloseIcon={false}
+          closeOnEsc={false}
+          closeOnOverlayClick={false}>
+          <h1>Confirm promotion deletion?</h1>
+          <p>
+            Are you sure you want to delete promotion
+            <strong> {promotionToBeDeletedName}</strong>?
+          </p>
+        </ModalDialog>
+      </div>
     )
   }
 }
@@ -333,6 +435,7 @@ PromotionsTable.propTypes = {
   handleSearchChange: PropTypes.func,
   handleSearchClear: PropTypes.func,
   handleSearchSubmit: PropTypes.func,
+  handlePromotionDeletion: PropTypes.func,
 }
 
-export default injectIntl(PromotionsTable)
+export default archivingPromotionById(injectIntl(PromotionsTable))

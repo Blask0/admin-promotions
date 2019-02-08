@@ -1,0 +1,3 @@
+mutation ArchivePromotionById($id: ID!) {
+  archivePromotionById(id: $id)
+}
