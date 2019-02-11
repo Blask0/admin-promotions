@@ -178,5 +178,12 @@
   "promotions.promotion.scopeSelector.sku.placeholder": "Selecione os SKUs desejados…",
   "promotions.promotions.table.filter.label": "Alternar campos visíveis",
   "promotions.promotions.table.filter.showAll": "Mostrar Tudo",
-  "promotions.promotions.table.filter.hideAll": "Ocultar Tudo"
+  "promotions.promotions.table.filter.hideAll": "Ocultar Tudo",
+  "promotions.promotions.actions.delete": "Deletar",
+  "promotions.promotions.deletionModal.title": "Confirmação de exclusão de promoção",
+  "promotions.promotions.deletionModal.text": "Tem certeza de que deseja excluir a promoção",
+  "promotions.promotions.deletionModal.confirm": "Sim",
+  "promotions.promotions.deletionModal.cancel": "Cancelar",
+  "promotions.promotions.actions.activate": "Iniciar",
+  "promotions.promotions.actions.deactivate": "Pausar"
 }

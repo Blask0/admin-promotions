@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { injectIntl, intlShape } from 'react-intl'
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
 import { Tag, Table, ModalDialog } from 'vtex.styleguide'
 
@@ -382,7 +382,29 @@ class PromotionsTable extends Component {
           onSort={this.handleSort}
           lineActions={[
             {
-              label: 'Delete',
+              label: ({ rowData: { isActive } }) =>
+                isActive
+                  ? intl.formatMessage({
+                    id: 'promotions.promotions.actions.deactivate',
+                  })
+                  : intl.formatMessage({
+                    id: 'promotions.promotions.actions.activate',
+                  }),
+              onClick: ({ rowData: { id, name } }) => {
+                this.setState({
+                  isPromotionModalOpened: true,
+                  promotionToBeDeleted: {
+                    id,
+                    name,
+                  },
+                })
+              },
+            },
+            {
+              label: () =>
+                intl.formatMessage({
+                  id: 'promotions.promotions.actions.delete',
+                }),
               isDangerous: true,
               onClick: ({ rowData: { id, name } }) => {
                 this.setState({
@@ -402,19 +424,25 @@ class PromotionsTable extends Component {
           centered
           confirmation={{
             onClick: this.handlePromotionDeletionModalConfirmed,
-            label: 'Ok',
+            label: intl.formatMessage({
+              id: 'promotions.promotions.deletionModal.confirm',
+            }),
           }}
           cancelation={{
             onClick: this.handlePromotionDeletionModalCanceled,
-            label: 'Cancel',
+            label: intl.formatMessage({
+              id: 'promotions.promotions.deletionModal.cancel',
+            }),
           }}
           isOpen={isPromotionModalOpened}
           showCloseIcon={false}
           closeOnEsc={false}
           closeOnOverlayClick={false}>
-          <h1>Confirm promotion deletion?</h1>
+          <h1>
+            <FormattedMessage id="promotions.promotions.deletionModal.title" />
+          </h1>
           <p>
-            Are you sure you want to delete promotion
+            <FormattedMessage id="promotions.promotions.deletionModal.text" />
             <strong> {promotionToBeDeletedName}</strong>?
           </p>
         </ModalDialog>

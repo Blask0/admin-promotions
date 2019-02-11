@@ -1,0 +1,3 @@
+mutation ActivatePromotionById($id: ID!) {
+  activatePromotionById(id: $id)
+}

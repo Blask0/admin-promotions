@@ -177,5 +177,12 @@
   "promotions.promotion.scopeSelector.sku.placeholder": "Select the desired SKUs…",
   "promotions.promotions.table.filter.label": "Toggle visible fields",
   "promotions.promotions.table.filter.showAll": "Show All",
-  "promotions.promotions.table.filter.hideAll": "Hide All"
+  "promotions.promotions.table.filter.hideAll": "Hide All",
+  "promotions.promotions.actions.delete": "Delete",
+  "promotions.promotions.deletionModal.title": "Promotion deletion confirmation",
+  "promotions.promotions.deletionModal.text": "Are you sure you want to delete promotion",
+  "promotions.promotions.deletionModal.confirm": "Yes",
+  "promotions.promotions.deletionModal.cancel": "Cancel",
+  "promotions.promotions.actions.activate": "Start",
+  "promotions.promotions.actions.deactivate": "Pause"
 }
