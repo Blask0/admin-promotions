@@ -5,12 +5,19 @@ import {
 } from '../../renders'
 
 import withBrands from '../../../../connectors/withBrands'
+import withCollections from '../../../../connectors/withCollections'
 import withSellers from '../../../../connectors/withSellers'
 
 const mapBrands = brands =>
   brands.map(brand => ({
     label: brand.name,
     value: brand.id,
+  }))
+
+const mapCollections = collections =>
+  collections.map(collection => ({
+    label: collection.name,
+    value: collection.id,
   }))
 
 const mapSellers = sellers =>
@@ -58,6 +65,45 @@ const cartProduct = (intl, update, currencyCode) => {
             placeholder: intl.formatMessage({
               id:
                 'promotions.promotion.elligibility.cartProduct.hasBrand.placeholder',
+            }),
+            multi: true,
+            update: update,
+          },
+        },
+      },
+      // HAS COLLECTIONS
+      {
+        label: 'belongs to any of these collections',
+        value: 'collection.any',
+        object: {
+          renderFn: renderSelectObject,
+          extraParams: {
+            queryInfo: {
+              connector: withCollections,
+              dataGetter: ({ collections = [] }) => mapCollections(collections),
+            },
+            placeholder: intl.formatMessage({
+              id:
+                'promotions.promotion.elligibility.cartProduct.hasCollections.placeholder',
+            }),
+            multi: true,
+            update: update,
+          },
+        },
+      },
+      {
+        label: 'does not belong to any of these collections',
+        value: 'collection.not.any',
+        object: {
+          renderFn: renderSelectObject,
+          extraParams: {
+            queryInfo: {
+              connector: withCollections,
+              dataGetter: ({ collections = [] }) => mapCollections(collections),
+            },
+            placeholder: intl.formatMessage({
+              id:
+                'promotions.promotion.elligibility.cartProduct.hasCollections.placeholder',
             }),
             multi: true,
             update: update,
