@@ -86,7 +86,7 @@ class EffectSection extends Component {
           // TO DO: implement shipping form
           <ShippingForm
             shippingEffect={effects.shipping}
-            onChange={this.updatePriceEffect}
+            onChange={this.updateShippingEffect}
           />
         )
       case 'reward':
