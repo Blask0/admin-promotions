@@ -5,10 +5,6 @@ import getSalesChannels from '../graphql/getSalesChannels.graphql'
 
 function withSalesChannels(WrappedComponent) {
   class WithSalesChannels extends Component {
-    constructor(props) {
-      super(props)
-    }
-
     render() {
       return (
         <Query query={getSalesChannels}>
