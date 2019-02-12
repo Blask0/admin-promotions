@@ -27,6 +27,8 @@ class PromotionPage extends Component {
           startDate: new Date(),
           hasEndDate: false, // temporary, this should be on promotion json
           endDate: addDays(new Date(), 1),
+          isArchived: false,
+          id: '',
         },
         eligibility: {
           allCustomers: true,
