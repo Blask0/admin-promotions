@@ -83,7 +83,6 @@ class EffectSection extends Component {
         )
       case 'shipping':
         return (
-          // TO DO: implement shipping form
           <ShippingForm
             shippingEffect={effects.shipping}
             onChange={this.updateShippingEffect}
