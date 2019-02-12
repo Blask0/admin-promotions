@@ -14,11 +14,11 @@ class ShippingForm extends Component {
 
   render() {
     console.log('rendering effect section!')
-    const { priceEffect, intl } = this.props
+    const { intl } = this.props
 
     return (
       <Fragment>
-        <div className="mh4">
+        <div className="mh4 mt7">
           <Radio
             id="promotions.promotion.effects.shippingForm.nominal"
             name="nominal-discount-type"
@@ -29,7 +29,7 @@ class ShippingForm extends Component {
             onChange={() => this.changeDiscountType('nominal')}
           />
           {this.isDiscountTypeSelected('nominal') ? (
-            <div className="mv4 mh7">
+            <div className="mv4 mh7 w-20">
               <Input
                 onChange={e => this.changeDiscount(e.target.value)}
                 size="small"
@@ -46,7 +46,7 @@ class ShippingForm extends Component {
             onChange={() => this.changeDiscountType('percentual')}
           />
           {this.isDiscountTypeSelected('percentual') ? (
-            <div className="mv4 mh7">
+            <div className="mv4 mh7 w-20">
               <Input
                 type="number"
                 onChange={e => this.changeDiscount(e.target.value)}
@@ -65,7 +65,7 @@ class ShippingForm extends Component {
             onChange={() => this.changeDiscountType('maximumValue')}
           />
           {this.isDiscountTypeSelected('maximumValue') ? (
-            <div className="mv4 mh7">
+            <div className="mv4 mh7 w-20">
               <Input
                 onChange={e => this.changeDiscount(e.target.value)}
                 size="small"
