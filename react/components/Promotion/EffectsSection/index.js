@@ -9,9 +9,11 @@ import Reward from '../../Icon/Reward'
 
 import SelectableCard from './SelectableCard'
 import PriceForm from './PriceForm'
+import ShippingForm from './ShippingForm'
 
 class EffectSection extends Component {
-  isEffectActive = activeEffectType => this.props.effects.activeEffectType === activeEffectType
+  isEffectActive = activeEffectType =>
+    this.props.effects.activeEffectType === activeEffectType
 
   changeActiveEffectType = activeEffectType => {
     this.props.updatePageState({
@@ -66,31 +68,35 @@ class EffectSection extends Component {
 
   renderEffectFormByType = activeEffectType => {
     const { effects } = this.props
-            switch (activeEffectType) {
-              case 'price':
-                return (
-                  <PriceForm
-                    priceEffect={effects.price}
-                    onChange={this.updatePriceEffect} />
-                )
-              case 'gift':
-                return (
-                  // TO DO: implement gift form
-                  <h1 className="tc ma7">gift</h1>
-                )
-              case 'shipping':
-                return (
-                  // TO DO: implement shipping form
-                  <h1 className="tc ma7">shipping</h1>
-                )
-              case 'reward':
-                return (
-                  // TO DO: implement reward form
-                  <h1 className="tc ma7">reward</h1>
-                )
-              default:
-                  return null
-            }
+    switch (activeEffectType) {
+      case 'price':
+        return (
+          <PriceForm
+            priceEffect={effects.price}
+            onChange={this.updatePriceEffect}
+          />
+        )
+      case 'gift':
+        return (
+          // TO DO: implement gift form
+          <h1 className="tc ma7">gift</h1>
+        )
+      case 'shipping':
+        return (
+          // TO DO: implement shipping form
+          <ShippingForm
+            shippingEffect={effects.shipping}
+            onChange={this.updatePriceEffect}
+          />
+        )
+      case 'reward':
+        return (
+          // TO DO: implement reward form
+          <h1 className="tc ma7">reward</h1>
+        )
+      default:
+        return null
+    }
   }
 
   render() {
