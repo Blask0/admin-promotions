@@ -13,7 +13,6 @@ class ShippingForm extends Component {
   changeDiscount = discount => this.props.onChange({ discount })
 
   render() {
-    console.log('rendering effect section!')
     const { intl } = this.props
 
     return (
