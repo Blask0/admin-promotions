@@ -23,6 +23,7 @@
   "promotions.promotion.effects.reward": "Reward",
   "promotions.promotion.effects.scope.title": "Applies to",
   "promotions.promotion.effects.shippingForm.nominal": "Nominal",
+  "promotions.promotion.effects.shippingForm.placeholder": "Enter value…",
   "promotions.promotion.effects.shippingForm.percentual": "Percentual",
   "promotions.promotion.effects.shippingForm.maximumValue": "Maximum Value",
   "promotions.promotion.elligibility.title": "Elligibility",

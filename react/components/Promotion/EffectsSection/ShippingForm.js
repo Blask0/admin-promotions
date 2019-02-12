@@ -31,6 +31,9 @@ class ShippingForm extends Component {
             <div className="mv4 mh7 w-20">
               <Input
                 onChange={e => this.changeDiscount(e.target.value)}
+                placeholder={intl.formatMessage({
+                  id: 'promotions.promotion.effects.shippingForm.placeholder',
+                })}
                 size="small"
               />
             </div>
@@ -49,6 +52,9 @@ class ShippingForm extends Component {
               <Input
                 type="number"
                 onChange={e => this.changeDiscount(e.target.value)}
+                placeholder={intl.formatMessage({
+                  id: 'promotions.promotion.effects.shippingForm.placeholder',
+                })}
                 prefix={<span className="b f6">%</span>}
                 size="small"
               />
@@ -67,6 +73,9 @@ class ShippingForm extends Component {
             <div className="mv4 mh7 w-20">
               <Input
                 onChange={e => this.changeDiscount(e.target.value)}
+                placeholder={intl.formatMessage({
+                  id: 'promotions.promotion.effects.shippingForm.placeholder',
+                })}
                 size="small"
               />
             </div>
