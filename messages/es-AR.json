@@ -67,5 +67,17 @@
   "promotions.promotion.cancel": "cancel",
   "promotions.promotions.title": "Promotions",
   "promotions.promotions.search": "Search promotions by name of effect",
-  "promotions.promotions.newPromotion": "New Promotion"
+  "promotions.promotions.newPromotion": "New Promotion",
+  "promotions.promotion.restriction.title": "Restricciones",
+  "promotions.promotion.restriction.limitUsage.label": "Limitar el uso",
+  "promotions.promotion.restriction.limitPerActivation.label": "Limitar el número máximo de activaciones",
+  "promotions.promotion.restriction.limitPerAffectedItems.label": "Limitar el número máximo de artículos afectados",
+  "promotions.promotion.restriction.limit.perStore": "Por tienda",
+  "promotions.promotion.restriction.limit.perClient": "Por cliente",
+  "promotions.promotion.restriction.accumulate.label": "Acumular",
+  "promotions.promotion.restriction.accumulateWithPromotions.label": "Con otras promociones",
+  "promotions.promotion.restriction.accumulateWithManualPrices.label": "Con precios manuales",
+  "promotions.promotion.restriction.externalMarketplaces.label": "Habilitar Marketplaces externos",
+  "promotions.promotion.restriction.restrictTradePolicies.label": "Restringir políticas comerciales",
+  "promotions.promotion.restriction.restrictTradePolicies.placeholder": "Seleccione una política comercial"
 }
