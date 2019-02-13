@@ -1,0 +1,8 @@
+query GetProducts($name: String!) {
+  getProducts(q: $name, itemsPerPage: 999999) {
+    products {
+      id
+      name
+    }
+  }
+}
