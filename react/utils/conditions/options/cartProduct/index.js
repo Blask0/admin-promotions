@@ -92,7 +92,10 @@ const cartProduct = (intl, update, currencyCode) => {
       },
       // HAS COLLECTIONS
       {
-        label: 'belongs to any of these collections',
+        label: intl.formatMessage({
+          id:
+            'promotions.promotion.elligibility.cartProduct.verb.collection.any',
+        }),
         value: 'collection.any',
         object: {
           renderFn: renderSelectObject,
@@ -111,7 +114,10 @@ const cartProduct = (intl, update, currencyCode) => {
         },
       },
       {
-        label: 'does not belong to any of these collections',
+        label: intl.formatMessage({
+          id:
+            'promotions.promotion.elligibility.cartProduct.verb.collection.not.any',
+        }),
         value: 'collection.not.any',
         object: {
           renderFn: renderSelectObject,
@@ -131,7 +137,9 @@ const cartProduct = (intl, update, currencyCode) => {
       },
       // HAS CATEGORY
       {
-        label: 'belongs to any of these categories',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.cartProduct.verb.category.any',
+        }),
         value: 'category.any',
         object: {
           renderFn: renderSelectObject,
@@ -150,7 +158,10 @@ const cartProduct = (intl, update, currencyCode) => {
         },
       },
       {
-        label: 'does not belong to any of these categories',
+        label: intl.formatMessage({
+          id:
+            'promotions.promotion.elligibility.cartProduct.verb.category.not.any',
+        }),
         value: 'category.not.any',
         object: {
           renderFn: renderSelectObject,
@@ -170,7 +181,9 @@ const cartProduct = (intl, update, currencyCode) => {
       },
       // HAS PRODUCTS
       {
-        label: 'is any of',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.cartProduct.verb.product.any',
+        }),
         value: 'product.any',
         object: {
           renderFn: renderSelectObject,
@@ -189,7 +202,10 @@ const cartProduct = (intl, update, currencyCode) => {
         },
       },
       {
-        label: 'is not any of',
+        label: intl.formatMessage({
+          id:
+            'promotions.promotion.elligibility.cartProduct.verb.product.not.any',
+        }),
         value: 'product.not.any',
         object: {
           renderFn: renderSelectObject,
