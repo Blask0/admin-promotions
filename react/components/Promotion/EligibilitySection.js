@@ -111,7 +111,7 @@ EligibilitySection.propTypes = {
     allCustomers: PropTypes.bool.isRequired,
   }).isRequired,
   updatePageState: PropTypes.func.isRequired,
-  currencyCode: PropTypes.string.isRequired,
+  currencyCode: PropTypes.string,
 }
 
 export default injectIntl(EligibilitySection)

@@ -96,7 +96,7 @@ ShippingForm.propTypes = {
     discountType: PropTypes.string,
     discount: PropTypes.string,
   }).isRequired,
-  currencyCode: PropTypes.string.isRequired,
+  currencyCode: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 }
 
