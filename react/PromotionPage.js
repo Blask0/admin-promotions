@@ -56,6 +56,7 @@ class PromotionPage extends Component {
             discount: '',
             applyByOrderStatus: '', // oneOf possible order status
           },
+        },
         restriction: {
           limitedUsage: false,
           limitPerActivations: false,
@@ -147,7 +148,7 @@ class PromotionPage extends Component {
   render() {
     const { navigate } = this.context
     const { promotion } = this.state
-    const { generalInfo, eligibility, effects, restriction} = promotion
+    const { generalInfo, eligibility, effects, restriction } = promotion
     const {
       intl,
       params: { id },
