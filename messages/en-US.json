@@ -46,6 +46,7 @@
   "promotions.promotion.elligibility.cartProduct.hasBrand.placeholder": "Select the desired brands…",
   "promotions.promotion.elligibility.cartProduct.hasCollections.placeholder": "Select the desired collections…",
   "promotions.promotion.elligibility.cartProduct.hasSellers.placeholder": "Select Sellers…",
+  "promotions.promotion.elligibility.cartProduct.hasCategories.placeholder": "Select the desired categories…",
   "promotions.promotion.elligibility.marketingTags.label": "Marketing tags",
   "promotions.promotion.elligibility.marketingTags.placeholder": "Type the desired marketing tags",
   "promotions.promotion.elligibility.marketingTags.errorMessage": "Invalid format. Please enter a marketing tag in the following format: 'key'='value'",
