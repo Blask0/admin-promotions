@@ -10,6 +10,7 @@ import Reward from '../../Icon/Reward'
 import SelectableCard from './SelectableCard'
 import PriceForm from './PriceForm'
 import ShippingForm from './ShippingForm'
+import RewardForm from './RewardForm'
 
 class EffectSection extends Component {
   isEffectActive = activeEffectType =>
@@ -91,8 +92,11 @@ class EffectSection extends Component {
         )
       case 'reward':
         return (
-          // TO DO: implement reward form
-          <h1 className="tc ma7">reward</h1>
+          <RewardForm
+            rewardEffect={effects.reward}
+            currencyCode={currencyCode}
+            onChange={this.updateRewardEffect}
+          />
         )
       default:
         return null
