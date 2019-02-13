@@ -36,7 +36,6 @@ class ShippingForm extends Component {
                 placeholder={intl.formatMessage({
                   id: 'promotions.promotion.effects.shippingForm.placeholder',
                 })}
-                size="small"
               />
             </div>
           ) : null}
@@ -58,7 +57,6 @@ class ShippingForm extends Component {
                   id: 'promotions.promotion.effects.shippingForm.placeholder',
                 })}
                 prefix={<span className="b f6">%</span>}
-                size="small"
               />
             </div>
           ) : null}
@@ -80,7 +78,6 @@ class ShippingForm extends Component {
                 placeholder={intl.formatMessage({
                   id: 'promotions.promotion.effects.shippingForm.placeholder',
                 })}
-                size="small"
               />
             </div>
           ) : null}
