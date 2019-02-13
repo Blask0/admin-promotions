@@ -35,6 +35,7 @@ class PromotionPage extends Component {
             discountType: 'nominal', // oneOf ['nominal', 'percentual', 'priceTables']
             discount: '',
             appliesTo: null, // type: statements[], if null: applies to All products
+            filterQuery: undefined,
           },
           gift: {
             products: [],
