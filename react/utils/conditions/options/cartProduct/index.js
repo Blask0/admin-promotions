@@ -165,7 +165,7 @@ const cartProduct = (intl, update, currencyCode) => {
       },
       // HAS PRODUCTS
       {
-        label: 'is any of these SKUs',
+        label: 'is any of',
         value: 'product.any',
         object: {
           renderFn: renderSelectObject,
@@ -184,7 +184,7 @@ const cartProduct = (intl, update, currencyCode) => {
         },
       },
       {
-        label: 'is not any of these SKUs',
+        label: 'is not any of',
         value: 'product.not.any',
         object: {
           renderFn: renderSelectObject,
