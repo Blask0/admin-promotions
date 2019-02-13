@@ -2,14 +2,17 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-import { Layout, PageBlock, PageHeader, Button, Radio } from 'vtex.styleguide'
+import { Layout, PageBlock, PageHeader, Button } from 'vtex.styleguide'
 
 import EffectsSection from './components/Promotion/EffectsSection'
 import EligibilitySection from './components/Promotion/EligibilitySection'
 import GeneralSection from './components/Promotion/GeneralSection'
 
+import withSalesChannels from './connectors/withSalesChannels'
 import savingPromotion from './connectors/savingPromotion'
+
 import { addDays } from 'date-fns'
+import { compose } from 'react-apollo'
 
 class PromotionPage extends Component {
   constructor(props) {
@@ -53,15 +56,6 @@ class PromotionPage extends Component {
         },
       },
     }
-  }
-
-  static contextTypes = {
-    navigate: PropTypes.func,
-  }
-
-  static propTypes = {
-    intl: intlShape,
-    savePromotion: PropTypes.func,
   }
 
   componentDidMount = () => {
@@ -108,6 +102,15 @@ class PromotionPage extends Component {
 
   canSave = () => true
 
+  getAffectedSalesChannels = () => {
+    const { restrictedSalesChannelsIds, salesChannels } = this.props
+    return restrictedSalesChannelsIds && restrictedSalesChannelsIds.length > 0
+      ? salesChannels.filter(({ id }) =>
+        restrictedSalesChannelsIds.includes(id)
+      )
+      : salesChannels.filter(({ id }) => id === '1')
+  }
+
   render() {
     const { navigate } = this.context
     const { promotion } = this.state
@@ -117,6 +120,8 @@ class PromotionPage extends Component {
       params: { id },
       savePromotion,
     } = this.props
+
+    const [{ currencyCode } = {}] = this.getAffectedSalesChannels()
 
     return (
       <Layout
@@ -147,12 +152,14 @@ class PromotionPage extends Component {
           <EffectsSection
             effects={effects}
             updatePageState={this.handleEffectsSectionChange}
+            currencyCode={currencyCode}
           />
         </PageBlock>
         <PageBlock>
           <EligibilitySection
             eligibility={eligibility}
             updatePageState={this.handleEligibilitySectionChange}
+            currencyCode={currencyCode}
           />
         </PageBlock>
         {this.canSave() ? (
@@ -192,4 +199,17 @@ class PromotionPage extends Component {
   }
 }
 
-export default savingPromotion(injectIntl(PromotionPage))
+PromotionPage.contextTypes = {
+  navigate: PropTypes.func,
+}
+
+PromotionPage.propTypes = {
+  intl: intlShape,
+  savePromotion: PropTypes.func,
+}
+
+export default compose(
+  savingPromotion,
+  withSalesChannels,
+  injectIntl
+)(PromotionPage)

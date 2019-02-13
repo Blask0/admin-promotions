@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape } from 'react-intl'
 
-import { Radio, Input } from 'vtex.styleguide'
+import { Radio, Input, InputCurrency } from 'vtex.styleguide'
 
 class ShippingForm extends Component {
   isDiscountTypeSelected = discountType =>
@@ -13,7 +13,7 @@ class ShippingForm extends Component {
   changeDiscount = discount => this.props.onChange({ discount })
 
   render() {
-    const { intl } = this.props
+    const { intl, currencyCode } = this.props
 
     return (
       <Fragment>
@@ -29,7 +29,9 @@ class ShippingForm extends Component {
           />
           {this.isDiscountTypeSelected('nominal') ? (
             <div className="mv4 mh7 w-20">
-              <Input
+              <InputCurrency
+                locale={intl.locale}
+                currencyCode={currencyCode}
                 onChange={e => this.changeDiscount(e.target.value)}
                 placeholder={intl.formatMessage({
                   id: 'promotions.promotion.effects.shippingForm.placeholder',
@@ -71,7 +73,9 @@ class ShippingForm extends Component {
           />
           {this.isDiscountTypeSelected('maximumValue') ? (
             <div className="mv4 mh7 w-20">
-              <Input
+              <InputCurrency
+                locale={intl.locale}
+                currencyCode={currencyCode}
                 onChange={e => this.changeDiscount(e.target.value)}
                 placeholder={intl.formatMessage({
                   id: 'promotions.promotion.effects.shippingForm.placeholder',
@@ -92,6 +96,7 @@ ShippingForm.propTypes = {
     discountType: PropTypes.string,
     discount: PropTypes.string,
   }).isRequired,
+  currencyCode: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 }
 

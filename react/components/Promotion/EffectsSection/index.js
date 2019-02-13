@@ -67,7 +67,7 @@ class EffectSection extends Component {
   }
 
   renderEffectFormByType = activeEffectType => {
-    const { effects } = this.props
+    const { effects, currencyCode } = this.props
     switch (activeEffectType) {
       case 'price':
         return (
@@ -85,6 +85,7 @@ class EffectSection extends Component {
         return (
           <ShippingForm
             shippingEffect={effects.shipping}
+            currencyCode={currencyCode}
             onChange={this.updateShippingEffect}
           />
         )
@@ -99,7 +100,7 @@ class EffectSection extends Component {
   }
 
   render() {
-    const { effects, intl } = this.props
+    const { intl, effects, currencyCode } = this.props
 
     return (
       <Fragment>
@@ -174,6 +175,7 @@ EffectSection.propTypes = {
     reward: PropTypes.object,
   }).isRequired,
   updatePageState: PropTypes.func.isRequired,
+  currencyCode: PropTypes.string.isRequired,
 }
 
 export default injectIntl(EffectSection)

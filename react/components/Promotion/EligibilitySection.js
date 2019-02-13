@@ -19,20 +19,9 @@ import {
   marketingTags,
 } from '../../utils/conditions/options'
 
-import withSalesChannels from '../../connectors/withSalesChannels'
-
 class EligibilitySection extends Component {
   constructor(props) {
     super(props)
-  }
-
-  getAffectedSalesChannels = () => {
-    const { restrictedSalesChannelsIds, salesChannels } = this.props
-    return restrictedSalesChannelsIds && restrictedSalesChannelsIds.length > 0
-      ? salesChannels.filter(({ id }) =>
-        restrictedSalesChannelsIds.includes(id)
-      )
-      : salesChannels.filter(({ id }) => id === '1')
   }
 
   render() {
@@ -40,9 +29,8 @@ class EligibilitySection extends Component {
       intl,
       eligibility: { allCustomers, statements, operator },
       updatePageState,
+      currencyCode,
     } = this.props
-
-    const [{ currencyCode } = {}] = this.getAffectedSalesChannels()
 
     const options = {
       installments: installments(intl, updatePageState),
@@ -123,6 +111,7 @@ EligibilitySection.propTypes = {
     allCustomers: PropTypes.bool.isRequired,
   }).isRequired,
   updatePageState: PropTypes.func.isRequired,
+  currencyCode: PropTypes.string.isRequired,
 }
 
-export default injectIntl(withSalesChannels(EligibilitySection))
+export default injectIntl(EligibilitySection)
