@@ -19,7 +19,7 @@ function withAuditInfo(WrappedComponent) {
 
     render = () => {
       const { promoId } = this.state
-      console.log('vou fazer  query')
+
       return (
         <Query query={getAuditInfo} variables={{ promoId }}>
           {({ loading, error, data }) => {
