@@ -213,5 +213,6 @@
   "promotions.promotion.import.modal.title.collection": "Importar lista de colecciones",
   "promotions.promotion.import.modal.placeholder": "(archivos *.txt con una entrada por línea)",
   "promotions.promotion.import.modal.catalog": "Comprobando las identificaciones con el sistema de catálogo…",
-  "promotions.promotion.import.modal.notFound": "No encontramos estos Ids en el catálogo: {notFound}"
+  "promotions.promotion.import.modal.notFound": "No encontramos estos Ids en el catálogo: {notFound}",
+  "promotions.promotion.history.title": "Historia"
 }

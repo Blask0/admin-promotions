@@ -19,18 +19,20 @@ function withAuditInfo(WrappedComponent) {
 
     render = () => {
       const { promoId } = this.state
-
+      console.log('vou fazer  query')
       return (
         <Query query={getAuditInfo} variables={{ promoId }}>
-          {({ loading, error, data }) => (
-            <WrappedComponent
-              {...this.props}
-              loading={loading}
-              error={error}
-              auditInfo={data ? data.getAuditInfo : []}
-              updateQueryParams={this.updateQueryParams}
-            />
-          )}
+          {({ loading, error, data }) => {
+            return (
+              <WrappedComponent
+                {...this.props}
+                loading={loading}
+                error={error}
+                auditInfo={data ? data.getAuditInfo : []}
+                updateQueryParams={this.updateQueryParams}
+              />
+            )
+          }}
         </Query>
       )
     }

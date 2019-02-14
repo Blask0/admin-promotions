@@ -212,5 +212,6 @@
   "promotions.promotion.import.modal.title.collection": "Import collection list",
   "promotions.promotion.import.modal.placeholder": "(*.txt files with one entry per line)",
   "promotions.promotion.import.modal.catalog": "Checking ids with catalog system…",
-  "promotions.promotion.import.modal.notFound": "We didn't find these Ids in catalog: {notFound}"
+  "promotions.promotion.import.modal.notFound": "We didn't find these Ids in catalog: {notFound}",
+  "promotions.promotion.history.title": "History"
 }

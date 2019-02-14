@@ -8,6 +8,7 @@ import EffectsSection from './components/Promotion/EffectsSection'
 import EligibilitySection from './components/Promotion/EligibilitySection'
 import GeneralSection from './components/Promotion/GeneralSection'
 import RestrictionSection from './components/Promotion/RestrictionSection'
+import HistorySection from './components/Promotion/HistorySection'
 
 import withSalesChannels from './connectors/withSalesChannels'
 import withPromotion from './connectors/withPromotion'
@@ -725,10 +726,7 @@ class PromotionPage extends Component {
           />
         </PageBlock>
         <PageBlock>
-          <HistorySection
-            restriction={restriction}
-            updatePageState={this.handleRestrictionSectionChange}
-          />
+        <HistorySection promoId={this.state.promotion.generalInfo.id} />
         </PageBlock>
         <div className="flex flex-row">
           <Button
