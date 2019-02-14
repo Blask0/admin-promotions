@@ -1,0 +1,8 @@
+query GetAuditInfo($id: String) {
+  getAuditInfo(promoId: $id) {
+    author
+    subject
+    evidenceHash
+    eventTime
+  }
+}

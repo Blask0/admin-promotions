@@ -724,6 +724,12 @@ class PromotionPage extends Component {
             updatePageState={this.handleRestrictionSectionChange}
           />
         </PageBlock>
+        <PageBlock>
+          <HistorySection
+            restriction={restriction}
+            updatePageState={this.handleRestrictionSectionChange}
+          />
+        </PageBlock>
         <div className="flex flex-row">
           <Button
             variation="primary"
