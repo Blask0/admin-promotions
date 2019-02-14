@@ -53,7 +53,7 @@ class PromotionPage extends Component {
           },
           reward: {
             discountType: 'nominal', // oneOf ['nominal', 'percentual']
-            discount: '',
+            discount: undefined,
             applyByOrderStatus: '', // oneOf possible order status
           },
         },
@@ -92,6 +92,18 @@ class PromotionPage extends Component {
         },
       }
     })
+  }
+
+  handleEffectsSectionChange = effects => {
+    this.setState(prevState => ({
+      promotion: {
+        ...prevState.promotion,
+        effects: {
+          ...prevState.promotion.effects,
+          ...effects,
+        },
+      },
+    }))
   }
 
   handleEligibilitySectionChange = eligibility => {
