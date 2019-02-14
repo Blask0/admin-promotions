@@ -185,5 +185,6 @@
   "promotions.promotions.deletionModal.confirm": "Sí",
   "promotions.promotions.deletionModal.cancel": "Cancelar",
   "promotions.promotions.actions.activate": "Empezar",
-  "promotions.promotions.actions.deactivate": "Pausa"
+  "promotions.promotions.actions.deactivate": "Pausa",
+  "promotions.promotions.actions.duplicate": "Duplicar"
 }

@@ -403,10 +403,26 @@ class PromotionsTable extends Component {
             {
               label: () =>
                 intl.formatMessage({
+                  id: 'promotions.promotions.actions.duplicate',
+                }),
+              onClick: ({ rowData: { id } }) => {
+                navigate({
+                  page: 'admin/create',
+                  params: {
+                    id: 'new',
+                    duplicate: id,
+                  },
+                })
+              },
+            },
+            {
+              label: () =>
+                intl.formatMessage({
                   id: 'promotions.promotions.actions.delete',
                 }),
               isDangerous: true,
               onClick: ({ rowData: { id, name } }) => {
+                navigate({})
                 this.setState({
                   isPromotionModalOpened: true,
                   promotionToBeDeleted: {
