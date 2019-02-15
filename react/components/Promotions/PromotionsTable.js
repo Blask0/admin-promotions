@@ -371,6 +371,7 @@ class PromotionsTable extends Component {
     const schema = this.getTableSchema(intl)
 
     return (
+<<<<<<< HEAD
       <div>
         <Table
           schema={schema}
@@ -394,6 +395,46 @@ class PromotionsTable extends Component {
               onChange: handleSearchChange,
               onClear: handleSearchClear,
               onSubmit: handleSearchSubmit,
+=======
+      <Table
+        schema={schema}
+        items={this.props.promotions}
+        density="low"
+        loading={this.props.loading}
+        onRowClick={({ rowData: { id } }) => {
+          navigate({
+            page: 'admin/create',
+            params: {
+              id: id,
+            },
+          })
+        }}
+        toolbar={{
+          inputSearch: {
+            value: this.props.inputSearchValue,
+            placeholder: intl.formatMessage({
+              id: 'promotions.promotions.search',
+            }),
+            onChange: this.props.handleSearchChange,
+            onClear: this.props.handleSearchClear,
+            onSubmit: this.props.handleSearchSubmit,
+          },
+          // download: {
+          //   label: 'Export',
+          //   handleCallback: () => alert('Export not implemented yet'),
+          // },
+          newLine: {
+            label: intl.formatMessage({
+              id: 'promotions.promotions.newPromotion',
+            }),
+            handleCallback: () => {
+              navigate({
+                page: 'admin/create',
+                params: {
+                  id: 'new',
+                },
+              })
+>>>>>>> [WIP] add importer component
             },
             fields: {
               label: intl.formatMessage({
@@ -455,10 +496,6 @@ class PromotionsTable extends Component {
       </div>
     )
   }
-}
-
-PromotionsTable.contextTypes = {
-  navigate: PropTypes.func,
 }
 
 PromotionsTable.propTypes = {
