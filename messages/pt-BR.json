@@ -199,5 +199,11 @@
   "promotions.promotion.multipleCurrencies.warning": "Esta promoção está sendo criada para políticas comerciais que utilizam moedas diferentes ({currencies}). Por favor, restrinja as políticas comerciais para utilizar apenas uma moeda.",
   "promotions.promotion.multipleCurrencies.error": "Não é possível criar promoções para políticas comerciais que utilizam moedas diferentes ({currencies}). Por favor, restrinja as políticas comerciais para utilizar apenas uma moeda.",
   "promotions.promotion.multipleCurrencies.action": "Restringir políticas",
-  "promotions.promotion.inputCurrency.multipleCurrencies": "Promoção não possui uma moeda bem definida. Verifique suas políticas comerciais."
+  "promotions.promotion.inputCurrency.multipleCurrencies": "Promoção não possui uma moeda bem definida. Verifique suas políticas comerciais.",
+  "promotions.promotion.restriction.origin": "Origem",
+  "promotions.promotion.restriction.origin.marketplace": "Marketplace",
+  "promotions.promotion.restriction.origin.fulfillment": "Fulfillment",
+  "promotions.promotion.restriction.origin.marketplace.explanation": "Pedidos feitos diretamente à sua loja",
+  "promotions.promotion.restriction.origin.fulfillment.explanation": "Pedidos onde sua loja atua como vendedor",
+  "promotions.promotion.import.modal.title.sku": "Importar skus de produtos"
 }
