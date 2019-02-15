@@ -14,7 +14,7 @@ class Importer extends Component {
   }
 
   handleModalToggle = () => {
-    this.setState({ isImportModalOpen: !isImportModalOpen })
+    this.setState({ isImportModalOpen: !this.state.isImportModalOpen })
   }
 
   render() {
@@ -23,7 +23,7 @@ class Importer extends Component {
     return (
       <Fragment>
         <Button variation="tertiary" onClick={this.handleModalToggle}>
-          Import
+          <FormattedMessage id="promotions.promotion.import" />
         </Button>
         <ModalDialog
           centered
@@ -42,10 +42,6 @@ class Importer extends Component {
       </Fragment>
     )
   }
-}
-
-Importer.contextTypes = {
-  navigate: PropTypes.func,
 }
 
 Importer.propTypes = {

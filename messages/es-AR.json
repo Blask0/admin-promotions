@@ -205,5 +205,7 @@
   "promotions.promotion.restriction.origin.fulfillment": "Fulfillment",
   "promotions.promotion.restriction.origin.marketplace.explanation": "Pedidos hechos directamente a su tienda",
   "promotions.promotion.restriction.origin.fulfillment.explanation": "Pedidos donde tu tienda actúa como vendedor",
-  "promotions.promotion.import.modal.title.sku": "Importar skus de productos"
+  "promotions.promotion.import": "Importar",
+  "promotions.promotion.import.modal.title.sku": "Importar skus de productos",
+  "promotions.promotion.import.modal.chooseFile": "Escolha o arquivo"
 }

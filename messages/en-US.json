@@ -204,5 +204,7 @@
   "promotions.promotion.restriction.origin.fulfillment": "Fulfillment",
   "promotions.promotion.restriction.origin.marketplace.explanation": "Orders made directly to your store",
   "promotions.promotion.restriction.origin.fulfillment.explanation": "Orders where your store is acting as a seller",
-  "promotions.promotion.import.modal.title.sku": "Import product's SKUs"
+  "promotions.promotion.import": "Import",
+  "promotions.promotion.import.modal.title.sku": "Import product's SKUs",
+  "promotions.promotion.import.modal.chooseFile": "Choose File"
 }
