@@ -1,7 +1,7 @@
 import React, { Fragment, Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
-import { Toggle, Input, DatePicker } from 'vtex.styleguide'
+import { Checkbox, Input, DatePicker } from 'vtex.styleguide'
 
 class GeneralSection extends Component {
   constructor(props) {
@@ -56,14 +56,17 @@ class GeneralSection extends Component {
             })}
           />
         </div>
-        <Toggle
+        <Checkbox
           checked={generalInfo.hasEndDate}
+          id="hasEndDate"
           label={intl.formatMessage({
             id: 'promotions.promotion.generalInfo.hasEndDate',
           })}
+          name="limitPerActivation-checkbox-group"
           onChange={() => {
             this.props.updatePageState({ hasEndDate: !generalInfo.hasEndDate })
           }}
+          value="hasEndDate"
         />
         {generalInfo.hasEndDate ? (
           <div className="mt4">
