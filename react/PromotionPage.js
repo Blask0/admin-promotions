@@ -60,13 +60,10 @@ class PromotionPage extends Component {
           },
         },
         restriction: {
-          limitedUsage: false,
-          limitPerActivations: false,
           limitPerAffectedItems: false,
           perStore: undefined,
           perClient: undefined,
           maxNumOfAffectedItems: undefined,
-          externalMarketplaces: false,
           restrictTradePolicies: false,
           restrictionVerb: undefined,
           restrictedTradePolicies: [],

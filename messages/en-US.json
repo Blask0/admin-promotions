@@ -74,14 +74,17 @@
   "promotions.promotions.search": "Search promotions by name of effect",
   "promotions.promotions.newPromotion": "New Promotion",
   "promotions.promotion.restriction.title": "Restrictions",
-  "promotions.promotion.restriction.limitUsage.label": "Limit usage",
-  "promotions.promotion.restriction.limitPerActivation.label": "Limit maximum number of activations",
   "promotions.promotion.restriction.limitPerAffectedItems.label": "Limit maximum number of affected items",
-  "promotions.promotion.restriction.limit.perStore": "Per store",
-  "promotions.promotion.restriction.limit.perClient": "Per client",
+  "promotions.promotion.restriction.limit.perStore": "Limit usage per store",
+  "promotions.promotion.restriction.limit.perClient": "Limit usage per client",
   "promotions.promotion.restriction.externalMarketplaces.label": "Enable external Marketplaces",
   "promotions.promotion.restriction.restrictTradePolicies.label": "Restrict trade policies",
   "promotions.promotion.restriction.restrictTradePolicies.placeholder": "Select a trade policy",
   "promotions.promotion.accumulation.title": "Accumulation & concurrency",
-  "promotions.promotion.accumulation.briefExplanation": "Some brief explanation of how concurrency works blabalblabalbalbalba"
+  "promotions.promotion.accumulation.briefExplanation": "Some brief explanation of how concurrency works blabalblabalbalbalba",
+  "promotions.promotion.restriction.origin": "Origin",
+  "promotions.promotion.restriction.origin.marketplace": "Marketplace",
+  "promotions.promotion.restriction.origin.fulfillment": "Fulfillment",
+  "promotions.promotion.restriction.origin.marketplace.explanation": "Orders made directly to your store",
+  "promotions.promotion.restriction.origin.fulfillment.explanation": "Orders where your store is acting as a seller"
 }

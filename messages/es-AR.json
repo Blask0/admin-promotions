@@ -83,5 +83,10 @@
   "promotions.promotion.restriction.restrictTradePolicies.label": "Restringir políticas comerciales",
   "promotions.promotion.restriction.restrictTradePolicies.placeholder": "Seleccione una política comercial",
   "promotions.promotion.accumulation.title": "Acumulación y concurrencia",
-  "promotions.promotion.accumulation.briefExplanation": "Some brief explanation of how concurrency works blabalblabalbalbalba"
+  "promotions.promotion.accumulation.briefExplanation": "Some brief explanation of how concurrency works blabalblabalbalbalba",
+  "promotions.promotion.restriction.origin": "Origen",
+  "promotions.promotion.restriction.origin.marketplace": "Marketplace",
+  "promotions.promotion.restriction.origin.fulfillment": "Fulfillment",
+  "promotions.promotion.restriction.origin.marketplace.explanation": "Pedidos hechos directamente a su tienda",
+  "promotions.promotion.restriction.origin.fulfillment.explanation": "Pedidos donde tu tienda actúa como vendedor"
 }

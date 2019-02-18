@@ -9,7 +9,7 @@
   "promotions.promotion.generalInfo.hasEndDate": "Configurar data de expiração",
   "promotions.promotion.generalInfo.endDate": "Data e hora de expiração (UTC)",
   "promotions.promotion.generalInfo.accumulateWithPromotions.label": "Acumular com outras promoções",
-  "promotions.promotion.generalInfo.accumulateWithManualPrices.label": "Acumular com preços manuais",
+  "promotions.promotion.generalInfo.accumulateWithManualPrices.label": "Acumular csom preços manuais",
   "promotions.promotion.effects.title": "Efeito",
   "promotions.promotion.effects.price": "Preço",
   "promotions.promotion.effects.gift": "Brinde",
@@ -83,5 +83,10 @@
   "promotions.promotion.restriction.restrictTradePolicies.label": "Restringir políticas comerciais",
   "promotions.promotion.restriction.restrictTradePolicies.placeholder": "Selecione uma política comercial",
   "promotions.promotion.accumulation.title": "Acumulação e concorrência",
-  "promotions.promotion.accumulation.briefExplanation": "Some brief explanation of how concurrency works blabalblabalbalbalba"
+  "promotions.promotion.accumulation.briefExplanation": "Some brief explanation of how concurrency works blabalblabalbalbalba",
+  "promotions.promotion.restriction.origin": "Origem",
+  "promotions.promotion.restriction.origin.marketplace": "Marketplace",
+  "promotions.promotion.restriction.origin.fulfillment": "Fulfillment",
+  "promotions.promotion.restriction.origin.marketplace.explanation": "Pedidos feitos diretamente à sua loja",
+  "promotions.promotion.restriction.origin.fulfillment.explanation": "Pedidos onde sua loja atua como vendedor"
 }
