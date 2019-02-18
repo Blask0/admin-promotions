@@ -34,6 +34,8 @@
   "promotions.promotion.effects.rewardForm.nominal": "Nominal",
   "promotions.promotion.effects.rewardForm.percentual": "Porcentual",
   "promotions.promotion.effects.rewardForm.placeholder": "Introduzca el valor…",
+  "promotions.promotion.effects.giftMultiplier.label": "Multiplicador de regalos",
+  "promotions.promotion.effects.limitQuantityOfGifts.label": "Limit quantity of gifts per purchase",
   "promotions.promotion.elligibility.title": "Elligibility",
   "promotions.promotion.elligibility.selectAll": "All customers",
   "promotions.promotion.elligibility.selectSpecific": "Specific customers",

@@ -22,17 +22,24 @@ function withProducts(WrappedComponent) {
 
       return (
         <Query query={getProducts} variables={{ name }}>
-          {({ loading, error, data }) => (
-            <WrappedComponent
-              {...this.props}
-              loading={loading}
-              error={error}
-              products={
-                data ? (data.getProducts ? data.getProducts.products : []) : []
-              }
-              updateQueryParams={this.updateQueryParams}
-            />
-          )}
+          {({ loading, error, data }) => {
+            console.log(loading, error, data)
+            return (
+              <WrappedComponent
+                {...this.props}
+                loading={loading}
+                error={error}
+                products={
+                  data
+                    ? data.getProducts
+                      ? data.getProducts.products
+                      : []
+                    : []
+                }
+                updateQueryParams={this.updateQueryParams}
+              />
+            )
+          }}
         </Query>
       )
     }
