@@ -8,6 +8,8 @@
   "promotions.promotion.generalInfo.startDate": "Data e hora de início (UTC)",
   "promotions.promotion.generalInfo.hasEndDate": "Configurar data de expiração",
   "promotions.promotion.generalInfo.endDate": "Data e hora de expiração (UTC)",
+  "promotions.promotion.generalInfo.accumulateWithPromotions.label": "Acumular com outras promoções",
+  "promotions.promotion.generalInfo.accumulateWithManualPrices.label": "Acumular com preços manuais",
   "promotions.promotion.effects.title": "Efeito",
   "promotions.promotion.effects.price": "Preço",
   "promotions.promotion.effects.gift": "Brinde",
@@ -77,10 +79,9 @@
   "promotions.promotion.restriction.limitPerAffectedItems.label": "Limitar o número máximo de items afetados",
   "promotions.promotion.restriction.limit.perStore": "Por loja",
   "promotions.promotion.restriction.limit.perClient": "Por cliente",
-  "promotions.promotion.restriction.accumulate.label": "Acumular",
-  "promotions.promotion.restriction.accumulateWithPromotions.label": "Com outras promoções",
-  "promotions.promotion.restriction.accumulateWithManualPrices.label": "Com preços manuais",
   "promotions.promotion.restriction.externalMarketplaces.label": "Habilitar Marketplaces externos",
   "promotions.promotion.restriction.restrictTradePolicies.label": "Restringir políticas comerciais",
-  "promotions.promotion.restriction.restrictTradePolicies.placeholder": "Selecione uma política comercial"
+  "promotions.promotion.restriction.restrictTradePolicies.placeholder": "Selecione uma política comercial",
+  "promotions.promotion.accumulation.title": "Acumulação e concorrência",
+  "promotions.promotion.accumulation.briefExplanation": "Some brief explanation of how concurrency works blabalblabalbalbalba"
 }

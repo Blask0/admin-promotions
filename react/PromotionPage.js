@@ -29,6 +29,8 @@ class PromotionPage extends Component {
           endDate: addDays(new Date(), 1),
           isArchived: false,
           id: '',
+          accumulateWithPromotions: false,
+          accumulateWithManualPrices: false,
         },
         eligibility: {
           allCustomers: true,
@@ -64,9 +66,6 @@ class PromotionPage extends Component {
           perStore: undefined,
           perClient: undefined,
           maxNumOfAffectedItems: undefined,
-          accumulate: false,
-          accumulateWithPromotions: false,
-          accumulateWithManualPrices: false,
           externalMarketplaces: false,
           restrictTradePolicies: false,
           restrictionVerb: undefined,
