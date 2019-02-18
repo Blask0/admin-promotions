@@ -67,6 +67,7 @@ class PromotionPage extends Component {
           restrictTradePolicies: false,
           restrictionVerb: undefined,
           restrictedTradePolicies: [],
+          origin: undefined,
         },
       },
     }
