@@ -23,7 +23,7 @@ class PromotionPage extends Component {
       promotion: {
         generalInfo: {
           name: undefined,
-          status: undefined,
+          isActive: false,
           startDate: new Date(),
           hasEndDate: false, // temporary, this should be on promotion json
           endDate: addDays(new Date(), 1),
