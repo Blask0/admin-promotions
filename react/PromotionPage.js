@@ -60,11 +60,21 @@ class PromotionPage extends Component {
           },
         },
         restriction: {
-          limitPerAffectedItems: false,
-          perStore: undefined,
-          perClient: undefined,
-          maxNumOfAffectedItems: undefined,
-          restrictTradePolicies: false,
+          perStore: {
+            value: undefined,
+            error: undefined,
+            focus: false,
+          },
+          perClient: {
+            value: undefined,
+            error: undefined,
+            focus: false,
+          },
+          maxNumOfAffectedItems: {
+            value: undefined,
+            error: undefined,
+            focus: false,
+          },
           restrictionVerb: undefined,
           restrictedTradePolicies: [],
           origin: undefined,

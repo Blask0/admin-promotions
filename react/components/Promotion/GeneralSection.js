@@ -9,7 +9,7 @@ class GeneralSection extends Component {
   }
 
   render() {
-    const { intl, generalInfo } = this.props
+    const { intl, generalInfo, updatePageState } = this.props
 
     return (
       <Fragment>
@@ -34,7 +34,7 @@ class GeneralSection extends Component {
                 }
                 checked={generalInfo.isActive}
                 onChange={() => {
-                  this.props.updatePageState({
+                  updatePageState({
                     isActive: !generalInfo.isActive,
                   })
                 }}
@@ -47,7 +47,7 @@ class GeneralSection extends Component {
                 })}
                 value={generalInfo.name}
                 onChange={e => {
-                  this.props.updatePageState({
+                  updatePageState({
                     name: e.target.value,
                   })
                 }}
@@ -57,7 +57,7 @@ class GeneralSection extends Component {
               <DatePicker
                 locale={intl.locale}
                 onChange={date => {
-                  this.props.updatePageState({
+                  updatePageState({
                     startDate: date,
                   })
                 }}
@@ -76,7 +76,7 @@ class GeneralSection extends Component {
                 })}
                 name="limitPerActivation-checkbox-group"
                 onChange={() => {
-                  this.props.updatePageState({
+                  updatePageState({
                     hasEndDate: !generalInfo.hasEndDate,
                   })
                 }}
@@ -88,7 +88,7 @@ class GeneralSection extends Component {
                 <DatePicker
                   locale={intl.locale}
                   onChange={date => {
-                    this.props.updatePageState({
+                    updatePageState({
                       endDate: date,
                     })
                   }}

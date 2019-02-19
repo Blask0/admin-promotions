@@ -14,8 +14,10 @@ class RestrictionSection extends Component {
     super(props)
 
     this.state = {
-      limitPerStore: false,
-      limitPerClient: false,
+      limitPerStore: !!props.perStore,
+      limitPerClient: !!props.perClient,
+      limitPerAffectedItems: !!props.maxNumOfAffectedItems,
+      restrictTradePolicies: !!props.restrictedTradePolicies,
     }
   }
 
@@ -25,7 +27,6 @@ class RestrictionSection extends Component {
     const {
       intl,
       restriction: {
-        limitPerAffectedItems,
         perStore,
         perClient,
         maxNumOfAffectedItems,
@@ -84,9 +85,14 @@ class RestrictionSection extends Component {
                   'promotions.promotion.restriction.limit.perStore.placeholder',
               })}
               type="number"
-              value={perStore}
+              value={perStore.value}
+              errorMessage={perStore.error}
               onChange={e => {
-                updatePageState({ perStore })
+                updatePageState({
+                  perStore: {
+                    value: e.target.value,
+                  },
+                })
               }}
             />
           </div>
@@ -115,9 +121,14 @@ class RestrictionSection extends Component {
                   'promotions.promotion.restriction.limit.perClient.placeholder',
               })}
               type="number"
-              value={perClient}
+              value={perClient.value}
+              errorMessage={perClient.error}
               onChange={e => {
-                updatePageState({ perClient })
+                updatePageState({
+                  perClient: {
+                    value: e.target.value,
+                  },
+                })
               }}
             />
           </div>
@@ -125,7 +136,7 @@ class RestrictionSection extends Component {
 
         <div className="pv3">
           <Checkbox
-            checked={limitPerAffectedItems}
+            checked={this.state.limitPerAffectedItems}
             id="limitPerAffectedItems"
             label={intl.formatMessage({
               id:
@@ -133,15 +144,15 @@ class RestrictionSection extends Component {
             })}
             name="limitPerAffectedItems-checkbox-group"
             onChange={e =>
-              updatePageState({
-                limitPerAffectedItems: !limitPerAffectedItems,
+              this.setState({
+                limitPerAffectedItems: !this.state.limitPerAffectedItems,
               })
             }
             value="limitPerAffectedItems"
           />
         </div>
 
-        {limitPerAffectedItems && (
+        {this.state.limitPerAffectedItems && (
           <div className="pv3 pl5 w-30">
             <Input
               placeholder={intl.formatMessage({
@@ -149,9 +160,14 @@ class RestrictionSection extends Component {
                   'promotions.promotion.restriction.limit.perAffectedItems.placeholder',
               })}
               type="number"
-              value={maxNumOfAffectedItems}
+              value={maxNumOfAffectedItems.value}
+              errorMessage={maxNumOfAffectedItems.error}
               onChange={e => {
-                updatePageState({ maxNumOfAffectedItems })
+                updatePageState({
+                  maxNumOfAffectedItems: {
+                    value: e.target.value,
+                  },
+                })
               }}
             />
           </div>
@@ -160,7 +176,7 @@ class RestrictionSection extends Component {
         <div className="pv3">
           <Checkbox
             className="pv4"
-            checked={restrictTradePolicies}
+            checked={this.state.restrictTradePolicies}
             id="restrictTradePolicies"
             label={intl.formatMessage({
               id:
@@ -168,15 +184,15 @@ class RestrictionSection extends Component {
             })}
             name="restrictTradePolicies-checkbox-group"
             onChange={e =>
-              updatePageState({
-                restrictTradePolicies: !restrictTradePolicies,
+              this.setState({
+                restrictTradePolicies: !this.state.restrictTradePolicies,
               })
             }
             value="restrictTradePolicies"
           />
         </div>
 
-        {restrictTradePolicies && (
+        {this.state.restrictTradePolicies && (
           <div className="pv3 flex flex-row">
             <div className="w-30 pl5">
               <EXPERIMENTAL_Select
