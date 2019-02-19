@@ -23,12 +23,14 @@ class PromotionPage extends Component {
       promotion: {
         generalInfo: {
           name: undefined,
-          status: undefined,
+          isActive: false,
           startDate: new Date(),
           hasEndDate: false, // temporary, this should be on promotion json
           endDate: addDays(new Date(), 1),
           isArchived: false,
           id: '',
+          accumulateWithPromotions: false,
+          accumulateWithManualPrices: false,
         },
         eligibility: {
           allCustomers: true,
@@ -58,19 +60,24 @@ class PromotionPage extends Component {
           },
         },
         restriction: {
-          limitedUsage: false,
-          limitPerActivations: false,
-          limitPerAffectedItems: false,
-          perStore: undefined,
-          perClient: undefined,
-          maxNumOfAffectedItems: undefined,
-          accumulate: false,
-          accumulateWithPromotions: false,
-          accumulateWithManualPrices: false,
-          externalMarketplaces: false,
-          restrictTradePolicies: false,
-          restrictionVerb: undefined,
-          restrictedTradePolicies: [],
+          perStore: {
+            value: undefined,
+            error: undefined,
+            focus: false,
+          },
+          perClient: {
+            value: undefined,
+            error: undefined,
+            focus: false,
+          },
+          maxNumOfAffectedItems: {
+            value: undefined,
+            error: undefined,
+            focus: false,
+          },
+          restrictSalesChannelVerb: undefined,
+          restrictedSalesChannels: [], // idsSalesChannel
+          origin: undefined,
         },
       },
     }

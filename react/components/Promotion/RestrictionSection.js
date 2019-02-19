@@ -1,31 +1,38 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
-import { Checkbox, Input, EXPERIMENTAL_Select } from 'vtex.styleguide'
+import {
+  RadioGroup,
+  Checkbox,
+  Input,
+  EXPERIMENTAL_Select,
+} from 'vtex.styleguide'
 import withSalesChannels from '../../connectors/withSalesChannels'
 
 class RestrictionSection extends Component {
   constructor(props) {
     super(props)
+
+    this.state = {
+      limitPerStore: !!props.perStore,
+      limitPerClient: !!props.perClient,
+      limitPerAffectedItems: !!props.maxNumOfAffectedItems,
+      restrictTradePolicies: !!props.restrictedSalesChannels,
+    }
   }
+
+  isOriginSelected = origin => this.props.restriction.origin === origin
 
   render() {
     const {
       intl,
       restriction: {
-        limitedUsage,
-        limitPerActivations,
-        limitPerAffectedItems,
         perStore,
         perClient,
         maxNumOfAffectedItems,
-        accumulate,
-        accumulateWithPromotions,
-        accumulateWithManualPrices,
-        externalMarketplaces,
-        restrictTradePolicies,
-        restrictionVerb,
-        restrictedTradePolicies,
+        restrictSalesChannelVerb,
+        restrictedSalesChannels,
+        origin,
       },
       salesChannels = [],
       loading,
@@ -44,7 +51,7 @@ class RestrictionSection extends Component {
       },
       {
         label: 'is not any of',
-        value: 'not_any',
+        value: 'not.any',
       },
     ]
 
@@ -53,165 +60,122 @@ class RestrictionSection extends Component {
         <h4 className="t-heading-4 mt0">
           <FormattedMessage id="promotions.promotion.restriction.title" />
         </h4>
+
         <div className="pv3">
           <Checkbox
-            checked={limitedUsage}
-            id="limitUsage"
+            checked={this.state.limitPerStore}
+            id="limitPerStoreActivation"
             label={intl.formatMessage({
-              id: 'promotions.promotion.restriction.limitUsage.label',
+              id: 'promotions.promotion.restriction.limit.perStore',
             })}
-            name="default-checkbox-group"
-            onChange={e => updatePageState({ limitedUsage: !limitedUsage })}
-            value="limitUsage"
-          />
-        </div>
-
-        {limitedUsage && (
-          <div className="pl5 pv3">
-            <Checkbox
-              checked={limitPerActivations}
-              id="limitPerActivation"
-              label={intl.formatMessage({
-                id: 'promotions.promotion.restriction.limitPerActivation.label',
-              })}
-              name="limitPerActivation-checkbox-group"
-              onChange={e =>
-                updatePageState({
-                  limitPerActivations: !limitPerActivations,
-                })
-              }
-              value="limitPerActivation"
-            />
-
-            {limitPerActivations && (
-              <div className="pl7 w-20">
-                <div className="pv3">
-                  <Input
-                    placeholder=""
-                    type="number"
-                    value={perStore}
-                    label={intl.formatMessage({
-                      id: 'promotions.promotion.restriction.limit.perStore',
-                    })}
-                    onChange={e => {
-                      updatePageState({ perStore })
-                    }}
-                  />
-                </div>
-                <div className="pv3">
-                  <Input
-                    placeholder=""
-                    type="number"
-                    value={perClient}
-                    label={intl.formatMessage({
-                      id: 'promotions.promotion.restriction.limit.perClient',
-                    })}
-                    onChange={e => {
-                      updatePageState({ perClient })
-                    }}
-                  />
-                </div>
-              </div>
-            )}
-            <div className="pv3">
-              <Checkbox
-                checked={limitPerAffectedItems}
-                id="limitPerAffectedItems"
-                label={intl.formatMessage({
-                  id:
-                    'promotions.promotion.restriction.limitPerAffectedItems.label',
-                })}
-                name="limitPerAffectedItems-checkbox-group"
-                onChange={e =>
-                  updatePageState({
-                    limitPerAffectedItems: !limitPerAffectedItems,
-                  })
-                }
-                value="limitPerAffectedItems"
-              />
-            </div>
-
-            {limitPerAffectedItems && (
-              <div className="pl7 w-20 pv3">
-                <Input
-                  placeholder=""
-                  type="number"
-                  value={maxNumOfAffectedItems}
-                  onChange={e => {
-                    updatePageState({ maxNumOfAffectedItems })
-                  }}
-                />
-              </div>
-            )}
-          </div>
-        )}
-        <div className="pv3">
-          <Checkbox
-            checked={accumulate}
-            id="accumulate"
-            label={intl.formatMessage({
-              id: 'promotions.promotion.restriction.accumulate.label',
-            })}
-            name="accumulate-checkbox-group"
-            onChange={e => updatePageState({ accumulate: !accumulate })}
-            value="accumulate"
-          />
-        </div>
-
-        {accumulate && (
-          <div className="pl5 pv3">
-            <Checkbox
-              checked={accumulateWithPromotions}
-              id="accumulateWithPromotions"
-              label={intl.formatMessage({
-                id:
-                  'promotions.promotion.restriction.accumulateWithPromotions.label',
-              })}
-              name="accumulateWithPromotions-checkbox-group"
-              onChange={e =>
-                updatePageState({
-                  accumulateWithPromotions: !accumulateWithPromotions,
-                })
-              }
-              value="accumulateWithPromotions"
-            />
-            <Checkbox
-              checked={accumulateWithManualPrices}
-              id="accumulateWithManualPrices"
-              label={intl.formatMessage({
-                id:
-                  'promotions.promotion.restriction.accumulateWithManualPrices.label',
-              })}
-              name="accumulateWithManualPrices-checkbox-group"
-              onChange={e =>
-                updatePageState({
-                  accumulateWithManualPrices: !accumulateWithManualPrices,
-                })
-              }
-              value="accumulateWithManualPrices"
-            />
-          </div>
-        )}
-        <div className="pv3">
-          <Checkbox
-            checked={externalMarketplaces}
-            id="externalMarketplaces"
-            label={intl.formatMessage({
-              id: 'promotions.promotion.restriction.externalMarketplaces.label',
-            })}
-            name="externalMarketplaces-checkbox-group"
+            name="limitPerStoreActivation-checkbox-group"
             onChange={e =>
-              updatePageState({
-                externalMarketplaces: !externalMarketplaces,
+              this.setState({ limitPerStore: !this.state.limitPerStore })
+            }
+            value="limitPerStoreActivation"
+          />
+        </div>
+
+        {this.state.limitPerStore && (
+          <div className="pv3 pl5 w-30">
+            <Input
+              placeholder={intl.formatMessage({
+                id:
+                  'promotions.promotion.restriction.limit.perStore.placeholder',
+              })}
+              type="number"
+              value={perStore.value}
+              errorMessage={perStore.error}
+              onChange={e => {
+                updatePageState({
+                  perStore: {
+                    value: e.target.value,
+                  },
+                })
+              }}
+            />
+          </div>
+        )}
+
+        <div className="pv3">
+          <Checkbox
+            checked={this.state.limitPerClient}
+            id="limitPerClientActivation"
+            label={intl.formatMessage({
+              id: 'promotions.promotion.restriction.limit.perClient',
+            })}
+            name="limitPerClientActivation-checkbox-group"
+            onChange={e =>
+              this.setState({ limitPerClient: !this.state.limitPerClient })
+            }
+            value="limitPerClientActivation"
+          />
+        </div>
+
+        {this.state.limitPerClient && (
+          <div className="pv3 pl5 w-30">
+            <Input
+              placeholder={intl.formatMessage({
+                id:
+                  'promotions.promotion.restriction.limit.perClient.placeholder',
+              })}
+              type="number"
+              value={perClient.value}
+              errorMessage={perClient.error}
+              onChange={e => {
+                updatePageState({
+                  perClient: {
+                    value: e.target.value,
+                  },
+                })
+              }}
+            />
+          </div>
+        )}
+
+        <div className="pv3">
+          <Checkbox
+            checked={this.state.limitPerAffectedItems}
+            id="limitPerAffectedItems"
+            label={intl.formatMessage({
+              id:
+                'promotions.promotion.restriction.limit.perAffectedItems.label',
+            })}
+            name="limitPerAffectedItems-checkbox-group"
+            onChange={e =>
+              this.setState({
+                limitPerAffectedItems: !this.state.limitPerAffectedItems,
               })
             }
-            value="externalMarketplaces"
+            value="limitPerAffectedItems"
           />
         </div>
+
+        {this.state.limitPerAffectedItems && (
+          <div className="pv3 pl5 w-30">
+            <Input
+              placeholder={intl.formatMessage({
+                id:
+                  'promotions.promotion.restriction.limit.perAffectedItems.placeholder',
+              })}
+              type="number"
+              value={maxNumOfAffectedItems.value}
+              errorMessage={maxNumOfAffectedItems.error}
+              onChange={e => {
+                updatePageState({
+                  maxNumOfAffectedItems: {
+                    value: e.target.value,
+                  },
+                })
+              }}
+            />
+          </div>
+        )}
+
         <div className="pv3">
           <Checkbox
             className="pv4"
-            checked={restrictTradePolicies}
+            checked={this.state.restrictTradePolicies}
             id="restrictTradePolicies"
             label={intl.formatMessage({
               id:
@@ -219,43 +183,85 @@ class RestrictionSection extends Component {
             })}
             name="restrictTradePolicies-checkbox-group"
             onChange={e =>
-              updatePageState({
-                restrictTradePolicies: !restrictTradePolicies,
+              this.setState({
+                restrictTradePolicies: !this.state.restrictTradePolicies,
               })
             }
             value="restrictTradePolicies"
           />
         </div>
 
-        {restrictTradePolicies && (
-          <div className="w-100 pl5 pv3 flex flex-row">
-            <div className="w-30 ph2">
+        {this.state.restrictTradePolicies && (
+          <div className="pv3 flex flex-row">
+            <div className="w-30 pl5">
               <EXPERIMENTAL_Select
                 options={verbs}
-                value={restrictionVerb || verbs[0]}
+                value={restrictSalesChannelVerb || verbs[0]}
                 loading={loading}
                 multi={false}
                 onChange={selected => {
-                  updatePageState({ restrictionVerb: selected })
+                  updatePageState({ restrictSalesChannelVerb: selected })
                 }}
               />
             </div>
-            <div className="flex-grow-1">
+            <div className="pl2 flex-grow-1">
               <EXPERIMENTAL_Select
                 placeholder={intl.formatMessage({
                   id:
                     'promotions.promotion.restriction.restrictTradePolicies.placeholder',
                 })}
                 options={mappedSalesChannels}
-                value={restrictedTradePolicies}
+                value={restrictedSalesChannels}
                 loading={loading}
                 onChange={selected => {
-                  updatePageState({ restrictedTradePolicies: selected })
+                  updatePageState({ restrictedSalesChannels: selected })
                 }}
               />
             </div>
           </div>
         )}
+
+        <div className="mt7">
+          <h4 className="t-heading-5 mt0">
+            <FormattedMessage id="promotions.promotion.restriction.origin" />
+          </h4>
+
+          <RadioGroup
+            name="origin"
+            options={[
+              {
+                value: 'marketplace',
+                label: (
+                  <div>
+                    <div className="b">
+                      <FormattedMessage id="promotions.promotion.restriction.origin.marketplace" />
+                    </div>
+                    <div className="c-muted-1">
+                      <FormattedMessage id="promotions.promotion.restriction.origin.marketplace.explanation" />
+                    </div>
+                  </div>
+                ),
+              },
+              {
+                value: 'fulfillment',
+                label: (
+                  <div>
+                    <div className="b">
+                      <FormattedMessage id="promotions.promotion.restriction.origin.fulfillment" />
+                    </div>
+                    <div className="c-muted-1">
+                      <FormattedMessage id="promotions.promotion.restriction.origin.fulfillment.explanation" />
+                    </div>
+                  </div>
+                ),
+              },
+            ]}
+            value={origin}
+            onChange={event => {
+              updatePageState({ origin: event.target.value })
+            }}
+          />
+        </div>
       </Fragment>
     )
   }
