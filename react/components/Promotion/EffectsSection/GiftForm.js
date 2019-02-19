@@ -26,7 +26,7 @@ class GiftForm extends Component {
     return (
       <Fragment>
         <div className="mh4 mt7">
-          <div className="mv4">
+          <div className="mv4 w-80">
             <EXPERIMENTAL_Select
               label={'Products'}
               options={productOptions}
