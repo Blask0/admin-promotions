@@ -10,6 +10,7 @@ class GeneralSection extends Component {
 
   render() {
     const { intl, generalInfo, updatePageState } = this.props
+    const tzLabel = Intl.DateTimeFormat().resolvedOptions().timeZone
 
     return (
       <Fragment>
@@ -62,6 +63,15 @@ class GeneralSection extends Component {
                   })
                 }}
                 value={generalInfo.startDate}
+                helpText={intl.formatMessage(
+                  {
+                    id: 'promotions.promotion.generalInfo.tz',
+                  },
+                  {
+                    tz: generalInfo.tz,
+                    tzLabel,
+                  }
+                )}
                 label={intl.formatMessage({
                   id: 'promotions.promotion.generalInfo.startDate',
                 })}
