@@ -17,7 +17,7 @@ class RestrictionSection extends Component {
       limitPerStore: !!props.perStore,
       limitPerClient: !!props.perClient,
       limitPerAffectedItems: !!props.maxNumOfAffectedItems,
-      restrictTradePolicies: !!props.restrictedTradePolicies,
+      restrictTradePolicies: !!props.restrictedSalesChannels,
     }
   }
 
@@ -30,9 +30,8 @@ class RestrictionSection extends Component {
         perStore,
         perClient,
         maxNumOfAffectedItems,
-        restrictTradePolicies,
-        restrictionVerb,
-        restrictedTradePolicies,
+        restrictSalesChannelVerb,
+        restrictedSalesChannels,
         origin,
       },
       salesChannels = [],
@@ -52,7 +51,7 @@ class RestrictionSection extends Component {
       },
       {
         label: 'is not any of',
-        value: 'not_any',
+        value: 'not.any',
       },
     ]
 
@@ -197,11 +196,11 @@ class RestrictionSection extends Component {
             <div className="w-30 pl5">
               <EXPERIMENTAL_Select
                 options={verbs}
-                value={restrictionVerb || verbs[0]}
+                value={restrictSalesChannelVerb || verbs[0]}
                 loading={loading}
                 multi={false}
                 onChange={selected => {
-                  updatePageState({ restrictionVerb: selected })
+                  updatePageState({ restrictSalesChannelVerb: selected })
                 }}
               />
             </div>
@@ -212,10 +211,10 @@ class RestrictionSection extends Component {
                     'promotions.promotion.restriction.restrictTradePolicies.placeholder',
                 })}
                 options={mappedSalesChannels}
-                value={restrictedTradePolicies}
+                value={restrictedSalesChannels}
                 loading={loading}
                 onChange={selected => {
-                  updatePageState({ restrictedTradePolicies: selected })
+                  updatePageState({ restrictedSalesChannels: selected })
                 }}
               />
             </div>

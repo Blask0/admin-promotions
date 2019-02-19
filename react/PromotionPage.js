@@ -75,8 +75,8 @@ class PromotionPage extends Component {
             error: undefined,
             focus: false,
           },
-          restrictionVerb: undefined,
-          restrictedTradePolicies: [],
+          restrictSalesChannelVerb: undefined,
+          restrictedSalesChannels: [], // idsSalesChannel
           origin: undefined,
         },
       },
