@@ -11,7 +11,7 @@
   "promotions.promotion.generalInfo.hasEndDate": "Configurar data de expiração",
   "promotions.promotion.generalInfo.endDate": "Data e hora de expiração (UTC)",
   "promotions.promotion.generalInfo.accumulateWithPromotions.label": "Acumular com outras promoções",
-  "promotions.promotion.generalInfo.accumulateWithManualPrices.label": "Acumular csom preços manuais",
+  "promotions.promotion.generalInfo.accumulateWithManualPrices.label": "Acumular com preços manuais",
   "promotions.promotion.effects.title": "Efeito",
   "promotions.promotion.effects.price": "Preço",
   "promotions.promotion.effects.gift": "Brinde",
