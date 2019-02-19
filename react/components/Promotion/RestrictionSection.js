@@ -70,7 +70,18 @@ class RestrictionSection extends Component {
             })}
             name="limitPerStoreActivation-checkbox-group"
             onChange={e =>
-              this.setState({ limitPerStore: !this.state.limitPerStore })
+              this.setState(
+                { limitPerStore: !this.state.limitPerStore },
+                () => {
+                  if (this.state.limitPerStore) {
+                    updatePageState({
+                      perStore: {
+                        error: 'empty',
+                      },
+                    })
+                  }
+                }
+              )
             }
             value="limitPerStoreActivation"
           />
@@ -90,6 +101,7 @@ class RestrictionSection extends Component {
                 updatePageState({
                   perStore: {
                     value: e.target.value,
+                    error: undefined,
                   },
                 })
               }}
@@ -106,7 +118,18 @@ class RestrictionSection extends Component {
             })}
             name="limitPerClientActivation-checkbox-group"
             onChange={e =>
-              this.setState({ limitPerClient: !this.state.limitPerClient })
+              this.setState(
+                { limitPerClient: !this.state.limitPerClient },
+                () => {
+                  if (this.state.limitPerClient) {
+                    updatePageState({
+                      perClient: {
+                        error: 'empty',
+                      },
+                    })
+                  }
+                }
+              )
             }
             value="limitPerClientActivation"
           />
@@ -126,6 +149,7 @@ class RestrictionSection extends Component {
                 updatePageState({
                   perClient: {
                     value: e.target.value,
+                    error: undefined,
                   },
                 })
               }}
@@ -143,9 +167,20 @@ class RestrictionSection extends Component {
             })}
             name="limitPerAffectedItems-checkbox-group"
             onChange={e =>
-              this.setState({
-                limitPerAffectedItems: !this.state.limitPerAffectedItems,
-              })
+              this.setState(
+                {
+                  limitPerAffectedItems: !this.state.limitPerAffectedItems,
+                },
+                () => {
+                  if (this.state.limitPerAffectedItems) {
+                    updatePageState({
+                      maxNumOfAffectedItems: {
+                        error: 'empty',
+                      },
+                    })
+                  }
+                }
+              )
             }
             value="limitPerAffectedItems"
           />
@@ -165,6 +200,7 @@ class RestrictionSection extends Component {
                 updatePageState({
                   maxNumOfAffectedItems: {
                     value: e.target.value,
+                    error: undefined,
                   },
                 })
               }}
