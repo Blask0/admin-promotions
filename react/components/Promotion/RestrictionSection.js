@@ -197,7 +197,7 @@ class RestrictionSection extends Component {
           </div>
         )}
 
-        <div className="mt8">
+        <div className="mt7">
           <h4 className="t-heading-5 mt0">
             <FormattedMessage id="promotions.promotion.restriction.origin" />
           </h4>
