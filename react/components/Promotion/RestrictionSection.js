@@ -77,9 +77,12 @@ class RestrictionSection extends Component {
         </div>
 
         {this.state.limitPerStore && (
-          <div className="pl5 w-20 pv3">
+          <div className="pv3 pl5 w-30">
             <Input
-              placeholder=""
+              placeholder={intl.formatMessage({
+                id:
+                  'promotions.promotion.restriction.limit.perStore.placeholder',
+              })}
               type="number"
               value={perStore}
               onChange={e => {
@@ -105,9 +108,12 @@ class RestrictionSection extends Component {
         </div>
 
         {this.state.limitPerClient && (
-          <div className="pv3 pl5 w-20">
+          <div className="pv3 pl5 w-30">
             <Input
-              placeholder=""
+              placeholder={intl.formatMessage({
+                id:
+                  'promotions.promotion.restriction.limit.perClient.placeholder',
+              })}
               type="number"
               value={perClient}
               onChange={e => {
@@ -123,7 +129,7 @@ class RestrictionSection extends Component {
             id="limitPerAffectedItems"
             label={intl.formatMessage({
               id:
-                'promotions.promotion.restriction.limitPerAffectedItems.label',
+                'promotions.promotion.restriction.limit.perAffectedItems.label',
             })}
             name="limitPerAffectedItems-checkbox-group"
             onChange={e =>
@@ -136,9 +142,12 @@ class RestrictionSection extends Component {
         </div>
 
         {limitPerAffectedItems && (
-          <div className="pl5 w-20 pv3">
+          <div className="pv3 pl5 w-30">
             <Input
-              placeholder=""
+              placeholder={intl.formatMessage({
+                id:
+                  'promotions.promotion.restriction.limit.perAffectedItems.placeholder',
+              })}
               type="number"
               value={maxNumOfAffectedItems}
               onChange={e => {
@@ -168,8 +177,8 @@ class RestrictionSection extends Component {
         </div>
 
         {restrictTradePolicies && (
-          <div className="w-100 pl5 pv3 flex flex-row">
-            <div className="w-30 ph2">
+          <div className="pv3 flex flex-row">
+            <div className="w-30 pl5">
               <EXPERIMENTAL_Select
                 options={verbs}
                 value={restrictionVerb || verbs[0]}
@@ -180,7 +189,7 @@ class RestrictionSection extends Component {
                 }}
               />
             </div>
-            <div className="flex-grow-1">
+            <div className="pl2 flex-grow-1">
               <EXPERIMENTAL_Select
                 placeholder={intl.formatMessage({
                   id:
