@@ -23,7 +23,6 @@ function withProducts(WrappedComponent) {
       return (
         <Query query={getProducts} variables={{ name }}>
           {({ loading, error, data }) => {
-            console.log(loading, error, data)
             return (
               <WrappedComponent
                 {...this.props}

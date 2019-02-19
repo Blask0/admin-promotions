@@ -14,47 +14,65 @@ class GiftForm extends Component {
     }))
 
   render() {
-    const { intl, giftEffect, products, onChange } = this.props
-    const options = this.mapProducts(products)
+    const {
+      intl,
+      giftEffect,
+      products,
+      onChange,
+      updateQueryParams,
+    } = this.props
+    const productOptions = this.mapProducts(products)
 
     return (
       <Fragment>
         <div className="mh4 mt7">
-          <EXPERIMENTAL_Select
-            label={'Products'}
-            options={options}
-            defaultValue={options[0]}
-            multi={false}
-            onChange={selected => {
-              this.changeApplyByOrderStatus(selected.value)
-            }}
-          />
+          <div className="mv4">
+            <EXPERIMENTAL_Select
+              label={'Products'}
+              options={productOptions}
+              defaultValue={productOptions[0]}
+              multi
+              onChange={selected => {
+                onChange({ products: selected })
+              }}
+              onSearchInputChange={searchedValue => {
+                updateQueryParams &&
+                  updateQueryParams({
+                    name: searchedValue,
+                  })
+              }}
+            />
+          </div>
 
-          <Checkbox
-            checked={giftEffect.multiplier}
-            id="giftMultiplier"
-            label={intl.formatMessage({
-              id: 'promotions.promotion.effects.giftMultiplier.label',
-            })}
-            name="giftMultiplier-checkbox-group"
-            onChange={e => onChange({ multiplier: !giftEffect.multiplier })}
-            value="giftMultiplier"
-          />
+          <div className="mv4">
+            <Checkbox
+              checked={giftEffect.multiplier}
+              id="giftMultiplier"
+              label={intl.formatMessage({
+                id: 'promotions.promotion.effects.giftMultiplier.label',
+              })}
+              name="giftMultiplier-checkbox-group"
+              onChange={e => onChange({ multiplier: !giftEffect.multiplier })}
+              value="giftMultiplier"
+            />
+          </div>
 
-          <Checkbox
-            checked={giftEffect.limitQuantityPerPurchase}
-            id="selectableLimit"
-            label={intl.formatMessage({
-              id: 'promotions.promotion.effects.limitQuantityOfGifts.label',
-            })}
-            name="selectableLimit-checkbox-group"
-            onChange={e =>
-              onChange({
-                limitQuantityPerPurchase: !giftEffect.limitQuantityPerPurchase,
-              })
-            }
-            value="selectableLimit"
-          />
+          <div className="mv4">
+            <Checkbox
+              checked={giftEffect.limitQuantityPerPurchase}
+              id="selectableLimit"
+              label={intl.formatMessage({
+                id: 'promotions.promotion.effects.limitQuantityOfGifts.label',
+              })}
+              name="selectableLimit-checkbox-group"
+              onChange={e =>
+                onChange({
+                  limitQuantityPerPurchase: !giftEffect.limitQuantityPerPurchase,
+                })
+              }
+              value="selectableLimit"
+            />
+          </div>
         </div>
       </Fragment>
     )
