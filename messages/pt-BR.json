@@ -12,6 +12,7 @@
   "promotions.promotion.generalInfo.endDate": "Data e hora de expiração (UTC)",
   "promotions.promotion.generalInfo.accumulateWithPromotions.label": "Acumular com outras promoções",
   "promotions.promotion.generalInfo.accumulateWithManualPrices.label": "Acumular com preços manuais",
+  "promotions.promotion.generalInfo.tz": "Fuso horário é GMT{tz} ({tzLabel})",
   "promotions.promotion.effects.title": "Efeito",
   "promotions.promotion.effects.price": "Preço",
   "promotions.promotion.effects.gift": "Brinde",

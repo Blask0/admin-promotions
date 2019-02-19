@@ -21,14 +21,15 @@ class PromotionPage extends Component {
 
     this.state = {
       promotion: {
+        id: '',
         generalInfo: {
           name: undefined,
           isActive: false,
           startDate: new Date(),
           hasEndDate: false, // temporary, this should be on promotion json
           endDate: addDays(new Date(), 1),
+          tz: -new Date().getTimezoneOffset() / 60,
           isArchived: false,
-          id: '',
           accumulateWithPromotions: false,
           accumulateWithManualPrices: false,
         },
