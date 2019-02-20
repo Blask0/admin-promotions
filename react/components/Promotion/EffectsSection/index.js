@@ -11,6 +11,7 @@ import SelectableCard from './SelectableCard'
 import PriceForm from './PriceForm'
 import ShippingForm from './ShippingForm'
 import RewardForm from './RewardForm'
+import GiftForm from './GiftForm'
 
 class EffectSection extends Component {
   isEffectActive = activeEffectType =>
@@ -79,8 +80,10 @@ class EffectSection extends Component {
         )
       case 'gift':
         return (
-          // TO DO: implement gift form
-          <h1 className="tc ma7">gift</h1>
+          <GiftForm
+            giftEffect={effects.gift}
+            onChange={this.updateGiftEffect}
+          />
         )
       case 'shipping':
         return (
