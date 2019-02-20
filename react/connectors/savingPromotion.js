@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
 
-import savePromotion from '../graphql/savePromotion.graphql';
+import savePromotion from '../graphql/savePromotion.graphql'
 
 function savingPromotion(WrappedComponent) {
   class SavingPromotion extends Component {
@@ -9,10 +9,7 @@ function savingPromotion(WrappedComponent) {
       return (
         <Mutation mutation={savePromotion}>
           {(savePromotion, { data }) => (
-            <WrappedComponent
-              {...this.props}
-              savePromotion={savePromotion}
-            />
+            <WrappedComponent {...this.props} savePromotion={savePromotion} />
           )}
         </Mutation>
       )

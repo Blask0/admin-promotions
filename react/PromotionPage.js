@@ -121,6 +121,31 @@ class PromotionPage extends Component {
     }
   }
 
+  validateRestrictionSection = restriction => {
+    if (restriction.isLimitingPerStore && !restriction.perStore.value) {
+      restriction.perStore.error = intl.formatMessage({
+        id: 'validation.emptyField',
+      })
+    }
+
+    if (restriction.isLimitingPerClient && !restriction.perClient.value) {
+      restriction.perClient.error = intl.formatMessage({
+        id: 'validation.emptyField',
+      })
+    }
+
+    if (
+      restriction.isLimitingPerNumOfAffectedItems &&
+      !restriction.maxNumOfAffectedItems.value
+    ) {
+      restriction.perClient.error = intl.formatMessage({
+        id: 'validation.emptyField',
+      })
+    }
+
+    return restriction
+  }
+
   validateGeneralInfoSection = () => {
     let isValid = true
     const { intl } = this.props
@@ -352,6 +377,17 @@ class PromotionPage extends Component {
       : salesChannels.filter(({ id }) => id === '1')
   }
 
+  prepareToSave = promotion => {
+    const { generalInfo, eligibility, effects, restriction } = promotion
+    return {
+      ...promotion,
+      eligibility: {
+        ...eligibility,
+        statements: JSON.stringify(eligibility.statements),
+      },
+    }
+  }
+
   render() {
     const { navigate } = this.context
     const { promotion } = this.state
@@ -413,23 +449,12 @@ class PromotionPage extends Component {
             <Button
               variation="primary"
               onClick={() => {
-                console.log({
-                  ...promotion,
-                  eligibility: {
-                    ...eligibility,
-                    statements: JSON.stringify(eligibility.statements),
-                  },
-                })
+                const preparedPromotion = this.prepareToSave(promotion)
+                console.log(preparedPromotion)
 
                 savePromotion({
                   variables: {
-                    promotion: {
-                      ...promotion,
-                      eligibility: {
-                        ...eligibility,
-                        statements: JSON.stringify(eligibility.statements),
-                      },
-                    },
+                    promotion: preparedPromotion,
                   },
                 })
               }}>

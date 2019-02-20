@@ -82,7 +82,7 @@ class RestrictionSection extends Component {
               })}
               type="number"
               value={perStore.value}
-              errorMessage={intl.formatMessage({ id: perStore.error })}
+              errorMessage={perStore.error}
               onChange={e => {
                 updatePageState({
                   perStore: {
@@ -118,7 +118,7 @@ class RestrictionSection extends Component {
               })}
               type="number"
               value={perClient.value}
-              errorMessage={intl.formatMessage({ id: perClient.error })}
+              errorMessage={perClient.error}
               onChange={e => {
                 updatePageState({
                   perClient: {
@@ -157,9 +157,7 @@ class RestrictionSection extends Component {
               })}
               type="number"
               value={maxNumOfAffectedItems.value}
-              errorMessage={intl.formatMessage({
-                id: maxNumOfAffectedItems.error,
-              })}
+              errorMessage={maxNumOfAffectedItems.error}
               onChange={e => {
                 updatePageState({
                   maxNumOfAffectedItems: {
