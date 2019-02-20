@@ -12,13 +12,6 @@ import withSalesChannels from '../../connectors/withSalesChannels'
 class RestrictionSection extends Component {
   constructor(props) {
     super(props)
-
-    this.state = {
-      limitPerStore: !!props.perStore,
-      limitPerClient: !!props.perClient,
-      limitPerAffectedItems: !!props.maxNumOfAffectedItems,
-      restrictTradePolicies: !!props.restrictedSalesChannels,
-    }
   }
 
   isOriginSelected = origin => this.props.restriction.origin === origin
@@ -27,9 +20,13 @@ class RestrictionSection extends Component {
     const {
       intl,
       restriction: {
+        isLimitingPerStore,
         perStore,
+        isLimitingPerClient,
         perClient,
+        isLimitingPerNumOfAffectedItems,
         maxNumOfAffectedItems,
+        isRestrictingSalesChannels,
         restrictSalesChannelVerb,
         restrictedSalesChannels,
         origin,
@@ -63,20 +60,20 @@ class RestrictionSection extends Component {
 
         <div className="pv3">
           <Checkbox
-            checked={this.state.limitPerStore}
+            checked={isLimitingPerStore}
             id="limitPerStoreActivation"
             label={intl.formatMessage({
               id: 'promotions.promotion.restriction.limit.perStore',
             })}
             name="limitPerStoreActivation-checkbox-group"
             onChange={e =>
-              this.setState({ limitPerStore: !this.state.limitPerStore })
+              updatePageState({ isLimitingPerStore: !isLimitingPerStore })
             }
             value="limitPerStoreActivation"
           />
         </div>
 
-        {this.state.limitPerStore && (
+        {isLimitingPerStore && (
           <div className="pv3 pl5 w-30">
             <Input
               placeholder={intl.formatMessage({
@@ -85,7 +82,7 @@ class RestrictionSection extends Component {
               })}
               type="number"
               value={perStore.value}
-              errorMessage={perStore.error}
+              errorMessage={intl.formatMessage({ id: perStore.error })}
               onChange={e => {
                 updatePageState({
                   perStore: {
@@ -99,20 +96,20 @@ class RestrictionSection extends Component {
 
         <div className="pv3">
           <Checkbox
-            checked={this.state.limitPerClient}
+            checked={isLimitingPerClient}
             id="limitPerClientActivation"
             label={intl.formatMessage({
               id: 'promotions.promotion.restriction.limit.perClient',
             })}
             name="limitPerClientActivation-checkbox-group"
             onChange={e =>
-              this.setState({ limitPerClient: !this.state.limitPerClient })
+              updatePageState({ isLimitingPerClient: !isLimitingPerClient })
             }
             value="limitPerClientActivation"
           />
         </div>
 
-        {this.state.limitPerClient && (
+        {isLimitingPerClient && (
           <div className="pv3 pl5 w-30">
             <Input
               placeholder={intl.formatMessage({
@@ -121,7 +118,7 @@ class RestrictionSection extends Component {
               })}
               type="number"
               value={perClient.value}
-              errorMessage={perClient.error}
+              errorMessage={intl.formatMessage({ id: perClient.error })}
               onChange={e => {
                 updatePageState({
                   perClient: {
@@ -135,7 +132,7 @@ class RestrictionSection extends Component {
 
         <div className="pv3">
           <Checkbox
-            checked={this.state.limitPerAffectedItems}
+            checked={isLimitingPerNumOfAffectedItems}
             id="limitPerAffectedItems"
             label={intl.formatMessage({
               id:
@@ -143,15 +140,15 @@ class RestrictionSection extends Component {
             })}
             name="limitPerAffectedItems-checkbox-group"
             onChange={e =>
-              this.setState({
-                limitPerAffectedItems: !this.state.limitPerAffectedItems,
+              updatePageState({
+                isLimitingPerNumOfAffectedItems: !isLimitingPerNumOfAffectedItems,
               })
             }
             value="limitPerAffectedItems"
           />
         </div>
 
-        {this.state.limitPerAffectedItems && (
+        {isLimitingPerNumOfAffectedItems && (
           <div className="pv3 pl5 w-30">
             <Input
               placeholder={intl.formatMessage({
@@ -160,7 +157,9 @@ class RestrictionSection extends Component {
               })}
               type="number"
               value={maxNumOfAffectedItems.value}
-              errorMessage={maxNumOfAffectedItems.error}
+              errorMessage={intl.formatMessage({
+                id: maxNumOfAffectedItems.error,
+              })}
               onChange={e => {
                 updatePageState({
                   maxNumOfAffectedItems: {
@@ -175,7 +174,7 @@ class RestrictionSection extends Component {
         <div className="pv3">
           <Checkbox
             className="pv4"
-            checked={this.state.restrictTradePolicies}
+            checked={isRestrictingSalesChannels}
             id="restrictTradePolicies"
             label={intl.formatMessage({
               id:
@@ -183,15 +182,15 @@ class RestrictionSection extends Component {
             })}
             name="restrictTradePolicies-checkbox-group"
             onChange={e =>
-              this.setState({
-                restrictTradePolicies: !this.state.restrictTradePolicies,
+              updatePageState({
+                isRestrictingSalesChannels: !isRestrictingSalesChannels,
               })
             }
             value="restrictTradePolicies"
           />
         </div>
 
-        {this.state.restrictTradePolicies && (
+        {isRestrictingSalesChannels && (
           <div className="pv3 flex flex-row">
             <div className="w-30 pl5">
               <EXPERIMENTAL_Select
@@ -199,9 +198,9 @@ class RestrictionSection extends Component {
                 value={restrictSalesChannelVerb || verbs[0]}
                 loading={loading}
                 multi={false}
-                onChange={selected => {
+                onChange={selected =>
                   updatePageState({ restrictSalesChannelVerb: selected })
-                }}
+                }
               />
             </div>
             <div className="pl2 flex-grow-1">
@@ -213,9 +212,9 @@ class RestrictionSection extends Component {
                 options={mappedSalesChannels}
                 value={restrictedSalesChannels}
                 loading={loading}
-                onChange={selected => {
+                onChange={selected =>
                   updatePageState({ restrictedSalesChannels: selected })
-                }}
+                }
               />
             </div>
           </div>
@@ -257,9 +256,7 @@ class RestrictionSection extends Component {
               },
             ]}
             value={origin}
-            onChange={event => {
-              updatePageState({ origin: event.target.value })
-            }}
+            onChange={event => updatePageState({ origin: event.target.value })}
           />
         </div>
       </Fragment>
@@ -274,14 +271,17 @@ RestrictionSection.contextTypes = {
 RestrictionSection.propTypes = {
   intl: intlShape,
   restriction: PropTypes.shape({
-    limitedUsage: PropTypes.bool.isRequired,
-    limitedUsage: PropTypes.bool.isRequired,
-    limitPerActivations: PropTypes.bool.isRequired,
-    limitPerAffectedItems: PropTypes.bool.isRequired,
+    isLimitingPerStore: PropTypes.bool.isRequired,
     perStore: PropTypes.number,
+    isLimitingPerClient: PropTypes.bool.isRequired,
     perClient: PropTypes.number,
+    limitPerActivations: PropTypes.bool.isRequired,
+    isLimitingPerNumOfAffectedItems: PropTypes.bool.isRequired,
     maxNumOfAffectedItems: PropTypes.number,
-    accumulate: PropTypes.bool.isRequired,
+    isRestrictingSalesChannels: PropTypes.bool,
+    restrictSalesChannelVerb: PropTypes.string,
+    restrictedSalesChannels: PropTypes.array,
+    origin: PropTypes.string,
   }).isRequired,
   updatePageState: PropTypes.func.isRequired,
 }

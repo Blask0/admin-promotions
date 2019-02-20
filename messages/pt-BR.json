@@ -93,5 +93,6 @@
   "promotions.promotion.restriction.origin.marketplace": "Marketplace",
   "promotions.promotion.restriction.origin.fulfillment": "Fulfillment",
   "promotions.promotion.restriction.origin.marketplace.explanation": "Pedidos feitos diretamente à sua loja",
-  "promotions.promotion.restriction.origin.fulfillment.explanation": "Pedidos onde sua loja atua como vendedor"
+  "promotions.promotion.restriction.origin.fulfillment.explanation": "Pedidos onde sua loja atua como vendedor",
+  "validation.emptyField": "Campo vazio"
 }
