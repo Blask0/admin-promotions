@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { EXPERIMENTAL_Select } from 'vtex.styleguide'
-import Importer from '../../../bulkImporter/Importer'
+import Importer from '../../../../components/bulkImporter/Importer'
 
 const renderSelectObject = ({
   statements,

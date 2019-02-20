@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
-import { Button } from 'vtex.styleguide'
+import { Button, ModalDialog } from 'vtex.styleguide'
 import FileModal from './fileModal'
 
 class Importer extends Component {

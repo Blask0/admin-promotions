@@ -30,7 +30,7 @@ FileModal.contextTypes = {
 
 FileModal.propTypes = {
   intl: intlShape,
-  titleId: propTypes.string,
+  titleId: PropTypes.string,
 }
 
 export default injectIntl(FileModal)
