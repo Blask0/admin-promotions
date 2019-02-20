@@ -107,7 +107,7 @@ class PromotionPage extends Component {
             focus: false,
           },
           isLimitingPerNumOfAffectedItems: false,
-          maxNumOfAffectedItems: {
+          maxNumberOfAffectedItems: {
             value: undefined,
             error: undefined,
             focus: false,
@@ -136,7 +136,7 @@ class PromotionPage extends Component {
 
     if (
       restriction.isLimitingPerNumOfAffectedItems &&
-      !restriction.maxNumOfAffectedItems.value
+      !restriction.maxNumberOfAffectedItems.value
     ) {
       restriction.perClient.error = intl.formatMessage({
         id: 'validation.emptyField',
@@ -389,7 +389,7 @@ class PromotionPage extends Component {
         ...restriction,
         perStore: restriction.perStore.value,
         perClient: restriction.perClient.value,
-        maxNumOfAffectedItems: restriction.maxNumOfAffectedItems.value,
+        maxNumberOfAffectedItems: restriction.maxNumberOfAffectedItems.value,
       },
     }
   }

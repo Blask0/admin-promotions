@@ -25,7 +25,7 @@ class RestrictionSection extends Component {
         isLimitingPerClient,
         perClient,
         isLimitingPerNumOfAffectedItems,
-        maxNumOfAffectedItems,
+        maxNumberOfAffectedItems,
         isRestrictingSalesChannels,
         restrictSalesChannelVerb,
         restrictedSalesChannels,
@@ -156,11 +156,11 @@ class RestrictionSection extends Component {
                   'promotions.promotion.restriction.limit.perAffectedItems.placeholder',
               })}
               type="number"
-              value={maxNumOfAffectedItems.value}
-              errorMessage={maxNumOfAffectedItems.error}
+              value={maxNumberOfAffectedItems.value}
+              errorMessage={maxNumberOfAffectedItems.error}
               onChange={e => {
                 updatePageState({
-                  maxNumOfAffectedItems: {
+                  maxNumberOfAffectedItems: {
                     value: parseInt(e.target.value),
                   },
                 })
@@ -275,7 +275,7 @@ RestrictionSection.propTypes = {
     perClient: PropTypes.number,
     limitPerActivations: PropTypes.bool.isRequired,
     isLimitingPerNumOfAffectedItems: PropTypes.bool.isRequired,
-    maxNumOfAffectedItems: PropTypes.number,
+    maxNumberOfAffectedItems: PropTypes.number,
     isRestrictingSalesChannels: PropTypes.bool,
     restrictSalesChannelVerb: PropTypes.string,
     restrictedSalesChannels: PropTypes.array,
