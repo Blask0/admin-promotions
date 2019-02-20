@@ -82,7 +82,7 @@ class RestrictionSection extends Component {
               })}
               type="number"
               value={perStore.value}
-              errorMessage={perStore.error}
+              errorMessage={intl.formatMessage({ id: perStore.error })}
               onChange={e => {
                 updatePageState({
                   perStore: {
@@ -118,7 +118,7 @@ class RestrictionSection extends Component {
               })}
               type="number"
               value={perClient.value}
-              errorMessage={perClient.error}
+              errorMessage={intl.formatMessage({ id: perClient.error })}
               onChange={e => {
                 updatePageState({
                   perClient: {
@@ -157,7 +157,9 @@ class RestrictionSection extends Component {
               })}
               type="number"
               value={maxNumOfAffectedItems.value}
-              errorMessage={maxNumOfAffectedItems.error}
+              errorMessage={intl.formatMessage({
+                id: maxNumOfAffectedItems.error,
+              })}
               onChange={e => {
                 updatePageState({
                   maxNumOfAffectedItems: {
@@ -269,12 +271,17 @@ RestrictionSection.contextTypes = {
 RestrictionSection.propTypes = {
   intl: intlShape,
   restriction: PropTypes.shape({
-    limitedUsage: PropTypes.bool.isRequired,
-    limitPerActivations: PropTypes.bool.isRequired,
+    isLimitingPerStore: PropTypes.bool.isRequired,
     perStore: PropTypes.number,
+    isLimitingPerClient: PropTypes.bool.isRequired,
     perClient: PropTypes.number,
+    limitPerActivations: PropTypes.bool.isRequired,
+    isLimitingPerNumOfAffectedItems: PropTypes.bool.isRequired,
     maxNumOfAffectedItems: PropTypes.number,
-    accumulate: PropTypes.bool.isRequired,
+    isRestrictingSalesChannels: PropTypes.bool,
+    restrictSalesChannelVerb: PropTypes.string,
+    restrictedSalesChannels: PropTypes.array,
+    origin: PropTypes.string,
   }).isRequired,
   updatePageState: PropTypes.func.isRequired,
 }

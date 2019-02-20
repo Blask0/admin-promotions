@@ -90,25 +90,21 @@ class PromotionPage extends Component {
 
   validateRestrictionSection = restriction => {
     if (restriction.isLimitingPerStore && !restriction.perStore.value) {
-      restriction.perStore.error = (
-        <FormattedMessage id="validation.emptyField" />
-      )
+      restriction.perStore.error = 'validation.emptyField'
     }
 
     if (restriction.isLimitingPerClient && !restriction.perClient.value) {
-      restriction.perClient.error = (
-        <FormattedMessage id="validation.emptyField" />
-      )
+      restriction.perClient.error = 'validation.emptyField'
     }
 
     if (
       restriction.isLimitingPerNumOfAffectedItems &&
       !restriction.maxNumOfAffectedItems.value
     ) {
-      restriction.perClient.error = (
-        <FormattedMessage id="validation.emptyField" />
-      )
+      restriction.perClient.error = 'validation.emptyField'
     }
+
+    return restriction
   }
 
   componentDidMount = () => {
