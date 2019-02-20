@@ -385,6 +385,12 @@ class PromotionPage extends Component {
         ...eligibility,
         statements: JSON.stringify(eligibility.statements),
       },
+      restriction: {
+        ...restriction,
+        perStore: restriction.perStore.value,
+        perClient: restriction.perClient.value,
+        maxNumOfAffectedItems: restriction.maxNumOfAffectedItems.value,
+      },
     }
   }
 

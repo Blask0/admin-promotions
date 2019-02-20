@@ -86,7 +86,7 @@ class RestrictionSection extends Component {
               onChange={e => {
                 updatePageState({
                   perStore: {
-                    value: e.target.value,
+                    value: parseInt(e.target.value),
                   },
                 })
               }}
@@ -122,7 +122,7 @@ class RestrictionSection extends Component {
               onChange={e => {
                 updatePageState({
                   perClient: {
-                    value: e.target.value,
+                    value: parseInt(e.target.value),
                   },
                 })
               }}
@@ -161,7 +161,7 @@ class RestrictionSection extends Component {
               onChange={e => {
                 updatePageState({
                   maxNumOfAffectedItems: {
-                    value: e.target.value,
+                    value: parseInt(e.target.value),
                   },
                 })
               }}
