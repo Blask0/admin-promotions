@@ -92,5 +92,6 @@
   "promotions.promotion.restriction.origin.marketplace": "Marketplace",
   "promotions.promotion.restriction.origin.fulfillment": "Fulfillment",
   "promotions.promotion.restriction.origin.marketplace.explanation": "Orders made directly to your store",
-  "promotions.promotion.restriction.origin.fulfillment.explanation": "Orders where your store is acting as a seller"
+  "promotions.promotion.restriction.origin.fulfillment.explanation": "Orders where your store is acting as a seller",
+  "validation.emptyField": "Empty field"
 }

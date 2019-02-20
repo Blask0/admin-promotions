@@ -12,13 +12,6 @@ import withSalesChannels from '../../connectors/withSalesChannels'
 class RestrictionSection extends Component {
   constructor(props) {
     super(props)
-
-    this.state = {
-      limitPerStore: !!props.perStore,
-      limitPerClient: !!props.perClient,
-      limitPerAffectedItems: !!props.maxNumOfAffectedItems,
-      restrictTradePolicies: !!props.restrictedSalesChannels,
-    }
   }
 
   isOriginSelected = origin => this.props.restriction.origin === origin
@@ -27,9 +20,13 @@ class RestrictionSection extends Component {
     const {
       intl,
       restriction: {
+        isLimitingPerStore,
         perStore,
+        isLimitingPerClient,
         perClient,
+        isLimitingPerNumOfAffectedItems,
         maxNumOfAffectedItems,
+        isRestrictingSalesChannels,
         restrictSalesChannelVerb,
         restrictedSalesChannels,
         origin,
@@ -63,31 +60,20 @@ class RestrictionSection extends Component {
 
         <div className="pv3">
           <Checkbox
-            checked={this.state.limitPerStore}
+            checked={isLimitingPerStore}
             id="limitPerStoreActivation"
             label={intl.formatMessage({
               id: 'promotions.promotion.restriction.limit.perStore',
             })}
             name="limitPerStoreActivation-checkbox-group"
             onChange={e =>
-              this.setState(
-                { limitPerStore: !this.state.limitPerStore },
-                () => {
-                  if (this.state.limitPerStore) {
-                    updatePageState({
-                      perStore: {
-                        error: 'empty',
-                      },
-                    })
-                  }
-                }
-              )
+              updatePageState({ isLimitingPerStore: !isLimitingPerStore })
             }
             value="limitPerStoreActivation"
           />
         </div>
 
-        {this.state.limitPerStore && (
+        {isLimitingPerStore && (
           <div className="pv3 pl5 w-30">
             <Input
               placeholder={intl.formatMessage({
@@ -101,7 +87,6 @@ class RestrictionSection extends Component {
                 updatePageState({
                   perStore: {
                     value: e.target.value,
-                    error: undefined,
                   },
                 })
               }}
@@ -111,31 +96,20 @@ class RestrictionSection extends Component {
 
         <div className="pv3">
           <Checkbox
-            checked={this.state.limitPerClient}
+            checked={isLimitingPerClient}
             id="limitPerClientActivation"
             label={intl.formatMessage({
               id: 'promotions.promotion.restriction.limit.perClient',
             })}
             name="limitPerClientActivation-checkbox-group"
             onChange={e =>
-              this.setState(
-                { limitPerClient: !this.state.limitPerClient },
-                () => {
-                  if (this.state.limitPerClient) {
-                    updatePageState({
-                      perClient: {
-                        error: 'empty',
-                      },
-                    })
-                  }
-                }
-              )
+              updatePageState({ isLimitingPerClient: !isLimitingPerClient })
             }
             value="limitPerClientActivation"
           />
         </div>
 
-        {this.state.limitPerClient && (
+        {isLimitingPerClient && (
           <div className="pv3 pl5 w-30">
             <Input
               placeholder={intl.formatMessage({
@@ -149,7 +123,6 @@ class RestrictionSection extends Component {
                 updatePageState({
                   perClient: {
                     value: e.target.value,
-                    error: undefined,
                   },
                 })
               }}
@@ -159,7 +132,7 @@ class RestrictionSection extends Component {
 
         <div className="pv3">
           <Checkbox
-            checked={this.state.limitPerAffectedItems}
+            checked={isLimitingPerNumOfAffectedItems}
             id="limitPerAffectedItems"
             label={intl.formatMessage({
               id:
@@ -167,26 +140,15 @@ class RestrictionSection extends Component {
             })}
             name="limitPerAffectedItems-checkbox-group"
             onChange={e =>
-              this.setState(
-                {
-                  limitPerAffectedItems: !this.state.limitPerAffectedItems,
-                },
-                () => {
-                  if (this.state.limitPerAffectedItems) {
-                    updatePageState({
-                      maxNumOfAffectedItems: {
-                        error: 'empty',
-                      },
-                    })
-                  }
-                }
-              )
+              updatePageState({
+                isLimitingPerNumOfAffectedItems: !isLimitingPerNumOfAffectedItems,
+              })
             }
             value="limitPerAffectedItems"
           />
         </div>
 
-        {this.state.limitPerAffectedItems && (
+        {isLimitingPerNumOfAffectedItems && (
           <div className="pv3 pl5 w-30">
             <Input
               placeholder={intl.formatMessage({
@@ -200,7 +162,6 @@ class RestrictionSection extends Component {
                 updatePageState({
                   maxNumOfAffectedItems: {
                     value: e.target.value,
-                    error: undefined,
                   },
                 })
               }}
@@ -211,7 +172,7 @@ class RestrictionSection extends Component {
         <div className="pv3">
           <Checkbox
             className="pv4"
-            checked={this.state.restrictTradePolicies}
+            checked={isRestrictingSalesChannels}
             id="restrictTradePolicies"
             label={intl.formatMessage({
               id:
@@ -219,15 +180,15 @@ class RestrictionSection extends Component {
             })}
             name="restrictTradePolicies-checkbox-group"
             onChange={e =>
-              this.setState({
-                restrictTradePolicies: !this.state.restrictTradePolicies,
+              updatePageState({
+                isRestrictingSalesChannels: !isRestrictingSalesChannels,
               })
             }
             value="restrictTradePolicies"
           />
         </div>
 
-        {this.state.restrictTradePolicies && (
+        {isRestrictingSalesChannels && (
           <div className="pv3 flex flex-row">
             <div className="w-30 pl5">
               <EXPERIMENTAL_Select
@@ -235,9 +196,9 @@ class RestrictionSection extends Component {
                 value={restrictSalesChannelVerb || verbs[0]}
                 loading={loading}
                 multi={false}
-                onChange={selected => {
+                onChange={selected =>
                   updatePageState({ restrictSalesChannelVerb: selected })
-                }}
+                }
               />
             </div>
             <div className="pl2 flex-grow-1">
@@ -249,9 +210,9 @@ class RestrictionSection extends Component {
                 options={mappedSalesChannels}
                 value={restrictedSalesChannels}
                 loading={loading}
-                onChange={selected => {
+                onChange={selected =>
                   updatePageState({ restrictedSalesChannels: selected })
-                }}
+                }
               />
             </div>
           </div>
@@ -293,9 +254,7 @@ class RestrictionSection extends Component {
               },
             ]}
             value={origin}
-            onChange={event => {
-              updatePageState({ origin: event.target.value })
-            }}
+            onChange={event => updatePageState({ origin: event.target.value })}
           />
         </div>
       </Fragment>
@@ -311,9 +270,7 @@ RestrictionSection.propTypes = {
   intl: intlShape,
   restriction: PropTypes.shape({
     limitedUsage: PropTypes.bool.isRequired,
-    limitedUsage: PropTypes.bool.isRequired,
     limitPerActivations: PropTypes.bool.isRequired,
-    limitPerAffectedItems: PropTypes.bool.isRequired,
     perStore: PropTypes.number,
     perClient: PropTypes.number,
     maxNumOfAffectedItems: PropTypes.number,

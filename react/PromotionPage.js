@@ -61,26 +61,53 @@ class PromotionPage extends Component {
           },
         },
         restriction: {
+          isLimitingPerStore: false,
           perStore: {
             value: undefined,
             error: undefined,
             focus: false,
           },
+          isLimitingPerClient: false,
           perClient: {
             value: undefined,
             error: undefined,
             focus: false,
           },
+          isLimitingPerNumOfAffectedItems: false,
           maxNumOfAffectedItems: {
             value: undefined,
             error: undefined,
             focus: false,
           },
+          isRestrictingSalesChannels: false,
           restrictSalesChannelVerb: undefined,
           restrictedSalesChannels: [], // idsSalesChannel
           origin: undefined,
         },
       },
+    }
+  }
+
+  validateRestrictionSection = restriction => {
+    if (restriction.isLimitingPerStore && !restriction.perStore.value) {
+      restriction.perStore.error = (
+        <FormattedMessage id="validation.emptyField" />
+      )
+    }
+
+    if (restriction.isLimitingPerClient && !restriction.perClient.value) {
+      restriction.perClient.error = (
+        <FormattedMessage id="validation.emptyField" />
+      )
+    }
+
+    if (
+      restriction.isLimitingPerNumOfAffectedItems &&
+      !restriction.maxNumOfAffectedItems.value
+    ) {
+      restriction.perClient.error = (
+        <FormattedMessage id="validation.emptyField" />
+      )
     }
   }
 
