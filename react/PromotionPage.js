@@ -123,7 +123,10 @@ class PromotionPage extends Component {
   validateGeneralInfoSection = () => {
     let isValid = true
     const { intl } = this.props
-
+    const {
+      promotion: { generalInfo },
+    } = this.state
+    
     if (
       !generalInfo.name.value ||
       (generalInfo.name.value && generalInfo.name.value.trim() == '')
