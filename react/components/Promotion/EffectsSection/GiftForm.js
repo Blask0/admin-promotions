@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape } from 'react-intl'
 
-import { Checkbox, EXPERIMENTAL_Select } from 'vtex.styleguide'
+import { Checkbox, EXPERIMENTAL_Select, Input } from 'vtex.styleguide'
 
 import withProducts from '../../../connectors/withProducts'
 
@@ -86,7 +86,7 @@ class GiftForm extends Component {
                 value={giftEffect.maximumQuantitySelectable.value}
                 errorMessage={giftEffect.maximumQuantitySelectable.error}
                 onChange={e => {
-                  updatePageState({
+                  onChange({
                     maximumQuantitySelectable: {
                       value: e.target.value,
                     },
