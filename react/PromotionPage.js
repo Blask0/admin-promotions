@@ -114,36 +114,76 @@ class PromotionPage extends Component {
           },
           isRestrictingSalesChannels: false,
           restrictSalesChannelVerb: undefined,
-          restrictedSalesChannels: [], // idsSalesChannel
+          restrictedSalesChannels: {
+            value: [], // idsSalesChannel
+            error: undefined,
+            focus: false,
+          },
           origin: undefined,
         },
       },
     }
   }
 
-  validateRestrictionSection = restriction => {
+  validate = () => {
+    const {
+      restriction,
+      isValid: isRestrictionValid,
+    } = this.validateRestrictionSection()
+
+    this.setState(prevState => ({
+      promotion: {
+        ...prevState.promotion,
+        restriction,
+      },
+    }))
+
+    return isRestrictionValid
+  }
+
+  validateRestrictionSection = () => {
+    let isValid = true
+    const {
+      promotion: { restriction },
+    } = this.state
+    const { intl } = this.props
+
     if (restriction.isLimitingPerStore && !restriction.perStore.value) {
       restriction.perStore.error = intl.formatMessage({
         id: 'validation.emptyField',
       })
+      isValid = false
     }
 
     if (restriction.isLimitingPerClient && !restriction.perClient.value) {
       restriction.perClient.error = intl.formatMessage({
         id: 'validation.emptyField',
       })
+      isValid = false
     }
 
     if (
       restriction.isLimitingPerNumOfAffectedItems &&
       !restriction.maxNumberOfAffectedItems.value
     ) {
-      restriction.perClient.error = intl.formatMessage({
+      restriction.maxNumberOfAffectedItems.error = intl.formatMessage({
         id: 'validation.emptyField',
       })
+      isValid = false
     }
 
-    return restriction
+    if (
+      restriction.isRestrictingSalesChannels &&
+      (!restriction.restrictedSalesChannels.value ||
+        restriction.restrictedSalesChannels.value.length === 0)
+    ) {
+      restriction.restrictedSalesChannels.error = intl.formatMessage({
+        id: 'validation.emptyField',
+      })
+      isValid = false
+    }
+
+    return { restriction, isValid }
   }
 
   validateGeneralInfoSection = () => {
@@ -366,7 +406,7 @@ class PromotionPage extends Component {
     }))
   }
 
-  canSave = () => true
+  canSave = () => this.validate()
 
   getAffectedSalesChannels = () => {
     const { restrictedSalesChannelsIds, salesChannels } = this.props
@@ -450,11 +490,11 @@ class PromotionPage extends Component {
             updatePageState={this.handleRestrictionSectionChange}
           />
         </PageBlock>
-        {this.canSave() ? (
-          <div className="flex flex-row">
-            <Button
-              variation="primary"
-              onClick={() => {
+        <div className="flex flex-row">
+          <Button
+            variation="primary"
+            onClick={() => {
+              if (this.canSave()) {
                 const preparedPromotion = this.prepareToSave(promotion)
                 console.log(preparedPromotion)
 
@@ -463,14 +503,14 @@ class PromotionPage extends Component {
                     promotion: preparedPromotion,
                   },
                 })
-              }}>
-              <FormattedMessage id="promotions.promotion.save" />
-            </Button>
-            <Button variation="tertiary">
-              <FormattedMessage id="promotions.promotion.cancel" />
-            </Button>
-          </div>
-        ) : null}
+              }
+            }}>
+            <FormattedMessage id="promotions.promotion.save" />
+          </Button>
+          <Button variation="tertiary">
+            <FormattedMessage id="promotions.promotion.cancel" />
+          </Button>
+        </div>
       </Layout>
     )
   }

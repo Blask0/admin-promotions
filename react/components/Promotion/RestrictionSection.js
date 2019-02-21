@@ -57,7 +57,6 @@ class RestrictionSection extends Component {
         <h4 className="t-heading-4 mt0">
           <FormattedMessage id="promotions.promotion.restriction.title" />
         </h4>
-
         <div className="pv3">
           <Checkbox
             checked={isLimitingPerStore}
@@ -67,7 +66,12 @@ class RestrictionSection extends Component {
             })}
             name="limitPerStoreActivation-checkbox-group"
             onChange={e =>
-              updatePageState({ isLimitingPerStore: !isLimitingPerStore })
+              updatePageState({
+                isLimitingPerStore: !isLimitingPerStore,
+                perStore: {
+                  value: undefined,
+                },
+              })
             }
             value="limitPerStoreActivation"
           />
@@ -93,7 +97,6 @@ class RestrictionSection extends Component {
             />
           </div>
         )}
-
         <div className="pv3">
           <Checkbox
             checked={isLimitingPerClient}
@@ -103,12 +106,16 @@ class RestrictionSection extends Component {
             })}
             name="limitPerClientActivation-checkbox-group"
             onChange={e =>
-              updatePageState({ isLimitingPerClient: !isLimitingPerClient })
+              updatePageState({
+                isLimitingPerClient: !isLimitingPerClient,
+                perClient: {
+                  value: undefined,
+                },
+              })
             }
             value="limitPerClientActivation"
           />
         </div>
-
         {isLimitingPerClient && (
           <div className="pv3 pl5 w-30">
             <Input
@@ -129,7 +136,6 @@ class RestrictionSection extends Component {
             />
           </div>
         )}
-
         <div className="pv3">
           <Checkbox
             checked={isLimitingPerNumOfAffectedItems}
@@ -142,12 +148,14 @@ class RestrictionSection extends Component {
             onChange={e =>
               updatePageState({
                 isLimitingPerNumOfAffectedItems: !isLimitingPerNumOfAffectedItems,
+                maxNumberOfAffectedItems: {
+                  value: undefined,
+                },
               })
             }
             value="limitPerAffectedItems"
           />
         </div>
-
         {isLimitingPerNumOfAffectedItems && (
           <div className="pv3 pl5 w-30">
             <Input
@@ -168,7 +176,6 @@ class RestrictionSection extends Component {
             />
           </div>
         )}
-
         <div className="pv3">
           <Checkbox
             className="pv4"
@@ -182,6 +189,10 @@ class RestrictionSection extends Component {
             onChange={e =>
               updatePageState({
                 isRestrictingSalesChannels: !isRestrictingSalesChannels,
+                restrictSalesChannelVerb: undefined,
+                restrictedSalesChannels: {
+                  value: [],
+                },
               })
             }
             value="restrictTradePolicies"
@@ -208,16 +219,20 @@ class RestrictionSection extends Component {
                     'promotions.promotion.restriction.restrictTradePolicies.placeholder',
                 })}
                 options={mappedSalesChannels}
-                value={restrictedSalesChannels}
+                value={restrictedSalesChannels.value}
+                errorMessage={restrictedSalesChannels.error}
                 loading={loading}
                 onChange={selected =>
-                  updatePageState({ restrictedSalesChannels: selected })
+                  updatePageState({
+                    restrictedSalesChannels: {
+                      value: selected,
+                    },
+                  })
                 }
               />
             </div>
           </div>
         )}
-
         <div className="mt7">
           <h4 className="t-heading-5 mt0">
             <FormattedMessage id="promotions.promotion.restriction.origin" />
