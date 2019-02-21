@@ -34,6 +34,7 @@
   "promotions.promotion.effects.rewardForm.nominal": "Nominal",
   "promotions.promotion.effects.rewardForm.percentual": "Percentual",
   "promotions.promotion.effects.rewardForm.placeholder": "Insira o valor…",
+  "promotions.promotion.effects.gifts.skus": "Skus",
   "promotions.promotion.effects.giftMultiplier.label": "Multiplicador de presente",
   "promotions.promotion.effects.limitQuantityOfGifts.label": "Limit quantity of gifts per purchase",
   "promotions.promotion.effects.quantitySelectable.placeholder": "Insira a quantidade selecionável…",

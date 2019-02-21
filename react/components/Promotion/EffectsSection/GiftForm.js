@@ -30,7 +30,9 @@ class GiftForm extends Component {
         <div className="mh4 mt7">
           <div className="mv4 w-80">
             <EXPERIMENTAL_Select
-              label={'Products'}
+              label={intl.formatMessage({
+                id: 'promotions.promotion.effects.gifts.skus',
+              })}
               options={skuOptions}
               defaultValue={skuOptions[0]}
               loading={loading}
