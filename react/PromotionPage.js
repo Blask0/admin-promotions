@@ -120,7 +120,7 @@ class PromotionPage extends Component {
     return restriction
   }
 
-  validateGeneralInfoSection = generalInfo => {
+  validateGeneralInfoSection = () => {
     let isValid = true
     const { intl } = this.props
 
