@@ -46,6 +46,7 @@ class GeneralSection extends Component {
                 label={intl.formatMessage({
                   id: 'promotions.promotion.generalInfo.name',
                 })}
+                errorMessage={generalInfo.name.error}
                 value={generalInfo.name.value}
                 onChange={e => {
                   updatePageState({
@@ -106,6 +107,7 @@ class GeneralSection extends Component {
                       },
                     })
                   }}
+                  errorMessage={generalInfo.endDate.error}
                   value={generalInfo.endDate.value}
                   label={intl.formatMessage({
                     id: 'promotions.promotion.generalInfo.endDate',
