@@ -28,7 +28,16 @@ function withSkus(WrappedComponent) {
             if (data && data.getProducts) {
               data.getProducts.products.forEach(product => {
                 product.skus.forEach(sku => {
-                  skus.push(sku)
+                  skus.push({
+                    product: {
+                      id: product.id,
+                      name: product.name,
+                    },
+                    sku: {
+                      id: sku.id,
+                      name: sku.name,
+                    },
+                  })
                 })
               })
             }

@@ -8,9 +8,11 @@ import withSkus from '../../../connectors/withSkus'
 
 class GiftForm extends Component {
   mapSkus = skus =>
-    skus.map(sku => ({
-      label: `${sku.id} - ${sku.name}`,
-      value: sku.id,
+    skus.map(element => ({
+      label: `${element.sku.id} - ${element.product.name} - ${
+        element.sku.name
+      }`,
+      value: element.sku.id,
     }))
 
   render() {
