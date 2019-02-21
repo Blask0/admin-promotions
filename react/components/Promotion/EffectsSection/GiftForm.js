@@ -37,10 +37,15 @@ class GiftForm extends Component {
               })}
               options={skuOptions}
               defaultValue={skuOptions[0]}
+              value={giftEffect.skus.value}
               loading={loading}
               multi
               onChange={selected => {
-                onChange({ skus: selected })
+                onChange({
+                  skus: {
+                    value: selected,
+                  },
+                })
               }}
               onSearchInputChange={searchedValue => {
                 updateQueryParams &&

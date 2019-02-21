@@ -58,7 +58,11 @@ class PromotionPage extends Component {
             },
           },
           gift: {
-            skus: [],
+            skus: {
+              value: [],
+              error: undefined,
+              focus: false,
+            },
             multiplier: false,
             limitQuantityPerPurchase: false,
             maximumQuantitySelectable: {
@@ -105,25 +109,6 @@ class PromotionPage extends Component {
     }
   }
 
-  validateRestrictionSection = restriction => {
-    if (restriction.isLimitingPerStore && !restriction.perStore.value) {
-      restriction.perStore.error = 'validation.emptyField'
-    }
-
-    if (restriction.isLimitingPerClient && !restriction.perClient.value) {
-      restriction.perClient.error = 'validation.emptyField'
-    }
-
-    if (
-      restriction.isLimitingPerNumOfAffectedItems &&
-      !restriction.maxNumOfAffectedItems.value
-    ) {
-      restriction.perClient.error = 'validation.emptyField'
-    }
-
-    return restriction
-  }
-
   validateGeneralInfoSection = () => {
     let isValid = true
     const { intl } = this.props
@@ -153,6 +138,82 @@ class PromotionPage extends Component {
     }
 
     return { generalInfo, isValid }
+  }
+
+  validateEffectsSection = () => {
+    const {
+      promotion: { effects },
+    } = this.state
+
+    if (effects.activeEffectType === 'Price') {
+      return this.validatePriceEffect()
+    } else if (effects.activeEffectType === 'Gift') {
+      return this.validateGiftEffect()
+    } else if (effects.activeEffectType === 'Shipping') {
+      return this.validateShippingEffect()
+    } else if (effects.activeEffectType === 'Reward') {
+      return this.validateRewardEffect()
+    }
+  }
+
+  validatePriceEffect = () => {
+    const isValid = true
+    const { intl } = this.props
+  }
+
+  validateGiftEffect = () => {
+    const isValid = true
+    const { intl } = this.props
+    const {
+      promotion: {
+        effects: { gift },
+      },
+    } = this.state
+
+    if (gift.skus.value.length === 0) {
+      gift.skus.error = intl.formatMessage({
+        id: 'validation.emptyField',
+      })
+      isValid = false
+    }
+
+    if (gift.limitQuantityPerPurchase && !gift.maxNumOfAffectedItems.value) {
+      gift.maxNumOfAffectedItems.error = intl.formatMessage({
+        id: 'validation.emptyField',
+      })
+      isValid = false
+    }
+
+    return { effects, isValid }
+  }
+
+  validateShippingEffect = () => {
+    const isValid = true
+    const { intl } = this.props
+  }
+
+  validateRewardEffect = () => {
+    const isValid = true
+    const { intl } = this.props
+  }
+
+  validateRestrictionSection = restriction => {
+    if (restriction.isLimitingPerStore && !restriction.perStore.value) {
+      restriction.perStore.error = 'validation.emptyField'
+    }
+
+    if (restriction.isLimitingPerClient && !restriction.perClient.value) {
+      restriction.perClient.error = 'validation.emptyField'
+    }
+
+    if (
+      restriction.isLimitingPerNumOfAffectedItems &&
+      !restriction.maxNumOfAffectedItems.value
+    ) {
+      restriction.perClient.error = 'validation.emptyField'
+    }
+
+    return restriction
   }
 
   componentDidMount = () => {
