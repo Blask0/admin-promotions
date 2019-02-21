@@ -76,7 +76,6 @@ class RestrictionSection extends Component {
             value="limitPerStoreActivation"
           />
         </div>
-
         {isLimitingPerStore && (
           <div className="pv3 pl5 w-30">
             <Input
@@ -198,7 +197,6 @@ class RestrictionSection extends Component {
             value="restrictTradePolicies"
           />
         </div>
-
         {isRestrictingSalesChannels && (
           <div className="pv3 flex flex-row">
             <div className="w-30 pl5">
@@ -237,7 +235,6 @@ class RestrictionSection extends Component {
           <h4 className="t-heading-5 mt0">
             <FormattedMessage id="promotions.promotion.restriction.origin" />
           </h4>
-
           <RadioGroup
             name="origin"
             options={[
