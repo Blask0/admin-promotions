@@ -127,6 +127,11 @@ class PromotionPage extends Component {
 
   validate = () => {
     const {
+      generalInfo,
+      isValid: isGeneralInfoValid,
+    } = this.validateGeneralInfoSection()
+
+    const {
       restriction,
       isValid: isRestrictionValid,
     } = this.validateRestrictionSection()
@@ -134,11 +139,43 @@ class PromotionPage extends Component {
     this.setState(prevState => ({
       promotion: {
         ...prevState.promotion,
+        generalInfo,
         restriction,
       },
     }))
 
-    return isRestrictionValid
+    return isGeneralInfoValid && isRestrictionValid
+  }
+
+  validateGeneralInfoSection = () => {
+    let isValid = true
+    const { intl } = this.props
+    const {
+      promotion: { generalInfo },
+    } = this.state
+
+    if (
+      !generalInfo.name.value ||
+      (generalInfo.name.value && generalInfo.name.value.trim() == '')
+    ) {
+      generalInfo.name.error = intl.formatMessage({
+        id: 'validation.emptyField',
+      })
+      isValid = false
+    }
+
+    if (
+      generalInfo.hasEndDate &&
+      new Date(generalInfo.endDate.value).getTime() <
+        new Date(generalInfo.startDate).getTime()
+    ) {
+      generalInfo.endDate.error = intl.formatMessage({
+        id: 'validation.endDateSmaller',
+      })
+      isValid = false
+    }
+
+    return { generalInfo, isValid }
   }
 
   validateRestrictionSection = () => {
