@@ -1,0 +1,12 @@
+query GetProductsAndSkus($name: String!) {
+  getProducts(q: $name, itemsPerPage: 999999) {
+    products {
+      id
+      name
+      skus {
+        id
+        name
+      }
+    }
+  }
+}
