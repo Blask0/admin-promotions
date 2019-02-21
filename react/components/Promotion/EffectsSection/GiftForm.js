@@ -36,7 +36,6 @@ class GiftForm extends Component {
                 id: 'promotions.promotion.effects.gifts.skus',
               })}
               options={skuOptions}
-              defaultValue={skuOptions[0]}
               value={giftEffect.skus.value}
               loading={loading}
               multi

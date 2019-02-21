@@ -81,8 +81,12 @@ class PromotionPage extends Component {
           },
           reward: {
             discountType: 'nominal', // oneOf ['nominal', 'percentual']
-            discount: undefined,
-            applyByOrderStatus: '', // oneOf possible order status
+            discount: {
+              value: undefined,
+              error: undefined,
+              focus: undefined,
+            },
+            applyByOrderStatus: undefined, // oneOf possible order status
           },
         },
         restriction: {
