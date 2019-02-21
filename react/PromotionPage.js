@@ -136,7 +136,7 @@ class PromotionPage extends Component {
 
     if (
       generalInfo.hasEndDate &&
-      new Date(generalInfo.endDate).getTime() <
+      new Date(generalInfo.endDate.value).getTime() <
         new Date(generalInfo.startDate).getTime()
     ) {
       generalInfo.endDate.error = intl.formatMessage({
@@ -238,7 +238,6 @@ class PromotionPage extends Component {
       params: { id },
       savePromotion,
     } = this.props
-
     const [{ currencyCode } = {}] = this.getAffectedSalesChannels()
 
     return (
