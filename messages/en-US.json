@@ -36,6 +36,7 @@
   "promotions.promotion.effects.rewardForm.placeholder": "Enter value…",
   "promotions.promotion.effects.giftMultiplier.label": "Gift multiplier",
   "promotions.promotion.effects.limitQuantityOfGifts.label": "Limit quantity of gifts per purchase",
+  "promotions.promotion.effects.quantitySelectable.placeholder": "Enter quantity selectable…",
   "promotions.promotion.elligibility.title": "Elligibility",
   "promotions.promotion.elligibility.selectAll": "All customers",
   "promotions.promotion.elligibility.selectSpecific": "Specific customers",

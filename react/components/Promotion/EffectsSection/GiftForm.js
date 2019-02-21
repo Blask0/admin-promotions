@@ -18,6 +18,7 @@ class GiftForm extends Component {
       intl,
       giftEffect,
       products,
+      loading,
       onChange,
       updateQueryParams,
     } = this.props
@@ -31,9 +32,10 @@ class GiftForm extends Component {
               label={'Products'}
               options={productOptions}
               defaultValue={productOptions[0]}
+              loading={loading}
               multi
               onChange={selected => {
-                onChange({ products: selected })
+                onChange({ skus: selected })
               }}
               onSearchInputChange={searchedValue => {
                 updateQueryParams &&
@@ -73,6 +75,26 @@ class GiftForm extends Component {
               value="selectableLimit"
             />
           </div>
+          {giftEffect.limitQuantityPerPurchase && (
+            <div className="pv3 pl5 w-30">
+              <Input
+                placeholder={intl.formatMessage({
+                  id:
+                    'promotions.promotion.effects.quantitySelectable.placeholder',
+                })}
+                type="number"
+                value={giftEffect.maximumQuantitySelectable.value}
+                errorMessage={giftEffect.maximumQuantitySelectable.error}
+                onChange={e => {
+                  updatePageState({
+                    maximumQuantitySelectable: {
+                      value: e.target.value,
+                    },
+                  })
+                }}
+              />
+            </div>
+          )}
         </div>
       </Fragment>
     )
@@ -82,6 +104,7 @@ class GiftForm extends Component {
 GiftForm.propTypes = {
   intl: intlShape,
   products: PropTypes.object,
+  loading: PropTypes.bool,
   updateQueryParams: PropTypes.func.isRequired,
 }
 
