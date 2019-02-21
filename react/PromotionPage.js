@@ -217,6 +217,20 @@ class PromotionPage extends Component {
   validateRewardEffect = () => {
     const isValid = true
     const { intl } = this.props
+    const {
+      promotion: {
+        effects: { reward },
+      },
+    } = this.state
+
+    if (!reward.discount.value) {
+      reward.discount.error = intl.formatMessage({
+        id: 'validation.emptyField',
+      })
+      isValid = false
+    }
+
+    return { effects, isValid }
   }
 
   validateRestrictionSection = restriction => {
