@@ -15,7 +15,12 @@ class RewardForm extends Component {
 
   changeDiscountType = discountType => this.props.onChange({ discountType })
 
-  changeDiscount = discount => this.props.onChange({ discount })
+  changeDiscount = discount =>
+    this.props.onChange({
+      discount: {
+        value: discount,
+      },
+    })
 
   changeApplyByOrderStatus = applyByOrderStatus =>
     this.props.onChange({ applyByOrderStatus })

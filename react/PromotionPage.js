@@ -50,7 +50,11 @@ class PromotionPage extends Component {
           activeEffectType: null, // oneOf ['price', 'gift', 'shipping', 'reward']
           price: {
             discountType: 'nominal', // oneOf ['nominal', 'percentual', 'priceTables']
-            discount: '',
+            discount: {
+              value: undefined,
+              error: undefined,
+              focus: false,
+            },
             appliesTo: {
               statements: [],
               allProducts: true,
@@ -167,6 +171,21 @@ class PromotionPage extends Component {
   validatePriceEffect = () => {
     const isValid = true
     const { intl } = this.props
+    const {
+      promotion: {
+        effects: { price },
+      },
+    } = this.state
+
+    if (!price.discount.value) {
+      price.discount.error = intl.formatMessage({
+        id: 'validation.emptyField',
+      })
+
+      isValid = false
+    }
+
+    return { effects, isValid }
   }
 
   validateGiftEffect = () => {
