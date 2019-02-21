@@ -19,7 +19,6 @@ function withSkus(WrappedComponent) {
 
     render() {
       const { name } = this.state
-      console.log(name)
 
       return (
         <Query query={getProductsAndSkus} variables={{ name }}>
