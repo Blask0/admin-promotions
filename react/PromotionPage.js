@@ -23,11 +23,19 @@ class PromotionPage extends Component {
       promotion: {
         id: '',
         generalInfo: {
-          name: undefined,
+          name: {
+            value: undefined,
+            error: undefined,
+            focus: false,
+          },
           isActive: false,
           startDate: new Date(),
           hasEndDate: false, // temporary, this should be on promotion json
-          endDate: addDays(new Date(), 1),
+          endDate: {
+            value: addDays(new Date(), 1),
+            error: undefined,
+            focus: false,
+          },
           tz: -new Date().getTimezoneOffset() / 60,
           isArchived: false,
           accumulateWithPromotions: false,
@@ -110,6 +118,37 @@ class PromotionPage extends Component {
     }
 
     return restriction
+  }
+
+  validateGeneralInfoSection = () => {
+    let isValid = true
+    const { intl } = this.props
+    const {
+      promotion: { generalInfo },
+    } = this.state
+    
+    if (
+      !generalInfo.name.value ||
+      (generalInfo.name.value && generalInfo.name.value.trim() == '')
+    ) {
+      generalInfo.name.error = intl.formatMessage({
+        id: 'validation.emptyField',
+      })
+      isValid = false
+    }
+
+    if (
+      generalInfo.hasEndDate &&
+      new Date(generalInfo.endDate.value).getTime() <
+        new Date(generalInfo.startDate).getTime()
+    ) {
+      generalInfo.endDate.error = intl.formatMessage({
+        id: 'validation.emptyField',
+      })
+      isValid = false
+    }
+
+    return { generalInfo, isValid }
   }
 
   componentDidMount = () => {
@@ -202,7 +241,6 @@ class PromotionPage extends Component {
       params: { id },
       savePromotion,
     } = this.props
-
     const [{ currencyCode } = {}] = this.getAffectedSalesChannels()
 
     return (

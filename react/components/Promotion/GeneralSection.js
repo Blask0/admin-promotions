@@ -46,10 +46,13 @@ class GeneralSection extends Component {
                 label={intl.formatMessage({
                   id: 'promotions.promotion.generalInfo.name',
                 })}
-                value={generalInfo.name}
+                errorMessage={generalInfo.name.error}
+                value={generalInfo.name.value}
                 onChange={e => {
                   updatePageState({
-                    name: e.target.value,
+                    name: {
+                      value: e.target.value,
+                    },
                   })
                 }}
               />
@@ -99,10 +102,13 @@ class GeneralSection extends Component {
                   locale={intl.locale}
                   onChange={date => {
                     updatePageState({
-                      endDate: date,
+                      endDate: {
+                        value: date,
+                      },
                     })
                   }}
-                  value={generalInfo.endDate}
+                  errorMessage={generalInfo.endDate.error}
+                  value={generalInfo.endDate.value}
                   label={intl.formatMessage({
                     id: 'promotions.promotion.generalInfo.endDate',
                   })}
