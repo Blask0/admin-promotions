@@ -46,9 +46,14 @@ class PromotionPage extends Component {
             appliesTo: null, // type: statements[], if null: applies to All products
           },
           gift: {
-            products: [],
-            multiplier: null,
-            limitQuantityPerPurchase: null,
+            skus: [],
+            multiplier: false,
+            limitQuantityPerPurchase: false,
+            maximumQuantitySelectable: {
+              value: undefined,
+              error: undefined,
+              focus: false,
+            },
           },
           shipping: {
             discountType: 'nominal', // oneOf ['nominal', 'percentual', 'maximumValue']
