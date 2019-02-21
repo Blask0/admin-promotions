@@ -73,7 +73,11 @@ class PromotionPage extends Component {
           },
           shipping: {
             discountType: 'nominal', // oneOf ['nominal', 'percentual', 'maximumValue']
-            discount: '',
+            discount: {
+              value: undefined,
+              error: undefined,
+              focus: false,
+            },
           },
           reward: {
             discountType: 'nominal', // oneOf ['nominal', 'percentual']
@@ -190,6 +194,20 @@ class PromotionPage extends Component {
   validateShippingEffect = () => {
     const isValid = true
     const { intl } = this.props
+    const {
+      promotion: {
+        effects: { shipping },
+      },
+    } = this.state
+
+    if (!shipping.discount.value) {
+      shipping.discount.error = intl.formatMessage({
+        id: 'validation.emptyField',
+      })
+      isValid = false
+    }
+
+    return { effects, isValid }
   }
 
   validateRewardEffect = () => {
