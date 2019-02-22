@@ -30,6 +30,7 @@ class PromotionPage extends Component {
           },
           isActive: false,
           startDate: new Date(),
+          // should this flag be sent to graphql?
           hasEndDate: false, // temporary, this should be on promotion json
           endDate: {
             value: addDays(new Date(), 1),
@@ -69,7 +70,7 @@ class PromotionPage extends Component {
             },
             multiplier: false,
             limitQuantityPerPurchase: false,
-            maximumQuantitySelectable: {
+            maxQuantityPerPurchase: {
               value: undefined,
               error: undefined,
               focus: false,
@@ -456,8 +457,25 @@ class PromotionPage extends Component {
 
   prepareToSave = promotion => {
     const { generalInfo, eligibility, effects, restriction } = promotion
+    const { limitQuantityPerPurchase, ...giftEffect } = effects.gift
     return {
       ...promotion,
+      generalInfo: {
+        ...generalInfo,
+        name: generalInfo.name.value,
+        endDate: generalInfo.endDate.value,
+      },
+      effects: {
+        ...effects,
+        gift: {
+          ...giftEffect,
+          skus: giftEffect.skus.map(sku => ({
+            id: sku.value.id,
+            name: sku.value.name,
+          })),
+          maxQuantityPerPurchase: giftEffect.maxQuantityPerPurchase.value,
+        },
+      },
       eligibility: {
         ...eligibility,
         statements: JSON.stringify(eligibility.statements),
@@ -531,10 +549,10 @@ class PromotionPage extends Component {
           <Button
             variation="primary"
             onClick={() => {
-              if (this.canSave()) {
-                const preparedPromotion = this.prepareToSave(promotion)
-                console.log(preparedPromotion)
+              const preparedPromotion = this.prepareToSave(promotion)
+              console.log(preparedPromotion)
 
+              if (this.canSave()) {
                 savePromotion({
                   variables: {
                     promotion: preparedPromotion,
