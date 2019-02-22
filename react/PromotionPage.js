@@ -12,7 +12,6 @@ import RestrictionSection from './components/Promotion/RestrictionSection'
 import withSalesChannels from './connectors/withSalesChannels'
 import savingPromotion from './connectors/savingPromotion'
 
-import { addDays } from 'date-fns'
 import { compose } from 'react-apollo'
 
 class PromotionPage extends Component {
@@ -21,7 +20,7 @@ class PromotionPage extends Component {
 
     this.state = {
       promotion: {
-        id: '',
+        id: undefined,
         generalInfo: {
           name: {
             value: undefined,
@@ -30,10 +29,9 @@ class PromotionPage extends Component {
           },
           isActive: false,
           startDate: new Date(),
-          // should this flag be sent to graphql?
-          hasEndDate: false, // temporary, this should be on promotion json
+          hasEndDate: false,
           endDate: {
-            value: addDays(new Date(), 1),
+            value: undefined,
             error: undefined,
             focus: false,
           },
@@ -444,7 +442,10 @@ class PromotionPage extends Component {
     }))
   }
 
-  canSave = () => this.validate()
+  canSave = () => {
+    const a = this.validate()
+    return a
+  }
 
   getAffectedSalesChannels = () => {
     const { restrictedSalesChannelsIds, salesChannels } = this.props
@@ -456,7 +457,12 @@ class PromotionPage extends Component {
   }
 
   prepareToSave = promotion => {
-    const { generalInfo, eligibility, effects, restriction } = promotion
+    const {
+      generalInfo: { hasEndDate, ...generalInfo },
+      eligibility,
+      effects,
+      restriction,
+    } = promotion
     const { limitQuantityPerPurchase, ...giftEffect } = effects.gift
     return {
       ...promotion,

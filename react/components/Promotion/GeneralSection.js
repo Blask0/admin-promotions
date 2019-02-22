@@ -1,7 +1,10 @@
 import React, { Fragment, Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
+
 import { Checkbox, Input, DatePicker, Toggle } from 'vtex.styleguide'
+
+import { addDays } from 'date-fns'
 
 class GeneralSection extends Component {
   constructor(props) {
@@ -91,6 +94,13 @@ class GeneralSection extends Component {
                 onChange={() => {
                   updatePageState({
                     hasEndDate: !generalInfo.hasEndDate,
+                    endDate: !generalInfo.hasEndDate
+                      ? {
+                        value: addDays(new Date(), 1),
+                      }
+                      : {
+                        value: undefined,
+                      },
                   })
                 }}
                 value="hasEndDate"
