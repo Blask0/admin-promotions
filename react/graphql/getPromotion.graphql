@@ -1,5 +1,5 @@
-mutation SavePromotions($promotion: PromotionInput!) {
-  savePromotion(promotion: $promotion) {
+mutation GetPromotion($id: String!) {
+  getPromotion(id: $id) {
     id
     generalInfo {
       name
