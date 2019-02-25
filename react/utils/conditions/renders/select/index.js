@@ -12,7 +12,7 @@ const renderSelectObject = ({
     update,
     creatable,
     placeholder,
-    multi,
+    multi = false,
     queryInfo: { connector, dataGetter },
     validation: { execute: isValid, errorMessage: validationErrorMessage } = {},
   } = extraParams

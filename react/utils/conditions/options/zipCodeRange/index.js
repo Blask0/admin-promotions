@@ -7,7 +7,9 @@ const zipCodeRange = (intl, update) => {
     }),
     verbs: [
       {
-        label: 'is between',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.zipCodeRange.verb.between',
+        }),
         value: 'between',
         object: {
           renderFn: renderRangeInputObject,
@@ -17,8 +19,10 @@ const zipCodeRange = (intl, update) => {
         },
       },
       {
-        label: 'is not between',
-        value: 'not between',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.zipCodeRange.verb.not.between',
+        }),
+        value: 'not.between',
         object: {
           renderFn: renderRangeInputObject,
           extraParams: {

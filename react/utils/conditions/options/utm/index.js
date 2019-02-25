@@ -7,7 +7,9 @@ const utm = (intl, update, type) => {
     }),
     verbs: [
       {
-        label: 'is',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.utm.verb.==',
+        }),
         value: '==',
         object: {
           renderFn: renderInputObject,
@@ -17,7 +19,9 @@ const utm = (intl, update, type) => {
         },
       },
       {
-        label: 'is any of',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.utm.verb.any',
+        }),
         value: 'any',
         object: {
           renderFn: renderSelectObject,

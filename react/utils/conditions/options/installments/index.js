@@ -7,7 +7,9 @@ const installments = (intl, update) => {
     }),
     verbs: [
       {
-        label: 'is greater than',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.installments.verb.gt',
+        }),
         value: '>',
         object: {
           renderFn: renderInputObject,
@@ -21,7 +23,9 @@ const installments = (intl, update) => {
         },
       },
       {
-        label: 'is less than',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.installments.verb.lt',
+        }),
         value: '<',
         object: {
           renderFn: renderInputObject,
@@ -35,7 +39,9 @@ const installments = (intl, update) => {
         },
       },
       {
-        label: 'is between',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.installments.verb.between',
+        }),
         value: 'between',
         object: {
           renderFn: renderRangeInputObject,

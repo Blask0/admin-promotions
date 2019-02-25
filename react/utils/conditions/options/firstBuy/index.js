@@ -13,7 +13,9 @@ const firstBuy = (intl, update) => {
     }),
     verbs: [
       {
-        label: 'is',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.firstBuy.verb.==',
+        }),
         value: '==',
         object: {
           renderFn: renderSelectObject,

@@ -32,7 +32,7 @@ class EligibilitySection extends Component {
       currencyCode,
     } = this.props
 
-    const options = {
+    const conditionsOptions = {
       installments: installments(intl, updatePageState),
       affiliates: affiliates(intl, updatePageState),
       firstBuy: firstBuy(intl, updatePageState),
@@ -46,6 +46,33 @@ class EligibilitySection extends Component {
       clusterExpressions: clusterExpressions(intl, updatePageState),
       creditCardBin: creditCardBin(intl, updatePageState),
       marketingTags: marketingTags(intl, updatePageState),
+    }
+
+    const conditionsLabels = {
+      addNewCondition: intl.formatMessage({
+        id: 'promotions.promotion.elligibility.conditions.addNewCondition',
+      }),
+      noConditions: intl.formatMessage({
+        id: 'promotions.promotion.elligibility.conditions.noConditions',
+      }),
+      operatorAll: intl.formatMessage({
+        id: 'promotions.promotion.elligibility.conditions.operatorAll',
+      }),
+      operatorAny: intl.formatMessage({
+        id: 'promotions.promotion.elligibility.conditions.operatorAny',
+      }),
+      operatorAnd: intl.formatMessage({
+        id: 'promotions.promotion.elligibility.conditions.operatorAnd',
+      }),
+      operatorOr: intl.formatMessage({
+        id: 'promotions.promotion.elligibility.conditions.operatorOr',
+      }),
+      headerPrefix: intl.formatMessage({
+        id: 'promotions.promotion.elligibility.conditions.headerPrefix',
+      }),
+      headerSufix: intl.formatMessage({
+        id: 'promotions.promotion.elligibility.conditions.headerSufix',
+      }),
     }
 
     return (
@@ -80,11 +107,12 @@ class EligibilitySection extends Component {
         {!allCustomers ? (
           <div className="mt6">
             <EXPERIMENTAL_Conditions
-              options={options}
+              options={conditionsOptions}
               subjectPlaceholder={intl.formatMessage({
                 id:
-                  'promotions.promotion.elligibility.conditionSubjectPlaceholder',
+                  'promotions.promotion.elligibility.conditions.subjectPlaceholder',
               })}
+              labels={conditionsLabels}
               statements={statements}
               operator={operator}
               onChangeOperator={({ operator }) => {

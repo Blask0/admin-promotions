@@ -7,7 +7,9 @@ const clusterExpressions = (intl, update) => {
     }),
     verbs: [
       {
-        label: 'is',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.clusterExpressions.verb.==',
+        }),
         value: '==',
         object: {
           renderFn: renderInputObject,
@@ -22,7 +24,9 @@ const clusterExpressions = (intl, update) => {
         },
       },
       {
-        label: 'is any of',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.clusterExpressions.verb.any',
+        }),
         value: 'any',
         object: {
           renderFn: renderSelectObject,

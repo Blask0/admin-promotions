@@ -10,7 +10,9 @@ const totalPriceRange = (intl, update, currencyCode) => {
     }),
     verbs: [
       {
-        label: 'is greather than',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.totalPriceRange.verb.gt',
+        }),
         value: '>',
         object: {
           renderFn: renderInputCurrencyObject,
@@ -22,7 +24,9 @@ const totalPriceRange = (intl, update, currencyCode) => {
         },
       },
       {
-        label: 'is smaller than',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.totalPriceRange.verb.lt',
+        }),
         value: '<',
         object: {
           renderFn: renderInputCurrencyObject,
@@ -34,7 +38,9 @@ const totalPriceRange = (intl, update, currencyCode) => {
         },
       },
       {
-        label: 'is between',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.totalPriceRange.verb.between',
+        }),
         value: 'between',
         object: {
           renderFn: renderRangeInputCurrencyObject,

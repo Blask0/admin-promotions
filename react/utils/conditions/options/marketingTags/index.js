@@ -7,7 +7,9 @@ const marketingTags = (intl, update) => {
     }),
     verbs: [
       {
-        label: 'is any of',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.marketingTags.verb.any',
+        }),
         value: 'any',
         object: {
           renderFn: renderSelectObject,
@@ -37,7 +39,9 @@ const marketingTags = (intl, update) => {
         },
       },
       {
-        label: 'is not any of',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.marketingTags.verb.not.any',
+        }),
         value: 'not.any',
         object: {
           renderFn: renderSelectObject,

@@ -15,7 +15,9 @@ const paymentMethods = (intl, update) => {
     }),
     verbs: [
       {
-        label: 'is',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.paymentMethods.verb.==',
+        }),
         value: '==',
         object: {
           renderFn: renderSelectObject,
@@ -34,7 +36,9 @@ const paymentMethods = (intl, update) => {
         },
       },
       {
-        label: 'is not',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.paymentMethods.verb.!=',
+        }),
         value: '!=',
         object: {
           renderFn: renderSelectObject,
@@ -53,7 +57,9 @@ const paymentMethods = (intl, update) => {
         },
       },
       {
-        label: 'is any of',
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.paymentMethods.verb.any',
+        }),
         value: 'any',
         object: {
           renderFn: renderSelectObject,
