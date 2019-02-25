@@ -491,6 +491,12 @@ class PromotionPage extends Component {
         perStore: restriction.perStore.value,
         perClient: restriction.perClient.value,
         maxNumberOfAffectedItems: restriction.maxNumberOfAffectedItems.value,
+        restrictSalesChannelVerb: restriction.restrictSalesChannelVerb
+          ? restriction.restrictSalesChannelVerb.value
+          : undefined,
+        restrictedSalesChannels: restriction.restrictedSalesChannels.value.map(
+          sc => sc.value
+        ),
       },
     }
   }
