@@ -51,7 +51,10 @@ class PromotionPage extends Component {
           price: {
             discountType: 'nominal', // oneOf ['nominal', 'percentual', 'priceTables']
             discount: '',
-            appliesTo: null, // type: statements[], if null: applies to All products
+            appliesTo: {
+              statements: [],
+              allProducts: true,
+            },
           },
           gift: {
             skus: [],
@@ -126,7 +129,7 @@ class PromotionPage extends Component {
     const {
       promotion: { generalInfo },
     } = this.state
-    
+
     if (
       !generalInfo.name.value ||
       (generalInfo.name.value && generalInfo.name.value.trim() == '')
@@ -170,15 +173,18 @@ class PromotionPage extends Component {
   }
 
   handleEffectsSectionChange = effects => {
-    this.setState(prevState => ({
-      promotion: {
-        ...prevState.promotion,
-        effects: {
-          ...prevState.promotion.effects,
-          ...effects,
+    this.setState(
+      prevState => ({
+        promotion: {
+          ...prevState.promotion,
+          effects: {
+            ...prevState.promotion.effects,
+            ...effects,
+          },
         },
-      },
-    }))
+      }),
+      () => console.log(this.state)
+    )
   }
 
   handleEligibilitySectionChange = eligibility => {
