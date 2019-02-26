@@ -154,9 +154,13 @@
   "promotions.promotion.scopeSelector.category.label": "Categoría",
   "promotions.promotion.scopeSelector.category.verb.any": "es uno de",
   "promotions.promotion.scopeSelector.category.verb.not.any": "no es uno de",
-  "promotions.promotion.scopeSelector.brand.placeholder": "Seleccione las categorías deseadas…",
+  "promotions.promotion.scopeSelector.category.placeholder": "Seleccione las categorías deseadas…",
   "promotions.promotion.scopeSelector.collection.label": "Coleccíon",
   "promotions.promotion.scopeSelector.collection.verb.any": "es una de",
   "promotions.promotion.scopeSelector.collection.verb.not.any": "no es una de",
-  "promotions.promotion.scopeSelector.collection.placeholder": "Seleccione las colecciones deseadas…"
+  "promotions.promotion.scopeSelector.collection.placeholder": "Seleccione las colecciones deseadas…",
+  "promotions.promotion.scopeSelector.product.label": "Producto",
+  "promotions.promotion.scopeSelector.product.verb.any": "es uno de",
+  "promotions.promotion.scopeSelector.product.verb.not.any": "no es uno de",
+  "promotions.promotion.scopeSelector.product.placeholder": "Seleccione los productos deseados…"
 }
