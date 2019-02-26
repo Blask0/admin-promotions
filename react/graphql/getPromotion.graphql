@@ -1,4 +1,4 @@
-mutation GetPromotion($id: String!) {
+query GetPromotion($id: String!) {
   getPromotion(id: $id) {
     id
     generalInfo {

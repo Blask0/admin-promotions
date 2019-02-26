@@ -10,7 +10,10 @@ import GeneralSection from './components/Promotion/GeneralSection'
 import RestrictionSection from './components/Promotion/RestrictionSection'
 
 import withSalesChannels from './connectors/withSalesChannels'
+import withPromotion from './connectors/withPromotion'
 import savingPromotion from './connectors/savingPromotion'
+
+import { newPromotion } from './utils/promotion'
 
 import { compose } from 'react-apollo'
 
@@ -18,109 +21,25 @@ class PromotionPage extends Component {
   constructor(props) {
     super(props)
 
+    const { id } = props.params
+    if (id) {
+      props.updatePromotionQueryParams({ id })
+    }
+
     this.state = {
-      promotion: {
-        id: undefined,
-        generalInfo: {
-          name: {
-            value: undefined,
-            error: undefined,
-            focus: false,
-          },
-          isActive: false,
-          startDate: new Date(),
-          hasEndDate: false,
-          endDate: {
-            value: undefined,
-            error: undefined,
-            focus: false,
-          },
-          tz: -new Date().getTimezoneOffset() / 60,
-          isArchived: false,
-          accumulateWithPromotions: false,
-          accumulateWithManualPrices: false,
-        },
-        eligibility: {
-          allCustomers: true,
-          statements: [],
-          operator: 'all',
-        },
-        effects: {
-          activeEffectType: null, // oneOf ['price', 'gift', 'shipping', 'reward']
-          price: {
-            discountType: 'nominal', // oneOf ['nominal', 'percentual', 'priceTables']
-            discount: {
-              value: undefined,
-              error: undefined,
-              focus: false,
-            },
-            appliesTo: {
-              statements: [],
-              allProducts: true,
-              operator: 'all',
-            },
-          },
-          gift: {
-            skus: {
-              value: [],
-              error: undefined,
-              focus: false,
-            },
-            multiplier: false,
-            limitQuantityPerPurchase: false,
-            maxQuantityPerPurchase: {
-              value: undefined,
-              error: undefined,
-              focus: false,
-            },
-          },
-          shipping: {
-            discountType: 'nominal', // oneOf ['nominal', 'percentual', 'maximumValue']
-            discount: {
-              value: undefined,
-              error: undefined,
-              focus: false,
-            },
-          },
-          reward: {
-            discountType: 'nominal', // oneOf ['nominal', 'percentual']
-            discount: {
-              value: undefined,
-              error: undefined,
-              focus: undefined,
-            },
-            applyByOrderStatus: undefined, // oneOf possible order status
-          },
-        },
-        restriction: {
-          isLimitingPerStore: false,
-          perStore: {
-            value: undefined,
-            error: undefined,
-            focus: false,
-          },
-          isLimitingPerClient: false,
-          perClient: {
-            value: undefined,
-            error: undefined,
-            focus: false,
-          },
-          isLimitingPerNumOfAffectedItems: false,
-          maxNumberOfAffectedItems: {
-            value: undefined,
-            error: undefined,
-            focus: false,
-          },
-          isRestrictingSalesChannels: false,
-          restrictSalesChannelVerb: undefined,
-          restrictedSalesChannels: {
-            value: [], // idsSalesChannel
-            error: undefined,
-            focus: false,
-          },
-          origin: undefined,
-        },
-      },
+      promotion: newPromotion(props.promotion),
+    }
+  }
+
+  componentDidMount = () => {
+    window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
+  }
+
+  componentDidUpdate = prevProps => {
+    if (this.props.promotion && this.props.promotion !== prevProps.promotion) {
+      this.setState({
+        promotion: newPromotion(this.props.promotion),
+      })
     }
   }
 
@@ -593,6 +512,7 @@ PromotionPage.propTypes = {
 }
 
 export default compose(
+  withPromotion,
   savingPromotion,
   withSalesChannels,
   injectIntl
