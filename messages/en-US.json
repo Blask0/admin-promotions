@@ -145,5 +145,13 @@
   "promotions.promotion.restriction.origin.marketplace.explanation": "Orders made directly to your store",
   "promotions.promotion.restriction.origin.fulfillment.explanation": "Orders where your store is acting as a seller",
   "validation.emptyField": "Empty field",
-  "validation.endDateSmaller": "End date can't be before start date"
+  "validation.endDateSmaller": "End date can't be before start date",
+  "promotions.promotion.scopeSelector.brand.label": "Brand",
+  "promotions.promotion.scopeSelector.brand.verb.any": "is one of",
+  "promotions.promotion.scopeSelector.brand.verb.not.any": "is not one of",
+  "promotions.promotion.scopeSelector.brand.placeholder": "Select the desired brands…",
+  "promotions.promotion.scopeSelector.category.label": "Category",
+  "promotions.promotion.scopeSelector.category.verb.any": "is one of",
+  "promotions.promotion.scopeSelector.category.verb.not.any": "is not one of",
+  "promotions.promotion.scopeSelector.brand.placeholder": "Select the desired categories…"
 }

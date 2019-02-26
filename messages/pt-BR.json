@@ -145,5 +145,13 @@
   "promotions.promotion.restriction.origin.marketplace.explanation": "Pedidos feitos diretamente à sua loja",
   "promotions.promotion.restriction.origin.fulfillment.explanation": "Pedidos onde sua loja atua como vendedor",
   "validation.emptyField": "Campo vazio",
-  "validation.endDateSmaller": "A data de fim não pode ser antes da data de início"
+  "validation.endDateSmaller": "A data de fim não pode ser antes da data de início",
+  "promotions.promotion.scopeSelector.brand.label": "Marca",
+  "promotions.promotion.scopeSelector.brand.verb.any": "é uma das",
+  "promotions.promotion.scopeSelector.brand.verb.not.any": "não é uma das",
+  "promotions.promotion.scopeSelector.brand.placeholder": "Selecione as marcas desejadas…",
+  "promotions.promotion.scopeSelector.category.label": "Categoria",
+  "promotions.promotion.scopeSelector.category.verb.any": "é uma das",
+  "promotions.promotion.scopeSelector.category.verb.not.any": "não é uma das",
+  "promotions.promotion.scopeSelector.brand.placeholder": "Seleccione las categorías deseadas…"
 }

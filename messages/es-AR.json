@@ -146,5 +146,13 @@
   "promotions.promotion.restriction.origin.marketplace.explanation": "Pedidos hechos directamente a su tienda",
   "promotions.promotion.restriction.origin.fulfillment.explanation": "Pedidos donde tu tienda actúa como vendedor",
   "validation.emptyField": "Campo vacío",
-  "validation.endDateSmaller": "La fecha de finalización no puede ser anterior a la fecha de inicio"
+  "validation.endDateSmaller": "La fecha de finalización no puede ser anterior a la fecha de inicio",
+  "promotions.promotion.scopeSelector.brand.label": "Marca",
+  "promotions.promotion.scopeSelector.brand.verb.any": "es uno de",
+  "promotions.promotion.scopeSelector.brand.verb.not.any": "no es uno de",
+  "promotions.promotion.scopeSelector.brand.placeholder": "Seleccione las marcas deseadas…",
+  "promotions.promotion.scopeSelector.category.label": "Categoría",
+  "promotions.promotion.scopeSelector.category.verb.any": "es uno de",
+  "promotions.promotion.scopeSelector.category.verb.not.any": "no es uno de",
+  "promotions.promotion.scopeSelector.brand.placeholder": "Seleccione las categorías deseadas…"
 }
