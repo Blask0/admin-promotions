@@ -21,33 +21,26 @@ class PriceForm extends Component {
 
   changeDiscount = discount => this.props.onChange({ discount })
 
-  changeAppliesToStatements = statements => {
+  changeAppliesTo = appliesTo => {
     const { priceEffect } = this.props
     this.props.onChange({
       appliesTo: {
         ...priceEffect.appliesTo,
-        ...statements,
+        ...appliesTo,
       },
     })
   }
-
-  changeAllProductsFlag = allProducts =>
-    this.props.onChange({
-      appliesTo: {
-        allProducts,
-      },
-    })
 
   render() {
     const { priceEffect, intl } = this.props
 
     const scopeOptions = {
-      brand: brand(intl, this.changeAppliesToStatements),
-      category: category(intl, this.changeAppliesToStatements),
-      collection: collection(intl, this.changeAppliesToStatements),
-      product: product(intl, this.changeAppliesToStatements),
-      seller: seller(intl, this.changeAppliesToStatements),
-      sku: sku(intl, this.changeAppliesToStatements),
+      brand: brand(intl, this.changeAppliesTo),
+      category: category(intl, this.changeAppliesTo),
+      collection: collection(intl, this.changeAppliesTo),
+      product: product(intl, this.changeAppliesTo),
+      seller: seller(intl, this.changeAppliesTo),
+      sku: sku(intl, this.changeAppliesTo),
     }
 
     const conditionsLabels = {
@@ -143,7 +136,7 @@ class PriceForm extends Component {
             label={intl.formatMessage({
               id: 'promotions.promotion.effects.priceForm.appliesTo.all',
             })}
-            onChange={() => this.changeAllProductsFlag(true)}
+            onChange={() => this.changeAppliesTo({ allProducts: true })}
           />
           <Radio
             id="promotions.promotion.effects.priceForm.appliesTo.specific"
@@ -152,7 +145,7 @@ class PriceForm extends Component {
             label={intl.formatMessage({
               id: 'promotions.promotion.effects.priceForm.appliesTo.specific',
             })}
-            onChange={() => this.changeAllProductsFlag(false)}
+            onChange={() => this.changeAppliesTo({ allProducts: false })}
           />
           {!priceEffect.appliesTo.allProducts ? (
             <div className="mv4 mh7">
@@ -164,12 +157,12 @@ class PriceForm extends Component {
                 })}
                 labels={conditionsLabels}
                 statements={priceEffect.appliesTo.statements}
-                operator={'all'} // WIP
+                operator={priceEffect.appliesTo.operator} // WIP
                 onChangeOperator={({ operator }) => {
-                  console.log('OPERATOR CHANGE: ', operator)
+                  this.changeAppliesTo({ operator })
                 }}
                 onChangeStatements={statements => {
-                  this.changeAppliesToStatements({ statements })
+                  this.changeAppliesTo({ statements })
                 }}
               />
             </div>

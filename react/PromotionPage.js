@@ -54,6 +54,7 @@ class PromotionPage extends Component {
             appliesTo: {
               statements: [],
               allProducts: true,
+              operator: 'all',
             },
           },
           gift: {
