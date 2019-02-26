@@ -23,12 +23,15 @@ class PriceForm extends Component {
 
   changeAppliesTo = appliesTo => this.props.onChange({ appliesTo })
 
-  changeAppliesToStatements = appliesToStatements =>
+  changeAppliesToStatements = statements => {
+    const { priceEffect } = this.props
     this.props.onChange({
       appliesTo: {
-        statements: appliesToStatements,
+        ...priceEffect.appliesTo,
+        ...statements,
       },
     })
+  }
 
   changeAllProductsFlag = allProducts =>
     this.props.onChange({
@@ -168,7 +171,7 @@ class PriceForm extends Component {
                   console.log('OPERATOR CHANGE: ', operator)
                 }}
                 onChangeStatements={statements => {
-                  this.changeAppliesToStatements(statements)
+                  this.changeAppliesToStatements({ statements })
                 }}
               />
             </div>

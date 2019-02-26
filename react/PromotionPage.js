@@ -173,18 +173,15 @@ class PromotionPage extends Component {
   }
 
   handleEffectsSectionChange = effects => {
-    this.setState(
-      prevState => ({
-        promotion: {
-          ...prevState.promotion,
-          effects: {
-            ...prevState.promotion.effects,
-            ...effects,
-          },
+    this.setState(prevState => ({
+      promotion: {
+        ...prevState.promotion,
+        effects: {
+          ...prevState.promotion.effects,
+          ...effects,
         },
-      }),
-      () => console.log(this.state)
-    )
+      },
+    }))
   }
 
   handleEligibilitySectionChange = eligibility => {
