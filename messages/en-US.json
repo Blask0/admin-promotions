@@ -161,5 +161,9 @@
   "promotions.promotion.scopeSelector.product.label": "Product",
   "promotions.promotion.scopeSelector.product.verb.any": "is one of",
   "promotions.promotion.scopeSelector.product.verb.not.any": "is not one of",
-  "promotions.promotion.scopeSelector.product.placeholder": "Select the desired products…"
+  "promotions.promotion.scopeSelector.product.placeholder": "Select the desired products…",
+  "promotions.promotion.scopeSelector.seller.label": "Seller",
+  "promotions.promotion.scopeSelector.seller.verb.any": "is one of",
+  "promotions.promotion.scopeSelector.seller.verb.not.any": "is not one of",
+  "promotions.promotion.scopeSelector.seller.placeholder": "Select the desired sellers…"
 }
