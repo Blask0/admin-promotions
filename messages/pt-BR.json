@@ -165,5 +165,9 @@
   "promotions.promotion.scopeSelector.seller.label": "Vendedor",
   "promotions.promotion.scopeSelector.seller.verb.any": "é um dos",
   "promotions.promotion.scopeSelector.seller.verb.not.any": "não é um dos",
-  "promotions.promotion.scopeSelector.seller.placeholder": "Selecione os vendedores desejados…"
+  "promotions.promotion.scopeSelector.seller.placeholder": "Selecione os vendedores desejados…",
+  "promotions.promotion.scopeSelector.sku.label": "SKU do produto",
+  "promotions.promotion.scopeSelector.sku.verb.any": "é um dos",
+  "promotions.promotion.scopeSelector.sku.verb.not.any": "não é um dos",
+  "promotions.promotion.scopeSelector.sku.placeholder": "Selecione os SKUs desejados…"
 }
