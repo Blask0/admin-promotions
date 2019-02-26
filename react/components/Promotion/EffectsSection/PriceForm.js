@@ -21,8 +21,6 @@ class PriceForm extends Component {
 
   changeDiscount = discount => this.props.onChange({ discount })
 
-  changeAppliesTo = appliesTo => this.props.onChange({ appliesTo })
-
   changeAppliesToStatements = statements => {
     const { priceEffect } = this.props
     this.props.onChange({
