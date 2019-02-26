@@ -109,6 +109,7 @@
   "promotions.promotion.elligibility.cartProduct.verb.seller.any": "é de um desses sellers",
   "promotions.promotion.elligibility.cartProduct.verb.seller.not.any": "não é de um desses sellers",
   "promotions.promotion.elligibility.cartProduct.itemPriceRange.placeholder": "Valor desejado do produto",
+  "promotions.promotion.elligibility.cartProduct.fromToPrices.placeholder": "Selecione…",
   "promotions.promotion.elligibility.cartProduct.fromToPrices.equals": "Iguais",
   "promotions.promotion.elligibility.cartProduct.fromToPrices.notEquals": "Diferentes",
   "promotions.promotion.elligibility.cartProduct.hasBrand.placeholder": "Selecione as marcas desejadas…",

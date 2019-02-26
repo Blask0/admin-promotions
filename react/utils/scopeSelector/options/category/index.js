@@ -1,5 +1,4 @@
-import { renderSelectObject } from '../../renders'
-
+import { renderSelectObject } from '../../../conditions/renders'
 import withCategories from '../../../../connectors/withCategories'
 
 const mapCategories = categories =>

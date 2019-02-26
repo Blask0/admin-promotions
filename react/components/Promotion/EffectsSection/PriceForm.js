@@ -4,6 +4,15 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
 import { Radio, Input, EXPERIMENTAL_Conditions } from 'vtex.styleguide'
 
+import {
+  brand,
+  category,
+  collection,
+  product,
+  seller,
+  sku,
+} from '../../../utils/scopeSelector/options'
+
 class PriceForm extends Component {
   isDiscountTypeSelected = discountType =>
     this.props.priceEffect.discountType === discountType
@@ -16,8 +25,15 @@ class PriceForm extends Component {
 
   render() {
     console.log('rendering effect section!')
-    const { priceEffect, intl } = this.props
-
+    const { priceEffect, intl, onChange } = this.props
+    const scopeOptions = {
+      brand: brand(intl, onChange),
+      category: category(intl, onChange),
+      collection: collection(intl, onChange),
+      product: product(intl, onChange),
+      seller: seller(intl, onChange),
+      sku: sku(intl, onChange),
+    }
     return (
       <Fragment>
         <h4 className="t-heading-4 mt7">
@@ -98,7 +114,7 @@ class PriceForm extends Component {
           {priceEffect.appliesTo ? (
             <div className="mv4 mh7">
               <EXPERIMENTAL_Conditions
-                options={[]} // WIP
+                options={scopeOptions}
                 subjectPlaceholder={intl.formatMessage({
                   id:
                     'promotions.promotion.effects.priceForm.appliesTo.specific.placeholder',
