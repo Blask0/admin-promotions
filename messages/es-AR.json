@@ -148,11 +148,15 @@
   "validation.emptyField": "Campo vacío",
   "validation.endDateSmaller": "La fecha de finalización no puede ser anterior a la fecha de inicio",
   "promotions.promotion.scopeSelector.brand.label": "Marca",
-  "promotions.promotion.scopeSelector.brand.verb.any": "es uno de",
-  "promotions.promotion.scopeSelector.brand.verb.not.any": "no es uno de",
+  "promotions.promotion.scopeSelector.brand.verb.any": "es una de",
+  "promotions.promotion.scopeSelector.brand.verb.not.any": "no es una de",
   "promotions.promotion.scopeSelector.brand.placeholder": "Seleccione las marcas deseadas…",
   "promotions.promotion.scopeSelector.category.label": "Categoría",
   "promotions.promotion.scopeSelector.category.verb.any": "es uno de",
   "promotions.promotion.scopeSelector.category.verb.not.any": "no es uno de",
-  "promotions.promotion.scopeSelector.brand.placeholder": "Seleccione las categorías deseadas…"
+  "promotions.promotion.scopeSelector.brand.placeholder": "Seleccione las categorías deseadas…",
+  "promotions.promotion.scopeSelector.collection.label": "Coleccíon",
+  "promotions.promotion.scopeSelector.collection.verb.any": "es una de",
+  "promotions.promotion.scopeSelector.collection.verb.not.any": "no es una de",
+  "promotions.promotion.scopeSelector.collection.placeholder": "Seleccione las colecciones deseadas…"
 }

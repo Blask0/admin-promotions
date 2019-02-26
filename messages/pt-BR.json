@@ -153,5 +153,9 @@
   "promotions.promotion.scopeSelector.category.label": "Categoria",
   "promotions.promotion.scopeSelector.category.verb.any": "é uma das",
   "promotions.promotion.scopeSelector.category.verb.not.any": "não é uma das",
-  "promotions.promotion.scopeSelector.brand.placeholder": "Seleccione las categorías deseadas…"
+  "promotions.promotion.scopeSelector.brand.placeholder": "Seleccione las categorías desejadas…",
+  "promotions.promotion.scopeSelector.collection.label": "Coleção",
+  "promotions.promotion.scopeSelector.collection.verb.any": "é uma das",
+  "promotions.promotion.scopeSelector.collection.verb.not.any": "não é uma das",
+  "promotions.promotion.scopeSelector.collection.placeholder": "Selecione as coleções desejadas…"
 }

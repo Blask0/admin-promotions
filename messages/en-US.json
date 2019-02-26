@@ -153,5 +153,9 @@
   "promotions.promotion.scopeSelector.category.label": "Category",
   "promotions.promotion.scopeSelector.category.verb.any": "is one of",
   "promotions.promotion.scopeSelector.category.verb.not.any": "is not one of",
-  "promotions.promotion.scopeSelector.brand.placeholder": "Select the desired categories…"
+  "promotions.promotion.scopeSelector.brand.placeholder": "Select the desired categories…",
+  "promotions.promotion.scopeSelector.collection.label": "Collection",
+  "promotions.promotion.scopeSelector.collection.verb.any": "is one of",
+  "promotions.promotion.scopeSelector.collection.verb.not.any": "is not one of",
+  "promotions.promotion.scopeSelector.collection.placeholder": "Select the desired collections…"
 }
