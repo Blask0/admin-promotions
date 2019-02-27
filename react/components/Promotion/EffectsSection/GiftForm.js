@@ -4,6 +4,7 @@ import { injectIntl, intlShape } from 'react-intl'
 
 import { Checkbox, EXPERIMENTAL_Select, Input } from 'vtex.styleguide'
 
+import { fieldShape } from '../../../utils/propTypes'
 import withSkus from '../../../connectors/withSkus'
 
 class GiftForm extends Component {
@@ -116,6 +117,9 @@ class GiftForm extends Component {
 GiftForm.propTypes = {
   intl: intlShape,
   skus: PropTypes.object,
+  multiplier: PropTypes.bool,
+  limitQuantityPerPurchase: PropTypes.bool,
+  maxQuantityPerPurchase: fieldShape(PropTypes.number),
   loading: PropTypes.bool,
   updateQueryParams: PropTypes.func.isRequired,
 }
