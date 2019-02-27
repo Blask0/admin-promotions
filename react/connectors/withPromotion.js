@@ -13,8 +13,8 @@ function withPromotion(WrappedComponent) {
       }
     }
 
-    updateQueryParams = ({ id }) => {
-      this.setState({ id })
+    componentWillMount() {
+      window.postMessage({ action: { type: 'START_LOADING' } }, '*')
     }
 
     render() {
@@ -29,7 +29,6 @@ function withPromotion(WrappedComponent) {
                 loading={loading}
                 error={error}
                 promotion={data ? data.getPromotion : undefined}
-                updatePromotionQueryParams={this.updateQueryParams}
               />
             )
           }
