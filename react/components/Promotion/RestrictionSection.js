@@ -19,8 +19,6 @@ import withSalesChannels from '../../connectors/withSalesChannels'
 class RestrictionSection extends Component {
   constructor(props) {
     super(props)
-
-    console.log(props)
   }
 
   isOriginSelected = origin => this.props.restriction.origin === origin
