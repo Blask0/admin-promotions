@@ -51,7 +51,11 @@ class PromotionPage extends Component {
           price: {
             discountType: 'nominal', // oneOf ['nominal', 'percentual', 'priceTables']
             discount: '',
-            appliesTo: null, // type: statements[], if null: applies to All products
+            appliesTo: {
+              statements: [],
+              allProducts: true,
+              operator: 'all',
+            },
           },
           gift: {
             skus: [],
@@ -126,7 +130,7 @@ class PromotionPage extends Component {
     const {
       promotion: { generalInfo },
     } = this.state
-    
+
     if (
       !generalInfo.name.value ||
       (generalInfo.name.value && generalInfo.name.value.trim() == '')

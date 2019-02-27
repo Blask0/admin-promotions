@@ -4,6 +4,15 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
 import { Radio, Input, EXPERIMENTAL_Conditions } from 'vtex.styleguide'
 
+import {
+  brand,
+  category,
+  collection,
+  product,
+  seller,
+  sku,
+} from '../../../utils/scopeSelector/options'
+
 class PriceForm extends Component {
   isDiscountTypeSelected = discountType =>
     this.props.priceEffect.discountType === discountType
@@ -12,11 +21,54 @@ class PriceForm extends Component {
 
   changeDiscount = discount => this.props.onChange({ discount })
 
-  changeAppliesTo = appliesTo => this.props.onChange({ appliesTo })
+  changeAppliesTo = appliesTo => {
+    const { priceEffect } = this.props
+    this.props.onChange({
+      appliesTo: {
+        ...priceEffect.appliesTo,
+        ...appliesTo,
+      },
+    })
+  }
 
   render() {
-    console.log('rendering effect section!')
     const { priceEffect, intl } = this.props
+
+    const scopeOptions = {
+      brand: brand(intl, this.changeAppliesTo),
+      category: category(intl, this.changeAppliesTo),
+      collection: collection(intl, this.changeAppliesTo),
+      product: product(intl, this.changeAppliesTo),
+      seller: seller(intl, this.changeAppliesTo),
+      sku: sku(intl, this.changeAppliesTo),
+    }
+
+    const conditionsLabels = {
+      addNewCondition: intl.formatMessage({
+        id: 'promotions.promotion.elligibility.conditions.addNewCondition',
+      }),
+      noConditions: intl.formatMessage({
+        id: 'promotions.promotion.elligibility.conditions.noConditions',
+      }),
+      operatorAll: intl.formatMessage({
+        id: 'promotions.promotion.elligibility.conditions.operatorAll',
+      }),
+      operatorAny: intl.formatMessage({
+        id: 'promotions.promotion.elligibility.conditions.operatorAny',
+      }),
+      operatorAnd: intl.formatMessage({
+        id: 'promotions.promotion.elligibility.conditions.operatorAnd',
+      }),
+      operatorOr: intl.formatMessage({
+        id: 'promotions.promotion.elligibility.conditions.operatorOr',
+      }),
+      headerPrefix: intl.formatMessage({
+        id: 'promotions.promotion.elligibility.conditions.headerPrefix',
+      }),
+      headerSufix: intl.formatMessage({
+        id: 'promotions.promotion.elligibility.conditions.headerSufix',
+      }),
+    }
 
     return (
       <Fragment>
@@ -80,36 +132,37 @@ class PriceForm extends Component {
           <Radio
             id="promotions.promotion.effects.priceForm.appliesTo.all"
             name="applies-to-all-products"
-            checked={!priceEffect.appliesTo}
+            checked={priceEffect.appliesTo.allProducts}
             label={intl.formatMessage({
               id: 'promotions.promotion.effects.priceForm.appliesTo.all',
             })}
-            onChange={() => this.changeAppliesTo(null)}
+            onChange={() => this.changeAppliesTo({ allProducts: true })}
           />
           <Radio
             id="promotions.promotion.effects.priceForm.appliesTo.specific"
             name="applies-to-specific-products"
-            checked={priceEffect.appliesTo}
+            checked={!priceEffect.appliesTo.allProducts}
             label={intl.formatMessage({
               id: 'promotions.promotion.effects.priceForm.appliesTo.specific',
             })}
-            onChange={() => this.changeAppliesTo([])}
+            onChange={() => this.changeAppliesTo({ allProducts: false })}
           />
-          {priceEffect.appliesTo ? (
+          {!priceEffect.appliesTo.allProducts ? (
             <div className="mv4 mh7">
               <EXPERIMENTAL_Conditions
-                options={[]} // WIP
+                options={scopeOptions}
                 subjectPlaceholder={intl.formatMessage({
                   id:
                     'promotions.promotion.effects.priceForm.appliesTo.specific.placeholder',
                 })}
-                statements={priceEffect.appliesTo}
-                operator={'all'} // WIP
+                labels={conditionsLabels}
+                statements={priceEffect.appliesTo.statements}
+                operator={priceEffect.appliesTo.operator} // WIP
                 onChangeOperator={({ operator }) => {
-                  console.log('OPERATOR CHANGE: ', operator)
+                  this.changeAppliesTo({ operator })
                 }}
                 onChangeStatements={statements => {
-                  this.changeAppliesTo(statements)
+                  this.changeAppliesTo({ statements })
                 }}
               />
             </div>
@@ -125,7 +178,7 @@ PriceForm.propTypes = {
   priceEffect: PropTypes.shape({
     discountType: PropTypes.string,
     discount: PropTypes.string,
-    appliesTo: PropTypes.any,
+    appliesTo: PropTypes.object,
   }).isRequired,
   onChange: PropTypes.func.isRequired,
 }
