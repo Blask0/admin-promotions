@@ -10,10 +10,15 @@ class ShippingForm extends Component {
 
   changeDiscountType = discountType => this.props.onChange({ discountType })
 
-  changeDiscount = discount => this.props.onChange({ discount })
+  changeDiscount = discount =>
+    this.props.onChange({
+      discount: {
+        value: discount,
+      },
+    })
 
   render() {
-    const { intl, currencyCode } = this.props
+    const { intl, currencyCode, shippingEffect } = this.props
 
     return (
       <Fragment>
@@ -32,6 +37,8 @@ class ShippingForm extends Component {
               <InputCurrency
                 locale={intl.locale}
                 currencyCode={currencyCode}
+                value={shippingEffect.discount.value}
+                errorMessage={shippingEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
                 placeholder={intl.formatMessage({
                   id: 'promotions.promotion.effects.shippingForm.placeholder',
@@ -52,6 +59,8 @@ class ShippingForm extends Component {
             <div className="mv4 mh7 w-20">
               <Input
                 type="number"
+                value={shippingEffect.discount.value}
+                errorMessage={shippingEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
                 placeholder={intl.formatMessage({
                   id: 'promotions.promotion.effects.shippingForm.placeholder',
@@ -74,6 +83,8 @@ class ShippingForm extends Component {
               <InputCurrency
                 locale={intl.locale}
                 currencyCode={currencyCode}
+                value={shippingEffect.discount.value}
+                errorMessage={shippingEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
                 placeholder={intl.formatMessage({
                   id: 'promotions.promotion.effects.shippingForm.placeholder',
@@ -91,7 +102,11 @@ ShippingForm.propTypes = {
   intl: intlShape,
   shippingEffect: PropTypes.shape({
     discountType: PropTypes.string,
-    discount: PropTypes.string,
+    discount: PropTypes.shape({
+      value: PropTypes.number,
+      error: PropTypes.string,
+      focus: PropTypes.bool,
+    }),
   }).isRequired,
   currencyCode: PropTypes.string,
   onChange: PropTypes.func.isRequired,

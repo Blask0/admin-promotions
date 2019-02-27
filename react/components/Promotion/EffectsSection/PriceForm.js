@@ -19,7 +19,12 @@ class PriceForm extends Component {
 
   changeDiscountType = discountType => this.props.onChange({ discountType })
 
-  changeDiscount = discount => this.props.onChange({ discount })
+  changeDiscount = discount =>
+    this.props.onChange({
+      discount: {
+        value: discount,
+      },
+    })
 
   changeAppliesTo = appliesTo => {
     const { priceEffect } = this.props
@@ -87,7 +92,11 @@ class PriceForm extends Component {
           />
           {this.isDiscountTypeSelected('nominal') ? (
             <div className="mv4 mh7">
-              <Input onChange={e => this.changeDiscount(e.target.value)} />
+              <Input
+                value={priceEffect.discount.value}
+                errorMessage={priceEffect.discount.error}
+                onChange={e => this.changeDiscount(e.target.value)}
+              />
             </div>
           ) : null}
           <Radio
@@ -104,6 +113,8 @@ class PriceForm extends Component {
             <div className="mv4 mh7">
               <Input
                 type="number"
+                value={priceEffect.discount.value}
+                errorMessage={priceEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
                 prefix={<span className="b f6">%</span>}
               />
@@ -121,7 +132,11 @@ class PriceForm extends Component {
           />
           {this.isDiscountTypeSelected('priceTables') ? (
             <div className="mv4 mh7">
-              <Input onChange={e => this.changeDiscount(e.target.value)} />
+              <Input
+                value={priceEffect.discount.value}
+                errorMessage={priceEffect.discount.error}
+                onChange={e => this.changeDiscount(e.target.value)}
+              />
             </div>
           ) : null}
         </div>

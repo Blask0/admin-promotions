@@ -15,13 +15,18 @@ class RewardForm extends Component {
 
   changeDiscountType = discountType => this.props.onChange({ discountType })
 
-  changeDiscount = discount => this.props.onChange({ discount })
+  changeDiscount = discount =>
+    this.props.onChange({
+      discount: {
+        value: discount,
+      },
+    })
 
   changeApplyByOrderStatus = applyByOrderStatus =>
     this.props.onChange({ applyByOrderStatus })
 
   render() {
-    const { intl, currencyCode } = this.props
+    const { intl, currencyCode, rewardEffect } = this.props
 
     const options = [
       {
@@ -51,6 +56,8 @@ class RewardForm extends Component {
               <InputCurrency
                 locale={intl.locale}
                 currencyCode={currencyCode}
+                value={rewardEffect.discount.value}
+                errrorMessage={rewardEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
                 placeholder={intl.formatMessage({
                   id: 'promotions.promotion.effects.rewardForm.placeholder',
@@ -71,6 +78,8 @@ class RewardForm extends Component {
             <div className="mv4 mh7">
               <Input
                 type="number"
+                value={rewardEffect.discount.value}
+                errrorMessage={rewardEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
                 placeholder={intl.formatMessage({
                   id: 'promotions.promotion.effects.rewardForm.placeholder',
@@ -84,7 +93,7 @@ class RewardForm extends Component {
           <EXPERIMENTAL_Select
             label={'Apply reward when order status changes to'}
             options={options}
-            defaultValue={options[0]}
+            value={rewardEffect.applyByOrderStatus || options[0]}
             multi={false}
             onChange={selected => {
               this.changeApplyByOrderStatus(selected.value)
