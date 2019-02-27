@@ -9,6 +9,78 @@ const newFieldWithValidation = value => ({
   focus: undefined,
 })
 
+const INITIAL_PRICE_EFFECT = {
+  discountType: 'nominal',
+  discount: newFieldWithValidation(),
+  appliesTo: {
+    statements: [],
+    allProducts: true,
+    operator: 'all',
+  },
+}
+const INITIAL_GIFT_EFFECT = {
+  skus: [],
+  multiplier: false,
+  limitQuantityPerPurchase: false,
+  maxQuantityPerPurchase: newFieldWithValidation(),
+}
+
+const INITIAL_SHIPPING_EFFECT = {
+  discountType: 'nominal',
+  discount: newFieldWithValidation(),
+}
+
+const INITIAL_REWARD_EFFECT = {
+  discountType: 'nominal',
+  discount: newFieldWithValidation(),
+  applyByOrderStatus: undefined,
+}
+
+const getPriceEffect = priceEffect =>
+  priceEffect
+    ? {
+      ...priceEffect,
+      discount: newFieldWithValidation(
+        priceEffect ? priceEffect.discount : undefined
+      ),
+      appliesTo: {
+        ...priceEffect.appliesTo,
+        statements: JSON.parse(priceEffect.appliesTo.statements),
+      },
+    }
+    : INITIAL_PRICE_EFFECT
+
+const getGiftEffect = giftEffect =>
+  giftEffect
+    ? {
+      ...giftEffect,
+      maxQuantityPerPurchase: newFieldWithValidation(
+        giftEffect ? giftEffect.maxQuantityPerPurchase : undefined
+      ),
+    }
+    : INITIAL_GIFT_EFFECT
+
+const getShippingEffect = shippingEffect =>
+  shippingEffect
+    ? {
+      ...shippingEffect,
+      discount: newFieldWithValidation(
+        shippingEffect ? shippingEffect.discount : undefined
+      ),
+    }
+    : INITIAL_SHIPPING_EFFECT
+
+const getRewardEffect = rewardEffect =>
+  rewardEffect
+    ? {
+      discountType: 'nominal',
+      discount: newFieldWithValidation(
+        rewardEffect ? rewardEffect.discount : undefined
+      ),
+      applyByOrderStatus: undefined,
+    }
+    : INITIAL_REWARD_EFFECT
+
 export const newPromotion = (promotion, salesChannels) => {
   if (promotion) {
     const { generalInfo, eligibility, effects, restriction } = promotion
@@ -23,26 +95,10 @@ export const newPromotion = (promotion, salesChannels) => {
       },
       effects: {
         ...effects,
-        price: effects.price || {
-          discountType: 'nominal',
-          discount: undefined,
-          appliesTo: null,
-        },
-        gift: effects.gift || {
-          skus: [],
-          multiplier: false,
-          limitQuantityPerPurchase: false,
-          maxQuantityPerPurchase: newFieldWithValidation(),
-        },
-        shipping: effects.shipping || {
-          discountType: 'nominal',
-          discount: undefined,
-        },
-        reward: effects.reward || {
-          discountType: 'nominal',
-          discount: undefined,
-          applyByOrderStatus: undefined,
-        },
+        price: getPriceEffect(effects.price),
+        gift: getGiftEffect(effects.gift),
+        shipping: getShippingEffect(effects.shipping),
+        reward: getRewardEffect(effects.reward),
       },
       eligibility: {
         ...eligibility,
@@ -94,31 +150,11 @@ export const newPromotion = (promotion, salesChannels) => {
       operator: 'all',
     },
     effects: {
-      activeEffectType: null,
-      price: {
-        discountType: 'nominal',
-        discount: newFieldWithValidation(),
-        appliesTo: {
-          statements: [],
-          allProducts: true,
-          operator: 'all',
-        },
-      },
-      gift: {
-        skus: [],
-        multiplier: false,
-        limitQuantityPerPurchase: false,
-        maxQuantityPerPurchase: newFieldWithValidation(),
-      },
-      shipping: {
-        discountType: 'nominal',
-        discount: newFieldWithValidation(),
-      },
-      reward: {
-        discountType: 'nominal',
-        discount: newFieldWithValidation(),
-        applyByOrderStatus: undefined,
-      },
+      activeEffectType: undefined,
+      price: INITIAL_PRICE_EFFECT,
+      gift: INITIAL_GIFT_EFFECT,
+      shipping: INITIAL_SHIPPING_EFFECT,
+      reward: INITIAL_REWARD_EFFECT,
     },
     restriction: {
       isLimitingPerStore: false,
