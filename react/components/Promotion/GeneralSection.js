@@ -4,6 +4,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
 import { Checkbox, Input, DatePicker, Toggle } from 'vtex.styleguide'
 
+import { fieldShape } from '../../utils/propTypes'
 import { addDays } from 'date-fns'
 
 class GeneralSection extends Component {
@@ -187,11 +188,11 @@ GeneralSection.contextTypes = {
 GeneralSection.propTypes = {
   intl: intlShape,
   generalInfo: PropTypes.shape({
-    name: PropTypes.string,
+    name: fieldShape(PropTypes.string),
     isActive: PropTypes.bool,
     startDate: PropTypes.instanceOf(Date),
     hasEndDate: PropTypes.bool,
-    endDate: PropTypes.instanceOf(Date),
+    endDate: fieldShape(PropTypes.instanceOf(Date)),
   }),
   updatePageState: PropTypes.func,
 }
