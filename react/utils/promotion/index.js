@@ -21,6 +21,29 @@ export const newPromotion = (promotion, salesChannels) => {
         hasEndDate: !!generalInfo.endDate,
         endDate: newFieldWithValidation(new Date(generalInfo.endDate)),
       },
+      effects: {
+        ...effects,
+        price: effects.price || {
+          discountType: 'nominal',
+          discount: undefined,
+          appliesTo: null,
+        },
+        gift: effects.gift || {
+          skus: [],
+          multiplier: false,
+          limitQuantityPerPurchase: false,
+          maxQuantityPerPurchase: newFieldWithValidation(),
+        },
+        shipping: effects.shipping || {
+          discountType: 'nominal',
+          discount: undefined,
+        },
+        reward: effects.reward || {
+          discountType: 'nominal',
+          discount: undefined,
+          applyByOrderStatus: undefined,
+        },
+      },
       eligibility: {
         ...eligibility,
         statements: JSON.parse(eligibility.statements),
