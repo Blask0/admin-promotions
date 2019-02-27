@@ -16,7 +16,11 @@ mutation SavePromotions($promotion: PromotionInput!) {
       price {
         discountType
         discount
-        appliesTo
+        appliesTo {
+          allProducts
+          statements
+          operator
+        }
       }
       gift {
         products

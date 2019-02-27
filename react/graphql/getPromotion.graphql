@@ -16,7 +16,11 @@ query GetPromotion($id: String!) {
       price {
         discountType
         discount
-        appliesTo
+        appliesTo {
+          allProducts
+          statements
+          operator
+        }
       }
       gift {
         products
