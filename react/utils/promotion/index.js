@@ -1,10 +1,15 @@
+import {
+  RESTRICT_SALES_CHANNEL_VERB_OPTIONS,
+  mapSalesChannelsToSelect,
+} from '../../utils/promotion/restrictions'
+
 const newFieldWithValidation = value => ({
   value,
   error: undefined,
   focus: undefined,
 })
 
-export const newPromotion = promotion => {
+export const newPromotion = (promotion, salesChannels) => {
   if (promotion) {
     const { generalInfo, eligibility, effects, restriction } = promotion
     return {
@@ -12,8 +17,9 @@ export const newPromotion = promotion => {
       generalInfo: {
         ...generalInfo,
         name: newFieldWithValidation(generalInfo.name),
+        startDate: new Date(generalInfo.startDate),
         hasEndDate: !!generalInfo.endDate,
-        endDate: newFieldWithValidation(generalInfo.endDate),
+        endDate: newFieldWithValidation(new Date(generalInfo.endDate)),
       },
       eligibility: {
         ...eligibility,
@@ -31,8 +37,15 @@ export const newPromotion = promotion => {
         ),
         isRestrictingSalesChannels:
           restriction.restrictedSalesChannels.length > 0,
+        restrictSalesChannelVerb: RESTRICT_SALES_CHANNEL_VERB_OPTIONS.find(
+          verb => verb.value === restriction.restrictSalesChannelVerb.value
+        ),
         restrictedSalesChannels: newFieldWithValidation(
-          restriction.restrictedSalesChannels
+          mapSalesChannelsToSelect(
+            salesChannels.filter(sc =>
+              restriction.restrictedSalesChannels.includes(sc.id)
+            )
+          )
         ),
       },
     }
@@ -94,7 +107,6 @@ export const newPromotion = promotion => {
       isRestrictingSalesChannels: false,
       restrictSalesChannelVerb: undefined,
       restrictedSalesChannels: newFieldWithValidation(),
-      origin: undefined,
     },
   }
 }

@@ -1,17 +1,26 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
+
 import {
   RadioGroup,
   Checkbox,
   Input,
   EXPERIMENTAL_Select,
 } from 'vtex.styleguide'
+
+import { fieldShape } from '../../utils/propTypes'
+import {
+  RESTRICT_SALES_CHANNEL_VERB_OPTIONS,
+  mapSalesChannelsToSelect,
+} from '../../utils/promotion/restrictions'
 import withSalesChannels from '../../connectors/withSalesChannels'
 
 class RestrictionSection extends Component {
   constructor(props) {
     super(props)
+
+    console.log(props)
   }
 
   isOriginSelected = origin => this.props.restriction.origin === origin
@@ -35,22 +44,6 @@ class RestrictionSection extends Component {
       loading,
       updatePageState,
     } = this.props
-
-    const mappedSalesChannels = salesChannels.map(salesChannel => ({
-      label: salesChannel.name,
-      value: salesChannel.id,
-    }))
-
-    const verbs = [
-      {
-        label: 'is any of',
-        value: 'any',
-      },
-      {
-        label: 'is not any of',
-        value: 'not.any',
-      },
-    ]
 
     return (
       <Fragment>
@@ -201,8 +194,11 @@ class RestrictionSection extends Component {
           <div className="pv3 flex flex-row">
             <div className="w-30 pl5">
               <EXPERIMENTAL_Select
-                options={verbs}
-                value={restrictSalesChannelVerb || verbs[0]}
+                options={RESTRICT_SALES_CHANNEL_VERB_OPTIONS}
+                value={
+                  restrictSalesChannelVerb ||
+                  RESTRICT_SALES_CHANNEL_VERB_OPTIONS[0]
+                }
                 loading={loading}
                 multi={false}
                 onChange={selected =>
@@ -216,7 +212,7 @@ class RestrictionSection extends Component {
                   id:
                     'promotions.promotion.restriction.restrictTradePolicies.placeholder',
                 })}
-                options={mappedSalesChannels}
+                options={mapSalesChannelsToSelect(salesChannels)}
                 value={restrictedSalesChannels.value}
                 errorMessage={restrictedSalesChannels.error}
                 loading={loading}
@@ -282,16 +278,14 @@ RestrictionSection.propTypes = {
   intl: intlShape,
   restriction: PropTypes.shape({
     isLimitingPerStore: PropTypes.bool.isRequired,
-    perStore: PropTypes.number,
+    perStore: fieldShape(PropTypes.number),
     isLimitingPerClient: PropTypes.bool.isRequired,
-    perClient: PropTypes.number,
-    limitPerActivations: PropTypes.bool.isRequired,
+    perClient: fieldShape(PropTypes.number),
     isLimitingPerNumOfAffectedItems: PropTypes.bool.isRequired,
-    maxNumberOfAffectedItems: PropTypes.number,
+    maxNumberOfAffectedItems: fieldShape(PropTypes.number),
     isRestrictingSalesChannels: PropTypes.bool,
     restrictSalesChannelVerb: PropTypes.string,
-    restrictedSalesChannels: PropTypes.array,
-    origin: PropTypes.string,
+    restrictedSalesChannels: fieldShape(PropTypes.array),
   }).isRequired,
   updatePageState: PropTypes.func.isRequired,
 }

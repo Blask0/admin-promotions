@@ -9,7 +9,7 @@ function withPromotion(WrappedComponent) {
       super(props)
 
       this.state = {
-        id: undefined,
+        id: props.params.id,
       }
     }
 
@@ -22,15 +22,17 @@ function withPromotion(WrappedComponent) {
 
       return (
         <Query query={getPromotion} variables={{ id }}>
-          {({ loading, error, data }) => (
-            <WrappedComponent
-              {...this.props}
-              loading={loading}
-              error={error}
-              promotion={data ? data.getPromotion : undefined}
-              updatePromotionQueryParams={this.updateQueryParams}
-            />
-          )}
+          {({ loading, error, data }) =>
+            loading ? null : (
+              <WrappedComponent
+                {...this.props}
+                loading={loading}
+                error={error}
+                promotion={data ? data.getPromotion : undefined}
+                updatePromotionQueryParams={this.updateQueryParams}
+              />
+            )
+          }
         </Query>
       )
     }

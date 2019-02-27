@@ -21,13 +21,10 @@ class PromotionPage extends Component {
   constructor(props) {
     super(props)
 
-    const { id } = props.params
-    if (id) {
-      props.updatePromotionQueryParams({ id })
-    }
+    const { promotion, salesChannels } = props
 
     this.state = {
-      promotion: newPromotion(props.promotion),
+      promotion: newPromotion(promotion, salesChannels),
     }
   }
 
@@ -35,13 +32,13 @@ class PromotionPage extends Component {
     window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
   }
 
-  componentDidUpdate = prevProps => {
-    if (this.props.promotion && this.props.promotion !== prevProps.promotion) {
-      this.setState({
-        promotion: newPromotion(this.props.promotion),
-      })
-    }
-  }
+  // componentDidUpdate = prevProps => {
+  //   if (this.props.promotion && this.props.promotion !== prevProps.promotion) {
+  //     this.setState({
+  //       promotion: newPromotion(this.props.promotion),
+  //     })
+  //   }
+  // }
 
   validate = () => {
     const {
@@ -410,12 +407,12 @@ class PromotionPage extends Component {
         perStore: restriction.perStore.value,
         perClient: restriction.perClient.value,
         maxNumberOfAffectedItems: restriction.maxNumberOfAffectedItems.value,
-        restrictSalesChannelVerb: restriction.restrictSalesChannelVerb
+        restrictSalesChannelVerb: restriction.isRestrictingSalesChannels
           ? restriction.restrictSalesChannelVerb.value
           : undefined,
-        restrictedSalesChannels: restriction.restrictedSalesChannels.value.map(
-          sc => sc.value
-        ),
+        restrictedSalesChannels: restriction.isRestrictingSalesChannels
+          ? restriction.restrictedSalesChannels.value.map(sc => sc.value)
+          : undefined,
       },
     }
   }
@@ -512,8 +509,8 @@ PromotionPage.propTypes = {
 }
 
 export default compose(
+  withSalesChannels,
   withPromotion,
   savingPromotion,
-  withSalesChannels,
   injectIntl
 )(PromotionPage)

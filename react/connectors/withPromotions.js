@@ -23,11 +23,12 @@ function withPromotions(WrappedComponent) {
 
       return (
         <Query query={getPromotions} variables={{ name, effect }}>
-          {({ loading, error, data }) => (
+          {({ loading, error, data, refetch }) => (
             <WrappedComponent
               {...this.props}
               loading={loading}
               error={error}
+              refetchPromotions={refetch}
               promotions={data ? data.getPromotions : []}
               updateQueryParams={this.updateQueryParams}
             />
