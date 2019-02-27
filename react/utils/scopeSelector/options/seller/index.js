@@ -1,11 +1,6 @@
 import { renderSelectObject } from '../../../conditions/renders'
 import withSellers from '../../../../connectors/withSellers'
-
-const mapSellers = sellers =>
-  sellers.map(seller => ({
-    label: seller.name,
-    value: seller.id,
-  }))
+import { mapSellersToSelect } from '../../../mappers'
 
 const seller = (intl, update) => {
   return {
@@ -23,7 +18,7 @@ const seller = (intl, update) => {
           extraParams: {
             queryInfo: {
               connector: withSellers,
-              dataGetter: ({ sellers = [] }) => mapSellers(sellers),
+              dataGetter: ({ sellers = [] }) => mapSellersToSelect(sellers),
             },
             placeholder: intl.formatMessage({
               id: 'promotions.promotion.scopeSelector.seller.placeholder',
@@ -43,7 +38,7 @@ const seller = (intl, update) => {
           extraParams: {
             queryInfo: {
               connector: withSellers,
-              dataGetter: ({ sellers = [] }) => mapSellers(sellers),
+              dataGetter: ({ sellers = [] }) => mapSellersToSelect(sellers),
             },
             placeholder: intl.formatMessage({
               id: 'promotions.promotion.scopeSelector.seller.placeholder',

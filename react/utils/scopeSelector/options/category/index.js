@@ -1,11 +1,6 @@
 import { renderSelectObject } from '../../../conditions/renders'
 import withCategories from '../../../../connectors/withCategories'
-
-const mapCategories = categories =>
-  categories.map(category => ({
-    label: category.name,
-    value: category.id,
-  }))
+import { mapCategoriesToSelect } from '../../../mappers'
 
 const category = (intl, update) => {
   return {
@@ -23,7 +18,8 @@ const category = (intl, update) => {
           extraParams: {
             queryInfo: {
               connector: withCategories,
-              dataGetter: ({ categories = [] }) => mapCategories(categories),
+              dataGetter: ({ categories = [] }) =>
+                mapCategoriesToSelect(categories),
             },
             placeholder: intl.formatMessage({
               id: 'promotions.promotion.scopeSelector.category.placeholder',
@@ -43,7 +39,8 @@ const category = (intl, update) => {
           extraParams: {
             queryInfo: {
               connector: withCategories,
-              dataGetter: ({ categories = [] }) => mapCategories(categories),
+              dataGetter: ({ categories = [] }) =>
+                mapCategoriesToSelect(categories),
             },
             placeholder: intl.formatMessage({
               id: 'promotions.promotion.scopeSelector.category.placeholder',

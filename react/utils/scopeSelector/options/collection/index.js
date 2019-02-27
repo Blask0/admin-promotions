@@ -1,11 +1,6 @@
 import { renderSelectObject } from '../../../conditions/renders'
 import withCollections from '../../../../connectors/withCollections'
-
-const mapCollections = collections =>
-  collections.map(collection => ({
-    label: collection.name,
-    value: collection.id,
-  }))
+import { mapCollectionsToSelect } from '../../../mappers'
 
 const collection = (intl, update) => {
   return {
@@ -23,7 +18,8 @@ const collection = (intl, update) => {
           extraParams: {
             queryInfo: {
               connector: withCollections,
-              dataGetter: ({ collections = [] }) => mapCollections(collections),
+              dataGetter: ({ collections = [] }) =>
+                mapCollectionsToSelect(collections),
             },
             placeholder: intl.formatMessage({
               id: 'promotions.promotion.scopeSelector.collection.placeholder',
@@ -43,7 +39,8 @@ const collection = (intl, update) => {
           extraParams: {
             queryInfo: {
               connector: withCollections,
-              dataGetter: ({ collections = [] }) => mapCollections(collections),
+              dataGetter: ({ collections = [] }) =>
+                mapCollectionsToSelect(collections),
             },
             placeholder: intl.formatMessage({
               id: 'promotions.promotion.scopeSelector.collection.placeholder',

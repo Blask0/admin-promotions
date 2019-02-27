@@ -1,11 +1,6 @@
 import { renderSelectObject } from '../../../conditions/renders'
 import withSkus from '../../../../connectors/withSkus'
-
-const mapSkus = skus =>
-  skus.map(element => ({
-    label: `${element.sku.id} - ${element.product.name} - ${element.sku.name}`,
-    value: element.sku.id,
-  }))
+import { mapSkusToSelect } from '../../../mappers'
 
 const sku = (intl, update) => {
   return {
@@ -23,7 +18,7 @@ const sku = (intl, update) => {
           extraParams: {
             queryInfo: {
               connector: withSkus,
-              dataGetter: ({ skus = [] }) => mapSkus(skus),
+              dataGetter: ({ skus = [] }) => mapSkusToSelect(skus),
             },
             placeholder: intl.formatMessage({
               id: 'promotions.promotion.scopeSelector.sku.placeholder',
@@ -43,7 +38,7 @@ const sku = (intl, update) => {
           extraParams: {
             queryInfo: {
               connector: withSkus,
-              dataGetter: ({ skus = [] }) => mapSkus(skus),
+              dataGetter: ({ skus = [] }) => mapSkusToSelect(skus),
             },
             placeholder: intl.formatMessage({
               id: 'promotions.promotion.scopeSelector.sku.placeholder',

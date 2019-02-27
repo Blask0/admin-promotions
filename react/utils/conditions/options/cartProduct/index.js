@@ -10,35 +10,13 @@ import withCategories from '../../../../connectors/withCategories'
 import withProducts from '../../../../connectors/withProducts'
 import withSellers from '../../../../connectors/withSellers'
 
-const mapBrands = brands =>
-  brands.map(brand => ({
-    label: brand.name,
-    value: brand.id,
-  }))
-
-const mapCollections = collections =>
-  collections.map(collection => ({
-    label: collection.name,
-    value: collection.id,
-  }))
-
-const mapCategories = categories =>
-  categories.map(category => ({
-    label: category.name,
-    value: category.id,
-  }))
-
-const mapProducts = products =>
-  products.map(product => ({
-    label: `${product.id} - ${product.name}`,
-    value: product.id,
-  }))
-
-const mapSellers = sellers =>
-  sellers.map(seller => ({
-    label: seller.name,
-    value: seller.id,
-  }))
+import {
+  mapBrandsToSelect,
+  mapCollectionsToSelect,
+  mapCategoriesToSelect,
+  mapProductsToSelect,
+  mapSellersToSelect,
+} from '../../../mappers'
 
 const cartProduct = (intl, update, currencyCode) => {
   return {
@@ -57,7 +35,7 @@ const cartProduct = (intl, update, currencyCode) => {
           extraParams: {
             queryInfo: {
               connector: withBrands,
-              dataGetter: ({ brands = [] }) => mapBrands(brands),
+              dataGetter: ({ brands = [] }) => mapBrandsToSelect(brands),
             },
             placeholder: intl.formatMessage({
               id:
@@ -79,7 +57,7 @@ const cartProduct = (intl, update, currencyCode) => {
           extraParams: {
             queryInfo: {
               connector: withBrands,
-              dataGetter: ({ brands = [] }) => mapBrands(brands),
+              dataGetter: ({ brands = [] }) => mapBrandsToSelect(brands),
             },
             placeholder: intl.formatMessage({
               id:
@@ -102,7 +80,8 @@ const cartProduct = (intl, update, currencyCode) => {
           extraParams: {
             queryInfo: {
               connector: withCollections,
-              dataGetter: ({ collections = [] }) => mapCollections(collections),
+              dataGetter: ({ collections = [] }) =>
+                mapCollectionsToSelect(collections),
             },
             placeholder: intl.formatMessage({
               id:
@@ -124,7 +103,8 @@ const cartProduct = (intl, update, currencyCode) => {
           extraParams: {
             queryInfo: {
               connector: withCollections,
-              dataGetter: ({ collections = [] }) => mapCollections(collections),
+              dataGetter: ({ collections = [] }) =>
+                mapCollectionsToSelect(collections),
             },
             placeholder: intl.formatMessage({
               id:
@@ -146,7 +126,8 @@ const cartProduct = (intl, update, currencyCode) => {
           extraParams: {
             queryInfo: {
               connector: withCategories,
-              dataGetter: ({ categories = [] }) => mapCategories(categories),
+              dataGetter: ({ categories = [] }) =>
+                mapCategoriesToSelect(categories),
             },
             placeholder: intl.formatMessage({
               id:
@@ -168,7 +149,8 @@ const cartProduct = (intl, update, currencyCode) => {
           extraParams: {
             queryInfo: {
               connector: withCategories,
-              dataGetter: ({ categories = [] }) => mapCategories(categories),
+              dataGetter: ({ categories = [] }) =>
+                mapCategoriesToSelect(categories),
             },
             placeholder: intl.formatMessage({
               id:
@@ -190,7 +172,7 @@ const cartProduct = (intl, update, currencyCode) => {
           extraParams: {
             queryInfo: {
               connector: withProducts,
-              dataGetter: ({ products = [] }) => mapProducts(products),
+              dataGetter: ({ products = [] }) => mapProductsToSelect(products),
             },
             placeholder: intl.formatMessage({
               id:
@@ -212,7 +194,7 @@ const cartProduct = (intl, update, currencyCode) => {
           extraParams: {
             queryInfo: {
               connector: withProducts,
-              dataGetter: ({ products = [] }) => mapProducts(products),
+              dataGetter: ({ products = [] }) => mapProductsToSelect(products),
             },
             placeholder: intl.formatMessage({
               id:
@@ -330,7 +312,7 @@ const cartProduct = (intl, update, currencyCode) => {
           extraParams: {
             queryInfo: {
               connector: withSellers,
-              dataGetter: ({ sellers = [] }) => mapSellers(sellers),
+              dataGetter: ({ sellers = [] }) => mapSellersToSelect(sellers),
             },
             placeholder: intl.formatMessage({
               id:
@@ -352,7 +334,7 @@ const cartProduct = (intl, update, currencyCode) => {
           extraParams: {
             queryInfo: {
               connector: withSellers,
-              dataGetter: ({ sellers = [] }) => mapSellers(sellers),
+              dataGetter: ({ sellers = [] }) => mapSellersToSelect(sellers),
             },
             placeholder: intl.formatMessage({
               id:

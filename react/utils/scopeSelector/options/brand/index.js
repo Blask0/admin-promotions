@@ -1,11 +1,6 @@
 import { renderSelectObject } from '../../../conditions/renders'
 import withBrands from '../../../../connectors/withBrands'
-
-const mapBrands = brands =>
-  brands.map(brand => ({
-    label: brand.name,
-    value: brand.id,
-  }))
+import { mapBrandsToSelect } from '../../../mappers'
 
 const brand = (intl, update) => {
   return {
@@ -23,7 +18,7 @@ const brand = (intl, update) => {
           extraParams: {
             queryInfo: {
               connector: withBrands,
-              dataGetter: ({ brands = [] }) => mapBrands(brands),
+              dataGetter: ({ brands = [] }) => mapBrandsToSelect(brands),
             },
             placeholder: intl.formatMessage({
               id: 'promotions.promotion.scopeSelector.brand.placeholder',
@@ -43,7 +38,7 @@ const brand = (intl, update) => {
           extraParams: {
             queryInfo: {
               connector: withBrands,
-              dataGetter: ({ brands = [] }) => mapBrands(brands),
+              dataGetter: ({ brands = [] }) => mapBrandsToSelect(brands),
             },
             placeholder: intl.formatMessage({
               id: 'promotions.promotion.scopeSelector.brand.placeholder',
