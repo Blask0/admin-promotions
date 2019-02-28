@@ -172,7 +172,7 @@ class PriceForm extends Component {
                 })}
                 labels={conditionsLabels}
                 statements={priceEffect.appliesTo.statements}
-                operator={'all'}
+                operator={priceEffect.appliesTo.operator}
                 showOperator={false}
                 onChangeStatements={statements => {
                   this.changeAppliesTo({ statements })
