@@ -12,7 +12,7 @@ const category = (intl, update) => {
         label: intl.formatMessage({
           id: 'promotions.promotion.scopeSelector.category.verb.any',
         }),
-        value: 'category.any',
+        value: 'any',
         object: {
           renderFn: renderSelectObject,
           extraParams: {
@@ -33,7 +33,7 @@ const category = (intl, update) => {
         label: intl.formatMessage({
           id: 'promotions.promotion.scopeSelector.category.verb.not.any',
         }),
-        value: 'category.not.any',
+        value: 'not.any',
         object: {
           renderFn: renderSelectObject,
           extraParams: {

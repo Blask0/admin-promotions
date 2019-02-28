@@ -15,7 +15,6 @@ const INITIAL_PRICE_EFFECT = {
   appliesTo: {
     statements: [],
     allProducts: true,
-    operator: 'all',
   },
 }
 const INITIAL_GIFT_EFFECT = {

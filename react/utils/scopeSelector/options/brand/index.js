@@ -12,7 +12,7 @@ const brand = (intl, update) => {
         label: intl.formatMessage({
           id: 'promotions.promotion.scopeSelector.brand.verb.any',
         }),
-        value: 'brand.any',
+        value: 'any',
         object: {
           renderFn: renderSelectObject,
           extraParams: {
@@ -32,7 +32,7 @@ const brand = (intl, update) => {
         label: intl.formatMessage({
           id: 'promotions.promotion.scopeSelector.brand.verb.not.any',
         }),
-        value: 'brand.not.any',
+        value: 'not.any',
         object: {
           renderFn: renderSelectObject,
           extraParams: {
