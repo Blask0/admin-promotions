@@ -446,7 +446,6 @@ class PromotionPage extends Component {
             variation="primary"
             onClick={() => {
               const preparedPromotion = this.prepareToSave(promotion)
-              console.log(preparedPromotion)
 
               if (this.canSave()) {
                 savePromotion({

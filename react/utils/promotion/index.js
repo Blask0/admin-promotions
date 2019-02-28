@@ -84,6 +84,7 @@ const getRewardEffect = rewardEffect =>
 export const newPromotion = (promotion, salesChannels) => {
   if (promotion) {
     const { generalInfo, eligibility, effects, restriction } = promotion
+
     return {
       ...promotion,
       generalInfo: {
@@ -91,7 +92,9 @@ export const newPromotion = (promotion, salesChannels) => {
         name: newFieldWithValidation(generalInfo.name),
         startDate: new Date(generalInfo.startDate),
         hasEndDate: !!generalInfo.endDate,
-        endDate: newFieldWithValidation(new Date(generalInfo.endDate)),
+        endDate: generalInfo.endDate
+          ? newFieldWithValidation(new Date(generalInfo.endDate))
+          : newFieldWithValidation(),
       },
       effects: {
         ...effects,
