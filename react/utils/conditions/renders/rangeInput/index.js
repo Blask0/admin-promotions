@@ -8,7 +8,7 @@ const renderRangeInputObject = ({
   error,
   extraParams,
 }) => {
-  const { placeholder, type, update } = extraParams
+  const { placeholder, type, update, intl } = extraParams
 
   return (
     <div className="flex">
@@ -19,7 +19,7 @@ const renderRangeInputObject = ({
           statements[statementIndex].object &&
           parseInt(statements[statementIndex].object.first) >=
             parseInt(statements[statementIndex].object.last)
-            ? 'Must be smaller than other input'
+            ? intl.formatMessage({ id: 'validation.rangeInput' })
             : ''
         }
         value={values && values.first ? values.first : ''}
@@ -34,7 +34,11 @@ const renderRangeInputObject = ({
         }}
       />
 
-      <div className="mv4 mh3 c-muted-2 b">and</div>
+      <div className="mv4 mh3 c-muted-2 b">
+        {intl.formatMessage({
+          id: 'promotions.promotion.elligibility.conditions.operatorAnd',
+        })}
+      </div>
 
       <Input
         type={type}

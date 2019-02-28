@@ -149,6 +149,7 @@
   "promotions.promotion.restriction.origin.fulfillment.explanation": "Orders where your store is acting as a seller",
   "validation.emptyField": "Empty field",
   "validation.endDateSmaller": "End date can't be before start date",
+  "validation.rangeInput": "Must be smaller than other input",
   "promotions.promotion.scopeSelector.brand.label": "Brand",
   "promotions.promotion.scopeSelector.brand.verb.any": "is one of",
   "promotions.promotion.scopeSelector.brand.verb.not.any": "is not one of",

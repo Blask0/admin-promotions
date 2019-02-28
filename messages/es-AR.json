@@ -150,6 +150,7 @@
   "promotions.promotion.restriction.origin.fulfillment.explanation": "Pedidos donde tu tienda actúa como vendedor",
   "validation.emptyField": "Campo vacío",
   "validation.endDateSmaller": "La fecha de finalización no puede ser anterior a la fecha de inicio",
+  "validation.rangeInput": "Debe ser más pequeño que otra entrada",
   "promotions.promotion.scopeSelector.brand.label": "Marca",
   "promotions.promotion.scopeSelector.brand.verb.any": "es una de",
   "promotions.promotion.scopeSelector.brand.verb.not.any": "no es una de",
