@@ -8,6 +8,7 @@ import withBrands from '../../../../connectors/withBrands'
 import withCollections from '../../../../connectors/withCollections'
 import withCategories from '../../../../connectors/withCategories'
 import withProducts from '../../../../connectors/withProducts'
+import withSkus from '../../../../connectors/withSkus'
 import withSellers from '../../../../connectors/withSellers'
 
 import {
@@ -15,6 +16,7 @@ import {
   mapCollectionsToSelect,
   mapCategoriesToSelect,
   mapProductsToSelect,
+  mapSkusToSelect,
   mapSellersToSelect,
 } from '../../../mappers'
 
@@ -199,6 +201,50 @@ const cartProduct = (intl, update, currencyCode) => {
             placeholder: intl.formatMessage({
               id:
                 'promotions.promotion.elligibility.cartProduct.hasProducts.placeholder',
+            }),
+            multi: true,
+            update: update,
+          },
+        },
+      },
+      // HAS SKUS
+
+      {
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.cartProduct.verb.sku.any',
+        }),
+        value: 'sku.any',
+        object: {
+          renderFn: renderSelectObject,
+          extraParams: {
+            queryInfo: {
+              connector: withSkus,
+              dataGetter: ({ skus = [] }) => mapSkusToSelect(skus),
+            },
+            placeholder: intl.formatMessage({
+              id:
+                'promotions.promotion.elligibility.cartProduct.hasSkus.placeholder',
+            }),
+            multi: true,
+            update: update,
+          },
+        },
+      },
+      {
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.cartProduct.verb.sku.not.any',
+        }),
+        value: 'sku.not.any',
+        object: {
+          renderFn: renderSelectObject,
+          extraParams: {
+            queryInfo: {
+              connector: withSkus,
+              dataGetter: ({ skus = [] }) => mapSkusToSelect(skus),
+            },
+            placeholder: intl.formatMessage({
+              id:
+                'promotions.promotion.elligibility.cartProduct.hasSkus.placeholder',
             }),
             multi: true,
             update: update,
