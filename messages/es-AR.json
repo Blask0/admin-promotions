@@ -184,7 +184,5 @@
   "promotions.promotions.deletionModal.text": "Are you sure you want to delete promotion",
   "promotions.promotions.deletionModal.confirm": "Sí",
   "promotions.promotions.deletionModal.cancel": "Cancelar",
-  "promotions.promotions.actions.activate": "Empezar",
-  "promotions.promotions.actions.deactivate": "Pausa",
   "promotions.promotions.actions.duplicate": "Duplicar"
 }

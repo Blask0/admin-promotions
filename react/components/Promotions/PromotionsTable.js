@@ -382,25 +382,6 @@ class PromotionsTable extends Component {
           onSort={this.handleSort}
           lineActions={[
             {
-              label: ({ rowData: { isActive } }) =>
-                isActive
-                  ? intl.formatMessage({
-                    id: 'promotions.promotions.actions.deactivate',
-                  })
-                  : intl.formatMessage({
-                    id: 'promotions.promotions.actions.activate',
-                  }),
-              onClick: ({ rowData: { id, name } }) => {
-                this.setState({
-                  isPromotionModalOpened: true,
-                  promotionToBeDeleted: {
-                    id,
-                    name,
-                  },
-                })
-              },
-            },
-            {
               label: () =>
                 intl.formatMessage({
                   id: 'promotions.promotions.actions.duplicate',
