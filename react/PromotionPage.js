@@ -169,7 +169,7 @@ class PromotionPage extends Component {
   }
 
   validatePriceEffect = () => {
-    const isValid = true
+    let isValid = true
     const { intl } = this.props
     const {
       promotion: {
@@ -189,7 +189,7 @@ class PromotionPage extends Component {
   }
 
   validateGiftEffect = () => {
-    const isValid = true
+    let isValid = true
     const { intl } = this.props
     const {
       promotion: {
@@ -215,7 +215,7 @@ class PromotionPage extends Component {
   }
 
   validateShippingEffect = () => {
-    const isValid = true
+    let isValid = true
     const { intl } = this.props
     const {
       promotion: {
@@ -234,7 +234,7 @@ class PromotionPage extends Component {
   }
 
   validateRewardEffect = () => {
-    const isValid = true
+    let isValid = true
     const { intl } = this.props
     const {
       promotion: {
