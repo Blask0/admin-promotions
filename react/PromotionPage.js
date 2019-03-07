@@ -25,6 +25,7 @@ class PromotionPage extends Component {
 
     this.state = {
       promotion: newPromotion(promotion, salesChannels),
+      isSaving: false,
     }
   }
 
@@ -387,7 +388,7 @@ class PromotionPage extends Component {
 
   render() {
     const { navigate } = this.context
-    const { promotion } = this.state
+    const { promotion, isSaving } = this.state
     const { generalInfo, eligibility, effects, restriction } = promotion
     const {
       intl,
@@ -444,7 +445,9 @@ class PromotionPage extends Component {
         <div className="flex flex-row">
           <Button
             variation="primary"
+            isLoading={isSaving}
             onClick={() => {
+              this.setState({ isSaving: true })
               const preparedPromotion = this.prepareToSave(promotion)
 
               if (this.canSave()) {
@@ -453,6 +456,14 @@ class PromotionPage extends Component {
                     promotion: preparedPromotion,
                   },
                 })
+                  .then(() =>
+                    navigate({
+                      page: 'admin/index',
+                    })
+                  )
+                  .finally(() => this.setState({ isSaving: false }))
+              } else {
+                this.setState({ isSaving: false })
               }
             }}>
             <FormattedMessage id="promotions.promotion.save" />
