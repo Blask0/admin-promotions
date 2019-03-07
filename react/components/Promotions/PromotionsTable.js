@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
+import { injectIntl, intlShape } from 'react-intl'
 
 import { Tag, Table } from 'vtex.styleguide'
 
@@ -15,85 +15,95 @@ class PromotionsTable extends Component {
   constructor(props) {
     super(props)
   }
-  
+
   getTableSchema(intl) {
     return {
       properties: {
         name: {
           type: 'string',
-            title: intl.formatMessage({ id: 'promotions.promotion.generalInfo.name' }),
-              width: 400,
-          },
+          title: intl.formatMessage({
+            id: 'promotions.promotion.generalInfo.name',
+          }),
+          width: 400,
+        },
         effectType: {
           type: 'string',
-            title: intl.formatMessage({ id: 'promotions.promotion.effects.title' }),
-              cellRenderer: ({ cellData: effectType }) => {
-                return (
-                  <div className="dt">
-                    {this.getEffectIcon(effectType)}
-                    <span className="dtc v-mid pl3">{effectType}</span>
-                  </div>
-                )
-              },
+          title: intl.formatMessage({
+            id: 'promotions.promotion.effects.title',
+          }),
+          cellRenderer: ({ cellData: effectType }) => {
+            return (
+              <div className="dt">
+                {this.getEffectIcon(effectType)}
+                <span className="dtc v-mid pl3">{effectType}</span>
+              </div>
+            )
           },
+        },
         scope: {
           type: 'string',
-            title: intl.formatMessage({ id: 'promotions.promotion.effects.scope.title' }),
-              width: 300,
-          },
+          title: intl.formatMessage({
+            id: 'promotions.promotion.effects.scope.title',
+          }),
+          width: 300,
+        },
         beginDate: {
           type: 'string',
-            title: intl.formatMessage({ id: 'promotions.promotion.generalInfo.startDate' }),
-              cellRenderer: ({ cellData: beginDate }) => {
-                const date = format(toDate(beginDate), 'PP')
-                const time = format(toDate(beginDate), 'p')
-                return (
-                  <div>
-                    <div className="dt">
-                      <span className="dtc v-mid">{date}</span>
-                    </div>
-                    <div className="dt">
-                      <span className="dtc v-mid">{time}</span>
-                    </div>
-                  </div>
-                )
-              },
+          title: intl.formatMessage({
+            id: 'promotions.promotion.generalInfo.startDate',
+          }),
+          cellRenderer: ({ cellData: beginDate }) => {
+            const date = format(toDate(beginDate), 'PP')
+            const time = format(toDate(beginDate), 'p')
+            return (
+              <div>
+                <div className="dt">
+                  <span className="dtc v-mid">{date}</span>
+                </div>
+                <div className="dt">
+                  <span className="dtc v-mid">{time}</span>
+                </div>
+              </div>
+            )
           },
+        },
         endDate: {
           type: 'string',
-            title: intl.formatMessage({ id: 'promotions.promotion.generalInfo.endDate' }),
-              cellRenderer: ({ cellData: endDate }) => {
-                if (!endDate) {
-                  return (
-                    <div className="dt">
-                      <span className="dtc v-mid">-</span>
-                    </div>
-                  )
-                }
-                const date = format(toDate(endDate), 'PP')
-                const time = format(toDate(endDate), 'p')
-                return (
-                  <div>
-                    <div className="dt">
-                      <span className="dtc v-mid">{date}</span>
-                    </div>
-                    <div className="dt">
-                      <span className="dtc v-mid">{time}</span>
-                    </div>
-                  </div>
-                )
-              },
+          title: intl.formatMessage({
+            id: 'promotions.promotion.generalInfo.endDate',
+          }),
+          cellRenderer: ({ cellData: endDate }) => {
+            if (!endDate) {
+              return (
+                <div className="dt">
+                  <span className="dtc v-mid">-</span>
+                </div>
+              )
+            }
+            const date = format(toDate(endDate), 'PP')
+            const time = format(toDate(endDate), 'p')
+            return (
+              <div>
+                <div className="dt">
+                  <span className="dtc v-mid">{date}</span>
+                </div>
+                <div className="dt">
+                  <span className="dtc v-mid">{time}</span>
+                </div>
+              </div>
+            )
           },
+        },
         isActive: {
           type: 'boolean',
-            title: 'Status',
-              cellRenderer: ({ cellData: isActive }) => {
-                const badgeProps = isActive
-                  ? { bgColor: '#8BC34A', color: '#FFFFFF', children: 'Active' }
-                  : { bgColor: '#727273', color: '#FFFFFF', children: 'Inactive' }
-                return <Tag {...badgeProps} />
-              },
+          title: 'Status',
+          cellRenderer: ({ cellData: isActive }) => {
+            const badgeProps = isActive
+              ? { bgColor: '#8BC34A', color: '#FFFFFF', children: 'Active' }
+              : { bgColor: '#727273', color: '#FFFFFF', children: 'Inactive' }
+            return <Tag {...badgeProps} />
           },
+        },
       },
     }
   }
@@ -115,7 +125,7 @@ class PromotionsTable extends Component {
     const { navigate } = this.context
     const { intl } = this.props
     const schema = this.getTableSchema(intl)
-    
+
     return (
       <Table
         schema={schema}
@@ -124,16 +134,18 @@ class PromotionsTable extends Component {
         loading={this.props.loading}
         onRowClick={({ rowData: { id } }) => {
           navigate({
-            page: `admin/create`,
+            page: 'admin/create',
             params: {
-              id: id
-            }
+              id: id,
+            },
           })
         }}
         toolbar={{
           inputSearch: {
             value: this.props.inputSearchValue,
-            placeholder: intl.formatMessage({ id: 'promotions.promotions.search' }),
+            placeholder: intl.formatMessage({
+              id: 'promotions.promotions.search',
+            }),
             onChange: this.props.handleSearchChange,
             onClear: this.props.handleSearchClear,
             onSubmit: this.props.handleSearchSubmit,
@@ -142,14 +154,27 @@ class PromotionsTable extends Component {
           //   label: 'Export',
           //   handleCallback: () => alert('Export not implemented yet'),
           // },
+          fields: {
+            label: intl.formatMessage({
+              id: 'promotions.promotions.table.filter.label',
+            }),
+            showAllLabel: intl.formatMessage({
+              id: 'promotions.promotions.table.filter.showAll',
+            }),
+            hideAllLabel: intl.formatMessage({
+              id: 'promotions.promotions.table.filter.hideAll',
+            }),
+          },
           newLine: {
-            label: intl.formatMessage({ id: 'promotions.promotions.newPromotion' }),
+            label: intl.formatMessage({
+              id: 'promotions.promotions.newPromotion',
+            }),
             handleCallback: () => {
               navigate({
                 page: 'admin/create',
                 params: {
-                  id: 'new'
-                }
+                  id: 'new',
+                },
               })
             },
           },

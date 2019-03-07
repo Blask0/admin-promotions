@@ -173,5 +173,8 @@
   "promotions.promotion.scopeSelector.sku.label": "Product SKU",
   "promotions.promotion.scopeSelector.sku.verb.any": "is one of",
   "promotions.promotion.scopeSelector.sku.verb.not.any": "is not one of",
-  "promotions.promotion.scopeSelector.sku.placeholder": "Select the desired SKUs…"
+  "promotions.promotion.scopeSelector.sku.placeholder": "Select the desired SKUs…",
+  "promotions.promotions.table.filter.label": "Toggle visible fields",
+  "promotions.promotions.table.filter.showAll": "Show All",
+  "promotions.promotions.table.filter.hideAll": "Hide All"
 }

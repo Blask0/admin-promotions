@@ -174,5 +174,8 @@
   "promotions.promotion.scopeSelector.sku.label": "SKU del producto",
   "promotions.promotion.scopeSelector.sku.verb.any": "es uno de",
   "promotions.promotion.scopeSelector.sku.verb.not.any": "no es uno de",
-  "promotions.promotion.scopeSelector.sku.placeholder": "Seleccione los SKUs deseados…"
+  "promotions.promotion.scopeSelector.sku.placeholder": "Seleccione los SKUs deseados…",
+  "promotions.promotions.table.filter.label": "Alternar campos visibles",
+  "promotions.promotions.table.filter.showAll": "Mostrar Todo",
+  "promotions.promotions.table.filter.hideAll": "Ocultar Todo"
 }
