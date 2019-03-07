@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-import { Tag, Table, ModalDialog } from 'vtex.styleguide'
+import { Tag, Table, ModalDialog, Toggle } from 'vtex.styleguide'
 
 import Price from '../Icon/Price'
 import Gift from '../Icon/Gift'
@@ -37,101 +37,144 @@ class PromotionsTable extends Component {
     }
   }
 
-  getTableSchema = intl => {
-    return {
-      properties: {
-        name: {
-          type: 'string',
-          title: intl.formatMessage({
-            id: 'promotions.promotion.generalInfo.name',
-          }),
-          width: 400,
-          sortable: true,
-        },
-        effectType: {
-          type: 'string',
-          title: intl.formatMessage({
-            id: 'promotions.promotion.effects.title',
-          }),
-          sortable: true,
-          cellRenderer: ({ cellData: effectType }) => {
-            return (
-              <div className="dt">
-                {this.getEffectIcon(effectType)}
-                <span className="dtc v-mid pl3">{effectType}</span>
-              </div>
-            )
-          },
-        },
-        scope: {
-          type: 'string',
-          title: intl.formatMessage({
-            id: 'promotions.promotion.effects.scope.title',
-          }),
-          width: 300,
-        },
-        beginDate: {
-          type: 'string',
-          title: intl.formatMessage({
-            id: 'promotions.promotion.generalInfo.startDate',
-          }),
-          sortable: true,
-          cellRenderer: ({ cellData: beginDate }) => {
-            const date = format(toDate(beginDate), 'PP')
-            const time = format(toDate(beginDate), 'p')
-            return (
-              <div>
-                <div className="dt">
-                  <span className="dtc v-mid">{date}</span>
-                </div>
-                <div className="dt">
-                  <span className="dtc v-mid">{time}</span>
-                </div>
-              </div>
-            )
-          },
-        },
-        endDate: {
-          type: 'string',
-          title: intl.formatMessage({
-            id: 'promotions.promotion.generalInfo.endDate',
-          }),
-          sortable: true,
-          cellRenderer: ({ cellData: endDate }) => {
-            if (!endDate) {
-              return (
-                <div className="dt">
-                  <span className="dtc v-mid">-</span>
-                </div>
-              )
-            }
-            const date = format(toDate(endDate), 'PP')
-            const time = format(toDate(endDate), 'p')
-            return (
-              <div>
-                <div className="dt">
-                  <span className="dtc v-mid">{date}</span>
-                </div>
-                <div className="dt">
-                  <span className="dtc v-mid">{time}</span>
-                </div>
-              </div>
-            )
-          },
-        },
-        isActive: {
-          type: 'boolean',
-          title: 'Status',
-          cellRenderer: ({ cellData: isActive }) => {
-            const badgeProps = isActive
-              ? { bgColor: '#8BC34A', color: '#FFFFFF', children: 'Active' }
-              : { bgColor: '#727273', color: '#FFFFFF', children: 'Inactive' }
-            return <Tag {...badgeProps} />
-          },
+  getTableSchema = intl => ({
+    properties: {
+      activation: {
+        title: ' ',
+        width: 60,
+        cellRenderer: ({ rowData }) => (
+          <div className="ma2">
+            <Toggle
+              checked={rowData.isActive}
+              onClick={e => {
+                e.stopPropagation()
+                e.preventDefault()
+              }}
+              onChange={e => console.log(rowData, e.target.checked)}
+            />
+          </div>
+        ),
+      },
+      name: {
+        type: 'string',
+        title: intl.formatMessage({
+          id: 'promotions.promotion.generalInfo.name',
+        }),
+      },
+      effectType: {
+        type: 'string',
+        title: intl.formatMessage({
+          id: 'promotions.promotion.effects.title',
+        }),
+        cellRenderer: ({ cellData: effectType }) => {
+          return (
+            <div className="dt">
+              {this.getEffectIcon(effectType)}
+              <span className="dtc v-mid pl3">{effectType}</span>
+            </div>
+          )
         },
       },
-    }
-  }
+      scope: {
+        type: 'string',
+        title: intl.formatMessage({
+          id: 'promotions.promotion.effects.scope.title',
+        }),
+      },
+      beginDate: {
+        type: 'string',
+        title: intl.formatMessage({
+          id: 'promotions.promotion.generalInfo.startDate',
+        }),
+        cellRenderer: ({ cellData: beginDate }) => {
+          const date = format(toDate(beginDate), 'PP')
+          const time = format(toDate(beginDate), 'p')
+          return (
+            <div>
+              <div className="dt">
+                <span className="dtc v-mid">{date}</span>
+              </div>
+              <div className="dt">
+                <span className="dtc v-mid">{time}</span>
+              </div>
+            </div>
+          )
+        },
+      },
+      endDate: {
+        type: 'string',
+        title: intl.formatMessage({
+          id: 'promotions.promotion.generalInfo.endDate',
+        }),
+        cellRenderer: ({ cellData: endDate }) => {
+          if (!endDate) {
+            return (
+              <div className="dt">
+                <span className="dtc v-mid">-</span>
+              </div>
+            )
+          }
+          const date = format(toDate(endDate), 'PP')
+          const time = format(toDate(endDate), 'p')
+          return (
+            <div>
+              <div className="dt">
+                <span className="dtc v-mid">{date}</span>
+              </div>
+              <div className="dt">
+                <span className="dtc v-mid">{time}</span>
+              </div>
+            </div>
+          )
+        },
+      },
+      isActive: {
+        type: 'boolean',
+        title: 'Status',
+        cellRenderer: ({ cellData: isActive }) => {
+          const badgeProps = isActive
+            ? { bgColor: '#8BC34A', color: '#FFFFFF', children: 'Active' }
+            : { bgColor: '#727273', color: '#FFFFFF', children: 'Inactive' }
+          return <Tag {...badgeProps} />
+        },
+      },
+    },
+  })
+
+  getTableLineActions = (intl, navigate) => [
+    {
+      label: () =>
+        intl.formatMessage({
+          id: 'promotions.promotions.actions.duplicate',
+        }),
+      onClick: ({ rowData: { id } }) => {
+        navigate({
+          page: 'admin/create',
+          params: {
+            id: 'new',
+            duplicate: id,
+          },
+        })
+      },
+    },
+    {
+      label: () =>
+        intl.formatMessage({
+          id: 'promotions.promotions.actions.delete',
+        }),
+      isDangerous: true,
+      onClick: ({ rowData: { id, name } }) => {
+        // navigate({})
+        this.setState({
+          isPromotionModalOpened: true,
+          promotionToBeDeleted: {
+            id,
+            name,
+          },
+        })
+      },
+    },
+  ]
 
   getEffectIcon = effectType => {
     switch (effectType) {
@@ -375,45 +418,7 @@ class PromotionsTable extends Component {
               },
             },
           }}
-          sort={{
-            sortedBy: this.state.dataSort.sortedBy,
-            sortOrder: this.state.dataSort.sortOrder,
-          }}
-          onSort={this.handleSort}
-          lineActions={[
-            {
-              label: () =>
-                intl.formatMessage({
-                  id: 'promotions.promotions.actions.duplicate',
-                }),
-              onClick: ({ rowData: { id } }) => {
-                navigate({
-                  page: 'admin/create',
-                  params: {
-                    id: 'new',
-                    duplicate: id,
-                  },
-                })
-              },
-            },
-            {
-              label: () =>
-                intl.formatMessage({
-                  id: 'promotions.promotions.actions.delete',
-                }),
-              isDangerous: true,
-              onClick: ({ rowData: { id, name } }) => {
-                navigate({})
-                this.setState({
-                  isPromotionModalOpened: true,
-                  promotionToBeDeleted: {
-                    id,
-                    name,
-                  },
-                })
-              },
-            },
-          ]}
+          lineActions={this.getTableLineActions(intl, navigate)}
           fullWidth
         />
 
