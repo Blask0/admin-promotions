@@ -22,7 +22,10 @@ function withPromotions(WrappedComponent) {
       const { name, effect } = this.state
 
       return (
-        <Query query={getPromotions} variables={{ name, effect }}>
+        <Query
+          query={getPromotions}
+          variables={{ name, effect }}
+          fetchPolicy="network-only">
           {({ loading, error, data, refetch }) => (
             <WrappedComponent
               {...this.props}
