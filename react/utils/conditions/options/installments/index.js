@@ -51,6 +51,7 @@ const installments = (intl, update) => {
             }),
             type: 'number',
             update: update,
+            intl: intl,
           },
         },
       },

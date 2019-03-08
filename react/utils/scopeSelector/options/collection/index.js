@@ -12,7 +12,7 @@ const collection = (intl, update) => {
         label: intl.formatMessage({
           id: 'promotions.promotion.scopeSelector.collection.verb.any',
         }),
-        value: 'collection.any',
+        value: 'any',
         object: {
           renderFn: renderSelectObject,
           extraParams: {
@@ -33,7 +33,7 @@ const collection = (intl, update) => {
         label: intl.formatMessage({
           id: 'promotions.promotion.scopeSelector.collection.verb.not.any',
         }),
-        value: 'collection.not.any',
+        value: 'not.any',
         object: {
           renderFn: renderSelectObject,
           extraParams: {

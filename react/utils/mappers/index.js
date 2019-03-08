@@ -33,3 +33,9 @@ export const mapSellersToSelect = sellers =>
     label: seller.name,
     value: seller.id,
   }))
+
+export const mapSalesChannelsToSelect = salesChannels =>
+  salesChannels.map(salesChannel => ({
+    label: salesChannel.name,
+    value: salesChannel.id,
+  }))

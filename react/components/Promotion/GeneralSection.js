@@ -1,7 +1,11 @@
 import React, { Fragment, Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
+
 import { Checkbox, Input, DatePicker, Toggle } from 'vtex.styleguide'
+
+import { fieldShape } from '../../utils/propTypes'
+import { addDays } from 'date-fns'
 
 class GeneralSection extends Component {
   constructor(props) {
@@ -91,6 +95,13 @@ class GeneralSection extends Component {
                 onChange={() => {
                   updatePageState({
                     hasEndDate: !generalInfo.hasEndDate,
+                    endDate: !generalInfo.hasEndDate
+                      ? {
+                        value: addDays(new Date(), 1),
+                      }
+                      : {
+                        value: undefined,
+                      },
                   })
                 }}
                 value="hasEndDate"
@@ -177,11 +188,11 @@ GeneralSection.contextTypes = {
 GeneralSection.propTypes = {
   intl: intlShape,
   generalInfo: PropTypes.shape({
-    name: PropTypes.string,
+    name: fieldShape(PropTypes.string),
     isActive: PropTypes.bool,
     startDate: PropTypes.instanceOf(Date),
     hasEndDate: PropTypes.bool,
-    endDate: PropTypes.instanceOf(Date),
+    endDate: fieldShape(PropTypes.instanceOf(Date)),
   }),
   updatePageState: PropTypes.func,
 }

@@ -10,115 +10,56 @@ import GeneralSection from './components/Promotion/GeneralSection'
 import RestrictionSection from './components/Promotion/RestrictionSection'
 
 import withSalesChannels from './connectors/withSalesChannels'
+import withPromotion from './connectors/withPromotion'
 import savingPromotion from './connectors/savingPromotion'
 
-import { addDays } from 'date-fns'
+import { newPromotion } from './utils/promotion'
+
 import { compose } from 'react-apollo'
+import {
+  getRewardEffectOrderStatusOptions,
+  getRestrictSalesChannelVerbOptions,
+} from './utils/constants'
 
 class PromotionPage extends Component {
   constructor(props) {
     super(props)
 
+    const { intl, promotion, salesChannels } = props
+
     this.state = {
-      promotion: {
-        id: '',
-        generalInfo: {
-          name: {
-            value: undefined,
-            error: undefined,
-            focus: false,
-          },
-          isActive: false,
-          startDate: new Date(),
-          hasEndDate: false, // temporary, this should be on promotion json
-          endDate: {
-            value: addDays(new Date(), 1),
-            error: undefined,
-            focus: false,
-          },
-          tz: -new Date().getTimezoneOffset() / 60,
-          isArchived: false,
-          accumulateWithPromotions: false,
-          accumulateWithManualPrices: false,
-        },
-        eligibility: {
-          allCustomers: true,
-          statements: [],
-          operator: 'all',
-        },
-        effects: {
-          activeEffectType: null, // oneOf ['price', 'gift', 'shipping', 'reward']
-          price: {
-            discountType: 'nominal', // oneOf ['nominal', 'percentual', 'priceTables']
-            discount: {
-              value: undefined,
-              error: undefined,
-              focus: false,
-            },
-            appliesTo: {
-              statements: [],
-              allProducts: true,
-              operator: 'all',
-            },
-          },
-          gift: {
-            skus: {
-              value: [],
-              error: undefined,
-              focus: false,
-            },
-            multiplier: false,
-            limitQuantityPerPurchase: false,
-            maximumQuantitySelectable: {
-              value: undefined,
-              error: undefined,
-              focus: false,
-            },
-          },
-          shipping: {
-            discountType: 'nominal', // oneOf ['nominal', 'percentual', 'maximumValue']
-            discount: {
-              value: undefined,
-              error: undefined,
-              focus: false,
-            },
-          },
-          reward: {
-            discountType: 'nominal', // oneOf ['nominal', 'percentual']
-            discount: {
-              value: undefined,
-              error: undefined,
-              focus: undefined,
-            },
-            applyByOrderStatus: undefined, // oneOf possible order status
-          },
-        },
-        restriction: {
-          isLimitingPerStore: false,
-          perStore: {
-            value: undefined,
-            error: undefined,
-            focus: false,
-          },
-          isLimitingPerClient: false,
-          perClient: {
-            value: undefined,
-            error: undefined,
-            focus: false,
-          },
-          isLimitingPerNumOfAffectedItems: false,
-          maxNumOfAffectedItems: {
-            value: undefined,
-            error: undefined,
-            focus: false,
-          },
-          isRestrictingSalesChannels: false,
-          restrictSalesChannelVerb: undefined,
-          restrictedSalesChannels: [], // idsSalesChannel
-          origin: undefined,
-        },
-      },
+      promotion: newPromotion(intl, promotion, salesChannels),
+      isSaving: false,
     }
+  }
+
+  componentDidMount = () => {
+    window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
+  }
+
+  validate = () => {
+    const {
+      generalInfo,
+      isValid: isGeneralInfoValid,
+    } = this.validateGeneralInfoSection()
+
+    const { effects, isValid: isEffectsValid } = this.validateEffectsSection()
+
+    const {
+      restriction,
+      isValid: isRestrictionValid,
+    } = this.validateRestrictionSection()
+
+    this.setState(prevState => ({
+      promotion: {
+        ...prevState.promotion,
+        generalInfo,
+        effects,
+        restriction,
+      },
+    }))
+
+    return isGeneralInfoValid && isEffectsValid && isRestrictionValid
   }
 
   validateGeneralInfoSection = () => {
@@ -133,7 +74,7 @@ class PromotionPage extends Component {
       (generalInfo.name.value && generalInfo.name.value.trim() == '')
     ) {
       generalInfo.name.error = intl.formatMessage({
-        id: 'validation.emptyField',
+        id: 'promotions.validation.emptyField',
       })
       isValid = false
     }
@@ -144,7 +85,7 @@ class PromotionPage extends Component {
         new Date(generalInfo.startDate).getTime()
     ) {
       generalInfo.endDate.error = intl.formatMessage({
-        id: 'validation.emptyField',
+        id: 'promotions.validation.endDateSmaller',
       })
       isValid = false
     }
@@ -157,13 +98,17 @@ class PromotionPage extends Component {
       promotion: { effects },
     } = this.state
 
-    if (effects.activeEffectType === 'Price') {
+    if (!effects.activeEffectType) {
+      return { effects, isValid: false }
+    }
+
+    if (effects.activeEffectType === 'price') {
       return this.validatePriceEffect()
-    } else if (effects.activeEffectType === 'Gift') {
+    } else if (effects.activeEffectType === 'gift') {
       return this.validateGiftEffect()
-    } else if (effects.activeEffectType === 'Shipping') {
+    } else if (effects.activeEffectType === 'shipping') {
       return this.validateShippingEffect()
-    } else if (effects.activeEffectType === 'Reward') {
+    } else if (effects.activeEffectType === 'reward') {
       return this.validateRewardEffect()
     }
   }
@@ -172,14 +117,12 @@ class PromotionPage extends Component {
     let isValid = true
     const { intl } = this.props
     const {
-      promotion: {
-        effects: { price },
-      },
+      promotion: { effects },
     } = this.state
 
-    if (!price.discount.value) {
-      price.discount.error = intl.formatMessage({
-        id: 'validation.emptyField',
+    if (!effects.price.discount.value) {
+      effects.price.discount.error = intl.formatMessage({
+        id: 'promotions.validation.emptyField',
       })
 
       isValid = false
@@ -192,21 +135,22 @@ class PromotionPage extends Component {
     let isValid = true
     const { intl } = this.props
     const {
-      promotion: {
-        effects: { gift },
-      },
+      promotion: { effects },
     } = this.state
 
-    if (gift.skus.value.length === 0) {
-      gift.skus.error = intl.formatMessage({
-        id: 'validation.emptyField',
+    if (effects.gift.skus.value.length === 0) {
+      effects.gift.skus.error = intl.formatMessage({
+        id: 'promotions.validation.emptyField',
       })
       isValid = false
     }
 
-    if (gift.limitQuantityPerPurchase && !gift.maxNumOfAffectedItems.value) {
-      gift.maxNumOfAffectedItems.error = intl.formatMessage({
-        id: 'validation.emptyField',
+    if (
+      effects.gift.limitQuantityPerPurchase &&
+      !effects.gift.maxNumOfAffectedItems.value
+    ) {
+      effects.gift.maxNumOfAffectedItems.error = intl.formatMessage({
+        id: 'promotions.validation.emptyField',
       })
       isValid = false
     }
@@ -218,14 +162,12 @@ class PromotionPage extends Component {
     let isValid = true
     const { intl } = this.props
     const {
-      promotion: {
-        effects: { shipping },
-      },
+      promotion: { effects },
     } = this.state
 
-    if (!shipping.discount.value) {
-      shipping.discount.error = intl.formatMessage({
-        id: 'validation.emptyField',
+    if (!effects.shipping.discount.value) {
+      effects.shipping.discount.error = intl.formatMessage({
+        id: 'promotions.validation.emptyField',
       })
       isValid = false
     }
@@ -237,14 +179,12 @@ class PromotionPage extends Component {
     let isValid = true
     const { intl } = this.props
     const {
-      promotion: {
-        effects: { reward },
-      },
+      promotion: { effects },
     } = this.state
 
-    if (!reward.discount.value) {
-      reward.discount.error = intl.formatMessage({
-        id: 'validation.emptyField',
+    if (!effects.reward.discount.value) {
+      effects.reward.discount.error = intl.formatMessage({
+        id: 'promotions.validation.emptyField',
       })
       isValid = false
     }
@@ -252,23 +192,60 @@ class PromotionPage extends Component {
     return { effects, isValid }
   }
 
-  validateRestrictionSection = restriction => {
+  validateRestrictionSection = () => {
+    let isValid = true
+    const {
+      promotion: { restriction },
+    } = this.state
+    const { intl } = this.props
+
     if (restriction.isLimitingPerStore && !restriction.perStore.value) {
-      restriction.perStore.error = 'validation.emptyField'
+      restriction.perStore.error = intl.formatMessage({
+        id: 'promotions.validation.emptyField',
+      })
+      isValid = false
     }
 
     if (restriction.isLimitingPerClient && !restriction.perClient.value) {
-      restriction.perClient.error = 'validation.emptyField'
+      restriction.perClient.error = intl.formatMessage({
+        id: 'promotions.validation.emptyField',
+      })
+      isValid = false
+    }
+
+    if (
+      restriction.perStore.value &&
+      restriction.perClient.value &&
+      restriction.perClient.value > restriction.perStore.value
+    ) {
+      restriction.perClient.error = intl.formatMessage({
+        id: 'promotions.validation.biggerLimit',
+      })
+      isValid = false
     }
 
     if (
       restriction.isLimitingPerNumOfAffectedItems &&
-      !restriction.maxNumOfAffectedItems.value
+      !restriction.maxNumberOfAffectedItems.value
     ) {
-      restriction.perClient.error = 'validation.emptyField'
+      restriction.maxNumberOfAffectedItems.error = intl.formatMessage({
+        id: 'promotions.validation.emptyField',
+      })
+      isValid = false
     }
 
-    return restriction
+    if (
+      restriction.isRestrictingSalesChannels &&
+      (!restriction.restrictedSalesChannels.value ||
+        restriction.restrictedSalesChannels.value.length === 0)
+    ) {
+      restriction.restrictedSalesChannels.error = intl.formatMessage({
+        id: 'promotions.validation.emptyField',
+      })
+      isValid = false
+    }
+
+    return { restriction, isValid }
   }
 
   componentDidMount = () => {
@@ -341,7 +318,10 @@ class PromotionPage extends Component {
     }))
   }
 
-  canSave = () => true
+  canSave = () => {
+    const a = this.validate()
+    return a
+  }
 
   getAffectedSalesChannels = () => {
     const { restrictedSalesChannelsIds, salesChannels } = this.props
@@ -352,9 +332,76 @@ class PromotionPage extends Component {
       : salesChannels.filter(({ id }) => id === '1')
   }
 
+  prepareToSave = promotion => {
+    const { intl } = this.props
+    const {
+      generalInfo: { hasEndDate, ...generalInfo },
+      eligibility,
+      effects,
+      restriction,
+    } = promotion
+    const { limitQuantityPerPurchase, ...giftEffect } = effects.gift
+    return {
+      ...promotion,
+      generalInfo: {
+        ...generalInfo,
+        name: generalInfo.name.value,
+        endDate: generalInfo.endDate.value,
+      },
+      effects: {
+        ...effects,
+        price: {
+          ...effects.price,
+          discount: effects.price.discount.value,
+          appliesTo: {
+            ...effects.price.appliesTo,
+            statements: JSON.stringify(effects.price.appliesTo.statements),
+          },
+        },
+        gift: {
+          ...giftEffect,
+          skus: giftEffect.skus.map(sku => ({
+            id: sku.value.id,
+            name: sku.value.name,
+          })),
+          maxQuantityPerPurchase: giftEffect.maxQuantityPerPurchase.value,
+        },
+        shipping: {
+          ...effects.shipping,
+          discount: effects.shipping.discount.value,
+        },
+        reward: {
+          ...effects.reward,
+          discount: effects.reward.discount.value,
+          applyByOrderStatus: effects.reward.applyByOrderStatus
+            ? effects.reward.applyByOrderStatus.value
+            : getRewardEffectOrderStatusOptions(intl)[0].value,
+        },
+      },
+      eligibility: {
+        ...eligibility,
+        statements: JSON.stringify(eligibility.statements),
+      },
+      restriction: {
+        ...restriction,
+        perStore: restriction.perStore.value,
+        perClient: restriction.perClient.value,
+        maxNumberOfAffectedItems: restriction.maxNumberOfAffectedItems.value,
+        restrictSalesChannelVerb: restriction.isRestrictingSalesChannels
+          ? restriction.restrictSalesChannelVerb
+            ? restriction.restrictSalesChannelVerb.value
+            : getRestrictSalesChannelVerbOptions(intl)[0].value
+          : undefined,
+        restrictedSalesChannels: restriction.isRestrictingSalesChannels
+          ? restriction.restrictedSalesChannels.value.map(sc => sc.value)
+          : undefined,
+      },
+    }
+  }
+
   render() {
     const { navigate } = this.context
-    const { promotion } = this.state
+    const { promotion, isSaving } = this.state
     const { generalInfo, eligibility, effects, restriction } = promotion
     const {
       intl,
@@ -408,38 +455,36 @@ class PromotionPage extends Component {
             updatePageState={this.handleRestrictionSectionChange}
           />
         </PageBlock>
-        {this.canSave() ? (
-          <div className="flex flex-row">
-            <Button
-              variation="primary"
-              onClick={() => {
-                console.log({
-                  ...promotion,
-                  eligibility: {
-                    ...eligibility,
-                    statements: JSON.stringify(eligibility.statements),
-                  },
-                })
+        <div className="flex flex-row">
+          <Button
+            variation="primary"
+            isLoading={isSaving}
+            onClick={() => {
+              this.setState({ isSaving: true })
+              const preparedPromotion = this.prepareToSave(promotion)
 
+              if (this.canSave()) {
                 savePromotion({
                   variables: {
-                    promotion: {
-                      ...promotion,
-                      eligibility: {
-                        ...eligibility,
-                        statements: JSON.stringify(eligibility.statements),
-                      },
-                    },
+                    promotion: preparedPromotion,
                   },
                 })
-              }}>
-              <FormattedMessage id="promotions.promotion.save" />
-            </Button>
-            <Button variation="tertiary">
-              <FormattedMessage id="promotions.promotion.cancel" />
-            </Button>
-          </div>
-        ) : null}
+                  .then(() =>
+                    navigate({
+                      page: 'admin/index',
+                    })
+                  )
+                  .finally(() => this.setState({ isSaving: false }))
+              } else {
+                this.setState({ isSaving: false })
+              }
+            }}>
+            <FormattedMessage id="promotions.promotion.save" />
+          </Button>
+          <Button variation="tertiary">
+            <FormattedMessage id="promotions.promotion.cancel" />
+          </Button>
+        </div>
       </Layout>
     )
   }
@@ -455,7 +500,8 @@ PromotionPage.propTypes = {
 }
 
 export default compose(
-  savingPromotion,
   withSalesChannels,
+  withPromotion,
+  savingPromotion,
   injectIntl
 )(PromotionPage)

@@ -5,7 +5,6 @@ query GetPromotions($name: String, $effect: String) {
     beginDate
     endDate
     isActive
-    description
     effectType
   }
 }
