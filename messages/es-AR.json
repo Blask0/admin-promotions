@@ -153,7 +153,7 @@
   "promotions.promotion.restriction.origin.fulfillment": "Fulfillment",
   "promotions.promotion.restriction.origin.marketplace.explanation": "Pedidos hechos directamente a su tienda",
   "promotions.promotion.restriction.origin.fulfillment.explanation": "Pedidos donde tu tienda actúa como vendedor",
-  "promotions.validation.emptyField": "Campo vacío",
+  "promotions.validation.emptyField": "Este campo no puede estar vacío",
   "promotions.validation.endDateSmaller": "La fecha de finalización no puede ser anterior a la fecha de inicio",
   "promotions.validation.rangeInput": "Debe ser más pequeño que otra entrada",
   "promotions.validation.biggerLimit": "Este límite no puede ser mayor que el límite por tienda",
