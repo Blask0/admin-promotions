@@ -40,6 +40,7 @@ class PromotionsTable extends Component {
           title: intl.formatMessage({
             id: 'promotions.promotion.effects.title',
           }),
+          sortable: true,
           cellRenderer: ({ cellData: effectType }) => {
             return (
               <div className="dt">
@@ -139,6 +140,14 @@ class PromotionsTable extends Component {
   sortNameAlphapeticallyDESC = (a, b) => {
     return a.name < b.name ? 1 : a.name > b.name ? -1 : 0
   }
+  
+  sortEffectAlphapeticallyASC = (a, b) => {
+    return a.effectType < b.effectType ? -1 : a.effectType > b.effectType ? 1 : 0
+  }
+
+  sortEffectAlphapeticallyDESC = (a, b) => {
+    return a.effectType < b.effectType ? 1 : a.effectType > b.effectType ? -1 : 0
+  }
 
   sortStartDateASC = (a, b) => {
     return new Date(a.beginDate).getTime() < new Date(b.beginDate).getTime()
@@ -187,6 +196,17 @@ class PromotionsTable extends Component {
         },
       })
     } else if (sortedBy === 'effectType') {
+      const orderedPromotions = sortOrder === 'ASC'
+      ? this.props.promotions.slice().sort(this.sortEffectAlphapeticallyASC)
+      : this.props.promotions.slice().sort(this.sortEffectAlphapeticallyDESC)
+
+      this.setState({
+        orderedPromotions,
+        dataSort: {
+          sortedBy,
+          sortOrder,
+        },
+      })
     } else if (sortedBy === 'beginDate') {
       const orderedPromotions = sortOrder === 'ASC'
       ? this.props.promotions.slice().sort(this.sortStartDateASC)
