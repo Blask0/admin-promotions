@@ -16,7 +16,7 @@ class PromotionsTable extends Component {
     super(props)
 
     this.state = {
-      orderedPromotions: this.props.promotions,
+      orderedPromotions: props.promotions,
       dataSort: {
         sortedBy: null,
         sortOrder: null,
