@@ -74,7 +74,7 @@ class PromotionPage extends Component {
       (generalInfo.name.value && generalInfo.name.value.trim() == '')
     ) {
       generalInfo.name.error = intl.formatMessage({
-        id: 'validation.emptyField',
+        id: 'promotions.validation.emptyField',
       })
       isValid = false
     }
@@ -85,7 +85,7 @@ class PromotionPage extends Component {
         new Date(generalInfo.startDate).getTime()
     ) {
       generalInfo.endDate.error = intl.formatMessage({
-        id: 'validation.endDateSmaller',
+        id: 'promotions.validation.endDateSmaller',
       })
       isValid = false
     }
@@ -122,7 +122,7 @@ class PromotionPage extends Component {
 
     if (!effects.price.discount.value) {
       effects.price.discount.error = intl.formatMessage({
-        id: 'validation.emptyField',
+        id: 'promotions.validation.emptyField',
       })
 
       isValid = false
@@ -140,7 +140,7 @@ class PromotionPage extends Component {
 
     if (effects.gift.skus.value.length === 0) {
       effects.gift.skus.error = intl.formatMessage({
-        id: 'validation.emptyField',
+        id: 'promotions.validation.emptyField',
       })
       isValid = false
     }
@@ -150,7 +150,7 @@ class PromotionPage extends Component {
       !effects.gift.maxNumOfAffectedItems.value
     ) {
       effects.gift.maxNumOfAffectedItems.error = intl.formatMessage({
-        id: 'validation.emptyField',
+        id: 'promotions.validation.emptyField',
       })
       isValid = false
     }
@@ -167,7 +167,7 @@ class PromotionPage extends Component {
 
     if (!effects.shipping.discount.value) {
       effects.shipping.discount.error = intl.formatMessage({
-        id: 'validation.emptyField',
+        id: 'promotions.validation.emptyField',
       })
       isValid = false
     }
@@ -184,7 +184,7 @@ class PromotionPage extends Component {
 
     if (!effects.reward.discount.value) {
       effects.reward.discount.error = intl.formatMessage({
-        id: 'validation.emptyField',
+        id: 'promotions.validation.emptyField',
       })
       isValid = false
     }
@@ -201,14 +201,25 @@ class PromotionPage extends Component {
 
     if (restriction.isLimitingPerStore && !restriction.perStore.value) {
       restriction.perStore.error = intl.formatMessage({
-        id: 'validation.emptyField',
+        id: 'promotions.validation.emptyField',
       })
       isValid = false
     }
 
     if (restriction.isLimitingPerClient && !restriction.perClient.value) {
       restriction.perClient.error = intl.formatMessage({
-        id: 'validation.emptyField',
+        id: 'promotions.validation.emptyField',
+      })
+      isValid = false
+    }
+
+    if (
+      restriction.perStore.value &&
+      restriction.perClient.value &&
+      restriction.perClient.value > restriction.perStore.value
+    ) {
+      restriction.perClient.error = intl.formatMessage({
+        id: 'promotions.validation.biggerLimit',
       })
       isValid = false
     }
@@ -218,7 +229,7 @@ class PromotionPage extends Component {
       !restriction.maxNumberOfAffectedItems.value
     ) {
       restriction.maxNumberOfAffectedItems.error = intl.formatMessage({
-        id: 'validation.emptyField',
+        id: 'promotions.validation.emptyField',
       })
       isValid = false
     }
@@ -229,7 +240,7 @@ class PromotionPage extends Component {
         restriction.restrictedSalesChannels.value.length === 0)
     ) {
       restriction.restrictedSalesChannels.error = intl.formatMessage({
-        id: 'validation.emptyField',
+        id: 'promotions.validation.emptyField',
       })
       isValid = false
     }

@@ -19,7 +19,7 @@ const renderRangeInputObject = ({
           statements[statementIndex].object &&
           parseInt(statements[statementIndex].object.first) >=
             parseInt(statements[statementIndex].object.last)
-            ? intl.formatMessage({ id: 'validation.rangeInput' })
+            ? intl.formatMessage({ id: 'promotions.validation.rangeInput' })
             : ''
         }
         value={values && values.first ? values.first : ''}
