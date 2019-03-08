@@ -21,7 +21,10 @@ function withPromotion(WrappedComponent) {
       const { id } = this.state
 
       return (
-        <Query query={getPromotion} variables={{ id }}>
+        <Query
+          query={getPromotion}
+          variables={{ id }}
+          fetchPolicy="network-only">
           {({ loading, error, data }) =>
             loading ? null : (
               <WrappedComponent

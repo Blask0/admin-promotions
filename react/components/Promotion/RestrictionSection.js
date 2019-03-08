@@ -10,10 +10,8 @@ import {
 } from 'vtex.styleguide'
 
 import { fieldShape } from '../../utils/propTypes'
-import {
-  RESTRICT_SALES_CHANNEL_VERB_OPTIONS,
-  mapSalesChannelsToSelect,
-} from '../../utils/promotion/restrictions'
+import { RESTRICT_SALES_CHANNEL_VERB_OPTIONS } from '../../utils/constants'
+import { mapSalesChannelsToSelect } from '../../utils/mappers'
 import withSalesChannels from '../../connectors/withSalesChannels'
 
 class RestrictionSection extends Component {

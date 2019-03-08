@@ -365,6 +365,7 @@ class PromotionPage extends Component {
         reward: {
           ...effects.reward,
           discount: effects.reward.discount.value,
+          applyByOrderStatus: effects.reward.applyByOrderStatus.value,
         },
       },
       eligibility: {

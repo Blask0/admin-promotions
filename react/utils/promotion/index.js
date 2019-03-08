@@ -1,7 +1,8 @@
 import {
   RESTRICT_SALES_CHANNEL_VERB_OPTIONS,
-  mapSalesChannelsToSelect,
-} from '../../utils/promotion/restrictions'
+  REWARD_EFFECT_ORDER_STATUS_OPTIONS,
+} from '../../utils/constants'
+import { mapSalesChannelsToSelect } from '../../utils/mappers'
 
 const newFieldWithValidation = value => ({
   value,
@@ -33,7 +34,7 @@ const INITIAL_SHIPPING_EFFECT = {
 const INITIAL_REWARD_EFFECT = {
   discountType: 'nominal',
   discount: newFieldWithValidation(),
-  applyByOrderStatus: undefined,
+  applyByOrderStatus: REWARD_EFFECT_ORDER_STATUS_OPTIONS[0],
 }
 
 const getPriceEffect = priceEffect =>
@@ -73,11 +74,13 @@ const getShippingEffect = shippingEffect =>
 const getRewardEffect = rewardEffect =>
   rewardEffect
     ? {
-      discountType: 'nominal',
+      ...rewardEffect,
       discount: newFieldWithValidation(
         rewardEffect ? rewardEffect.discount : undefined
       ),
-      applyByOrderStatus: undefined,
+      applyByOrderStatus: REWARD_EFFECT_ORDER_STATUS_OPTIONS.find(
+        option => option.value === rewardEffect.applyByOrderStatus
+      ),
     }
     : INITIAL_REWARD_EFFECT
 
