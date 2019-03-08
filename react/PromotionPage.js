@@ -33,14 +33,6 @@ class PromotionPage extends Component {
     window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
   }
 
-  // componentDidUpdate = prevProps => {
-  //   if (this.props.promotion && this.props.promotion !== prevProps.promotion) {
-  //     this.setState({
-  //       promotion: newPromotion(this.props.promotion),
-  //     })
-  //   }
-  // }
-
   validate = () => {
     const {
       generalInfo,
