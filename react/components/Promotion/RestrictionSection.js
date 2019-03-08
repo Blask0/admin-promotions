@@ -10,7 +10,7 @@ import {
 } from 'vtex.styleguide'
 
 import { fieldShape } from '../../utils/propTypes'
-import { RESTRICT_SALES_CHANNEL_VERB_OPTIONS } from '../../utils/constants'
+import { getRestrictSalesChannelVerbOptions } from '../../utils/constants'
 import { mapSalesChannelsToSelect } from '../../utils/mappers'
 import withSalesChannels from '../../connectors/withSalesChannels'
 
@@ -40,6 +40,8 @@ class RestrictionSection extends Component {
       loading,
       updatePageState,
     } = this.props
+
+    const restrictSalesChannelOptions = getRestrictSalesChannelVerbOptions(intl)
 
     return (
       <Fragment>
@@ -190,10 +192,9 @@ class RestrictionSection extends Component {
           <div className="pv3 flex flex-row">
             <div className="w-30 pl5">
               <EXPERIMENTAL_Select
-                options={RESTRICT_SALES_CHANNEL_VERB_OPTIONS}
+                options={restrictSalesChannelOptions}
                 value={
-                  restrictSalesChannelVerb ||
-                  RESTRICT_SALES_CHANNEL_VERB_OPTIONS[0]
+                  restrictSalesChannelVerb || restrictSalesChannelOptions[0]
                 }
                 loading={loading}
                 multi={false}

@@ -16,15 +16,19 @@ import savingPromotion from './connectors/savingPromotion'
 import { newPromotion } from './utils/promotion'
 
 import { compose } from 'react-apollo'
+import {
+  getRewardEffectOrderStatusOptions,
+  getRestrictSalesChannelVerbOptions,
+} from './utils/constants'
 
 class PromotionPage extends Component {
   constructor(props) {
     super(props)
 
-    const { promotion, salesChannels } = props
+    const { intl, promotion, salesChannels } = props
 
     this.state = {
-      promotion: newPromotion(promotion, salesChannels),
+      promotion: newPromotion(intl, promotion, salesChannels),
       isSaving: false,
     }
   }
@@ -318,6 +322,7 @@ class PromotionPage extends Component {
   }
 
   prepareToSave = promotion => {
+    const { intl } = this.props
     const {
       generalInfo: { hasEndDate, ...generalInfo },
       eligibility,
@@ -357,7 +362,9 @@ class PromotionPage extends Component {
         reward: {
           ...effects.reward,
           discount: effects.reward.discount.value,
-          applyByOrderStatus: effects.reward.applyByOrderStatus.value,
+          applyByOrderStatus: effects.reward.applyByOrderStatus
+            ? effects.reward.applyByOrderStatus.value
+            : getRewardEffectOrderStatusOptions(intl)[0].value,
         },
       },
       eligibility: {
@@ -370,7 +377,9 @@ class PromotionPage extends Component {
         perClient: restriction.perClient.value,
         maxNumberOfAffectedItems: restriction.maxNumberOfAffectedItems.value,
         restrictSalesChannelVerb: restriction.isRestrictingSalesChannels
-          ? restriction.restrictSalesChannelVerb.value
+          ? restriction.restrictSalesChannelVerb
+            ? restriction.restrictSalesChannelVerb.value
+            : getRestrictSalesChannelVerbOptions(intl)[0].value
           : undefined,
         restrictedSalesChannels: restriction.isRestrictingSalesChannels
           ? restriction.restrictedSalesChannels.value.map(sc => sc.value)

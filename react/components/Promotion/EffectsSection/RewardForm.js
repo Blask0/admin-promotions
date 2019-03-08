@@ -9,7 +9,7 @@ import {
   EXPERIMENTAL_Select,
 } from 'vtex.styleguide'
 
-import { REWARD_EFFECT_ORDER_STATUS_OPTIONS } from '../../../utils/constants'
+import { getRewardEffectOrderStatusOptions } from '../../../utils/constants'
 
 class RewardForm extends Component {
   isDiscountTypeSelected = discountType =>
@@ -29,6 +29,7 @@ class RewardForm extends Component {
 
   render() {
     const { intl, currencyCode, rewardEffect } = this.props
+    const orderStatusOptions = getRewardEffectOrderStatusOptions(intl)
 
     return (
       <Fragment>
@@ -82,12 +83,11 @@ class RewardForm extends Component {
         </div>
         <div className="mh4 mt4">
           <EXPERIMENTAL_Select
-            label={'Apply reward when order status changes to'}
-            options={REWARD_EFFECT_ORDER_STATUS_OPTIONS}
-            value={
-              rewardEffect.applyByOrderStatus ||
-              REWARD_EFFECT_ORDER_STATUS_OPTIONS[0]
-            }
+            label={intl.formatMessage({
+              id: 'promotions.promotion.effects.rewardForm.orderStatus.label',
+            })}
+            options={orderStatusOptions}
+            value={rewardEffect.applyByOrderStatus || orderStatusOptions[0]}
             multi={false}
             onChange={selected => {
               selected && this.changeApplyByOrderStatus(selected)

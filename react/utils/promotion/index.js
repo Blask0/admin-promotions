@@ -1,6 +1,6 @@
 import {
-  RESTRICT_SALES_CHANNEL_VERB_OPTIONS,
-  REWARD_EFFECT_ORDER_STATUS_OPTIONS,
+  getRestrictSalesChannelVerbOptions,
+  getRewardEffectOrderStatusOptions,
 } from '../../utils/constants'
 import { mapSalesChannelsToSelect } from '../../utils/mappers'
 
@@ -34,7 +34,7 @@ const INITIAL_SHIPPING_EFFECT = {
 const INITIAL_REWARD_EFFECT = {
   discountType: 'nominal',
   discount: newFieldWithValidation(),
-  applyByOrderStatus: REWARD_EFFECT_ORDER_STATUS_OPTIONS[0],
+  applyByOrderStatus: undefined,
 }
 
 const getPriceEffect = priceEffect =>
@@ -71,20 +71,20 @@ const getShippingEffect = shippingEffect =>
     }
     : INITIAL_SHIPPING_EFFECT
 
-const getRewardEffect = rewardEffect =>
+const getRewardEffect = (intl, rewardEffect) =>
   rewardEffect
     ? {
       ...rewardEffect,
       discount: newFieldWithValidation(
         rewardEffect ? rewardEffect.discount : undefined
       ),
-      applyByOrderStatus: REWARD_EFFECT_ORDER_STATUS_OPTIONS.find(
+      applyByOrderStatus: getRewardEffectOrderStatusOptions(intl).find(
         option => option.value === rewardEffect.applyByOrderStatus
       ),
     }
     : INITIAL_REWARD_EFFECT
 
-export const newPromotion = (promotion, salesChannels) => {
+export const newPromotion = (intl, promotion, salesChannels) => {
   if (promotion) {
     const { generalInfo, eligibility, effects, restriction } = promotion
 
@@ -104,7 +104,7 @@ export const newPromotion = (promotion, salesChannels) => {
         price: getPriceEffect(effects.price),
         gift: getGiftEffect(effects.gift),
         shipping: getShippingEffect(effects.shipping),
-        reward: getRewardEffect(effects.reward),
+        reward: getRewardEffect(intl, effects.reward),
       },
       eligibility: {
         ...eligibility,
@@ -122,7 +122,7 @@ export const newPromotion = (promotion, salesChannels) => {
         ),
         isRestrictingSalesChannels:
           restriction.restrictedSalesChannels.length > 0,
-        restrictSalesChannelVerb: RESTRICT_SALES_CHANNEL_VERB_OPTIONS.find(
+        restrictSalesChannelVerb: getRestrictSalesChannelVerbOptions(intl).find(
           verb => verb.value === restriction.restrictSalesChannelVerb.value
         ),
         restrictedSalesChannels: newFieldWithValidation(

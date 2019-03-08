@@ -1,21 +1,29 @@
-export const RESTRICT_SALES_CHANNEL_VERB_OPTIONS = [
+export const getRestrictSalesChannelVerbOptions = intl => [
   {
-    label: 'is any of',
+    label: intl.formatMessage({
+      id: 'promotions.promotion.restriction.restrictTradePolicies.verb.any',
+    }),
     value: 'any',
   },
   {
-    label: 'is not any of',
+    label: intl.formatMessage({
+      id: 'promotions.promotion.restriction.restrictTradePolicies.verb.not.any',
+    }),
     value: 'not.any',
   },
 ]
 
-export const REWARD_EFFECT_ORDER_STATUS_OPTIONS = [
+export const getRewardEffectOrderStatusOptions = intl => [
   {
-    label: 'Invoiced',
+    label: intl.formatMessage({
+      id: 'promotions.promotion.effects.rewardForm.orderStatus.invoiced',
+    }),
     value: 'invoiced',
   },
   {
-    label: 'Payment approved',
+    label: intl.formatMessage({
+      id: 'promotions.promotion.effects.rewardForm.orderStatus.paymentApproved',
+    }),
     value: 'payment-approved',
   },
 ]
