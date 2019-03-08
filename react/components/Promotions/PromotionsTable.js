@@ -14,9 +14,17 @@ import { toDate, format } from 'date-fns'
 class PromotionsTable extends Component {
   constructor(props) {
     super(props)
+
+    this.state = {
+      orderedPromotions: this.props.promotions,
+      dataSort: {
+        sortedBy: null,
+        sortOrder: null,
+      },
+    }
   }
 
-  getTableSchema(intl) {
+  getTableSchema = intl => {
     return {
       properties: {
         name: {
@@ -25,6 +33,7 @@ class PromotionsTable extends Component {
             id: 'promotions.promotion.generalInfo.name',
           }),
           width: 400,
+          sortable: true,
         },
         effectType: {
           type: 'string',
@@ -52,6 +61,7 @@ class PromotionsTable extends Component {
           title: intl.formatMessage({
             id: 'promotions.promotion.generalInfo.startDate',
           }),
+          sortable: true,
           cellRenderer: ({ cellData: beginDate }) => {
             const date = format(toDate(beginDate), 'PP')
             const time = format(toDate(beginDate), 'p')
@@ -72,6 +82,7 @@ class PromotionsTable extends Component {
           title: intl.formatMessage({
             id: 'promotions.promotion.generalInfo.endDate',
           }),
+          sortable: true,
           cellRenderer: ({ cellData: endDate }) => {
             if (!endDate) {
               return (
@@ -108,7 +119,7 @@ class PromotionsTable extends Component {
     }
   }
 
-  getEffectIcon(effectType) {
+  getEffectIcon = effectType => {
     switch (effectType) {
       case 'Price':
         return <Price />
@@ -121,6 +132,88 @@ class PromotionsTable extends Component {
     }
   }
 
+  sortNameAlphapeticallyASC = (a, b) => {
+    return a.name < b.name ? -1 : a.name > b.name ? 1 : 0
+  }
+
+  sortNameAlphapeticallyDESC = (a, b) => {
+    return a.name < b.name ? 1 : a.name > b.name ? -1 : 0
+  }
+
+  sortStartDateASC = (a, b) => {
+    return new Date(a.beginDate).getTime() < new Date(b.beginDate).getTime()
+      ? -1
+      : new Date(a.beginDate).getTime() > new Date(b.beginDate).getTime()
+        ? 1
+        : 0
+  }
+  
+  sortStartDateDESC = (a, b) => {
+    return new Date(a.beginDate).getTime() < new Date(b.beginDate).getTime()
+      ? 1
+      : new Date(a.beginDate).getTime() > new Date(b.beginDate).getTime()
+        ? -1
+        : 0
+  }
+
+  sortEndDateASC = (a, b) => {
+    return new Date(a.endDate).getTime() < new Date(b.endDate).getTime()
+      ? -1
+      : new Date(a.endDate).getTime() > new Date(b.endDate).getTime()
+        ? 1
+        : 0
+  }
+  
+  sortEndDateDESC = (a, b) => {
+    return new Date(a.endDate).getTime() < new Date(b.endDate).getTime()
+      ? 1
+      : new Date(a.endDate).getTime() > new Date(b.endDate).getTime()
+        ? -1
+        : 0
+  }
+
+  handleSort = ({ sortOrder, sortedBy }) => {
+    if (sortedBy === 'name') {
+      const orderedPromotions =
+        sortOrder === 'ASC'
+          ? this.props.promotions.slice().sort(this.sortNameAlphapeticallyASC)
+          : this.props.promotions.slice().sort(this.sortNameAlphapeticallyDESC)
+
+      this.setState({
+        orderedPromotions,
+        dataSort: {
+          sortedBy,
+          sortOrder,
+        },
+      })
+    } else if (sortedBy === 'effectType') {
+    } else if (sortedBy === 'beginDate') {
+      const orderedPromotions = sortOrder === 'ASC'
+      ? this.props.promotions.slice().sort(this.sortStartDateASC)
+      : this.props.promotions.slice().sort(this.sortStartDateDESC)
+
+      this.setState({
+        orderedPromotions,
+        dataSort: {
+          sortedBy,
+          sortOrder,
+        },
+      })
+    } else if (sortedBy === 'endDate') {
+      const orderedPromotions = sortOrder === 'ASC'
+      ? this.props.promotions.slice().sort(this.sortEndDateASC)
+      : this.props.promotions.slice().sort(this.sortEndDateDESC)
+
+      this.setState({
+        orderedPromotions,
+        dataSort: {
+          sortedBy,
+          sortOrder,
+        },
+      })
+    }
+  }
+
   render() {
     const { navigate } = this.context
     const { intl } = this.props
@@ -129,7 +222,7 @@ class PromotionsTable extends Component {
     return (
       <Table
         schema={schema}
-        items={this.props.promotions}
+        items={this.state.orderedPromotions}
         density="low"
         loading={this.props.loading}
         onRowClick={({ rowData: { id } }) => {
@@ -179,6 +272,11 @@ class PromotionsTable extends Component {
             },
           },
         }}
+        sort={{
+          sortedBy: this.state.dataSort.sortedBy,
+          sortOrder: this.state.dataSort.sortOrder,
+        }}
+        onSort={this.handleSort}
         fullWidth
       />
     )
