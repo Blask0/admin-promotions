@@ -152,7 +152,7 @@
   "promotions.promotion.restriction.origin.fulfillment": "Fulfillment",
   "promotions.promotion.restriction.origin.marketplace.explanation": "Orders made directly to your store",
   "promotions.promotion.restriction.origin.fulfillment.explanation": "Orders where your store is acting as a seller",
-  "promotions.validation.emptyField": "Empty field",
+  "promotions.validation.emptyField": "This field cannot be empty",
   "promotions.validation.endDateSmaller": "End date can't be before start date",
   "promotions.validation.rangeInput": "Must be smaller than other input",
   "promotions.validation.biggerLimit": "This limit can't be bigger than the limit per store",
