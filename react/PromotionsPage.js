@@ -47,7 +47,7 @@ class PromotionsPage extends Component {
   }
 
   handlePromotionDeletion = () => {
-    this.props.refetch()
+    this.props.refetchPromotions()
   }
 
   render() {

@@ -145,40 +145,42 @@ class PromotionsTable extends Component {
     },
   })
 
-  getTableLineActions = (intl, navigate) => [
-    {
-      label: () =>
-        intl.formatMessage({
-          id: 'promotions.promotions.actions.duplicate',
-        }),
-      onClick: ({ rowData: { id } }) => {
-        navigate({
-          page: 'admin/create',
-          params: {
-            id: 'new',
-            duplicate: id,
-          },
-        })
+  getTableLineActions = () => {
+    const { intl, navigate } = this.props
+    return [
+      {
+        label: () =>
+          intl.formatMessage({
+            id: 'promotions.promotions.actions.duplicate',
+          }),
+        onClick: ({ rowData: { id } }) => {
+          navigate({
+            page: 'admin/create',
+            params: {
+              id: 'new',
+              duplicate: id,
+            },
+          })
+        },
       },
-    },
-    {
-      label: () =>
-        intl.formatMessage({
-          id: 'promotions.promotions.actions.delete',
-        }),
-      isDangerous: true,
-      onClick: ({ rowData: { id, name } }) => {
-        // navigate({})
-        this.setState({
-          isPromotionModalOpened: true,
-          promotionToBeDeleted: {
-            id,
-            name,
-          },
-        })
+      {
+        label: () =>
+          intl.formatMessage({
+            id: 'promotions.promotions.actions.delete',
+          }),
+        isDangerous: true,
+        onClick: ({ rowData: { id, name } }) => {
+          this.setState({
+            isPromotionModalOpened: true,
+            promotionToBeDeleted: {
+              id,
+              name,
+            },
+          })
+        },
       },
-    },
-  ]
+    ]
+  }
 
   getEffectIcon = effectType => {
     switch (effectType) {
@@ -428,7 +430,7 @@ class PromotionsTable extends Component {
             sortOrder: this.state.dataSort.sortOrder,
           }}
           onSort={this.handleSort}
-          lineActions={this.getTableLineActions(intl, navigate)}
+          lineActions={this.getTableLineActions()}
           fullWidth
         />
 
