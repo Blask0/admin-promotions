@@ -146,7 +146,8 @@ class PromotionsTable extends Component {
   })
 
   getTableLineActions = () => {
-    const { intl, navigate } = this.props
+    const { intl } = this.props
+    const { navigate } = this.context
     return [
       {
         label: () =>

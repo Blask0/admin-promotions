@@ -8,8 +8,13 @@ function withPromotion(WrappedComponent) {
     constructor(props) {
       super(props)
 
+      const {
+        params: { id, duplicate },
+      } = this.props
+
       this.state = {
-        id: props.params.id,
+        id: id !== 'new' ? id : duplicate || undefined,
+        isDuplicating: id === 'new' && duplicate,
       }
     }
 
@@ -17,10 +22,21 @@ function withPromotion(WrappedComponent) {
       window.postMessage({ action: { type: 'START_LOADING' } }, '*')
     }
 
-    render() {
-      const { id } = this.state
+    mapPromotion = promotion =>
+      this.state.isDuplicating
+        ? {
+          ...promotion,
+          id: undefined,
+          eligibility: {
+            ...promotion.eligibility,
+            id: undefined,
+          },
+        }
+        : promotion
 
-      return (
+    render() {
+      const { id, isDuplicating } = this.state
+      return id ? (
         <Query
           query={getPromotion}
           variables={{ id }}
@@ -31,11 +47,15 @@ function withPromotion(WrappedComponent) {
                 {...this.props}
                 loading={loading}
                 error={error}
-                promotion={data ? data.getPromotion : undefined}
+                promotion={
+                  data ? this.mapPromotion(data.getPromotion) : undefined
+                }
               />
             )
           }
         </Query>
+      ) : (
+        <WrappedComponent {...this.props} />
       )
     }
   }
