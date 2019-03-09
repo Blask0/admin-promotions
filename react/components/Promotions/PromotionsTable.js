@@ -60,12 +60,14 @@ class PromotionsTable extends Component {
         title: intl.formatMessage({
           id: 'promotions.promotion.generalInfo.name',
         }),
+        sortable: true,
       },
       effectType: {
         type: 'string',
         title: intl.formatMessage({
           id: 'promotions.promotion.effects.title',
         }),
+        sortable: true,
         cellRenderer: ({ cellData: effectType }) => {
           return (
             <div className="dt">
@@ -86,6 +88,7 @@ class PromotionsTable extends Component {
         title: intl.formatMessage({
           id: 'promotions.promotion.generalInfo.startDate',
         }),
+        sortable: true,
         cellRenderer: ({ cellData: beginDate }) => {
           const date = format(toDate(beginDate), 'PP')
           const time = format(toDate(beginDate), 'p')
@@ -106,6 +109,7 @@ class PromotionsTable extends Component {
         title: intl.formatMessage({
           id: 'promotions.promotion.generalInfo.endDate',
         }),
+        sortable: true,
         cellRenderer: ({ cellData: endDate }) => {
           if (!endDate) {
             return (
@@ -351,7 +355,6 @@ class PromotionsTable extends Component {
     const { navigate } = this.context
     const {
       intl,
-      promotions,
       loading,
       inputSearchValue,
       handleSearchChange,
@@ -359,6 +362,8 @@ class PromotionsTable extends Component {
       handleSearchSubmit,
     } = this.props
     const {
+      orderedPromotions,
+      dataSort: { sortOrder, sortedBy },
       isPromotionModalOpened,
       promotionToBeDeleted: { name: promotionToBeDeletedName } = {},
     } = this.state
@@ -368,9 +373,9 @@ class PromotionsTable extends Component {
       <div>
         <Table
           schema={schema}
-          items={this.state.orderedPromotions}
+          items={orderedPromotions}
           density="low"
-          loading={this.props.loading}
+          loading={loading}
           onRowClick={({ rowData: { id } }) => {
             navigate({
               page: 'admin/create',
@@ -381,13 +386,13 @@ class PromotionsTable extends Component {
           }}
           toolbar={{
             inputSearch: {
-              value: this.props.inputSearchValue,
+              value: inputSearchValue,
               placeholder: intl.formatMessage({
                 id: 'promotions.promotions.search',
               }),
-              onChange: this.props.handleSearchChange,
-              onClear: this.props.handleSearchClear,
-              onSubmit: this.props.handleSearchSubmit,
+              onChange: handleSearchChange,
+              onClear: handleSearchClear,
+              onSubmit: handleSearchSubmit,
             },
             // download: {
             //   label: 'Export',
@@ -418,6 +423,11 @@ class PromotionsTable extends Component {
               },
             },
           }}
+          sort={{
+            sortedBy: this.state.dataSort.sortedBy,
+            sortOrder: this.state.dataSort.sortOrder,
+          }}
+          onSort={this.handleSort}
           lineActions={this.getTableLineActions(intl, navigate)}
           fullWidth
         />
