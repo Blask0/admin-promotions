@@ -247,7 +247,7 @@ class PromotionsTable extends Component {
         loading={this.props.loading}
         onRowClick={({ rowData: { id } }) => {
           navigate({
-            page: 'admin/create',
+            page: 'admin/promotion',
             params: {
               id: id,
             },
@@ -284,7 +284,7 @@ class PromotionsTable extends Component {
             }),
             handleCallback: () => {
               navigate({
-                page: 'admin/create',
+                page: 'admin/promotion',
                 params: {
                   id: 'new',
                 },
