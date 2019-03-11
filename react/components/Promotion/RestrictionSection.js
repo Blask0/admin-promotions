@@ -19,8 +19,6 @@ class RestrictionSection extends Component {
     super(props)
   }
 
-  isOriginSelected = origin => this.props.restriction.origin === origin
-
   render() {
     const {
       intl,
@@ -34,7 +32,6 @@ class RestrictionSection extends Component {
         isRestrictingSalesChannels,
         restrictSalesChannelVerb,
         restrictedSalesChannels,
-        origin,
       },
       salesChannels = [],
       loading,
@@ -224,44 +221,6 @@ class RestrictionSection extends Component {
             </div>
           </div>
         )}
-        <div className="mt7">
-          <h4 className="t-heading-5 mt0">
-            <FormattedMessage id="promotions.promotion.restriction.origin" />
-          </h4>
-          <RadioGroup
-            name="origin"
-            options={[
-              {
-                value: 'marketplace',
-                label: (
-                  <div>
-                    <div className="b">
-                      <FormattedMessage id="promotions.promotion.restriction.origin.marketplace" />
-                    </div>
-                    <div className="c-muted-1">
-                      <FormattedMessage id="promotions.promotion.restriction.origin.marketplace.explanation" />
-                    </div>
-                  </div>
-                ),
-              },
-              {
-                value: 'fulfillment',
-                label: (
-                  <div>
-                    <div className="b">
-                      <FormattedMessage id="promotions.promotion.restriction.origin.fulfillment" />
-                    </div>
-                    <div className="c-muted-1">
-                      <FormattedMessage id="promotions.promotion.restriction.origin.fulfillment.explanation" />
-                    </div>
-                  </div>
-                ),
-              },
-            ]}
-            value={origin}
-            onChange={event => updatePageState({ origin: event.target.value })}
-          />
-        </div>
       </Fragment>
     )
   }

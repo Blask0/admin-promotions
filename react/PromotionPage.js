@@ -419,7 +419,7 @@ class PromotionPage extends Component {
             })}
             onLinkClick={() => {
               navigate({
-                page: 'admin/index',
+                page: 'admin/promotions',
               })
             }}
             title={
@@ -471,7 +471,7 @@ class PromotionPage extends Component {
                 })
                   .then(() =>
                     navigate({
-                      page: 'admin/index',
+                      page: 'admin/promotions',
                     })
                   )
                   .finally(() => this.setState({ isSaving: false }))

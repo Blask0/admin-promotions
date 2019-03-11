@@ -1,17 +1,17 @@
 {
   "pages": {
-    "admin/index": {
+    "admin/promotions": {
       "path": "/admin/promotions"
     },
-    "admin/create": {
+    "admin/promotion": {
       "path": "/admin/promotions/:id"
     }
   },
   "extensions": {
-    "admin/index": {
+    "admin/promotions": {
       "component": "PromotionsPage"
     },
-    "admin/create": {
+    "admin/promotion": {
       "component": "PromotionPage"
     }
   }

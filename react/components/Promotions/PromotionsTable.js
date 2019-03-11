@@ -15,12 +15,22 @@ class PromotionsTable extends Component {
   constructor(props) {
     super(props)
 
+    const { promotions } = props
+
     this.state = {
-      orderedPromotions: props.promotions,
+      orderedPromotions: promotions,
       dataSort: {
         sortedBy: null,
         sortOrder: null,
       },
+    }
+  }
+
+  componentDidUpdate = (prevProps) => {
+    const { loading: prevLoading } = prevProps
+    const { loading, promotions } = this.props
+    if (prevLoading !== loading) {
+      this.setState({ orderedPromotions: promotions })
     }
   }
 
@@ -140,7 +150,7 @@ class PromotionsTable extends Component {
   sortNameAlphapeticallyDESC = (a, b) => {
     return a.name < b.name ? 1 : a.name > b.name ? -1 : 0
   }
-  
+
   sortEffectAlphapeticallyASC = (a, b) => {
     return a.effectType < b.effectType ? -1 : a.effectType > b.effectType ? 1 : 0
   }
@@ -156,7 +166,7 @@ class PromotionsTable extends Component {
         ? 1
         : 0
   }
-  
+
   sortStartDateDESC = (a, b) => {
     return new Date(a.beginDate).getTime() < new Date(b.beginDate).getTime()
       ? 1
@@ -172,7 +182,7 @@ class PromotionsTable extends Component {
         ? 1
         : 0
   }
-  
+
   sortEndDateDESC = (a, b) => {
     return new Date(a.endDate).getTime() < new Date(b.endDate).getTime()
       ? 1
@@ -197,8 +207,8 @@ class PromotionsTable extends Component {
       })
     } else if (sortedBy === 'effectType') {
       const orderedPromotions = sortOrder === 'ASC'
-      ? this.props.promotions.slice().sort(this.sortEffectAlphapeticallyASC)
-      : this.props.promotions.slice().sort(this.sortEffectAlphapeticallyDESC)
+        ? this.props.promotions.slice().sort(this.sortEffectAlphapeticallyASC)
+        : this.props.promotions.slice().sort(this.sortEffectAlphapeticallyDESC)
 
       this.setState({
         orderedPromotions,
@@ -209,8 +219,8 @@ class PromotionsTable extends Component {
       })
     } else if (sortedBy === 'beginDate') {
       const orderedPromotions = sortOrder === 'ASC'
-      ? this.props.promotions.slice().sort(this.sortStartDateASC)
-      : this.props.promotions.slice().sort(this.sortStartDateDESC)
+        ? this.props.promotions.slice().sort(this.sortStartDateASC)
+        : this.props.promotions.slice().sort(this.sortStartDateDESC)
 
       this.setState({
         orderedPromotions,
@@ -221,8 +231,8 @@ class PromotionsTable extends Component {
       })
     } else if (sortedBy === 'endDate') {
       const orderedPromotions = sortOrder === 'ASC'
-      ? this.props.promotions.slice().sort(this.sortEndDateASC)
-      : this.props.promotions.slice().sort(this.sortEndDateDESC)
+        ? this.props.promotions.slice().sort(this.sortEndDateASC)
+        : this.props.promotions.slice().sort(this.sortEndDateDESC)
 
       this.setState({
         orderedPromotions,
@@ -236,18 +246,26 @@ class PromotionsTable extends Component {
 
   render() {
     const { navigate } = this.context
-    const { intl } = this.props
+    const {
+      intl,
+      loading,
+      inputSearchValue,
+      handleSearchChange,
+      handleSearchClear,
+      handleSearchSubmit
+    } = this.props
+    const { orderedPromotions } = this.state
     const schema = this.getTableSchema(intl)
 
     return (
       <Table
         schema={schema}
-        items={this.state.orderedPromotions}
+        items={orderedPromotions}
         density="low"
-        loading={this.props.loading}
+        loading={loading}
         onRowClick={({ rowData: { id } }) => {
           navigate({
-            page: 'admin/create',
+            page: 'admin/promotion',
             params: {
               id: id,
             },
@@ -255,13 +273,13 @@ class PromotionsTable extends Component {
         }}
         toolbar={{
           inputSearch: {
-            value: this.props.inputSearchValue,
+            value: inputSearchValue,
             placeholder: intl.formatMessage({
               id: 'promotions.promotions.search',
             }),
-            onChange: this.props.handleSearchChange,
-            onClear: this.props.handleSearchClear,
-            onSubmit: this.props.handleSearchSubmit,
+            onChange: handleSearchChange,
+            onClear: handleSearchClear,
+            onSubmit: handleSearchSubmit,
           },
           // download: {
           //   label: 'Export',
@@ -284,7 +302,7 @@ class PromotionsTable extends Component {
             }),
             handleCallback: () => {
               navigate({
-                page: 'admin/create',
+                page: 'admin/promotion',
                 params: {
                   id: 'new',
                 },
