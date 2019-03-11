@@ -31,14 +31,14 @@ class PromotionsTable extends Component {
     }
   }
 
-  componentDidUpdate = (prevProps) => {
+  componentDidUpdate = prevProps => {
     const { loading: prevLoading } = prevProps
     const { loading, promotions } = this.props
     if (prevLoading !== loading) {
       this.setState({ orderedPromotions: promotions })
     }
   }
-  
+
   handlePromotionActivation = () => {
     const {
       dataSort: { sortedBy, sortOrder },
@@ -159,7 +159,7 @@ class PromotionsTable extends Component {
           }),
         onClick: ({ rowData: { id } }) => {
           navigate({
-            page: 'admin/create',
+            page: 'admin/promotion',
             params: {
               id: 'new',
               duplicate: id,
@@ -258,7 +258,8 @@ class PromotionsTable extends Component {
   handleSort = ({ sortOrder, sortedBy }) => {
     const { promotions } = this.props
     if (sortedBy === 'name') {
-      const orderedPromotions = sortOrder === 'ASC'
+      const orderedPromotions =
+        sortOrder === 'ASC'
           ? promotions.slice().sort(this.sortNameAlphapeticallyASC)
           : promotions.slice().sort(this.sortNameAlphapeticallyDESC)
 
@@ -270,7 +271,8 @@ class PromotionsTable extends Component {
         },
       })
     } else if (sortedBy === 'effectType') {
-      const orderedPromotions = sortOrder === 'ASC'
+      const orderedPromotions =
+        sortOrder === 'ASC'
           ? promotions.slice().sort(this.sortEffectAlphapeticallyASC)
           : promotions.slice().sort(this.sortEffectAlphapeticallyDESC)
 
@@ -282,7 +284,8 @@ class PromotionsTable extends Component {
         },
       })
     } else if (sortedBy === 'beginDate') {
-      const orderedPromotions = sortOrder === 'ASC'
+      const orderedPromotions =
+        sortOrder === 'ASC'
           ? promotions.slice().sort(this.sortStartDateASC)
           : promotions.slice().sort(this.sortStartDateDESC)
 
@@ -294,7 +297,8 @@ class PromotionsTable extends Component {
         },
       })
     } else if (sortedBy === 'endDate') {
-      const orderedPromotions = sortOrder === 'ASC'
+      const orderedPromotions =
+        sortOrder === 'ASC'
           ? promotions.slice().sort(this.sortEndDateASC)
           : promotions.slice().sort(this.sortEndDateDESC)
 
@@ -369,7 +373,7 @@ class PromotionsTable extends Component {
           loading={loading}
           onRowClick={({ rowData: { id } }) => {
             navigate({
-              page: 'admin/create',
+              page: 'admin/promotion',
               params: {
                 id: id,
               },
@@ -402,7 +406,7 @@ class PromotionsTable extends Component {
               }),
               handleCallback: () => {
                 navigate({
-                  page: 'admin/create',
+                  page: 'admin/promotion',
                   params: {
                     id: 'new',
                   },
