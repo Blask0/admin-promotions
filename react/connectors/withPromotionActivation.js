@@ -8,12 +8,11 @@ function withPromotionActivation(WrappedComponent) {
   class WithPromotionActivation extends Component {
     render() {
       return (
-        <Mutation
-          mutation={promotionActivation}
-          refetchQueries={[{ query: getPromotions }]}>
-          {(promotionActivation, { data }) => (
+        <Mutation mutation={promotionActivation}>
+          {(promotionActivation, { loading }) => (
             <WrappedComponent
               {...this.props}
+              loading={loading}
               promotionActivation={promotionActivation}
             />
           )}

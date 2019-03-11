@@ -19,10 +19,7 @@ class PromotionsTable extends Component {
   constructor(props) {
     super(props)
 
-    const { promotions } = props
-
     this.state = {
-      orderedPromotions: promotions,
       dataSort: {
         sortedBy: null,
         sortOrder: null,
@@ -39,13 +36,6 @@ class PromotionsTable extends Component {
     }
   }
 
-  handlePromotionActivation = () => {
-    const {
-      dataSort: { sortedBy, sortOrder },
-    } = this.state
-    this.handleSort({ sortOrder, sortedBy })
-  }
-
   getTableSchema = intl => ({
     properties: {
       activation: {
@@ -54,7 +44,6 @@ class PromotionsTable extends Component {
         cellRenderer: ({ rowData: promotion }) => (
           <PromotionActivationToggle
             promotion={promotion}
-            onActivationChange={this.handlePromotionActivation}
           />
         ),
       },
@@ -255,69 +244,39 @@ class PromotionsTable extends Component {
         : 0
   }
 
-  handleSort = ({ sortOrder, sortedBy }) => {
-    const { promotions } = this.props
-    if (sortedBy === 'name') {
-      const orderedPromotions =
-        sortOrder === 'ASC'
+  sortPromotions = promotions => {
+    const {
+      dataSort: { sortedBy, sortOrder },
+    } = this.state
+    switch (sortedBy) {
+      case 'name':
+        return sortOrder === 'ASC'
           ? promotions.slice().sort(this.sortNameAlphapeticallyASC)
           : promotions.slice().sort(this.sortNameAlphapeticallyDESC)
-
-      this.setState({
-        orderedPromotions,
-        dataSort: {
-          sortedBy,
-          sortOrder,
-        },
-      })
-    } else if (sortedBy === 'effectType') {
-      const orderedPromotions =
-        sortOrder === 'ASC'
+      case 'effectType':
+        return sortOrder === 'ASC'
           ? promotions.slice().sort(this.sortEffectAlphapeticallyASC)
           : promotions.slice().sort(this.sortEffectAlphapeticallyDESC)
-
-      this.setState({
-        orderedPromotions,
-        dataSort: {
-          sortedBy,
-          sortOrder,
-        },
-      })
-    } else if (sortedBy === 'beginDate') {
-      const orderedPromotions =
-        sortOrder === 'ASC'
+      case 'beginDate':
+        return sortOrder === 'ASC'
           ? promotions.slice().sort(this.sortStartDateASC)
           : promotions.slice().sort(this.sortStartDateDESC)
-
-      this.setState({
-        orderedPromotions,
-        dataSort: {
-          sortedBy,
-          sortOrder,
-        },
-      })
-    } else if (sortedBy === 'endDate') {
-      const orderedPromotions =
-        sortOrder === 'ASC'
+      case 'endDate':
+        return sortOrder === 'ASC'
           ? promotions.slice().sort(this.sortEndDateASC)
           : promotions.slice().sort(this.sortEndDateDESC)
-
-      this.setState({
-        orderedPromotions,
-        dataSort: {
-          sortedBy,
-          sortOrder,
-        },
-      })
-    } else {
-      this.setState({
-        orderedPromotions: promotions,
-        dataSort: {
-          sortedBy,
-          sortOrder,
-        },
-      })
+      default:
+        return promotions
     }
+  }
+
+  handleSort = ({ sortOrder, sortedBy }) => {
+    this.setState({
+      dataSort: {
+        sortedBy,
+        sortOrder,
+      },
+    })
   }
 
   handlePromotionDeletionModalConfirmed = () => {
@@ -351,14 +310,14 @@ class PromotionsTable extends Component {
     const {
       intl,
       loading,
+      promotions,
       inputSearchValue,
       handleSearchChange,
       handleSearchClear,
       handleSearchSubmit,
     } = this.props
     const {
-      orderedPromotions,
-      dataSort: { sortOrder, sortedBy },
+      dataSort,
       isPromotionModalOpened,
       promotionToBeDeleted: { name: promotionToBeDeletedName } = {},
     } = this.state
@@ -368,7 +327,7 @@ class PromotionsTable extends Component {
       <div>
         <Table
           schema={schema}
-          items={orderedPromotions}
+          items={this.sortPromotions(promotions)}
           density="low"
           loading={loading}
           onRowClick={({ rowData: { id } }) => {
@@ -414,10 +373,7 @@ class PromotionsTable extends Component {
               },
             },
           }}
-          sort={{
-            sortedBy: this.state.dataSort.sortedBy,
-            sortOrder: this.state.dataSort.sortOrder,
-          }}
+          sort={dataSort}
           onSort={this.handleSort}
           lineActions={this.getTableLineActions()}
           fullWidth

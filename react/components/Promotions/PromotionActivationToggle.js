@@ -1,11 +1,13 @@
-import { Toggle } from 'vtex.styleguide'
+import { Toggle, Spinner } from 'vtex.styleguide'
 
 import withPromotionActivation from '../../connectors/withPromotionActivation'
 
 export const PromotionActivationToggle = withPromotionActivation(
-  ({ promotion: promo, onActivationChange, promotionActivation }) => {
+  ({ promotion: promo, promotionActivation, loading }) => {
     const promotion = { ...promo }
-    return (
+    return loading ? (
+      <Spinner />
+    ) : (
       <Toggle
         checked={promotion.isActive}
         onClick={e => e.stopPropagation()}
@@ -15,7 +17,7 @@ export const PromotionActivationToggle = withPromotionActivation(
             variables: {
               promotion,
             },
-          }).then(() => onActivationChange())
+          })
         }}
       />
     )
