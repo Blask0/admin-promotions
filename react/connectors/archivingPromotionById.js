@@ -3,8 +3,8 @@ import { Mutation } from 'react-apollo'
 
 import archivePromotionById from '../graphql/archivePromotionById.graphql'
 
-function archivingPromotioById(WrappedComponent) {
-  class ArchivingPromotioById extends Component {
+function archivingPromotionById(WrappedComponent) {
+  class ArchivingPromotionById extends Component {
     render() {
       return (
         <Mutation mutation={archivePromotionById}>
@@ -19,7 +19,7 @@ function archivingPromotioById(WrappedComponent) {
     }
   }
 
-  return ArchivingPromotioById
+  return ArchivingPromotionById
 }
 
-export default archivingPromotioById
+export default archivingPromotionById

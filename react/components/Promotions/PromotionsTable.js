@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-import { Tag, Table, ModalDialog, Toggle } from 'vtex.styleguide'
+import { Tag, Table, ModalDialog } from 'vtex.styleguide'
+import { PromotionActivationToggle } from './PromotionActivationToggle'
 
 import Price from '../Icon/Price'
 import Gift from '../Icon/Gift'
@@ -12,6 +13,7 @@ import Reward from '../Icon/Reward'
 import { toDate, format } from 'date-fns'
 
 import archivingPromotionById from '../../connectors/archivingPromotionById'
+import { compose } from 'react-apollo'
 
 class PromotionsTable extends Component {
   constructor(props) {
@@ -36,23 +38,24 @@ class PromotionsTable extends Component {
       this.setState({ orderedPromotions: promotions })
     }
   }
+  
+  handlePromotionActivation = () => {
+    const {
+      dataSort: { sortedBy, sortOrder },
+    } = this.state
+    this.handleSort({ sortOrder, sortedBy })
+  }
 
   getTableSchema = intl => ({
     properties: {
       activation: {
         title: ' ',
         width: 60,
-        cellRenderer: ({ rowData }) => (
-          <div className="ma2">
-            <Toggle
-              checked={rowData.isActive}
-              onClick={e => {
-                e.stopPropagation()
-                e.preventDefault()
-              }}
-              onChange={e => console.log(rowData, e.target.checked)}
-            />
-          </div>
+        cellRenderer: ({ rowData: promotion }) => (
+          <PromotionActivationToggle
+            promotion={promotion}
+            onActivationChange={this.handlePromotionActivation}
+          />
         ),
       },
       name: {
@@ -253,11 +256,11 @@ class PromotionsTable extends Component {
   }
 
   handleSort = ({ sortOrder, sortedBy }) => {
+    const { promotions } = this.props
     if (sortedBy === 'name') {
-      const orderedPromotions =
-        sortOrder === 'ASC'
-          ? this.props.promotions.slice().sort(this.sortNameAlphapeticallyASC)
-          : this.props.promotions.slice().sort(this.sortNameAlphapeticallyDESC)
+      const orderedPromotions = sortOrder === 'ASC'
+          ? promotions.slice().sort(this.sortNameAlphapeticallyASC)
+          : promotions.slice().sort(this.sortNameAlphapeticallyDESC)
 
       this.setState({
         orderedPromotions,
@@ -267,18 +270,9 @@ class PromotionsTable extends Component {
         },
       })
     } else if (sortedBy === 'effectType') {
-<<<<<<< HEAD
       const orderedPromotions = sortOrder === 'ASC'
-        ? this.props.promotions.slice().sort(this.sortEffectAlphapeticallyASC)
-        : this.props.promotions.slice().sort(this.sortEffectAlphapeticallyDESC)
-=======
-      const orderedPromotions =
-        sortOrder === 'ASC'
-          ? this.props.promotions.slice().sort(this.sortEffectAlphapeticallyASC)
-          : this.props.promotions
-            .slice()
-            .sort(this.sortEffectAlphapeticallyDESC)
->>>>>>> Add delete action to promotions table
+          ? promotions.slice().sort(this.sortEffectAlphapeticallyASC)
+          : promotions.slice().sort(this.sortEffectAlphapeticallyDESC)
 
       this.setState({
         orderedPromotions,
@@ -288,16 +282,9 @@ class PromotionsTable extends Component {
         },
       })
     } else if (sortedBy === 'beginDate') {
-<<<<<<< HEAD
       const orderedPromotions = sortOrder === 'ASC'
-        ? this.props.promotions.slice().sort(this.sortStartDateASC)
-        : this.props.promotions.slice().sort(this.sortStartDateDESC)
-=======
-      const orderedPromotions =
-        sortOrder === 'ASC'
-          ? this.props.promotions.slice().sort(this.sortStartDateASC)
-          : this.props.promotions.slice().sort(this.sortStartDateDESC)
->>>>>>> Add delete action to promotions table
+          ? promotions.slice().sort(this.sortStartDateASC)
+          : promotions.slice().sort(this.sortStartDateDESC)
 
       this.setState({
         orderedPromotions,
@@ -307,19 +294,20 @@ class PromotionsTable extends Component {
         },
       })
     } else if (sortedBy === 'endDate') {
-<<<<<<< HEAD
       const orderedPromotions = sortOrder === 'ASC'
-        ? this.props.promotions.slice().sort(this.sortEndDateASC)
-        : this.props.promotions.slice().sort(this.sortEndDateDESC)
-=======
-      const orderedPromotions =
-        sortOrder === 'ASC'
-          ? this.props.promotions.slice().sort(this.sortEndDateASC)
-          : this.props.promotions.slice().sort(this.sortEndDateDESC)
->>>>>>> Add delete action to promotions table
+          ? promotions.slice().sort(this.sortEndDateASC)
+          : promotions.slice().sort(this.sortEndDateDESC)
 
       this.setState({
         orderedPromotions,
+        dataSort: {
+          sortedBy,
+          sortOrder,
+        },
+      })
+    } else {
+      this.setState({
+        orderedPromotions: promotions,
         dataSort: {
           sortedBy,
           sortOrder,
@@ -397,10 +385,6 @@ class PromotionsTable extends Component {
               onClear: handleSearchClear,
               onSubmit: handleSearchSubmit,
             },
-            // download: {
-            //   label: 'Export',
-            //   handleCallback: () => alert('Export not implemented yet'),
-            // },
             fields: {
               label: intl.formatMessage({
                 id: 'promotions.promotions.table.filter.label',
@@ -481,4 +465,7 @@ PromotionsTable.propTypes = {
   handlePromotionDeletion: PropTypes.func,
 }
 
-export default archivingPromotionById(injectIntl(PromotionsTable))
+export default compose(
+  archivingPromotionById,
+  injectIntl
+)(PromotionsTable)
