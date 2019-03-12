@@ -29,6 +29,50 @@ function withPromotions(WrappedComponent) {
           variables={{ name, effect }}
           fetchPolicy="network-only">
           {({ loading, error, data, refetch }) => {
+            const promotions = data ? data.getPromotions : []
+
+            if (promotions) {
+              promotions.forEach((promotion, index) => {
+                if (promotion.scope.allCatalog) {
+                  promotions[index].scope = (
+                    <span className="fw5">
+                      {intl.formatMessage({
+                        id: 'promotions.scopeColumn.allProducts',
+                      })}
+                    </span>
+                  )
+                } else {
+                  let scopeInfo = []
+                  const blackList = ['allCatalog', '__typename']
+
+                  Object.keys(promotion.scope).forEach((key, index) => {
+                    if (
+                      promotion.scope[key] !== 0 &&
+                      !blackList.includes(key)
+                    ) {
+                      if (promotion.scope[key] === 1) {
+                        scopeInfo = [
+                          ...scopeInfo,
+                          `${promotion.scope[key]} ${intl.formatMessage({
+                            id: `promotions.scopeColumn.${key}.singular`,
+                          })}`,
+                        ]
+                      } else {
+                        scopeInfo = [
+                          ...scopeInfo,
+                          `${promotion.scope[key]} ${intl.formatMessage({
+                            id: `promotions.scopeColumn.${key}.plural`,
+                          })}`,
+                        ]
+                      }
+                    }
+                  })
+
+                  promotions[index].scope = scopeInfo.join(', ')
+                }
+              })
+            }
+
             return (
               <WrappedComponent
                 {...this.props}
