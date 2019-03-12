@@ -28,14 +28,6 @@ class PromotionsTable extends Component {
     }
   }
 
-  componentDidUpdate = prevProps => {
-    const { loading: prevLoading } = prevProps
-    const { loading, promotions } = this.props
-    if (prevLoading !== loading) {
-      this.setState({ orderedPromotions: promotions })
-    }
-  }
-
   getTableSchema = intl => ({
     properties: {
       activation: {
