@@ -185,9 +185,14 @@
   "promotions.promotions.deletionModal.cancel": "Cancel",
   "promotions.promotions.actions.duplicate": "Duplicate",
   "promotions.scopeColumn.allProducts": "All products",
-  "promotions.scopeColumn.skus": "skus",
-  "promotions.scopeColumn.products": "products",
-  "promotions.scopeColumn.categories": "categories",
-  "promotions.scopeColumn.collections": "collections",
-  "promotions.scopeColumn.brands": "brands"
+  "promotions.scopeColumn.skus.plural": "skus",
+  "promotions.scopeColumn.products.plural": "products",
+  "promotions.scopeColumn.categories.plural": "categories",
+  "promotions.scopeColumn.collections.plural": "collections",
+  "promotions.scopeColumn.brands.plural": "brands",
+  "promotions.scopeColumn.skus.singular": "sku",
+  "promotions.scopeColumn.products.singular": "product",
+  "promotions.scopeColumn.categories.singular": "category",
+  "promotions.scopeColumn.collections.singular": "collection",
+  "promotions.scopeColumn.brands.singular": "brand"
 }

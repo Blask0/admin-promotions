@@ -186,9 +186,14 @@
   "promotions.promotions.deletionModal.cancel": "Cancelar",
   "promotions.promotions.actions.duplicate": "Duplicar",
   "promotions.scopeColumn.allProducts": "Todos os produtos",
-  "promotions.scopeColumn.skus": "skus",
-  "promotions.scopeColumn.products": "produtos",
-  "promotions.scopeColumn.categories": "categorias",
-  "promotions.scopeColumn.collections": "coleções",
-  "promotions.scopeColumn.brands": "marcas"
+  "promotions.scopeColumn.skus.plural": "skus",
+  "promotions.scopeColumn.products.plural": "produtos",
+  "promotions.scopeColumn.categories.plural": "categorias",
+  "promotions.scopeColumn.collections.plural": "coleções",
+  "promotions.scopeColumn.brands.plural": "marcas",
+  "promotions.scopeColumn.skus.singular": "sku",
+  "promotions.scopeColumn.products.singular": "produto",
+  "promotions.scopeColumn.categories.singular": "categoria",
+  "promotions.scopeColumn.collections.singular": "coleção",
+  "promotions.scopeColumn.brands.singular": "marca"
 }
