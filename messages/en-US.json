@@ -185,14 +185,9 @@
   "promotions.promotions.deletionModal.cancel": "Cancel",
   "promotions.promotions.actions.duplicate": "Duplicate",
   "promotions.scopeColumn.allProducts": "All products",
-  "promotions.scopeColumn.skus.plural": "skus",
-  "promotions.scopeColumn.products.plural": "products",
-  "promotions.scopeColumn.categories.plural": "categories",
-  "promotions.scopeColumn.collections.plural": "collections",
-  "promotions.scopeColumn.brands.plural": "brands",
-  "promotions.scopeColumn.skus.singular": "sku",
-  "promotions.scopeColumn.products.singular": "product",
-  "promotions.scopeColumn.categories.singular": "category",
-  "promotions.scopeColumn.collections.singular": "collection",
-  "promotions.scopeColumn.brands.singular": "brand"
+  "promotions.scopeColumn.brands": "{itemCount, plural, one {1 brand} other {{itemCount} brands}}",
+  "promotions.scopeColumn.collections": "{itemCount, plural, one {1 collection} other {{itemCount} collections}}",
+  "promotions.scopeColumn.categories": "{itemCount, plural, one {1 category} other {{itemCount} categories}}",
+  "promotions.scopeColumn.products": "{itemCount, plural, one {1 product} other {{itemCount} products}}",
+  "promotions.scopeColumn.skus": "{itemCount, plural, one {1 sku} other {{itemCount} skus}}"
 }

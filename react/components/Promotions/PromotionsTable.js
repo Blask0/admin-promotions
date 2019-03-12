@@ -106,21 +106,14 @@ class PromotionsTable extends Component {
                 cellData[key] !== 0 &&
                 !blackList.includes(key)
               ) {
-                if (cellData[key] === 1) {
-                  scopeInfo = [
-                    ...scopeInfo,
-                    `${cellData[key]} ${intl.formatMessage({
-                      id: `promotions.scopeColumn.${key}.singular`,
-                    })}`,
-                  ]
-                } else {
-                  scopeInfo = [
-                    ...scopeInfo,
-                    `${cellData[key]} ${intl.formatMessage({
-                      id: `promotions.scopeColumn.${key}.plural`,
-                    })}`,
-                  ]
-                }
+                scopeInfo = [
+                  ...scopeInfo,
+                  `${intl.formatMessage({
+                    id: `promotions.scopeColumn.${key}`,
+                  }, {
+                    itemCount: cellData[key] 
+                  })}`,
+                ]
               }
             })
 
