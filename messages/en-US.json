@@ -183,5 +183,11 @@
   "promotions.promotions.deletionModal.text": "Are you sure you want to delete promotion",
   "promotions.promotions.deletionModal.confirm": "Yes",
   "promotions.promotions.deletionModal.cancel": "Cancel",
-  "promotions.promotions.actions.duplicate": "Duplicate"
+  "promotions.promotions.actions.duplicate": "Duplicate",
+  "promotions.scopeColumn.allProducts": "All products",
+  "promotions.scopeColumn.skus": "skus",
+  "promotions.scopeColumn.products": "products",
+  "promotions.scopeColumn.categories": "categories",
+  "promotions.scopeColumn.collections": "collections",
+  "promotions.scopeColumn.brands": "brands"
 }

@@ -169,13 +169,13 @@ class PromotionsTable extends Component {
 
   getEffectIcon = effectType => {
     switch (effectType) {
-      case 'Price':
+      case 'price':
         return <Price />
-      case 'Gift':
+      case 'gift':
         return <Gift />
-      case 'Shipping':
+      case 'shipping':
         return <Shipping />
-      case 'Reward':
+      case 'reward':
         return <Reward />
     }
   }

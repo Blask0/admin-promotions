@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Query } from 'react-apollo'
+import { injectIntl } from 'react-intl'
 
 import getPromotions from '../graphql/getPromotions.graphql'
 
@@ -20,6 +21,7 @@ function withPromotions(WrappedComponent) {
 
     render() {
       const { name, effect } = this.state
+      const { intl } = this.props
 
       return (
         <Query
@@ -43,7 +45,7 @@ function withPromotions(WrappedComponent) {
     }
   }
 
-  return WithPromotions
+  return injectIntl(WithPromotions)
 }
 
 export default withPromotions
