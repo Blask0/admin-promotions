@@ -50,6 +50,11 @@ class PromotionPage extends Component {
       isValid: isRestrictionValid,
     } = this.validateRestrictionSection()
 
+    const {
+      eligibility,
+      isValid: isEligibilityValid,
+    } = this.validateEligibilitySection()
+
     this.setState(prevState => ({
       promotion: {
         ...prevState.promotion,
@@ -190,6 +195,23 @@ class PromotionPage extends Component {
     }
 
     return { effects, isValid }
+  }
+
+  validateEligibilitySection = () => {
+    const isValid = true
+    const { intl } = this.props
+    const {
+      promotion: { eligibility },
+    } = this.state
+    console.log(eligibility)
+
+    if (!eligibility.allCustomers && eligibility.statements.length === 0) {
+    }
+
+    if (eligibility.statements.slice(-1).pop().subject === '') {
+    }
+
+    return { eligibility, isValid }
   }
 
   validateRestrictionSection = () => {
