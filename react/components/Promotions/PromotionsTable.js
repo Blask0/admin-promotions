@@ -61,12 +61,6 @@ class PromotionsTable extends Component {
           )
         },
       },
-      scope: {
-        type: 'string',
-        title: intl.formatMessage({
-          id: 'promotions.promotion.effects.scope.title',
-        }),
-      },
       beginDate: {
         type: 'string',
         title: intl.formatMessage({
@@ -85,9 +79,76 @@ class PromotionsTable extends Component {
                 <span className="dtc v-mid">{time}</span>
               </div>
             </div>
-          )
+            )
+          },
         },
-      },
+        scope: {
+          type: 'object',
+          title: intl.formatMessage({
+            id: 'promotions.promotion.effects.scope.title',
+          }),
+          properties: {
+            allCatalog: {
+              type: 'boolean',
+            },
+            skus: {
+              type: 'int',
+            },
+            products: {
+              type: 'int',
+            },
+            categories: {
+              type: 'int',
+            },
+            collections: {
+              type: 'int',
+            },
+            brands: {
+              type: 'int',
+            },
+          },
+          width: 300,
+          cellRenderer: ({ cellData }) => {
+
+            if (cellData.allCatalog) {
+              return (
+                <span className="fw5">
+                  {intl.formatMessage({
+                    id: 'promotions.scopeColumn.allProducts',
+                  })}
+                </span>
+              )
+            } else {
+              let scopeInfo = []
+              const blackList = ['allCatalog', '__typename']
+
+              Object.keys(cellData).forEach((key, index) => {
+                if (
+                  cellData[key] !== 0 &&
+                  !blackList.includes(key)
+                ) {
+                  if (cellData[key] === 1) {
+                    scopeInfo = [
+                      ...scopeInfo,
+                      `${cellData[key]} ${intl.formatMessage({
+                        id: `promotions.scopeColumn.${key}.singular`,
+                      })}`,
+                    ]
+                  } else {
+                    scopeInfo = [
+                      ...scopeInfo,
+                      `${cellData[key]} ${intl.formatMessage({
+                        id: `promotions.scopeColumn.${key}.plural`,
+                      })}`,
+                    ]
+                  }
+                }
+              })
+
+              return (<span>{scopeInfo.join(', ')}</span>)
+            }
+          },
+        },
       endDate: {
         type: 'string',
         title: intl.formatMessage({
