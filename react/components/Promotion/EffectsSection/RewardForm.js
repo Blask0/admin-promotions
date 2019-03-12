@@ -44,7 +44,7 @@ class RewardForm extends Component {
             onChange={() => this.changeDiscountType('nominal')}
           />
           {this.isDiscountTypeSelected('nominal') ? (
-            <div className="mv4 mh7">
+            <div className="mv4 mh7 w-20">
               <InputCurrency
                 locale={intl.locale}
                 currencyCode={currencyCode}
@@ -67,7 +67,7 @@ class RewardForm extends Component {
             onChange={() => this.changeDiscountType('percentual')}
           />
           {this.isDiscountTypeSelected('percentual') ? (
-            <div className="mv4 mh7">
+            <div className="mv4 mh7 w-20">
               <Input
                 type="number"
                 value={rewardEffect.discount.value}

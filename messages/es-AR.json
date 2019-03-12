@@ -16,6 +16,7 @@
   "promotions.promotion.effects.title": "Efectos",
   "promotions.promotion.effects.price": "Precio",
   "promotions.promotion.effects.gift": "Regalo",
+  "promotions.promotion.effects.priceForm.placeholder": "Introduzca el valor…",
   "promotions.promotion.effects.priceForm.discountType.title": "Tipo de descuento",
   "promotions.promotion.effects.priceForm.discountType.nominal": "Nominal",
   "promotions.promotion.effects.priceForm.discountType.percentual": "Porcentual",

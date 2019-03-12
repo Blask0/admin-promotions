@@ -203,12 +203,13 @@ class PromotionPage extends Component {
     const {
       promotion: { eligibility },
     } = this.state
-    console.log(eligibility)
 
     if (!eligibility.allCustomers && eligibility.statements.length === 0) {
+      return { eligibility, isValid: false }
     }
 
     if (eligibility.statements.slice(-1).pop().subject === '') {
+      return { eligibility, isValid: false }
     }
 
     return { eligibility, isValid }

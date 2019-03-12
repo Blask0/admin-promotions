@@ -15,6 +15,7 @@
   "promotions.promotion.generalInfo.tz": "Time zone is GMT{tz} ({tzLabel})",
   "promotions.promotion.effects.title": "Effects",
   "promotions.promotion.effects.price": "Price",
+  "promotions.promotion.effects.priceForm.placeholder": "Enter value…",
   "promotions.promotion.effects.priceForm.discountType.title": "Discount type",
   "promotions.promotion.effects.priceForm.discountType.nominal": "Nominal",
   "promotions.promotion.effects.priceForm.discountType.percentual": "Percentual",

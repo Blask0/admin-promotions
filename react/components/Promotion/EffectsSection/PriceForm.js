@@ -2,7 +2,12 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-import { Radio, Input, EXPERIMENTAL_Conditions } from 'vtex.styleguide'
+import {
+  Radio,
+  Input,
+  InputCurrency,
+  EXPERIMENTAL_Conditions,
+} from 'vtex.styleguide'
 
 import {
   brand,
@@ -37,7 +42,7 @@ class PriceForm extends Component {
   }
 
   render() {
-    const { priceEffect, intl } = this.props
+    const { priceEffect, intl, currencyCode } = this.props
 
     const scopeOptions = {
       brand: brand(intl, this.changeAppliesTo),
@@ -91,11 +96,16 @@ class PriceForm extends Component {
             onChange={() => this.changeDiscountType('nominal')}
           />
           {this.isDiscountTypeSelected('nominal') ? (
-            <div className="mv4 mh7">
-              <Input
+            <div className="mv4 mh7 w-20">
+              <InputCurrency
+                locale={intl.locale}
+                currencyCode={currencyCode}
                 value={priceEffect.discount.value}
                 errorMessage={priceEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
+                placeholder={intl.formatMessage({
+                  id: 'promotions.promotion.effects.priceForm.placeholder',
+                })}
               />
             </div>
           ) : null}
@@ -110,7 +120,7 @@ class PriceForm extends Component {
             onChange={() => this.changeDiscountType('percentual')}
           />
           {this.isDiscountTypeSelected('percentual') ? (
-            <div className="mv4 mh7">
+            <div className="mv4 mh7 w-20">
               <Input
                 type="number"
                 value={priceEffect.discount.value}
@@ -131,7 +141,7 @@ class PriceForm extends Component {
             onChange={() => this.changeDiscountType('priceTables')}
           />
           {this.isDiscountTypeSelected('priceTables') ? (
-            <div className="mv4 mh7">
+            <div className="mv4 mh7 w-20">
               <Input
                 value={priceEffect.discount.value}
                 errorMessage={priceEffect.discount.error}
@@ -193,6 +203,7 @@ PriceForm.propTypes = {
     discount: PropTypes.string,
     appliesTo: PropTypes.object,
   }).isRequired,
+  currencyCode: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 }
 

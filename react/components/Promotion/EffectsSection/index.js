@@ -75,6 +75,7 @@ class EffectSection extends Component {
         return (
           <PriceForm
             priceEffect={effects.price}
+            currencyCode={currencyCode}
             onChange={this.updatePriceEffect}
           />
         )
