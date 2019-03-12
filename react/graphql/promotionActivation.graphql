@@ -1,0 +1,11 @@
+mutation PromotionActivation($promotion: SimplifiedPromotionInput!) {
+  promotionActivation(promotion: $promotion) {
+    cacheId
+    id
+    name
+    beginDate
+    endDate
+    isActive
+    effectType
+  }
+}

@@ -46,6 +46,10 @@ class PromotionsPage extends Component {
     })
   }
 
+  handlePromotionDeletion = () => {
+    this.props.refetchPromotions()
+  }
+
   render() {
     const { inputSearchValue } = this.state
     const { promotions = [], loading } = this.props
@@ -60,6 +64,7 @@ class PromotionsPage extends Component {
             handleSearchChange={this.handleSearchChange}
             handleSearchClear={this.handleSearchClear}
             handleSearchSubmit={this.handleSearchSubmit}
+            handlePromotionDeletion={this.handlePromotionDeletion}
           />
         </PageBlock>
       </Layout>
@@ -71,6 +76,7 @@ PromotionsPage.propTypes = {
   promotions: PropTypes.arrayOf(PropTypes.object),
   error: PropTypes.object,
   loading: PropTypes.bool,
+  refetch: PropTypes.func,
   updateQueryParams: PropTypes.func,
 }
 

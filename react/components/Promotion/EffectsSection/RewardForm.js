@@ -104,7 +104,7 @@ RewardForm.propTypes = {
   rewardEffect: PropTypes.shape({
     discountType: PropTypes.oneOf(['nominal', 'percentual']),
     discount: PropTypes.number,
-    applyByOrderStatus: PropTypes.string, // oneOf possible order status
+    applyByOrderStatus: PropTypes.string,
   }).isRequired,
   currencyCode: PropTypes.string,
   onChange: PropTypes.func.isRequired,
