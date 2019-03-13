@@ -318,10 +318,7 @@ class PromotionPage extends Component {
     }))
   }
 
-  canSave = () => {
-    const a = this.validate()
-    return a
-  }
+  canSave = () => this.validate()
 
   getAffectedSalesChannels = () => {
     const { restrictedSalesChannelsIds, salesChannels } = this.props
@@ -360,9 +357,9 @@ class PromotionPage extends Component {
         },
         gift: {
           ...giftEffect,
-          skus: giftEffect.skus.map(sku => ({
-            id: sku.value.id,
-            name: sku.value.name,
+          skus: giftEffect.skus.value.map(sku => ({
+            id: sku.value,
+            name: sku.label,
           })),
           maxQuantityPerPurchase: giftEffect.maxQuantityPerPurchase.value,
         },

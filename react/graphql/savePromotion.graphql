@@ -23,7 +23,10 @@ mutation SavePromotions($promotion: PromotionInput!) {
         }
       }
       gift {
-        products
+        skus {
+          id
+          name
+        }
         multiplier
         limitQuantityPerPurchase
       }

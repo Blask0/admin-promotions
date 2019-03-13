@@ -5,20 +5,10 @@ import { injectIntl, intlShape } from 'react-intl'
 import { Checkbox, EXPERIMENTAL_Select, Input } from 'vtex.styleguide'
 
 import { fieldShape } from '../../../utils/propTypes'
+import { mapSkusToSelect } from '../../../utils/mappers'
 import withSkus from '../../../connectors/withSkus'
 
 class GiftForm extends Component {
-  mapSkus = skus =>
-    skus.map(element => ({
-      label: `${element.sku.id} - ${element.product.name} - ${
-        element.sku.name
-      }`,
-      value: {
-        id: element.sku.id,
-        name: element.sku.name,
-      },
-    }))
-
   render() {
     const {
       intl,
@@ -29,7 +19,7 @@ class GiftForm extends Component {
       updateQueryParams,
     } = this.props
 
-    const skuOptions = this.mapSkus(skus)
+    const skuOptions = mapSkusToSelect(skus)
 
     return (
       <Fragment>
@@ -40,6 +30,7 @@ class GiftForm extends Component {
                 id: 'promotions.promotion.effects.gifts.skus',
               })}
               options={skuOptions}
+              errorMessage={giftEffect.skus.error}
               value={giftEffect.skus.value}
               loading={loading}
               multi
