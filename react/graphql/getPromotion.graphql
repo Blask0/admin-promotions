@@ -28,7 +28,7 @@ query GetPromotion($id: String!) {
           name
         }
         multiplier
-        limitQuantityPerPurchase
+        maxQuantityPerPurchase
       }
       shipping {
         discountType

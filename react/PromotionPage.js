@@ -147,9 +147,9 @@ class PromotionPage extends Component {
 
     if (
       effects.gift.limitQuantityPerPurchase &&
-      !effects.gift.maxNumOfAffectedItems.value
+      !effects.gift.maxQuantityPerPurchase.value
     ) {
-      effects.gift.maxNumOfAffectedItems.error = intl.formatMessage({
+      effects.gift.maxQuantityPerPurchase.error = intl.formatMessage({
         id: 'promotions.validation.emptyField',
       })
       isValid = false

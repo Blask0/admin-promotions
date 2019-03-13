@@ -61,6 +61,7 @@ const getGiftEffect = giftEffect =>
           value: sku.id,
         }))
       ),
+      limitQuantityPerPurchase: !!giftEffect.maxQuantityPerPurchase,
       maxQuantityPerPurchase: newFieldWithValidation(
         giftEffect ? giftEffect.maxQuantityPerPurchase : undefined
       ),
