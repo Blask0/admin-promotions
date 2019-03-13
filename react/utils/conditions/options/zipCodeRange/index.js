@@ -15,6 +15,7 @@ const zipCodeRange = (intl, update) => {
           renderFn: renderRangeInputObject,
           extraParams: {
             update: update,
+            intl: intl,
           },
         },
       },
@@ -27,6 +28,7 @@ const zipCodeRange = (intl, update) => {
           renderFn: renderRangeInputObject,
           extraParams: {
             update: update,
+            intl: intl,
           },
         },
       },

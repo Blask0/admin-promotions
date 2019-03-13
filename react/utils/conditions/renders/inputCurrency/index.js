@@ -17,6 +17,7 @@ const renderInputCurrencyObject = ({
         locale={locale}
         currencyCode={currencyCode}
         value={values}
+        errorMessage={statements[statementIndex].error}
         onChange={e => {
           statements[statementIndex].object = e.target.value
           update({

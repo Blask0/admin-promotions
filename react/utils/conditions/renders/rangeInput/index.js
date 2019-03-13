@@ -20,7 +20,7 @@ const renderRangeInputObject = ({
           parseInt(statements[statementIndex].object.first) >=
             parseInt(statements[statementIndex].object.last)
             ? intl.formatMessage({ id: 'promotions.validation.rangeInput' })
-            : ''
+            : statements[statementIndex].error
         }
         value={values && values.first ? values.first : ''}
         onChange={e => {
@@ -46,6 +46,7 @@ const renderRangeInputObject = ({
         type={type}
         placeholder={placeholder}
         value={values && values.last ? values.last : ''}
+        errorMessage={statements[statementIndex].error}
         onChange={e => {
           const currentObject = statements[statementIndex].object || {}
           currentObject.last = e.target.value.replace(/\D/g, '')
