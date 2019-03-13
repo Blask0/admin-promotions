@@ -153,6 +153,8 @@
   "promotions.validation.rangeInput": "Must be smaller than other input",
   "promotions.validation.biggerLimit": "This limit can't be bigger than the limit per store",
   "promotions.validation.emptyEffect": "You have to select one type of effect",
+  "promotions.validation.emptyStatement": "You cannot define an empty condition",
+  "promotions.validation.incompleteStatement": "You cannot define an incomplete condition",
   "promotions.promotion.scopeSelector.brand.label": "Brand",
   "promotions.promotion.scopeSelector.brand.verb.any": "is one of",
   "promotions.promotion.scopeSelector.brand.verb.not.any": "is not one of",

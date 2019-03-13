@@ -116,7 +116,7 @@ export const newPromotion = (intl, promotion, salesChannels) => {
       },
       eligibility: {
         ...eligibility,
-        statements: JSON.parse(eligibility.statements),
+        statements: newFieldWithValidation(JSON.parse(eligibility.statements)),
       },
       restriction: {
         ...restriction,
@@ -160,7 +160,7 @@ export const newPromotion = (intl, promotion, salesChannels) => {
     eligibility: {
       id: undefined,
       allCustomers: true,
-      statements: [],
+      statements: newFieldWithValidation([]),
       operator: 'all',
     },
     effects: {

@@ -29,7 +29,9 @@ const renderRangeInputCurrencyObject = ({
           currentObject.first = e.target.value
           statements[statementIndex].object = currentObject
           update({
-            statements,
+            statements: {
+              value: statements,
+            },
           })
         }}
       />
@@ -46,7 +48,9 @@ const renderRangeInputCurrencyObject = ({
           currentObject.last = e.target.value
           statements[statementIndex].object = currentObject
           update({
-            statements,
+            statements: {
+              value: statements,
+            },
           })
         }}
       />

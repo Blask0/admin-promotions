@@ -154,6 +154,8 @@
   "promotions.validation.rangeInput": "Deve ser menor que a outra entrada",
   "promotions.validation.biggerLimit": "Este limite não pode ser maior que o limite por loja",
   "promotions.validation.emptyEffect": "É necessário selecionar um tipo de efeito",
+  "promotions.validation.emptyStatement": "Não é possivel definir uma condição vazia",
+  "promotions.validation.incompleteStatement": "Não é possivel definir uma condição incompleta",
   "promotions.promotion.scopeSelector.brand.label": "Marca",
   "promotions.promotion.scopeSelector.brand.verb.any": "é uma das",
   "promotions.promotion.scopeSelector.brand.verb.not.any": "não é uma das",

@@ -114,7 +114,6 @@ class PromotionPage extends Component {
       effects.activeEffectType.error = intl.formatMessage({
         id: 'promotions.validation.emptyEffect',
       })
-
       return { effects, isValid: false }
     }
 
@@ -209,21 +208,30 @@ class PromotionPage extends Component {
   }
 
   validateEligibilitySection = () => {
-    const isValid = true
+    let isValid = true
     const { intl } = this.props
     const {
       promotion: { eligibility },
     } = this.state
 
-    if (!eligibility.allCustomers && eligibility.statements.length === 0) {
-      return { eligibility, isValid: false }
+    if (
+      !eligibility.allCustomers &&
+      eligibility.statements.value.length === 0
+    ) {
+      eligibility.statements.error = intl.formatMessage({
+        id: 'promotions.validation.emptyStatement',
+      })
+      isValid = false
     }
 
     if (
-      eligibility.statements.length > 0 &&
-      eligibility.statements.slice(-1).pop().subject === ''
+      eligibility.statements.value.length > 0 &&
+      eligibility.statements.value.slice(-1).pop().subject === ''
     ) {
-      return { eligibility, isValid: false }
+      eligibility.statements.error = intl.formatMessage({
+        id: 'promotions.validation.incompleteStatement',
+      })
+      isValid = false
     }
 
     return { eligibility, isValid }
@@ -384,6 +392,7 @@ class PromotionPage extends Component {
       },
       effects: {
         ...effects,
+        activeEffectType: effects.activeEffectType.value,
         price: {
           ...effects.price,
           discount: effects.price.discount.value,
@@ -414,7 +423,7 @@ class PromotionPage extends Component {
       },
       eligibility: {
         ...eligibility,
-        statements: JSON.stringify(eligibility.statements),
+        statements: JSON.stringify(eligibility.statements.value),
       },
       restriction: {
         ...restriction,

@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-import { Radio, EXPERIMENTAL_Conditions } from 'vtex.styleguide'
+import { Radio, EXPERIMENTAL_Conditions, Alert } from 'vtex.styleguide'
 
 import {
   affiliates,
@@ -104,6 +104,12 @@ class EligibilitySection extends Component {
             })
           }
         />
+        {statements.error && (
+          <div className="mb5 flex justify-center w-100">
+            <Alert type="error">{statements.error}</Alert>
+          </div>
+        )}
+
         {!allCustomers ? (
           <div className="mt6">
             <EXPERIMENTAL_Conditions
@@ -113,13 +119,18 @@ class EligibilitySection extends Component {
                   'promotions.promotion.elligibility.conditions.subjectPlaceholder',
               })}
               labels={conditionsLabels}
-              statements={statements}
+              statements={statements.value}
               operator={operator}
               onChangeOperator={({ operator }) => {
                 updatePageState({ operator })
               }}
               onChangeStatements={statements => {
-                updatePageState({ statements })
+                updatePageState({
+                  statements: {
+                    value: statements,
+                    error: undefined,
+                  },
+                })
               }}
             />
           </div>
