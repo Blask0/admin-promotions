@@ -10,6 +10,23 @@ import { addDays } from 'date-fns'
 class GeneralSection extends Component {
   constructor(props) {
     super(props)
+    this.nameRef = React.createRef()
+    this.endDateRef = React.createRef()
+  }
+
+  componentDidUpdate = () => {
+    const {
+      generalInfo: { name, endDate },
+    } = this.props
+
+    if (name.focus) {
+      this.nameRef.current.focus()
+      name.focus = false
+    }
+
+    if (endDate.focus) {
+      // this.endDateRef.current.focus()
+    }
   }
 
   render() {
@@ -52,6 +69,7 @@ class GeneralSection extends Component {
                 })}
                 errorMessage={generalInfo.name.error}
                 value={generalInfo.name.value}
+                ref={this.nameRef}
                 onChange={e => {
                   updatePageState({
                     name: {
@@ -120,6 +138,7 @@ class GeneralSection extends Component {
                   }}
                   errorMessage={generalInfo.endDate.error}
                   value={generalInfo.endDate.value}
+                  ref={this.endDateRef}
                   label={intl.formatMessage({
                     id: 'promotions.promotion.generalInfo.endDate',
                   })}

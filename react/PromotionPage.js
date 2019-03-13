@@ -87,6 +87,7 @@ class PromotionPage extends Component {
       generalInfo.name.error = intl.formatMessage({
         id: 'promotions.validation.emptyField',
       })
+      generalInfo.name.focus = true
       isValid = false
     }
 
@@ -98,6 +99,7 @@ class PromotionPage extends Component {
       generalInfo.endDate.error = intl.formatMessage({
         id: 'promotions.validation.endDateSmaller',
       })
+      generalInfo.endDate.focus = true
       isValid = false
     }
 
@@ -512,10 +514,10 @@ class PromotionPage extends Component {
             variation="primary"
             isLoading={isSaving}
             onClick={() => {
-              this.setState({ isSaving: true })
-              const preparedPromotion = this.prepareToSave(promotion)
-
               if (this.canSave()) {
+                this.setState({ isSaving: true })
+                const preparedPromotion = this.prepareToSave(promotion)
+
                 savePromotion({
                   variables: {
                     promotion: preparedPromotion,
@@ -527,8 +529,6 @@ class PromotionPage extends Component {
                     })
                   )
                   .finally(() => this.setState({ isSaving: false }))
-              } else {
-                this.setState({ isSaving: false })
               }
             }}>
             <FormattedMessage id="promotions.promotion.save" />

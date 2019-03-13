@@ -8,6 +8,7 @@ const newFieldWithValidation = value => ({
   value,
   error: undefined,
   focus: undefined,
+  ref: React.createRef(),
 })
 
 const INITIAL_PRICE_EFFECT = {
