@@ -184,5 +184,11 @@
   "promotions.promotions.deletionModal.text": "Tem certeza de que deseja excluir a promoção",
   "promotions.promotions.deletionModal.confirm": "Sim",
   "promotions.promotions.deletionModal.cancel": "Cancelar",
-  "promotions.promotions.actions.duplicate": "Duplicar"
+  "promotions.promotions.actions.duplicate": "Duplicar",
+  "promotions.scopeColumn.allProducts": "Todos os produtos",
+  "promotions.scopeColumn.brands": "{itemCount, plural, one {1 marca} other {{itemCount} marcas}}",
+  "promotions.scopeColumn.collections": "{itemCount, plural, one {1 coleção} other {{itemCount} coleções}}",
+  "promotions.scopeColumn.categories": "{itemCount, plural, one {1 categoria} other {{itemCount} categorias}}",
+  "promotions.scopeColumn.products": "{itemCount, plural, one {1 produto} other {{itemCount} produtos}}",
+  "promotions.scopeColumn.skus": "{itemCount, plural, one {1 sku} other {{itemCount} skus}}"
 }

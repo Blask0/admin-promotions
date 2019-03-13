@@ -26,18 +26,16 @@ function withPromotions(WrappedComponent) {
           query={getPromotions}
           variables={{ name, effect }}
           fetchPolicy="network-only">
-          {({ loading, error, data, refetch }) => {
-            return (
-              <WrappedComponent
-                {...this.props}
-                loading={loading}
-                error={error}
-                refetchPromotions={refetch}
-                promotions={data ? data.getPromotions : []}
-                updateQueryParams={this.updateQueryParams}
-              />
-            )
-          }}
+          {({ loading, error, data, refetch }) => (
+            <WrappedComponent
+              {...this.props}
+              loading={loading}
+              error={error}
+              refetchPromotions={refetch}
+              promotions={data ? data.getPromotions : []}
+              updateQueryParams={this.updateQueryParams}
+            />
+          )}
         </Query>
       )
     }

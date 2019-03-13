@@ -5,6 +5,14 @@ query GetPromotions($name: String, $effect: String) {
     name
     beginDate
     endDate
+    scope {
+      allCatalog
+      skus
+      products
+      collections
+      categories
+      brands
+    }
     isActive
     effectType
   }

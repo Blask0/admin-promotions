@@ -62,10 +62,64 @@ class PromotionsTable extends Component {
         },
       },
       scope: {
-        type: 'string',
+        type: 'object',
         title: intl.formatMessage({
           id: 'promotions.promotion.effects.scope.title',
         }),
+        properties: {
+          allCatalog: {
+            type: 'boolean',
+          },
+          skus: {
+            type: 'int',
+          },
+          products: {
+            type: 'int',
+          },
+          categories: {
+            type: 'int',
+          },
+          collections: {
+            type: 'int',
+          },
+          brands: {
+            type: 'int',
+          },
+        },
+        width: 300,
+        cellRenderer: ({ cellData }) => {
+
+          if (cellData.allCatalog) {
+            return (
+              <span className="fw5">
+                {intl.formatMessage({
+                  id: 'promotions.scopeColumn.allProducts',
+                })}
+              </span>
+            )
+          } else {
+            let scopeInfo = []
+            const blackList = ['allCatalog', '__typename']
+
+            Object.keys(cellData).forEach((key, index) => {
+              if (
+                cellData[key] !== 0 &&
+                !blackList.includes(key)
+              ) {
+                scopeInfo = [
+                  ...scopeInfo,
+                  `${intl.formatMessage({
+                    id: `promotions.scopeColumn.${key}`,
+                  }, {
+                    itemCount: cellData[key] 
+                  })}`,
+                ]
+              }
+            })
+
+            return (<span>{scopeInfo.join(', ')}</span>)
+          }
+        },
       },
       beginDate: {
         type: 'string',
@@ -85,9 +139,9 @@ class PromotionsTable extends Component {
                 <span className="dtc v-mid">{time}</span>
               </div>
             </div>
-          )
+            )
+          },
         },
-      },
       endDate: {
         type: 'string',
         title: intl.formatMessage({
@@ -169,13 +223,13 @@ class PromotionsTable extends Component {
 
   getEffectIcon = effectType => {
     switch (effectType) {
-      case 'Price':
+      case 'price':
         return <Price />
-      case 'Gift':
+      case 'gift':
         return <Gift />
-      case 'Shipping':
+      case 'shipping':
         return <Shipping />
-      case 'Reward':
+      case 'reward':
         return <Reward />
     }
   }
