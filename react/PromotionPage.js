@@ -226,13 +226,22 @@ class PromotionPage extends Component {
 
     if (
       eligibility.statements.value.length > 0 &&
-      eligibility.statements.value.slice(-1).pop().subject === ''
+      !eligibility.statements.value.slice(-1).pop().subject
     ) {
       eligibility.statements.error = intl.formatMessage({
         id: 'promotions.validation.incompleteStatement',
       })
       isValid = false
     }
+
+    eligibility.statements.value.forEach((statement, index) => {
+      if (statement.subject && !statement.object) {
+        eligibility.statements.value[index].error = intl.formatMessage({
+          id: 'promotions.validation.incompleteStatement',
+        })
+        isValid = false
+      }
+    })
 
     return { eligibility, isValid }
   }
