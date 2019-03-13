@@ -20,7 +20,7 @@ const INITIAL_PRICE_EFFECT = {
   },
 }
 const INITIAL_GIFT_EFFECT = {
-  skus: [],
+  skus: newFieldWithValidation([]),
   multiplier: false,
   limitQuantityPerPurchase: false,
   maxQuantityPerPurchase: newFieldWithValidation(),
@@ -55,6 +55,12 @@ const getGiftEffect = giftEffect =>
   giftEffect
     ? {
       ...giftEffect,
+      skus: newFieldWithValidation(
+        giftEffect.skus.map(sku => ({
+          label: sku.name,
+          value: sku.id,
+        }))
+      ),
       maxQuantityPerPurchase: newFieldWithValidation(
         giftEffect ? giftEffect.maxQuantityPerPurchase : undefined
       ),

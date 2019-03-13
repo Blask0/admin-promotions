@@ -23,7 +23,10 @@ query GetPromotion($id: String!) {
         }
       }
       gift {
-        products
+        skus {
+          id
+          name
+        }
         multiplier
         limitQuantityPerPurchase
       }
