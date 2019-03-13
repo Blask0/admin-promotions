@@ -65,6 +65,7 @@ class ShippingForm extends Component {
                 placeholder={intl.formatMessage({
                   id: 'promotions.promotion.effects.shippingForm.placeholder',
                 })}
+                prefix={<span className="b f6">%</span>}
               />
             </div>
           ) : null}

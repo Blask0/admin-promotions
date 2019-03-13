@@ -29,7 +29,9 @@ const renderRangeInputObject = ({
 
           statements[statementIndex].object = currentObject
           update({
-            statements,
+            statements: {
+              value: statements,
+            },
           })
         }}
       />
@@ -50,7 +52,9 @@ const renderRangeInputObject = ({
 
           statements[statementIndex].object = currentObject
           update({
-            statements,
+            statements: {
+              value: statements,
+            },
           })
         }}
       />

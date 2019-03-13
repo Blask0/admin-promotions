@@ -50,16 +50,27 @@ class PromotionPage extends Component {
       isValid: isRestrictionValid,
     } = this.validateRestrictionSection()
 
+    const {
+      eligibility,
+      isValid: isEligibilityValid,
+    } = this.validateEligibilitySection()
+
     this.setState(prevState => ({
       promotion: {
         ...prevState.promotion,
         generalInfo,
         effects,
         restriction,
+        eligibility,
       },
     }))
 
-    return isGeneralInfoValid && isEffectsValid && isRestrictionValid
+    return (
+      isGeneralInfoValid &&
+      isEffectsValid &&
+      isEligibilityValid &&
+      isRestrictionValid
+    )
   }
 
   validateGeneralInfoSection = () => {
@@ -97,18 +108,22 @@ class PromotionPage extends Component {
     const {
       promotion: { effects },
     } = this.state
+    const { intl } = this.props
 
-    if (!effects.activeEffectType) {
+    if (!effects.activeEffectType.value) {
+      effects.activeEffectType.error = intl.formatMessage({
+        id: 'promotions.validation.emptyEffect',
+      })
       return { effects, isValid: false }
     }
 
-    if (effects.activeEffectType === 'price') {
+    if (effects.activeEffectType.value === 'price') {
       return this.validatePriceEffect()
-    } else if (effects.activeEffectType === 'gift') {
+    } else if (effects.activeEffectType.value === 'gift') {
       return this.validateGiftEffect()
-    } else if (effects.activeEffectType === 'shipping') {
+    } else if (effects.activeEffectType.value === 'shipping') {
       return this.validateShippingEffect()
-    } else if (effects.activeEffectType === 'reward') {
+    } else if (effects.activeEffectType.value === 'reward') {
       return this.validateRewardEffect()
     }
   }
@@ -190,6 +205,45 @@ class PromotionPage extends Component {
     }
 
     return { effects, isValid }
+  }
+
+  validateEligibilitySection = () => {
+    let isValid = true
+    const { intl } = this.props
+    const {
+      promotion: { eligibility },
+    } = this.state
+
+    if (
+      !eligibility.allCustomers &&
+      eligibility.statements.value.length === 0
+    ) {
+      eligibility.statements.error = intl.formatMessage({
+        id: 'promotions.validation.emptyStatement',
+      })
+      isValid = false
+    }
+
+    if (
+      eligibility.statements.value.length > 0 &&
+      !eligibility.statements.value.slice(-1).pop().subject
+    ) {
+      eligibility.statements.error = intl.formatMessage({
+        id: 'promotions.validation.incompleteStatement',
+      })
+      isValid = false
+    }
+
+    eligibility.statements.value.forEach((statement, index) => {
+      if (statement.subject && !statement.object) {
+        eligibility.statements.value[index].error = intl.formatMessage({
+          id: 'promotions.validation.incompleteStatement',
+        })
+        isValid = false
+      }
+    })
+
+    return { eligibility, isValid }
   }
 
   validateRestrictionSection = () => {
@@ -347,6 +401,7 @@ class PromotionPage extends Component {
       },
       effects: {
         ...effects,
+        activeEffectType: effects.activeEffectType.value,
         price: {
           ...effects.price,
           discount: effects.price.discount.value,
@@ -377,7 +432,7 @@ class PromotionPage extends Component {
       },
       eligibility: {
         ...eligibility,
-        statements: JSON.stringify(eligibility.statements),
+        statements: JSON.stringify(eligibility.statements.value),
       },
       restriction: {
         ...restriction,

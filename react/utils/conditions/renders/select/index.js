@@ -40,7 +40,9 @@ const renderSelectObject = ({
             statements[statementIndex].error = validationErrorMessage
           }
           update({
-            statements,
+            statements: {
+              value: statements,
+            },
           })
         }}
         onSearchInputChange={searchedValue => {

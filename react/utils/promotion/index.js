@@ -108,6 +108,7 @@ export const newPromotion = (intl, promotion, salesChannels) => {
       },
       effects: {
         ...effects,
+        activeEffectType: newFieldWithValidation(effects.activeEffectType),
         price: getPriceEffect(effects.price),
         gift: getGiftEffect(effects.gift),
         shipping: getShippingEffect(effects.shipping),
@@ -115,7 +116,7 @@ export const newPromotion = (intl, promotion, salesChannels) => {
       },
       eligibility: {
         ...eligibility,
-        statements: JSON.parse(eligibility.statements),
+        statements: newFieldWithValidation(JSON.parse(eligibility.statements)),
       },
       restriction: {
         ...restriction,
@@ -159,11 +160,11 @@ export const newPromotion = (intl, promotion, salesChannels) => {
     eligibility: {
       id: undefined,
       allCustomers: true,
-      statements: [],
+      statements: newFieldWithValidation([]),
       operator: 'all',
     },
     effects: {
-      activeEffectType: undefined,
+      activeEffectType: newFieldWithValidation(),
       price: INITIAL_PRICE_EFFECT,
       gift: INITIAL_GIFT_EFFECT,
       shipping: INITIAL_SHIPPING_EFFECT,
