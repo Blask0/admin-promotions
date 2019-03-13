@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
-
+import { Alert } from 'vtex.styleguide'
 import Price from '../../Icon/Price'
 import Gift from '../../Icon/Gift'
 import Shipping from '../../Icon/Shipping'
@@ -15,19 +15,25 @@ import GiftForm from './GiftForm'
 
 class EffectSection extends Component {
   isEffectActive = activeEffectType =>
-    this.props.effects.activeEffectType === activeEffectType
+    this.props.effects.activeEffectType.value === activeEffectType
 
   changeActiveEffectType = activeEffectType => {
     this.props.updatePageState({
       ...this.props.effects,
-      activeEffectType,
+      activeEffectType: {
+        value: activeEffectType,
+        error: undefined,
+      },
     })
   }
 
   updatePriceEffect = price => {
     this.props.updatePageState({
       ...this.props.effects,
-      activeEffectType: 'price',
+      activeEffectType: {
+        value: 'price',
+        error: undefined,
+      },
       price: {
         ...this.props.effects.price,
         ...price,
@@ -38,7 +44,10 @@ class EffectSection extends Component {
   updateGiftEffect = gift => {
     this.props.updatePageState({
       ...this.props.effects,
-      activeEffectType: 'gift',
+      activeEffectType: {
+        value: 'gift',
+        error: undefined,
+      },
       gift: {
         ...this.props.effects.gift,
         ...gift,
@@ -49,7 +58,10 @@ class EffectSection extends Component {
   updateShippingEffect = shipping => {
     this.props.updatePageState({
       ...this.props.effects,
-      activeEffectType: 'shipping',
+      activeEffectType: {
+        value: 'shipping',
+        error: undefined,
+      },
       shipping: {
         ...this.props.effects.shipping,
         ...shipping,
@@ -60,7 +72,10 @@ class EffectSection extends Component {
   updateRewardEffect = reward => {
     this.props.updatePageState({
       ...this.props.effects,
-      activeEffectType: 'reward',
+      activeEffectType: {
+        value: 'reward',
+        error: undefined,
+      },
       reward: {
         ...this.props.effects.reward,
         ...reward,
@@ -115,6 +130,13 @@ class EffectSection extends Component {
         <h4 className="t-heading-4 mt0">
           <FormattedMessage id="promotions.promotion.effects.title" />
         </h4>
+
+        {effects.activeEffectType.error && (
+          <div className="mb5 flex justify-center w-100">
+            <Alert type="error">{effects.activeEffectType.error}</Alert>
+          </div>
+        )}
+
         <div className="flex flex-row">
           <div className="mh3">
             <SelectableCard
@@ -166,7 +188,7 @@ class EffectSection extends Component {
           </div>
         </div>
         <div className="flex flex-column">
-          {this.renderEffectFormByType(effects.activeEffectType)}
+          {this.renderEffectFormByType(effects.activeEffectType.value)}
         </div>
       </Fragment>
     )
@@ -176,7 +198,7 @@ class EffectSection extends Component {
 EffectSection.propTypes = {
   intl: intlShape,
   effects: PropTypes.shape({
-    activeEffectType: PropTypes.string,
+    activeEffectType: PropTypes.object,
     price: PropTypes.object,
     gift: PropTypes.object,
     shipping: PropTypes.object,

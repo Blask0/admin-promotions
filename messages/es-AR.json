@@ -153,6 +153,7 @@
   "promotions.validation.endDateSmaller": "La fecha de finalización no puede ser anterior a la fecha de inicio",
   "promotions.validation.rangeInput": "Debe ser más pequeño que otra entrada",
   "promotions.validation.biggerLimit": "Este límite no puede ser mayor que el límite por tienda",
+  "promotions.validation.emptyEffect": "Tienes que seleccionar un tipo de efecto",
   "promotions.promotion.scopeSelector.brand.label": "Marca",
   "promotions.promotion.scopeSelector.brand.verb.any": "es una de",
   "promotions.promotion.scopeSelector.brand.verb.not.any": "no es una de",

@@ -61,10 +61,16 @@ class PromotionPage extends Component {
         generalInfo,
         effects,
         restriction,
+        eligibility,
       },
     }))
 
-    return isGeneralInfoValid && isEffectsValid && isRestrictionValid
+    return (
+      isGeneralInfoValid &&
+      isEffectsValid &&
+      isEligibilityValid &&
+      isRestrictionValid
+    )
   }
 
   validateGeneralInfoSection = () => {
@@ -102,18 +108,23 @@ class PromotionPage extends Component {
     const {
       promotion: { effects },
     } = this.state
+    const { intl } = this.props
 
-    if (!effects.activeEffectType) {
+    if (!effects.activeEffectType.value) {
+      effects.activeEffectType.error = intl.formatMessage({
+        id: 'promotions.validation.emptyEffect',
+      })
+
       return { effects, isValid: false }
     }
 
-    if (effects.activeEffectType === 'price') {
+    if (effects.activeEffectType.value === 'price') {
       return this.validatePriceEffect()
-    } else if (effects.activeEffectType === 'gift') {
+    } else if (effects.activeEffectType.value === 'gift') {
       return this.validateGiftEffect()
-    } else if (effects.activeEffectType === 'shipping') {
+    } else if (effects.activeEffectType.value === 'shipping') {
       return this.validateShippingEffect()
-    } else if (effects.activeEffectType === 'reward') {
+    } else if (effects.activeEffectType.value === 'reward') {
       return this.validateRewardEffect()
     }
   }
@@ -208,7 +219,10 @@ class PromotionPage extends Component {
       return { eligibility, isValid: false }
     }
 
-    if (eligibility.statements.slice(-1).pop().subject === '') {
+    if (
+      eligibility.statements.length > 0 &&
+      eligibility.statements.slice(-1).pop().subject === ''
+    ) {
       return { eligibility, isValid: false }
     }
 
