@@ -10,7 +10,7 @@ const renderInputObject = ({
 }) => {
   const { placeholder, type, update } = extraParams
   // if (statements[statementIndex].focus) {
-  //   // statements[statementIndex].ref.current.focus()
+  // statements[statementIndex].ref.current.focus()
   //   statements[statementIndex].focus = false
 
   //   update({

@@ -22,9 +22,8 @@ class GeneralSection extends Component {
       applyFocus({ sectionName: 'generalInfo', fieldName: 'name' })
     }
 
-    // TODO: Add ref in DatePicker: ch7996
     if (endDate.focus) {
-      // this.endDateRef.current.focus()
+      applyFocus({ sectionName: 'generalInfo', fieldName: 'endDate' })
     }
   }
 
@@ -145,7 +144,7 @@ class GeneralSection extends Component {
                   }}
                   errorMessage={generalInfo.endDate.error}
                   value={generalInfo.endDate.value}
-                  ref={this.endDateRef}
+                  ref={generalInfo.endDate.ref}
                   label={intl.formatMessage({
                     id: 'promotions.promotion.generalInfo.endDate',
                   })}
