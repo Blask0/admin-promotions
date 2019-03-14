@@ -14,27 +14,18 @@ class GeneralSection extends Component {
     this.endDateRef = React.createRef()
   }
 
-  applyFocus = (section, field) => {
-    const fieldObject = { ...section[field] }
-    const { updatePageState } = this.props
-    fieldObject.ref.current.focus()
-
-    const changeObject = {}
-    changeObject[field] = {
-      ...fieldObject,
-      focus: false,
-    }
-    updatePageState(changeObject)
-  }
-
   componentDidUpdate = () => {
-    const { generalInfo } = this.props
+    const {
+      generalInfo: { name, endDate },
+      applyFocus,
+    } = this.props
 
-    if (generalInfo.name.focus) {
-      this.applyFocus(generalInfo, 'name')
+    if (name.focus) {
+      applyFocus({ sectionName: 'generalInfo', fieldName: 'name' })
     }
 
-    if (generalInfo.endDate.focus) {
+    // TODO: Add ref in DatePicker: ch7996
+    if (endDate.focus) {
       // this.endDateRef.current.focus()
     }
   }

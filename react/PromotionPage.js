@@ -37,6 +37,34 @@ class PromotionPage extends Component {
     window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
   }
 
+  applyFocus = ({ sectionName, fieldName }) => {
+    const { promotion } = this.state
+    const fieldObject = { ...promotion[sectionName][fieldName] }
+    fieldObject.ref.current.focus()
+
+    const changeObject = {
+      [fieldName]: {
+        ...fieldObject,
+        focus: false,
+      },
+    }
+
+    switch (sectionName) {
+      case 'generalInfo':
+        this.handleGeneralInfoChange(changeObject)
+        break
+      case 'eligibility':
+        this.handleEligibilitySectionChange(changeObject)
+        break
+      case 'effects':
+        this.handleEffectsSectionChange(changeObject)
+        break
+      case 'restriction':
+        this.handleRestrictionSectionChange(changeObject)
+        break
+    }
+  }
+
   validate = () => {
     const {
       generalInfo,
@@ -486,6 +514,7 @@ class PromotionPage extends Component {
         <PageBlock>
           <GeneralSection
             generalInfo={generalInfo}
+            applyFocus={this.applyFocus}
             updatePageState={this.handleGeneralInfoChange}
           />
         </PageBlock>
