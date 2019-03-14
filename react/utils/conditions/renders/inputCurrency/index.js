@@ -10,6 +10,18 @@ const renderInputCurrencyObject = ({
 }) => {
   const { placeholder, locale, currencyCode, update } = extraParams
 
+  // if (statements[statementIndex].focus) {
+  //   inputRef.current.focus()
+  //   statements[statementIndex].focus = false
+  //   update({
+  //     statements: {
+  //       ...statements,
+  //       value: statements,
+  //       error: undefined,
+  //     },
+  //   })
+  // }
+
   return (
     <div className="flex">
       <InputCurrency
@@ -20,6 +32,7 @@ const renderInputCurrencyObject = ({
         errorMessage={statements[statementIndex].error}
         onChange={e => {
           statements[statementIndex].object = e.target.value
+          statements[statementIndex].error = undefined
           update({
             statements: {
               ...statements,

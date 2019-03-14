@@ -41,7 +41,9 @@ const renderSelectObject = ({
           }
           update({
             statements: {
+              ...statements,
               value: statements,
+              error: undefined,
             },
           })
         }}

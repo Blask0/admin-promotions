@@ -28,9 +28,12 @@ const renderRangeInputObject = ({
           currentObject.first = e.target.value.replace(/\D/g, '')
 
           statements[statementIndex].object = currentObject
+          statements[statementIndex].error = undefined
           update({
             statements: {
+              ...statements,
               value: statements,
+              error: undefined,
             },
           })
         }}
@@ -52,9 +55,12 @@ const renderRangeInputObject = ({
           currentObject.last = e.target.value.replace(/\D/g, '')
 
           statements[statementIndex].object = currentObject
+          statements[statementIndex].error = undefined
           update({
             statements: {
+              ...statements,
               value: statements,
+              error: undefined,
             },
           })
         }}

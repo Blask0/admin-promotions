@@ -122,6 +122,18 @@ class EffectSection extends Component {
     }
   }
 
+  componentDidUpdate = () => {
+    const {
+      effects: { activeEffectType },
+      applyFocus,
+    } = this.props
+
+    // TODO: Add ref prop to Alert component
+    if (activeEffectType.focus) {
+      // applyFocus({ sectionName: 'effects', fieldName: 'activeEffectType' })
+    }
+  }
+
   render() {
     const { intl, effects, currencyCode } = this.props
 
@@ -133,7 +145,9 @@ class EffectSection extends Component {
 
         {effects.activeEffectType.error && (
           <div className="mb5 flex justify-center w-100">
-            <Alert type="error">{effects.activeEffectType.error}</Alert>
+            <Alert type="error" ref={effects.activeEffectType.ref}>
+              {effects.activeEffectType.error}
+            </Alert>
           </div>
         )}
 

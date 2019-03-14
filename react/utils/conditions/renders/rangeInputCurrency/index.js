@@ -28,9 +28,12 @@ const renderRangeInputCurrencyObject = ({
           const currentObject = statements[statementIndex].object || {}
           currentObject.first = e.target.value
           statements[statementIndex].object = currentObject
+          statements[statementIndex].error = undefined
           update({
             statements: {
+              ...statements,
               value: statements,
+              error: undefined,
             },
           })
         }}
@@ -48,9 +51,12 @@ const renderRangeInputCurrencyObject = ({
           const currentObject = statements[statementIndex].object || {}
           currentObject.last = e.target.value
           statements[statementIndex].object = currentObject
+          statements[statementIndex].error = undefined
           update({
             statements: {
+              ...statements,
               value: statements,
+              error: undefined,
             },
           })
         }}

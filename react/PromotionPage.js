@@ -271,6 +271,7 @@ class PromotionPage extends Component {
         eligibility.statements.value[index].error = intl.formatMessage({
           id: 'promotions.validation.incompleteStatement',
         })
+        eligibility.statements.value[index].focus = true
         isValid = false
       }
     })
@@ -528,6 +529,7 @@ class PromotionPage extends Component {
         <PageBlock>
           <EffectsSection
             effects={effects}
+            applyFocus={this.applyFocus}
             updatePageState={this.handleEffectsSectionChange}
             currencyCode={currencyCode}
           />
