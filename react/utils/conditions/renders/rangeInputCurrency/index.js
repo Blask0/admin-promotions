@@ -8,7 +8,7 @@ const renderRangeInputCurrencyObject = ({
   error,
   extraParams,
 }) => {
-  const { placeholder, locale, currencyCode, update } = extraParams
+  const { placeholder, locale, currencyCode, intl, update } = extraParams
 
   return (
     <div className="flex">
@@ -20,8 +20,8 @@ const renderRangeInputCurrencyObject = ({
           statements[statementIndex].object &&
           statements[statementIndex].object.first >=
             statements[statementIndex].object.last
-            ? 'Must be smaller than other input'
-            : ''
+            ? intl.formatMessage({ id: 'promotions.validation.rangeInput' })
+            : statements[statementIndex].error
         }
         value={values && values.first ? values.first : ''}
         onChange={e => {
@@ -43,6 +43,7 @@ const renderRangeInputCurrencyObject = ({
         locale={locale}
         currencyCode={currencyCode}
         value={values && values.last ? values.last : ''}
+        errorMessage={statements[statementIndex].error}
         onChange={e => {
           const currentObject = statements[statementIndex].object || {}
           currentObject.last = e.target.value

@@ -48,6 +48,7 @@ const totalPriceRange = (intl, update, currencyCode) => {
             locale: intl.locale,
             currencyCode: currencyCode,
             update: update,
+            intl: intl,
           },
         },
       },
