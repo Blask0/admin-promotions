@@ -24,6 +24,18 @@ class EligibilitySection extends Component {
     super(props)
   }
 
+  componentDidUpdate = () => {
+    const {
+      eligibility: { statements },
+      applyFocus,
+    } = this.props
+
+    // TODO: Add ref prop to Alert component
+    if (statements.focus) {
+      // applyFocus({ sectionName: 'eligibility', fieldName: 'statements' })
+    }
+  }
+
   render() {
     const {
       intl,
@@ -106,7 +118,9 @@ class EligibilitySection extends Component {
         />
         {statements.error && (
           <div className="mb5 flex justify-center w-100">
-            <Alert type="error">{statements.error}</Alert>
+            <Alert type="error" ref={statements.ref}>
+              {statements.error}
+            </Alert>
           </div>
         )}
 
@@ -127,6 +141,7 @@ class EligibilitySection extends Component {
               onChangeStatements={statements => {
                 updatePageState({
                   statements: {
+                    ...statements,
                     value: statements,
                     error: undefined,
                   },
@@ -149,6 +164,7 @@ EligibilitySection.propTypes = {
   eligibility: PropTypes.shape({
     allCustomers: PropTypes.bool.isRequired,
   }).isRequired,
+  applyFocus: PropTypes.func,
   updatePageState: PropTypes.func.isRequired,
   currencyCode: PropTypes.string,
 }

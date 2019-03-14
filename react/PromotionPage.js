@@ -251,6 +251,7 @@ class PromotionPage extends Component {
       eligibility.statements.error = intl.formatMessage({
         id: 'promotions.validation.emptyStatement',
       })
+      eligibility.statements.focus = true
       isValid = false
     }
 
@@ -261,6 +262,7 @@ class PromotionPage extends Component {
       eligibility.statements.error = intl.formatMessage({
         id: 'promotions.validation.incompleteStatement',
       })
+      eligibility.statements.focus = true
       isValid = false
     }
 
@@ -287,6 +289,7 @@ class PromotionPage extends Component {
       restriction.perStore.error = intl.formatMessage({
         id: 'promotions.validation.emptyField',
       })
+      restriction.perStore.focus = true
       isValid = false
     }
 
@@ -294,6 +297,7 @@ class PromotionPage extends Component {
       restriction.perClient.error = intl.formatMessage({
         id: 'promotions.validation.emptyField',
       })
+      restriction.perClient.focus = true
       isValid = false
     }
 
@@ -305,6 +309,7 @@ class PromotionPage extends Component {
       restriction.perClient.error = intl.formatMessage({
         id: 'promotions.validation.biggerLimit',
       })
+      restriction.perClient.focus = true
       isValid = false
     }
 
@@ -315,6 +320,7 @@ class PromotionPage extends Component {
       restriction.maxNumberOfAffectedItems.error = intl.formatMessage({
         id: 'promotions.validation.emptyField',
       })
+      restriction.maxNumberOfAffectedItems.focus = true
       isValid = false
     }
 
@@ -326,6 +332,7 @@ class PromotionPage extends Component {
       restriction.restrictedSalesChannels.error = intl.formatMessage({
         id: 'promotions.validation.emptyField',
       })
+      restriction.restrictedSalesChannels.focus = true
       isValid = false
     }
 
@@ -528,6 +535,7 @@ class PromotionPage extends Component {
         <PageBlock>
           <EligibilitySection
             eligibility={eligibility}
+            applyFocus={this.applyFocus}
             updatePageState={this.handleEligibilitySectionChange}
             currencyCode={currencyCode}
           />
@@ -535,6 +543,7 @@ class PromotionPage extends Component {
         <PageBlock>
           <RestrictionSection
             restriction={restriction}
+            applyFocus={this.applyFocus}
             updatePageState={this.handleRestrictionSectionChange}
           />
         </PageBlock>

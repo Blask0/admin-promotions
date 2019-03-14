@@ -19,6 +19,41 @@ class RestrictionSection extends Component {
     super(props)
   }
 
+  componentDidUpdate = () => {
+    const {
+      restriction: {
+        perStore,
+        perClient,
+        maxNumberOfAffectedItems,
+        restrictedSalesChannels,
+      },
+      applyFocus,
+    } = this.props
+
+    if (perStore.focus) {
+      applyFocus({ sectionName: 'restriction', fieldName: 'perStore' })
+    }
+
+    if (perClient.focus) {
+      applyFocus({ sectionName: 'restriction', fieldName: 'perClient' })
+    }
+
+    if (maxNumberOfAffectedItems.focus) {
+      applyFocus({
+        sectionName: 'restriction',
+        fieldName: 'maxNumberOfAffectedItems',
+      })
+    }
+
+    // TODO: Add ref prop to Select component
+    if (restrictedSalesChannels.focus) {
+      // applyFocus({
+      //   sectionName: 'restriction',
+      //   fieldName: 'restrictedSalesChannels',
+      // })
+    }
+  }
+
   render() {
     const {
       intl,
@@ -57,7 +92,9 @@ class RestrictionSection extends Component {
               updatePageState({
                 isLimitingPerStore: !isLimitingPerStore,
                 perStore: {
+                  ...perStore,
                   value: undefined,
+                  error: undefined,
                 },
               })
             }
@@ -73,11 +110,14 @@ class RestrictionSection extends Component {
               })}
               type="number"
               value={perStore.value}
+              ref={perStore.ref}
               errorMessage={perStore.error}
               onChange={e => {
                 updatePageState({
                   perStore: {
+                    ...perStore,
                     value: parseInt(e.target.value),
+                    error: undefined,
                   },
                 })
               }}
@@ -96,7 +136,9 @@ class RestrictionSection extends Component {
               updatePageState({
                 isLimitingPerClient: !isLimitingPerClient,
                 perClient: {
+                  ...perClient,
                   value: undefined,
+                  error: undefined,
                 },
               })
             }
@@ -112,11 +154,14 @@ class RestrictionSection extends Component {
               })}
               type="number"
               value={perClient.value}
+              ref={perClient.ref}
               errorMessage={perClient.error}
               onChange={e => {
                 updatePageState({
                   perClient: {
+                    ...perClient,
                     value: parseInt(e.target.value),
+                    error: undefined,
                   },
                 })
               }}
@@ -136,7 +181,9 @@ class RestrictionSection extends Component {
               updatePageState({
                 isLimitingPerNumOfAffectedItems: !isLimitingPerNumOfAffectedItems,
                 maxNumberOfAffectedItems: {
+                  ...maxNumberOfAffectedItems,
                   value: undefined,
+                  error: undefined,
                 },
               })
             }
@@ -152,11 +199,14 @@ class RestrictionSection extends Component {
               })}
               type="number"
               value={maxNumberOfAffectedItems.value}
+              ref={maxNumberOfAffectedItems.ref}
               errorMessage={maxNumberOfAffectedItems.error}
               onChange={e => {
                 updatePageState({
                   maxNumberOfAffectedItems: {
+                    ...maxNumberOfAffectedItems,
                     value: parseInt(e.target.value),
+                    error: undefined,
                   },
                 })
               }}
@@ -178,7 +228,9 @@ class RestrictionSection extends Component {
                 isRestrictingSalesChannels: !isRestrictingSalesChannels,
                 restrictSalesChannelVerb: undefined,
                 restrictedSalesChannels: {
+                  ...restrictedSalesChannels,
                   value: [],
+                  error: undefined,
                 },
               })
             }
@@ -208,12 +260,15 @@ class RestrictionSection extends Component {
                 })}
                 options={mapSalesChannelsToSelect(salesChannels)}
                 value={restrictedSalesChannels.value}
+                ref={restrictedSalesChannels.ref}
                 errorMessage={restrictedSalesChannels.error}
                 loading={loading}
                 onChange={selected =>
                   updatePageState({
                     restrictedSalesChannels: {
+                      ...restrictedSalesChannels,
                       value: selected,
+                      error: undefined,
                     },
                   })
                 }
@@ -243,6 +298,7 @@ RestrictionSection.propTypes = {
     restrictSalesChannelVerb: PropTypes.string,
     restrictedSalesChannels: fieldShape(PropTypes.array),
   }).isRequired,
+  applyFocus: PropTypes.func,
   updatePageState: PropTypes.func.isRequired,
 }
 

@@ -19,9 +19,12 @@ const renderInputObject = ({
         errorMessage={statements[statementIndex].error}
         onChange={e => {
           statements[statementIndex].object = e.target.value
+          statements[statementIndex].error = undefined
           update({
             statements: {
+              ...statements,
               value: statements,
+              error: undefined,
             },
           })
         }}

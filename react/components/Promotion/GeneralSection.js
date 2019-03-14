@@ -10,8 +10,6 @@ import { addDays } from 'date-fns'
 class GeneralSection extends Component {
   constructor(props) {
     super(props)
-    this.nameRef = React.createRef()
-    this.endDateRef = React.createRef()
   }
 
   componentDidUpdate = () => {
@@ -74,7 +72,9 @@ class GeneralSection extends Component {
                 onChange={e => {
                   updatePageState({
                     name: {
+                      ...generalInfo.name,
                       value: e.target.value,
+                      error: undefined,
                     },
                   })
                 }}
@@ -116,10 +116,14 @@ class GeneralSection extends Component {
                     hasEndDate: !generalInfo.hasEndDate,
                     endDate: !generalInfo.hasEndDate
                       ? {
+                        ...generalInfo.endDate,
                         value: addDays(new Date(), 1),
+                        error: undefined,
                       }
                       : {
+                        ...generalInfo.endDate,
                         value: undefined,
+                        error: undefined,
                       },
                   })
                 }}
@@ -133,7 +137,9 @@ class GeneralSection extends Component {
                   onChange={date => {
                     updatePageState({
                       endDate: {
+                        ...generalInfo.endDate,
                         value: date,
+                        error: undefined,
                       },
                     })
                   }}
@@ -214,6 +220,7 @@ GeneralSection.propTypes = {
     hasEndDate: PropTypes.bool,
     endDate: fieldShape(PropTypes.instanceOf(Date)),
   }),
+  applyFocus: PropTypes.func,
   updatePageState: PropTypes.func,
 }
 

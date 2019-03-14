@@ -22,7 +22,9 @@ const renderInputCurrencyObject = ({
           statements[statementIndex].object = e.target.value
           update({
             statements: {
+              ...statements,
               value: statements,
+              error: undefined,
             },
           })
         }}
