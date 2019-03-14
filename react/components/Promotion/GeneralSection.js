@@ -14,17 +14,27 @@ class GeneralSection extends Component {
     this.endDateRef = React.createRef()
   }
 
-  componentDidUpdate = () => {
-    const {
-      generalInfo: { name, endDate },
-    } = this.props
+  applyFocus = (section, field) => {
+    const fieldObject = { ...section[field] }
+    const { updatePageState } = this.props
+    fieldObject.ref.current.focus()
 
-    if (name.focus) {
-      this.nameRef.current.focus()
-      name.focus = false
+    const changeObject = {}
+    changeObject[field] = {
+      ...fieldObject,
+      focus: false,
+    }
+    updatePageState(changeObject)
+  }
+
+  componentDidUpdate = () => {
+    const { generalInfo } = this.props
+
+    if (generalInfo.name.focus) {
+      this.applyFocus(generalInfo, 'name')
     }
 
-    if (endDate.focus) {
+    if (generalInfo.endDate.focus) {
       // this.endDateRef.current.focus()
     }
   }
@@ -69,7 +79,7 @@ class GeneralSection extends Component {
                 })}
                 errorMessage={generalInfo.name.error}
                 value={generalInfo.name.value}
-                ref={this.nameRef}
+                ref={generalInfo.name.ref}
                 onChange={e => {
                   updatePageState({
                     name: {
