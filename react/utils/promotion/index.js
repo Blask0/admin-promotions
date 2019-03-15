@@ -47,7 +47,9 @@ const getPriceEffect = priceEffect =>
       ),
       appliesTo: {
         ...priceEffect.appliesTo,
-        statements: JSON.parse(priceEffect.appliesTo.statements),
+        statements: newFieldWithValidation(
+          JSON.parse(priceEffect.appliesTo.statements)
+        ),
       },
     }
     : INITIAL_PRICE_EFFECT
