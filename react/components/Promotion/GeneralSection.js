@@ -1,7 +1,7 @@
 import React, { Fragment, Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
-
+import { applyFocus } from '../../utils/functions'
 import { Checkbox, Input, DatePicker, Toggle } from 'vtex.styleguide'
 
 import { fieldShape } from '../../utils/propTypes'
@@ -15,15 +15,25 @@ class GeneralSection extends Component {
   componentDidUpdate = () => {
     const {
       generalInfo: { name, endDate },
-      applyFocus,
+      updatePageState,
     } = this.props
 
     if (name.focus) {
-      applyFocus({ sectionName: 'generalInfo', fieldName: 'name' })
+      applyFocus({
+        changeObject: {
+          name,
+        },
+        changeFunction: updatePageState,
+      })
     }
 
     if (endDate.focus) {
-      applyFocus({ sectionName: 'generalInfo', fieldName: 'endDate' })
+      applyFocus({
+        changeObject: {
+          endDate,
+        },
+        changeFunction: updatePageState,
+      })
     }
   }
 
@@ -219,7 +229,6 @@ GeneralSection.propTypes = {
     hasEndDate: PropTypes.bool,
     endDate: fieldShape(PropTypes.instanceOf(Date)),
   }),
-  applyFocus: PropTypes.func,
   updatePageState: PropTypes.func,
 }
 

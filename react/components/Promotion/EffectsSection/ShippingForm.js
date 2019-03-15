@@ -4,6 +4,8 @@ import { injectIntl, intlShape } from 'react-intl'
 
 import { Radio, Input, InputCurrency } from 'vtex.styleguide'
 
+import { applyFocus } from '../../../utils/functions'
+
 class ShippingForm extends Component {
   isDiscountTypeSelected = discountType =>
     this.props.shippingEffect.discountType === discountType
@@ -16,6 +18,23 @@ class ShippingForm extends Component {
         value: discount,
       },
     })
+
+  componentDidUpdate = () => {
+    const {
+      shippingEffect: { discount },
+      onChange,
+    } = this.props
+
+    // TODO: Add ref prop in InputCurrency
+    if (discount.focus) {
+      applyFocus({
+        changeObject: {
+          discount,
+        },
+        changeFunction: onChange,
+      })
+    }
+  }
 
   render() {
     const { intl, currencyCode, shippingEffect } = this.props
@@ -38,6 +57,7 @@ class ShippingForm extends Component {
                 locale={intl.locale}
                 currencyCode={currencyCode}
                 value={shippingEffect.discount.value}
+                ref={shippingEffect.discount.ref}
                 errorMessage={shippingEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
                 placeholder={intl.formatMessage({
@@ -60,6 +80,7 @@ class ShippingForm extends Component {
               <Input
                 type="number"
                 value={shippingEffect.discount.value}
+                ref={shippingEffect.discount.ref}
                 errorMessage={shippingEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
                 placeholder={intl.formatMessage({
@@ -84,6 +105,7 @@ class ShippingForm extends Component {
                 locale={intl.locale}
                 currencyCode={currencyCode}
                 value={shippingEffect.discount.value}
+                ref={shippingEffect.discount.ref}
                 errorMessage={shippingEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
                 placeholder={intl.formatMessage({

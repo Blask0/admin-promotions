@@ -37,34 +37,6 @@ class PromotionPage extends Component {
     window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
   }
 
-  applyFocus = ({ sectionName, fieldName }) => {
-    const { promotion } = this.state
-    const fieldObject = { ...promotion[sectionName][fieldName] }
-    fieldObject.ref.current.focus()
-
-    const changeObject = {
-      [fieldName]: {
-        ...fieldObject,
-        focus: false,
-      },
-    }
-
-    switch (sectionName) {
-      case 'generalInfo':
-        this.handleGeneralInfoChange(changeObject)
-        break
-      case 'eligibility':
-        this.handleEligibilitySectionChange(changeObject)
-        break
-      case 'effects':
-        this.handleEffectsSectionChange(changeObject)
-        break
-      case 'restriction':
-        this.handleRestrictionSectionChange(changeObject)
-        break
-    }
-  }
-
   validate = () => {
     const {
       generalInfo,
@@ -144,6 +116,7 @@ class PromotionPage extends Component {
       effects.activeEffectType.error = intl.formatMessage({
         id: 'promotions.validation.emptyEffect',
       })
+      effects.activeEffectType.focus = true
       return { effects, isValid: false }
     }
 
@@ -169,7 +142,7 @@ class PromotionPage extends Component {
       effects.price.discount.error = intl.formatMessage({
         id: 'promotions.validation.emptyField',
       })
-
+      effects.price.discount.focus = true
       isValid = false
     }
 
@@ -187,6 +160,7 @@ class PromotionPage extends Component {
       effects.gift.skus.error = intl.formatMessage({
         id: 'promotions.validation.emptyField',
       })
+      effects.gift.skus.focus = true
       isValid = false
     }
 
@@ -197,6 +171,7 @@ class PromotionPage extends Component {
       effects.gift.maxQuantityPerPurchase.error = intl.formatMessage({
         id: 'promotions.validation.emptyField',
       })
+      effects.gift.maxQuantityPerPurchase.focus = true
       isValid = false
     }
 
@@ -214,6 +189,7 @@ class PromotionPage extends Component {
       effects.shipping.discount.error = intl.formatMessage({
         id: 'promotions.validation.emptyField',
       })
+      effects.shipping.discount.focus = true
       isValid = false
     }
 
@@ -231,6 +207,7 @@ class PromotionPage extends Component {
       effects.reward.discount.error = intl.formatMessage({
         id: 'promotions.validation.emptyField',
       })
+      effects.reward.discount.focus = true
       isValid = false
     }
 
@@ -522,14 +499,12 @@ class PromotionPage extends Component {
         <PageBlock>
           <GeneralSection
             generalInfo={generalInfo}
-            applyFocus={this.applyFocus}
             updatePageState={this.handleGeneralInfoChange}
           />
         </PageBlock>
         <PageBlock>
           <EffectsSection
             effects={effects}
-            applyFocus={this.applyFocus}
             updatePageState={this.handleEffectsSectionChange}
             currencyCode={currencyCode}
           />
@@ -537,7 +512,6 @@ class PromotionPage extends Component {
         <PageBlock>
           <EligibilitySection
             eligibility={eligibility}
-            applyFocus={this.applyFocus}
             updatePageState={this.handleEligibilitySectionChange}
             currencyCode={currencyCode}
           />
@@ -545,7 +519,6 @@ class PromotionPage extends Component {
         <PageBlock>
           <RestrictionSection
             restriction={restriction}
-            applyFocus={this.applyFocus}
             updatePageState={this.handleRestrictionSectionChange}
           />
         </PageBlock>

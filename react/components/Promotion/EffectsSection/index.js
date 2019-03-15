@@ -13,6 +13,8 @@ import ShippingForm from './ShippingForm'
 import RewardForm from './RewardForm'
 import GiftForm from './GiftForm'
 
+import { applyFocus } from '../../../utils/functions'
+
 class EffectSection extends Component {
   isEffectActive = activeEffectType =>
     this.props.effects.activeEffectType.value === activeEffectType
@@ -84,13 +86,14 @@ class EffectSection extends Component {
   }
 
   renderEffectFormByType = activeEffectType => {
-    const { effects, currencyCode } = this.props
+    const { effects, currencyCode, applyFocus } = this.props
     switch (activeEffectType) {
       case 'price':
         return (
           <PriceForm
             priceEffect={effects.price}
             currencyCode={currencyCode}
+            applyFocus={applyFocus}
             onChange={this.updatePriceEffect}
           />
         )
@@ -125,12 +128,17 @@ class EffectSection extends Component {
   componentDidUpdate = () => {
     const {
       effects: { activeEffectType },
-      applyFocus,
+      updatePageState,
     } = this.props
 
     // TODO: Add ref prop to Alert component
     if (activeEffectType.focus) {
-      // applyFocus({ sectionName: 'effects', fieldName: 'activeEffectType' })
+      // applyFocus({
+      //   changeObject: {
+      //     activeEffectType,
+      //   },
+      //   changeFunction: updatePageState,
+      // })
     }
   }
 

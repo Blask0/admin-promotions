@@ -7,8 +7,34 @@ import { Checkbox, EXPERIMENTAL_Select, Input } from 'vtex.styleguide'
 import { fieldShape } from '../../../utils/propTypes'
 import { mapSkusToSelect } from '../../../utils/mappers'
 import withSkus from '../../../connectors/withSkus'
+import { applyFocus } from '../../../utils/functions'
 
 class GiftForm extends Component {
+  componentDidUpdate = () => {
+    const {
+      giftEffect: { skus, maxQuantityPerPurchase },
+      onChange,
+    } = this.props
+
+    if (skus.focus) {
+      applyFocus({
+        changeObject: {
+          skus,
+        },
+        changeFunction: onChange,
+      })
+    }
+
+    if (maxQuantityPerPurchase.focus) {
+      applyFocus({
+        changeObject: {
+          maxQuantityPerPurchase,
+        },
+        changeFunction: onChange,
+      })
+    }
+  }
+
   render() {
     const {
       intl,
@@ -32,12 +58,15 @@ class GiftForm extends Component {
               options={skuOptions}
               errorMessage={giftEffect.skus.error}
               value={giftEffect.skus.value}
+              ref={giftEffect.skus.ref}
               loading={loading}
               multi
               onChange={selected => {
                 onChange({
                   skus: {
+                    ...giftEffect.skus,
                     value: selected,
+                    error: undefined,
                   },
                 })
               }}
@@ -88,11 +117,14 @@ class GiftForm extends Component {
                 })}
                 type="number"
                 value={giftEffect.maxQuantityPerPurchase.value}
+                ref={giftEffect.maxQuantityPerPurchase.ref}
                 errorMessage={giftEffect.maxQuantityPerPurchase.error}
                 onChange={e => {
                   onChange({
                     maxQuantityPerPurchase: {
+                      ...giftEffect.maxQuantityPerPurchase,
                       value: e.target.value,
+                      error: undefined,
                     },
                   })
                 }}

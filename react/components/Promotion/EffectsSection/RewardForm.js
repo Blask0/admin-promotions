@@ -10,6 +10,7 @@ import {
 } from 'vtex.styleguide'
 
 import { getRewardEffectOrderStatusOptions } from '../../../utils/constants'
+import { applyFocus } from '../../../utils/functions'
 
 class RewardForm extends Component {
   isDiscountTypeSelected = discountType =>
@@ -26,6 +27,23 @@ class RewardForm extends Component {
 
   changeApplyByOrderStatus = applyByOrderStatus =>
     this.props.onChange({ applyByOrderStatus })
+
+  componentDidUpdate = () => {
+    const {
+      rewardEffect: { discount },
+      onChange,
+    } = this.props
+
+    // TODO: Add ref prop in InputCurrency
+    if (discount.focus) {
+      // applyFocus({
+      //   changeObject: {
+      //     discount,
+      //   },
+      //   changeFunction: onChange,
+      // })
+    }
+  }
 
   render() {
     const { intl, currencyCode, rewardEffect } = this.props
@@ -49,6 +67,7 @@ class RewardForm extends Component {
                 locale={intl.locale}
                 currencyCode={currencyCode}
                 value={rewardEffect.discount.value}
+                ref={rewardEffect.discount.ref}
                 errrorMessage={rewardEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
                 placeholder={intl.formatMessage({
@@ -71,6 +90,7 @@ class RewardForm extends Component {
               <Input
                 type="number"
                 value={rewardEffect.discount.value}
+                ref={rewardEffect.discount.ref}
                 errrorMessage={rewardEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
                 placeholder={intl.formatMessage({

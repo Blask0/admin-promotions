@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
+import { applyFocus } from '../../utils/functions'
 
 import { Radio, EXPERIMENTAL_Conditions, Alert } from 'vtex.styleguide'
 
@@ -27,12 +28,17 @@ class EligibilitySection extends Component {
   componentDidUpdate = () => {
     const {
       eligibility: { statements },
-      applyFocus,
+      updatePageState,
     } = this.props
 
     // TODO: Add ref prop to Alert component
     if (statements.focus) {
-      // applyFocus({ sectionName: 'eligibility', fieldName: 'statements' })
+      // applyFocus({
+      //   changeObject: {
+      //     statements,
+      //   },
+      //   changeFunction: updatePageState,
+      // })
     }
   }
 
@@ -164,7 +170,6 @@ EligibilitySection.propTypes = {
   eligibility: PropTypes.shape({
     allCustomers: PropTypes.bool.isRequired,
   }).isRequired,
-  applyFocus: PropTypes.func,
   updatePageState: PropTypes.func.isRequired,
   currencyCode: PropTypes.string,
 }

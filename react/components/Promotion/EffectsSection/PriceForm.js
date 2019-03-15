@@ -18,6 +18,8 @@ import {
   sku,
 } from '../../../utils/scopeSelector/options'
 
+import { applyFocus } from '../../../utils/functions'
+
 class PriceForm extends Component {
   isDiscountTypeSelected = discountType =>
     this.props.priceEffect.discountType === discountType
@@ -27,7 +29,9 @@ class PriceForm extends Component {
   changeDiscount = discount =>
     this.props.onChange({
       discount: {
+        ...discount,
         value: discount,
+        error: undefined,
       },
     })
 
@@ -39,6 +43,23 @@ class PriceForm extends Component {
         ...appliesTo,
       },
     })
+  }
+
+  componentDidUpdate = () => {
+    const {
+      priceEffect: { discount },
+      onChange,
+    } = this.props
+
+    // TODO: Add ref prop in InputCurrency
+    if (discount.focus) {
+      applyFocus({
+        changeObject: {
+          discount,
+        },
+        changeFunction: onChange,
+      })
+    }
   }
 
   render() {
@@ -101,6 +122,7 @@ class PriceForm extends Component {
                 locale={intl.locale}
                 currencyCode={currencyCode}
                 value={priceEffect.discount.value}
+                ref={priceEffect.discount.ref}
                 errorMessage={priceEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
                 placeholder={intl.formatMessage({
@@ -124,6 +146,7 @@ class PriceForm extends Component {
               <Input
                 type="number"
                 value={priceEffect.discount.value}
+                ref={priceEffect.discount.ref}
                 errorMessage={priceEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
                 prefix={<span className="b f6">%</span>}
@@ -144,6 +167,7 @@ class PriceForm extends Component {
             <div className="mv4 mh7 w-20">
               <Input
                 value={priceEffect.discount.value}
+                ref={priceEffect.discount.ref}
                 errorMessage={priceEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
               />
@@ -200,7 +224,7 @@ PriceForm.propTypes = {
   intl: intlShape,
   priceEffect: PropTypes.shape({
     discountType: PropTypes.string,
-    discount: PropTypes.string,
+    discount: PropTypes.object,
     appliesTo: PropTypes.object,
   }).isRequired,
   currencyCode: PropTypes.string,

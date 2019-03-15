@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
+import { applyFocus } from '../../utils/functions'
 
 import {
   RadioGroup,
@@ -27,30 +28,43 @@ class RestrictionSection extends Component {
         maxNumberOfAffectedItems,
         restrictedSalesChannels,
       },
-      applyFocus,
+      updatePageState,
     } = this.props
 
     if (perStore.focus) {
-      applyFocus({ sectionName: 'restriction', fieldName: 'perStore' })
+      applyFocus({
+        changeObject: {
+          perStore,
+        },
+        changeFunction: updatePageState,
+      })
     }
 
     if (perClient.focus) {
-      applyFocus({ sectionName: 'restriction', fieldName: 'perClient' })
+      applyFocus({
+        changeObject: {
+          perClient,
+        },
+        changeFunction: updatePageState,
+      })
     }
 
     if (maxNumberOfAffectedItems.focus) {
       applyFocus({
-        sectionName: 'restriction',
-        fieldName: 'maxNumberOfAffectedItems',
+        changeObject: {
+          maxNumberOfAffectedItems,
+        },
+        changeFunction: updatePageState,
       })
     }
 
-    // TODO: Add ref prop to Select component
     if (restrictedSalesChannels.focus) {
-      // applyFocus({
-      //   sectionName: 'restriction',
-      //   fieldName: 'restrictedSalesChannels',
-      // })
+      applyFocus({
+        changeObject: {
+          restrictedSalesChannels,
+        },
+        changeFunction: updatePageState,
+      })
     }
   }
 
@@ -298,7 +312,6 @@ RestrictionSection.propTypes = {
     restrictSalesChannelVerb: PropTypes.string,
     restrictedSalesChannels: fieldShape(PropTypes.array),
   }).isRequired,
-  applyFocus: PropTypes.func,
   updatePageState: PropTypes.func.isRequired,
 }
 
