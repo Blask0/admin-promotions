@@ -15,7 +15,7 @@ const INITIAL_PRICE_EFFECT = {
   discountType: 'nominal',
   discount: newFieldWithValidation(),
   appliesTo: {
-    statements: [],
+    statements: newFieldWithValidation([]),
     allProducts: true,
     operator: 'all',
   },

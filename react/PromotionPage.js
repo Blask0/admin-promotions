@@ -146,6 +146,40 @@ class PromotionPage extends Component {
       isValid = false
     }
 
+    if (
+      !effects.price.appliesTo.allCustomers &&
+      effects.price.appliesTo.statements.value.length === 0
+    ) {
+      effects.price.appliesTo.statements.error = intl.formatMessage({
+        id: 'promotions.validation.emptyStatement',
+      })
+      effects.price.appliesTo.statements.focus = true
+      isValid = false
+    }
+
+    if (
+      effects.price.appliesTo.statements.value.length > 0 &&
+      !effects.price.appliesTo.statements.value.slice(-1).pop().subject
+    ) {
+      effects.price.appliesTo.statements.error = intl.formatMessage({
+        id: 'promotions.validation.incompleteStatement',
+      })
+      effects.price.appliesTo.statements.focus = true
+      isValid = false
+    }
+
+    effects.price.appliesTo.statements.value.forEach((statement, index) => {
+      if (statement.subject && !statement.object) {
+        effects.price.appliesTo.statements.value[
+          index
+        ].error = intl.formatMessage({
+          id: 'promotions.validation.incompleteStatement',
+        })
+        effects.price.appliesTo.statements.value[index].focus = true
+        isValid = false
+      }
+    })
+
     return { effects, isValid }
   }
 
@@ -422,7 +456,9 @@ class PromotionPage extends Component {
           discount: effects.price.discount.value,
           appliesTo: {
             ...effects.price.appliesTo,
-            statements: JSON.stringify(effects.price.appliesTo.statements),
+            statements: JSON.stringify(
+              effects.price.appliesTo.statements.value
+            ),
           },
         },
         gift: {

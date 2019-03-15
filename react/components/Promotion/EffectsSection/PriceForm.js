@@ -7,6 +7,7 @@ import {
   Input,
   InputCurrency,
   EXPERIMENTAL_Conditions,
+  Alert,
 } from 'vtex.styleguide'
 
 import {
@@ -196,6 +197,13 @@ class PriceForm extends Component {
             })}
             onChange={() => this.changeAppliesTo({ allProducts: false })}
           />
+          {priceEffect.appliesTo.statements.error && (
+            <div className="mb5 flex justify-center w-100">
+              <Alert type="error" ref={priceEffect.appliesTo.statements.ref}>
+                {priceEffect.appliesTo.statements.error}
+              </Alert>
+            </div>
+          )}
           {!priceEffect.appliesTo.allProducts ? (
             <div className="mv4 mh7">
               <EXPERIMENTAL_Conditions
@@ -205,11 +213,17 @@ class PriceForm extends Component {
                     'promotions.promotion.effects.priceForm.appliesTo.specific.placeholder',
                 })}
                 labels={conditionsLabels}
-                statements={priceEffect.appliesTo.statements}
+                statements={priceEffect.appliesTo.statements.value}
                 operator={priceEffect.appliesTo.operator}
                 showOperator={false}
                 onChangeStatements={statements => {
-                  this.changeAppliesTo({ statements })
+                  this.changeAppliesTo({
+                    statements: {
+                      ...statements,
+                      value: statements,
+                      error: undefined,
+                    },
+                  })
                 }}
               />
             </div>
