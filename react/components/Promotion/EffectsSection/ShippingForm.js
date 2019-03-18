@@ -25,7 +25,6 @@ class ShippingForm extends Component {
       onChange,
     } = this.props
 
-    // TODO: Add ref prop in InputCurrency
     if (discount.focus) {
       applyFocus({
         changeObject: {

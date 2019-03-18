@@ -34,14 +34,13 @@ class RewardForm extends Component {
       onChange,
     } = this.props
 
-    // TODO: Add ref prop in InputCurrency
     if (discount.focus) {
-      // applyFocus({
-      //   changeObject: {
-      //     discount,
-      //   },
-      //   changeFunction: onChange,
-      // })
+      applyFocus({
+        changeObject: {
+          discount,
+        },
+        changeFunction: onChange,
+      })
     }
   }
 
