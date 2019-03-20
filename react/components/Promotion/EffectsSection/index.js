@@ -133,12 +133,13 @@ class EffectSection extends Component {
 
     // TODO: Add ref prop to Alert component
     if (activeEffectType.focus) {
-      // applyFocus({
-      //   changeObject: {
-      //     activeEffectType,
-      //   },
-      //   changeFunction: updatePageState,
-      // })
+      const windowHeight = window.innerHeight
+      const alertHeight = activeEffectType.ref.current.clientHeight
+      const alertY = activeEffectType.ref.current.offsetTop
+      const x = 0
+      const y = alertY + alertHeight / 2 - windowHeight / 2
+      console.log('scrolled to:', x, y)
+      window.scrollTo(x, y)
     }
   }
 
@@ -153,7 +154,7 @@ class EffectSection extends Component {
 
         {effects.activeEffectType.error && (
           <div className="mb5 flex justify-center w-100">
-            <Alert type="error" ref={effects.activeEffectType.ref}>
+            <Alert ref={effects.activeEffectType.ref} type="error">
               {effects.activeEffectType.error}
             </Alert>
           </div>
