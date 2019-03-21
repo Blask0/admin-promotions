@@ -145,11 +145,11 @@ class EligibilitySection extends Component {
               onChangeOperator={({ operator }) => {
                 updatePageState({ operator })
               }}
-              onChangeStatements={statements => {
+              onChangeStatements={statementsWithoutValidation => {
                 updatePageState({
                   statements: {
                     ...statements,
-                    value: statements,
+                    value: statementsWithoutValidation,
                     error: undefined,
                   },
                 })

@@ -23,12 +23,25 @@ const renderSelectObject = ({
 
     const { object: selected, error: errorMessage } = statements[statementIndex]
 
+    if (statements[statementIndex].focus) {
+      statements[statementIndex].refs.object.current.focus()
+      statements[statementIndex].focus = false
+      update({
+        statements: {
+          value: statements,
+          error: undefined,
+          focus: false,
+        },
+      })
+    }
+
     return (
       <EXPERIMENTAL_Select
         placeholder={placeholder}
         options={options}
         value={selected}
         multi={multi}
+        ref={statements[statementIndex].refs.object}
         loading={loading}
         creatable={creatable}
         errorMessage={errorMessage}
@@ -41,9 +54,9 @@ const renderSelectObject = ({
           }
           update({
             statements: {
-              ...statements,
               value: statements,
               error: undefined,
+              focus: false,
             },
           })
         }}
