@@ -147,7 +147,7 @@ class PromotionPage extends Component {
     }
 
     if (
-      !effects.price.appliesTo.allCustomers &&
+      !effects.price.appliesTo.allProducts &&
       effects.price.appliesTo.statements.value.length === 0
     ) {
       effects.price.appliesTo.statements.error = intl.formatMessage({

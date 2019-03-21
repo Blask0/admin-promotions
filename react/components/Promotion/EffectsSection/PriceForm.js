@@ -48,7 +48,10 @@ class PriceForm extends Component {
 
   componentDidUpdate = () => {
     const {
-      priceEffect: { discount },
+      priceEffect: {
+        discount,
+        appliesTo: { statements },
+      },
       onChange,
     } = this.props
 
@@ -58,6 +61,13 @@ class PriceForm extends Component {
           discount,
         },
         changeFunction: onChange,
+      })
+    }
+
+    if (statements.focus) {
+      statements.ref.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
       })
     }
   }
@@ -185,7 +195,16 @@ class PriceForm extends Component {
             label={intl.formatMessage({
               id: 'promotions.promotion.effects.priceForm.appliesTo.all',
             })}
-            onChange={() => this.changeAppliesTo({ allProducts: true })}
+            onChange={() =>
+              this.changeAppliesTo({
+                allProducts: true,
+                statements: {
+                  ...priceEffect.appliesTo.statements,
+                  focus: false,
+                  error: undefined,
+                },
+              })
+            }
           />
           <Radio
             id="promotions.promotion.effects.priceForm.appliesTo.specific"

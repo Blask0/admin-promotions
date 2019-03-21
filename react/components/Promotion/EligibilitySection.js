@@ -28,17 +28,13 @@ class EligibilitySection extends Component {
   componentDidUpdate = () => {
     const {
       eligibility: { statements },
-      updatePageState,
     } = this.props
 
-    // TODO: Add ref prop to Alert component
     if (statements.focus) {
-      // applyFocus({
-      //   changeObject: {
-      //     statements,
-      //   },
-      //   changeFunction: updatePageState,
-      // })
+      statements.ref.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
     }
   }
 
@@ -107,6 +103,11 @@ class EligibilitySection extends Component {
           onChange={e =>
             updatePageState({
               allCustomers: true,
+              statements: {
+                ...statements,
+                focus: false,
+                error: undefined,
+              },
             })
           }
         />

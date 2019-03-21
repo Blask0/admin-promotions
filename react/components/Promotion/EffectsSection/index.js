@@ -128,18 +128,13 @@ class EffectSection extends Component {
   componentDidUpdate = () => {
     const {
       effects: { activeEffectType },
-      updatePageState,
     } = this.props
 
-    // TODO: Add ref prop to Alert component
     if (activeEffectType.focus) {
-      const windowHeight = window.innerHeight
-      const alertHeight = activeEffectType.ref.current.clientHeight
-      const alertY = activeEffectType.ref.current.offsetTop
-      const x = 0
-      const y = alertY + alertHeight / 2 - windowHeight / 2
-      console.log('scrolled to:', x, y)
-      window.scrollTo(x, y)
+      activeEffectType.ref.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
     }
   }
 
