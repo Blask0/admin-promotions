@@ -2,12 +2,8 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape } from 'react-intl'
 
-import {
-  Radio,
-  Input,
-  InputCurrency,
-  EXPERIMENTAL_Select,
-} from 'vtex.styleguide'
+import { Radio, Input, EXPERIMENTAL_Select } from 'vtex.styleguide'
+import PromotionsInputCurrency from '../../../components/Promotion/PromotionInputCurrency'
 
 import { getRewardEffectOrderStatusOptions } from '../../../utils/constants'
 import { applyFocus } from '../../../utils/functions'
@@ -76,7 +72,7 @@ class RewardForm extends Component {
           />
           {this.isDiscountTypeSelected('nominal') ? (
             <div className="mv4 mh7 w-20">
-              <InputCurrency
+              <PromotionsInputCurrency
                 locale={intl.locale}
                 currencyCode={currencyCode}
                 value={rewardEffect.discount.value}

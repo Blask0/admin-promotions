@@ -1,5 +1,5 @@
 import React from 'react'
-import { InputCurrency } from 'vtex.styleguide'
+import PromotionsInputCurrency from '../../../../components/Promotion/PromotionInputCurrency'
 
 const renderInputCurrencyObject = ({
   statements,
@@ -18,7 +18,7 @@ const renderInputCurrencyObject = ({
 
   return (
     <div className="flex">
-      <InputCurrency
+      <PromotionsInputCurrency
         placeholder={placeholder}
         locale={locale}
         currencyCode={currencyCode}
