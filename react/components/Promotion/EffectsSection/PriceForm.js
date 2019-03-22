@@ -27,14 +27,20 @@ class PriceForm extends Component {
 
   changeDiscountType = discountType => this.props.onChange({ discountType })
 
-  changeDiscount = discount =>
-    this.props.onChange({
+  changeDiscount = discountWithoutValidation => {
+    const {
+      onChange,
+      priceEffect: { discount },
+    } = this.props
+
+    onChange({
       discount: {
         ...discount,
-        value: discount,
+        value: discountWithoutValidation,
         error: undefined,
       },
     })
+  }
 
   changeAppliesTo = appliesTo => {
     const { priceEffect } = this.props
