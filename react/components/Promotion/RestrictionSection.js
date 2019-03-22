@@ -268,6 +268,7 @@ class RestrictionSection extends Component {
             </div>
             <div className="pl2 flex-grow-1">
               <EXPERIMENTAL_Select
+                ref={restrictedSalesChannels.ref}
                 placeholder={intl.formatMessage({
                   id:
                     'promotions.promotion.restriction.restrictTradePolicies.placeholder',

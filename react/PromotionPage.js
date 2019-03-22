@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-import { Layout, PageBlock, PageHeader, Button } from 'vtex.styleguide'
+import { Layout, PageBlock, PageHeader, Button, Alert } from 'vtex.styleguide'
 
 import EffectsSection from './components/Promotion/EffectsSection'
 import EligibilitySection from './components/Promotion/EligibilitySection'
@@ -31,10 +31,24 @@ class PromotionPage extends Component {
       promotion: newPromotion(intl, promotion, salesChannels),
       isSaving: false,
     }
+
+    this.multipleCurrenciesRef = React.createRef()
   }
 
   componentDidMount = () => {
     window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
+  }
+
+  componentDidUpdate() {
+    const {
+      restriction: { isRestrictingSalesChannels, restrictedSalesChannels },
+    } = this.state.promotion
+    if (!isRestrictingSalesChannels && restrictedSalesChannels.error) {
+      this.multipleCurrenciesRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
+    }
   }
 
   validate = () => {
@@ -439,11 +453,15 @@ class PromotionPage extends Component {
       isValid = false
     }
 
-    return { restriction, isValid }
-  }
+    const uniqueCurrencyCodes = this.getUniqueCurrencyCodes()
+    if (uniqueCurrencyCodes.length !== 1) {
+      restriction.restrictedSalesChannels.error = intl.formatMessage({
+        id: 'promotions.validation.multipleCurrencies',
+      })
+      isValid = false
+    }
 
-  componentDidMount = () => {
-    window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
+    return { restriction, isValid }
   }
 
   handleGeneralInfoChange = generalInfo => {
@@ -496,10 +514,6 @@ class PromotionPage extends Component {
     }))
   }
 
-  componentDidMount = () => {
-    window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
-  }
-
   selectEffect = effect => {
     this.setState(prevState => ({
       promotion: {
@@ -515,12 +529,26 @@ class PromotionPage extends Component {
   canSave = () => this.validate()
 
   getAffectedSalesChannels = () => {
-    const { restrictedSalesChannelsIds, salesChannels } = this.props
-    return restrictedSalesChannelsIds && restrictedSalesChannelsIds.length > 0
+    const { salesChannels } = this.props
+    const {
+      promotion: {
+        restriction: {
+          restrictedSalesChannels: { value: restrictedSalesChannels },
+        },
+      },
+    } = this.state
+    return restrictedSalesChannels && restrictedSalesChannels.length > 0
       ? salesChannels.filter(({ id }) =>
-        restrictedSalesChannelsIds.includes(id)
+        restrictedSalesChannels.find(({ value }) => id === value)
       )
-      : salesChannels.filter(({ id }) => id === '1')
+      : salesChannels
+  }
+
+  getUniqueCurrencyCodes = () => {
+    const currencyCodes = this.getAffectedSalesChannels().map(
+      sc => sc.currencyCode
+    )
+    return [...new Set(currencyCodes)]
   }
 
   prepareToSave = promotion => {
@@ -602,7 +630,9 @@ class PromotionPage extends Component {
       params: { id },
       savePromotion,
     } = this.props
-    const [{ currencyCode } = {}] = this.getAffectedSalesChannels()
+    const uniqueCurrencyCodes = this.getUniqueCurrencyCodes()
+    const currencyCode =
+      uniqueCurrencyCodes.length === 1 ? uniqueCurrencyCodes[0] : undefined
 
     return (
       <Layout
@@ -623,6 +653,47 @@ class PromotionPage extends Component {
             }
           />
         }>
+        {!currencyCode ? (
+          <div className="mb5">
+            <Alert
+              ref={this.multipleCurrenciesRef}
+              type={
+                restriction.restrictedSalesChannels.error ? 'error' : 'warning'
+              }
+              action={{
+                label: intl.formatMessage({
+                  id: 'promotions.promotion.multipleCurrencies.action',
+                }),
+                onClick: () => {
+                  this.setState(
+                    ({ promotion }) => ({
+                      promotion: {
+                        ...promotion,
+                        restriction: {
+                          ...promotion.restriction,
+                          isRestrictingSalesChannels: true,
+                        },
+                      },
+                    }),
+                    () => {
+                      restriction.restrictedSalesChannels.ref.current.focus()
+                    }
+                  )
+                },
+              }}>
+              <FormattedMessage
+                id={`promotions.promotion.multipleCurrencies.${
+                  restriction.restrictedSalesChannels.error
+                    ? 'error'
+                    : 'warning'
+                }`}
+                values={{
+                  currencies: uniqueCurrencyCodes.join(', '),
+                }}
+              />
+            </Alert>
+          </div>
+        ) : null}
         <PageBlock>
           <GeneralSection
             generalInfo={generalInfo}

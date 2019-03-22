@@ -5,4 +5,5 @@ export const fieldShape = valueType =>
     value: valueType,
     error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     focus: PropTypes.bool,
+    ref: PropTypes.instanceOf(Element),
   })
