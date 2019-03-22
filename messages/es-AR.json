@@ -156,6 +156,7 @@
   "promotions.validation.emptyEffect": "Tienes que seleccionar un tipo de efecto",
   "promotions.validation.emptyStatement": "No se puede definir una condición vacía",
   "promotions.validation.incompleteStatement": "No puedes definir una condición incompleta",
+  "promotions.validation.multipleCurrencies": "No es posible crear una promoción para políticas comerciales que tienen monedas diferentes",
   "promotions.promotion.scopeSelector.brand.label": "Marca",
   "promotions.promotion.scopeSelector.brand.verb.any": "es una de",
   "promotions.promotion.scopeSelector.brand.verb.not.any": "no es una de",
@@ -194,5 +195,9 @@
   "promotions.scopeColumn.collections": "{itemCount, plural, one {1 colección} other {{itemCount} colecciones}}",
   "promotions.scopeColumn.categories": "{itemCount, plural, one {1 categoría} other {{itemCount} categorías}}",
   "promotions.scopeColumn.products": "{itemCount, plural, one {1 producto} other {{itemCount} productos}}",
-  "promotions.scopeColumn.skus": "{itemCount, plural, one {1 sku} other {{itemCount} skus}}"
+  "promotions.scopeColumn.skus": "{itemCount, plural, one {1 sku} other {{itemCount} skus}}",
+  "promotions.promotion.multipleCurrencies.warning": "Esta promoción se está creando para las políticas comerciales que utilizan monedas diferentes ({currencies}). Por favor, restrinja las políticas comerciales para utilizar sólo una moneda.",
+  "promotions.promotion.multipleCurrencies.error": "No es posible crear promociones para políticas comerciales que utilizan monedas diferentes ({currencies}). Por favor, restrinja las políticas comerciales para utilizar sólo una moneda.",
+  "promotions.promotion.multipleCurrencies.action": "Restringir las políticas",
+  "promotions.promotion.inputCurrency.multipleCurrencies": "La promoción no tiene una moneda bien definida. Compruebe sus políticas comerciales."
 }
