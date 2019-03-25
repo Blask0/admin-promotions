@@ -10,11 +10,18 @@ const renderRangeInputCurrencyObject = ({
 }) => {
   const { placeholder, locale, currencyCode, intl, update } = extraParams
 
+  if (statements[statementIndex].focus) {
+    statements[statementIndex].refs.object.current.focus()
+    statements[statementIndex].focus = false
+    update(statements)
+  }
+
   return (
     <div className="flex">
       <InputCurrency
         placeholder={placeholder}
         locale={locale}
+        ref={statements[statementIndex].refs.object}
         currencyCode={currencyCode}
         errorMessage={
           statements[statementIndex].object &&
@@ -28,11 +35,8 @@ const renderRangeInputCurrencyObject = ({
           const currentObject = statements[statementIndex].object || {}
           currentObject.first = e.target.value
           statements[statementIndex].object = currentObject
-          update({
-            statements: {
-              value: statements,
-            },
-          })
+          statements[statementIndex].error = undefined
+          update(statementss)
         }}
       />
 
@@ -48,11 +52,8 @@ const renderRangeInputCurrencyObject = ({
           const currentObject = statements[statementIndex].object || {}
           currentObject.last = e.target.value
           statements[statementIndex].object = currentObject
-          update({
-            statements: {
-              value: statements,
-            },
-          })
+          statements[statementIndex].error = undefined
+          update(statements)
         }}
       />
     </div>

@@ -10,11 +10,18 @@ const renderRangeInputObject = ({
 }) => {
   const { placeholder, type, update, intl } = extraParams
 
+  if (statements[statementIndex].focus) {
+    statements[statementIndex].refs.object.current.focus()
+    statements[statementIndex].focus = false
+    update(statements)
+  }
+
   return (
     <div className="flex">
       <Input
         type={type}
         placeholder={placeholder}
+        ref={statements[statementIndex].refs.object}
         errorMessage={
           statements[statementIndex].object &&
           parseInt(statements[statementIndex].object.first) >=
@@ -28,9 +35,12 @@ const renderRangeInputObject = ({
           currentObject.first = e.target.value.replace(/\D/g, '')
 
           statements[statementIndex].object = currentObject
+          statements[statementIndex].error = undefined
           update({
             statements: {
               value: statements,
+              error: undefined,
+              focus: false,
             },
           })
         }}
@@ -52,9 +62,12 @@ const renderRangeInputObject = ({
           currentObject.last = e.target.value.replace(/\D/g, '')
 
           statements[statementIndex].object = currentObject
+          statements[statementIndex].error = undefined
           update({
             statements: {
               value: statements,
+              error: undefined,
+              focus: false,
             },
           })
         }}

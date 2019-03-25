@@ -7,6 +7,7 @@ import {
   Input,
   InputCurrency,
   EXPERIMENTAL_Conditions,
+  Alert,
 } from 'vtex.styleguide'
 
 import {
@@ -18,18 +19,41 @@ import {
   sku,
 } from '../../../utils/scopeSelector/options'
 
+import { applyFocus } from '../../../utils/functions'
+
 class PriceForm extends Component {
   isDiscountTypeSelected = discountType =>
     this.props.priceEffect.discountType === discountType
 
-  changeDiscountType = discountType => this.props.onChange({ discountType })
-
-  changeDiscount = discount =>
-    this.props.onChange({
+  changeDiscountType = discountType => {
+    const {
+      onChange,
+      priceEffect: { discount },
+    } = this.props
+    onChange({
+      discountType,
       discount: {
-        value: discount,
+        ...discount,
+        value: undefined,
+        error: undefined,
       },
     })
+  }
+
+  changeDiscount = discountWithoutValidation => {
+    const {
+      onChange,
+      priceEffect: { discount },
+    } = this.props
+
+    onChange({
+      discount: {
+        ...discount,
+        value: discountWithoutValidation,
+        error: undefined,
+      },
+    })
+  }
 
   changeAppliesTo = appliesTo => {
     const { priceEffect } = this.props
@@ -41,16 +65,68 @@ class PriceForm extends Component {
     })
   }
 
+  componentDidUpdate = () => {
+    const {
+      priceEffect: {
+        discount,
+        appliesTo: { statements },
+      },
+      onChange,
+    } = this.props
+
+    if (discount.focus) {
+      applyFocus({
+        changeObject: {
+          discount,
+        },
+        changeFunction: onChange,
+      })
+    }
+
+    if (statements.focus) {
+      statements.ref.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
+
+      onChange({
+        appliesTo: {
+          ...this.props.priceEffect.appliesTo,
+          statements: {
+            ...statements,
+            focus: false,
+          },
+        },
+      })
+    }
+  }
+
+  updateScopeStatements = statementsValue => {
+    const {
+      priceEffect: {
+        appliesTo: { statements },
+      },
+    } = this.props
+
+    this.changeAppliesTo({
+      statements: {
+        ...statements,
+        value: statementsValue,
+        error: undefined,
+      },
+    })
+  }
+
   render() {
     const { priceEffect, intl, currencyCode } = this.props
 
     const scopeOptions = {
-      brand: brand(intl, this.changeAppliesTo),
-      category: category(intl, this.changeAppliesTo),
-      collection: collection(intl, this.changeAppliesTo),
-      product: product(intl, this.changeAppliesTo),
-      seller: seller(intl, this.changeAppliesTo),
-      sku: sku(intl, this.changeAppliesTo),
+      brand: brand(intl, this.updateScopeStatements),
+      category: category(intl, this.updateScopeStatements),
+      collection: collection(intl, this.updateScopeStatements),
+      product: product(intl, this.updateScopeStatements),
+      seller: seller(intl, this.updateScopeStatements),
+      sku: sku(intl, this.updateScopeStatements),
     }
 
     const conditionsLabels = {
@@ -101,6 +177,7 @@ class PriceForm extends Component {
                 locale={intl.locale}
                 currencyCode={currencyCode}
                 value={priceEffect.discount.value}
+                ref={priceEffect.discount.ref}
                 errorMessage={priceEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
                 placeholder={intl.formatMessage({
@@ -124,6 +201,7 @@ class PriceForm extends Component {
               <Input
                 type="number"
                 value={priceEffect.discount.value}
+                ref={priceEffect.discount.ref}
                 errorMessage={priceEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
                 prefix={<span className="b f6">%</span>}
@@ -144,6 +222,7 @@ class PriceForm extends Component {
             <div className="mv4 mh7 w-20">
               <Input
                 value={priceEffect.discount.value}
+                ref={priceEffect.discount.ref}
                 errorMessage={priceEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
               />
@@ -161,7 +240,16 @@ class PriceForm extends Component {
             label={intl.formatMessage({
               id: 'promotions.promotion.effects.priceForm.appliesTo.all',
             })}
-            onChange={() => this.changeAppliesTo({ allProducts: true })}
+            onChange={() =>
+              this.changeAppliesTo({
+                allProducts: true,
+                statements: {
+                  ...priceEffect.appliesTo.statements,
+                  focus: false,
+                  error: undefined,
+                },
+              })
+            }
           />
           <Radio
             id="promotions.promotion.effects.priceForm.appliesTo.specific"
@@ -170,8 +258,19 @@ class PriceForm extends Component {
             label={intl.formatMessage({
               id: 'promotions.promotion.effects.priceForm.appliesTo.specific',
             })}
-            onChange={() => this.changeAppliesTo({ allProducts: false })}
+            onChange={() =>
+              this.changeAppliesTo({
+                allProducts: false,
+              })
+            }
           />
+          {priceEffect.appliesTo.statements.error && (
+            <div className="mb5 flex justify-center w-100">
+              <Alert type="error" ref={priceEffect.appliesTo.statements.ref}>
+                {priceEffect.appliesTo.statements.error}
+              </Alert>
+            </div>
+          )}
           {!priceEffect.appliesTo.allProducts ? (
             <div className="mv4 mh7">
               <EXPERIMENTAL_Conditions
@@ -181,11 +280,17 @@ class PriceForm extends Component {
                     'promotions.promotion.effects.priceForm.appliesTo.specific.placeholder',
                 })}
                 labels={conditionsLabels}
-                statements={priceEffect.appliesTo.statements}
+                statements={priceEffect.appliesTo.statements.value}
                 operator={priceEffect.appliesTo.operator}
                 showOperator={false}
-                onChangeStatements={statements => {
-                  this.changeAppliesTo({ statements })
+                onChangeStatements={statementsValue => {
+                  this.changeAppliesTo({
+                    statements: {
+                      ...priceEffect.appliesTo.statements,
+                      value: statementsValue,
+                      error: undefined,
+                    },
+                  })
                 }}
               />
             </div>
@@ -200,7 +305,7 @@ PriceForm.propTypes = {
   intl: intlShape,
   priceEffect: PropTypes.shape({
     discountType: PropTypes.string,
-    discount: PropTypes.string,
+    discount: PropTypes.object,
     appliesTo: PropTypes.object,
   }).isRequired,
   currencyCode: PropTypes.string,

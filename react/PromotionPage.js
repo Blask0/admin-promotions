@@ -74,19 +74,26 @@ class PromotionPage extends Component {
   }
 
   validateGeneralInfoSection = () => {
-    let isValid = true
     const { intl } = this.props
     const {
-      promotion: { generalInfo },
+      promotion: {
+        generalInfo: { ...generalInfo },
+      },
     } = this.state
+    let isValid = true
 
     if (
       !generalInfo.name.value ||
       (generalInfo.name.value && generalInfo.name.value.trim() == '')
     ) {
-      generalInfo.name.error = intl.formatMessage({
-        id: 'promotions.validation.emptyField',
-      })
+      generalInfo.name = {
+        ...generalInfo.name,
+        error: intl.formatMessage({
+          id: 'promotions.validation.emptyField',
+        }),
+        focus: true,
+      }
+
       isValid = false
     }
 
@@ -95,9 +102,14 @@ class PromotionPage extends Component {
       new Date(generalInfo.endDate.value).getTime() <
         new Date(generalInfo.startDate).getTime()
     ) {
-      generalInfo.endDate.error = intl.formatMessage({
-        id: 'promotions.validation.endDateSmaller',
-      })
+      generalInfo.endDate = {
+        ...generalInfo.endDate,
+        error: intl.formatMessage({
+          id: 'promotions.validation.endDateSmaller',
+        }),
+        focus: true,
+      }
+
       isValid = false
     }
 
@@ -105,122 +117,219 @@ class PromotionPage extends Component {
   }
 
   validateEffectsSection = () => {
-    const {
-      promotion: { effects },
-    } = this.state
     const { intl } = this.props
+    const {
+      promotion: {
+        effects: { ...effects },
+      },
+    } = this.state
+    let isValid = true
 
     if (!effects.activeEffectType.value) {
-      effects.activeEffectType.error = intl.formatMessage({
-        id: 'promotions.validation.emptyEffect',
-      })
-      return { effects, isValid: false }
+      effects.activeEffectType = {
+        ...effects.activeEffectType,
+        error: intl.formatMessage({
+          id: 'promotions.validation.emptyEffect',
+        }),
+        focus: true,
+      }
+      isValid = false
+      return { effects, isValid }
     }
 
     if (effects.activeEffectType.value === 'price') {
-      return this.validatePriceEffect()
+      ({ price: effects.price, isValid } = this.validatePriceEffect())
     } else if (effects.activeEffectType.value === 'gift') {
-      return this.validateGiftEffect()
+      ({ gift: effects.gift, isValid } = this.validateGiftEffect())
     } else if (effects.activeEffectType.value === 'shipping') {
-      return this.validateShippingEffect()
+      ({ shipping: effects.shipping, isValid } = this.validateShippingEffect())
     } else if (effects.activeEffectType.value === 'reward') {
-      return this.validateRewardEffect()
+      ({ reward: effects.reward, isValid } = this.validateRewardEffect())
     }
-  }
-
-  validatePriceEffect = () => {
-    let isValid = true
-    const { intl } = this.props
-    const {
-      promotion: { effects },
-    } = this.state
-
-    if (!effects.price.discount.value) {
-      effects.price.discount.error = intl.formatMessage({
-        id: 'promotions.validation.emptyField',
-      })
-
-      isValid = false
-    }
-
     return { effects, isValid }
   }
 
-  validateGiftEffect = () => {
-    let isValid = true
+  validatePriceEffect = () => {
     const { intl } = this.props
     const {
-      promotion: { effects },
+      promotion: {
+        effects: {
+          price: { ...price },
+        },
+      },
     } = this.state
+    let isValid = true
 
-    if (effects.gift.skus.value.length === 0) {
-      effects.gift.skus.error = intl.formatMessage({
-        id: 'promotions.validation.emptyField',
-      })
+    if (!price.discount.value) {
+      price.discount = {
+        ...price.discount,
+        error: intl.formatMessage({
+          id: 'promotions.validation.emptyField',
+        }),
+        focus: true,
+      }
       isValid = false
     }
 
     if (
-      effects.gift.limitQuantityPerPurchase &&
-      !effects.gift.maxQuantityPerPurchase.value
+      !price.appliesTo.allProducts &&
+      price.appliesTo.statements.value.length === 0
     ) {
-      effects.gift.maxQuantityPerPurchase.error = intl.formatMessage({
-        id: 'promotions.validation.emptyField',
-      })
+      price.appliesTo = {
+        ...price.appliesTo,
+        statements: {
+          ...price.appliesTo.statements,
+          error: intl.formatMessage({
+            id: 'promotions.validation.emptyStatement',
+          }),
+          focus: true,
+        },
+      }
       isValid = false
     }
 
-    return { effects, isValid }
+    if (
+      price.appliesTo.statements.value.length > 0 &&
+      !price.appliesTo.statements.value.slice(-1).pop().subject
+    ) {
+      price.appliesTo = {
+        ...price.appliesTo,
+        statements: {
+          ...price.appliesTo.statements,
+          error: intl.formatMessage({
+            id: 'promotions.validation.incompleteStatement',
+          }),
+          focus: true,
+        },
+      }
+      isValid = false
+    }
+
+    price.appliesTo = {
+      ...price.appliesTo,
+      statements: {
+        ...price.appliesTo.statements,
+        value: price.appliesTo.statements.value.map(statement => ({
+          ...statement,
+          error:
+            statement.subject && !statement.object
+              ? intl.formatMessage({
+                id: 'promotions.validation.incompleteStatement',
+              })
+              : undefined,
+          focus: statement.subject && !statement.object,
+        })),
+      },
+    }
+
+    return { price, isValid }
+  }
+
+  validateGiftEffect = () => {
+    const { intl } = this.props
+    const {
+      promotion: {
+        effects: {
+          gift: { ...gift },
+        },
+      },
+    } = this.state
+    let isValid = true
+
+    if (gift.skus.value.length === 0) {
+      gift.skus = {
+        ...gift.skus,
+        error: intl.formatMessage({
+          id: 'promotions.validation.emptyField',
+        }),
+        focus: true,
+      }
+      isValid = false
+    }
+
+    if (gift.limitQuantityPerPurchase && !gift.maxQuantityPerPurchase.value) {
+      gift.maxQuantityPerPurchase = {
+        ...gift.maxQuantityPerPurchase,
+        error: intl.formatMessage({
+          id: 'promotions.validation.emptyField',
+        }),
+        focus: true,
+      }
+      isValid = false
+    }
+
+    return { gift, isValid }
   }
 
   validateShippingEffect = () => {
-    let isValid = true
     const { intl } = this.props
     const {
-      promotion: { effects },
+      promotion: {
+        effects: {
+          shipping: { ...shipping },
+        },
+      },
     } = this.state
+    let isValid = true
 
-    if (!effects.shipping.discount.value) {
-      effects.shipping.discount.error = intl.formatMessage({
-        id: 'promotions.validation.emptyField',
-      })
+    if (!shipping.discount.value) {
+      shipping.discount = {
+        error: intl.formatMessage({
+          id: 'promotions.validation.emptyField',
+        }),
+        focus: true,
+      }
       isValid = false
     }
 
-    return { effects, isValid }
+    return { shipping, isValid }
   }
 
   validateRewardEffect = () => {
-    let isValid = true
     const { intl } = this.props
     const {
-      promotion: { effects },
+      promotion: {
+        effects: {
+          reward: { ...reward },
+        },
+      },
     } = this.state
+    let isValid = true
 
-    if (!effects.reward.discount.value) {
-      effects.reward.discount.error = intl.formatMessage({
-        id: 'promotions.validation.emptyField',
-      })
+    if (!reward.discount.value) {
+      reward.discount = {
+        ...reward.discount,
+        error: intl.formatMessage({
+          id: 'promotions.validation.emptyField',
+        }),
+        focus: true,
+      }
       isValid = false
     }
 
-    return { effects, isValid }
+    return { reward, isValid }
   }
 
   validateEligibilitySection = () => {
-    let isValid = true
     const { intl } = this.props
     const {
-      promotion: { eligibility },
+      promotion: {
+        eligibility: { ...eligibility },
+      },
     } = this.state
+    let isValid = true
 
     if (
       !eligibility.allCustomers &&
       eligibility.statements.value.length === 0
     ) {
-      eligibility.statements.error = intl.formatMessage({
-        id: 'promotions.validation.emptyStatement',
-      })
+      eligibility.statements = {
+        ...eligibility.statements,
+        error: intl.formatMessage({
+          id: 'promotions.validation.emptyStatement',
+        }),
+        focus: true,
+      }
       isValid = false
     }
 
@@ -228,42 +337,61 @@ class PromotionPage extends Component {
       eligibility.statements.value.length > 0 &&
       !eligibility.statements.value.slice(-1).pop().subject
     ) {
-      eligibility.statements.error = intl.formatMessage({
-        id: 'promotions.validation.incompleteStatement',
-      })
+      eligibility.statements = {
+        ...eligibility.statements,
+        error: intl.formatMessage({
+          id: 'promotions.validation.incompleteStatement',
+        }),
+        focus: true,
+      }
       isValid = false
     }
 
-    eligibility.statements.value.forEach((statement, index) => {
-      if (statement.subject && !statement.object) {
-        eligibility.statements.value[index].error = intl.formatMessage({
-          id: 'promotions.validation.incompleteStatement',
-        })
-        isValid = false
-      }
-    })
+    eligibility.statements = {
+      ...eligibility.statements,
+      value: eligibility.statements.value.map(statement => ({
+        ...statement,
+        error:
+          statement.subject && !statement.object
+            ? intl.formatMessage({
+              id: 'promotions.validation.incompleteStatement',
+            })
+            : undefined,
+        focus: statement.subject && !statement.object,
+      })),
+    }
 
     return { eligibility, isValid }
   }
 
   validateRestrictionSection = () => {
-    let isValid = true
-    const {
-      promotion: { restriction },
-    } = this.state
     const { intl } = this.props
+    const {
+      promotion: {
+        restriction: { ...restriction },
+      },
+    } = this.state
+    let isValid = true
 
     if (restriction.isLimitingPerStore && !restriction.perStore.value) {
-      restriction.perStore.error = intl.formatMessage({
-        id: 'promotions.validation.emptyField',
-      })
+      restriction.perStore = {
+        ...restriction.perStore,
+        error: intl.formatMessage({
+          id: 'promotions.validation.emptyField',
+        }),
+        focus: true,
+      }
       isValid = false
     }
 
     if (restriction.isLimitingPerClient && !restriction.perClient.value) {
-      restriction.perClient.error = intl.formatMessage({
-        id: 'promotions.validation.emptyField',
-      })
+      restriction.perClient = {
+        ...restriction.perClient,
+        error: intl.formatMessage({
+          id: 'promotions.validation.emptyField',
+        }),
+        focus: true,
+      }
       isValid = false
     }
 
@@ -272,9 +400,13 @@ class PromotionPage extends Component {
       restriction.perClient.value &&
       restriction.perClient.value > restriction.perStore.value
     ) {
-      restriction.perClient.error = intl.formatMessage({
-        id: 'promotions.validation.biggerLimit',
-      })
+      restriction.perClient = {
+        ...restriction.perClient,
+        error: intl.formatMessage({
+          id: 'promotions.validation.biggerLimit',
+        }),
+        focus: true,
+      }
       isValid = false
     }
 
@@ -282,9 +414,13 @@ class PromotionPage extends Component {
       restriction.isLimitingPerNumOfAffectedItems &&
       !restriction.maxNumberOfAffectedItems.value
     ) {
-      restriction.maxNumberOfAffectedItems.error = intl.formatMessage({
-        id: 'promotions.validation.emptyField',
-      })
+      restriction.maxNumberOfAffectedItems = {
+        ...restriction.maxNumberOfAffectedItems,
+        error: intl.formatMessage({
+          id: 'promotions.validation.emptyField',
+        }),
+        focus: true,
+      }
       isValid = false
     }
 
@@ -293,9 +429,13 @@ class PromotionPage extends Component {
       (!restriction.restrictedSalesChannels.value ||
         restriction.restrictedSalesChannels.value.length === 0)
     ) {
-      restriction.restrictedSalesChannels.error = intl.formatMessage({
-        id: 'promotions.validation.emptyField',
-      })
+      restriction.restrictedSalesChannels = {
+        ...restriction.restrictedSalesChannels,
+        error: intl.formatMessage({
+          id: 'promotions.validation.emptyField',
+        }),
+        focus: true,
+      }
       isValid = false
     }
 
@@ -407,7 +547,9 @@ class PromotionPage extends Component {
           discount: effects.price.discount.value,
           appliesTo: {
             ...effects.price.appliesTo,
-            statements: JSON.stringify(effects.price.appliesTo.statements),
+            statements: JSON.stringify(
+              effects.price.appliesTo.statements.value
+            ),
           },
         },
         gift: {
@@ -512,10 +654,10 @@ class PromotionPage extends Component {
             variation="primary"
             isLoading={isSaving}
             onClick={() => {
-              this.setState({ isSaving: true })
-              const preparedPromotion = this.prepareToSave(promotion)
-
               if (this.canSave()) {
+                this.setState({ isSaving: true })
+                const preparedPromotion = this.prepareToSave(promotion)
+
                 savePromotion({
                   variables: {
                     promotion: preparedPromotion,
@@ -527,8 +669,6 @@ class PromotionPage extends Component {
                     })
                   )
                   .finally(() => this.setState({ isSaving: false }))
-              } else {
-                this.setState({ isSaving: false })
               }
             }}>
             <FormattedMessage id="promotions.promotion.save" />

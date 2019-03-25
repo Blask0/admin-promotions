@@ -13,17 +13,31 @@ import ShippingForm from './ShippingForm'
 import RewardForm from './RewardForm'
 import GiftForm from './GiftForm'
 
+import {
+  INITIAL_PRICE_EFFECT,
+  INITIAL_GIFT_EFFECT,
+  INITIAL_SHIPPING_EFFECT,
+  INITIAL_REWARD_EFFECT,
+} from '../../../utils/promotion'
+
 class EffectSection extends Component {
   isEffectActive = activeEffectType =>
     this.props.effects.activeEffectType.value === activeEffectType
 
   changeActiveEffectType = activeEffectType => {
-    this.props.updatePageState({
-      ...this.props.effects,
+    const { effects, updatePageState } = this.props
+
+    updatePageState({
+      ...effects,
       activeEffectType: {
+        ...effects.activeEffectType,
         value: activeEffectType,
         error: undefined,
       },
+      price: { ...INITIAL_PRICE_EFFECT },
+      gift: { ...INITIAL_GIFT_EFFECT },
+      shipping: { ...INITIAL_SHIPPING_EFFECT },
+      reward: { ...INITIAL_REWARD_EFFECT },
     })
   }
 
@@ -84,13 +98,14 @@ class EffectSection extends Component {
   }
 
   renderEffectFormByType = activeEffectType => {
-    const { effects, currencyCode } = this.props
+    const { effects, currencyCode, applyFocus } = this.props
     switch (activeEffectType) {
       case 'price':
         return (
           <PriceForm
             priceEffect={effects.price}
             currencyCode={currencyCode}
+            applyFocus={applyFocus}
             onChange={this.updatePriceEffect}
           />
         )
@@ -122,6 +137,28 @@ class EffectSection extends Component {
     }
   }
 
+  componentDidUpdate = () => {
+    const {
+      effects: { activeEffectType },
+      updatePageState,
+    } = this.props
+
+    if (activeEffectType.focus) {
+      activeEffectType.ref.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
+
+      updatePageState({
+        ...this.props.effects,
+        activeEffectType: {
+          ...activeEffectType,
+          focus: false,
+        },
+      })
+    }
+  }
+
   render() {
     const { intl, effects, currencyCode } = this.props
 
@@ -133,7 +170,9 @@ class EffectSection extends Component {
 
         {effects.activeEffectType.error && (
           <div className="mb5 flex justify-center w-100">
-            <Alert type="error">{effects.activeEffectType.error}</Alert>
+            <Alert ref={effects.activeEffectType.ref} type="error">
+              {effects.activeEffectType.error}
+            </Alert>
           </div>
         )}
 

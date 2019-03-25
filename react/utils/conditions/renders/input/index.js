@@ -10,20 +10,25 @@ const renderInputObject = ({
 }) => {
   const { placeholder, type, update } = extraParams
 
+  if (statements[statementIndex].focus) {
+    statements[statementIndex].refs.object.current.focus()
+    statements[statementIndex].focus = false
+    update(statements)
+  }
+
   return (
     <div className="flex">
       <Input
         type={type}
         placeholder={placeholder}
         value={values || ''}
+        ref={statements[statementIndex].refs.object}
         errorMessage={statements[statementIndex].error}
         onChange={e => {
           statements[statementIndex].object = e.target.value
-          update({
-            statements: {
-              value: statements,
-            },
-          })
+          statements[statementIndex].error = undefined
+
+          update(statements)
         }}
       />
     </div>

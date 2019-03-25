@@ -4,11 +4,26 @@ import { injectIntl, intlShape } from 'react-intl'
 
 import { Radio, Input, InputCurrency } from 'vtex.styleguide'
 
+import { applyFocus } from '../../../utils/functions'
+
 class ShippingForm extends Component {
   isDiscountTypeSelected = discountType =>
     this.props.shippingEffect.discountType === discountType
 
-  changeDiscountType = discountType => this.props.onChange({ discountType })
+  changeDiscountType = discountType => {
+    const {
+      onChange,
+      shippingEffect: { discount },
+    } = this.props
+    onChange({
+      discountType,
+      discount: {
+        ...discount,
+        value: undefined,
+        error: undefined,
+      },
+    })
+  }
 
   changeDiscount = discount =>
     this.props.onChange({
@@ -16,6 +31,22 @@ class ShippingForm extends Component {
         value: discount,
       },
     })
+
+  componentDidUpdate = () => {
+    const {
+      shippingEffect: { discount },
+      onChange,
+    } = this.props
+
+    if (discount.focus) {
+      applyFocus({
+        changeObject: {
+          discount,
+        },
+        changeFunction: onChange,
+      })
+    }
+  }
 
   render() {
     const { intl, currencyCode, shippingEffect } = this.props
@@ -38,6 +69,7 @@ class ShippingForm extends Component {
                 locale={intl.locale}
                 currencyCode={currencyCode}
                 value={shippingEffect.discount.value}
+                ref={shippingEffect.discount.ref}
                 errorMessage={shippingEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
                 placeholder={intl.formatMessage({
@@ -60,6 +92,7 @@ class ShippingForm extends Component {
               <Input
                 type="number"
                 value={shippingEffect.discount.value}
+                ref={shippingEffect.discount.ref}
                 errorMessage={shippingEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
                 placeholder={intl.formatMessage({
@@ -84,6 +117,7 @@ class ShippingForm extends Component {
                 locale={intl.locale}
                 currencyCode={currencyCode}
                 value={shippingEffect.discount.value}
+                ref={shippingEffect.discount.ref}
                 errorMessage={shippingEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
                 placeholder={intl.formatMessage({

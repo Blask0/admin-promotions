@@ -10,22 +10,53 @@ import {
 } from 'vtex.styleguide'
 
 import { getRewardEffectOrderStatusOptions } from '../../../utils/constants'
+import { applyFocus } from '../../../utils/functions'
 
 class RewardForm extends Component {
   isDiscountTypeSelected = discountType =>
     this.props.rewardEffect.discountType === discountType
 
-  changeDiscountType = discountType => this.props.onChange({ discountType })
+  changeDiscountType = discountType => {
+    const {
+      onChange,
+      rewardEffect: { discount },
+    } = this.props
+    onChange({
+      discountType,
+      discount: {
+        ...discount,
+        value: undefined,
+        error: undefined,
+      },
+    })
+  }
 
   changeDiscount = discount =>
     this.props.onChange({
       discount: {
+        ...this.props.rewardEffect.discount,
         value: discount,
       },
     })
 
   changeApplyByOrderStatus = applyByOrderStatus =>
     this.props.onChange({ applyByOrderStatus })
+
+  componentDidUpdate = () => {
+    const {
+      rewardEffect: { discount },
+      onChange,
+    } = this.props
+
+    if (discount.focus) {
+      applyFocus({
+        changeObject: {
+          discount,
+        },
+        changeFunction: onChange,
+      })
+    }
+  }
 
   render() {
     const { intl, currencyCode, rewardEffect } = this.props
@@ -49,7 +80,8 @@ class RewardForm extends Component {
                 locale={intl.locale}
                 currencyCode={currencyCode}
                 value={rewardEffect.discount.value}
-                errrorMessage={rewardEffect.discount.error}
+                ref={rewardEffect.discount.ref}
+                errorMessage={rewardEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
                 placeholder={intl.formatMessage({
                   id: 'promotions.promotion.effects.rewardForm.placeholder',
@@ -71,7 +103,8 @@ class RewardForm extends Component {
               <Input
                 type="number"
                 value={rewardEffect.discount.value}
-                errrorMessage={rewardEffect.discount.error}
+                ref={rewardEffect.discount.ref}
+                errorMessage={rewardEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
                 placeholder={intl.formatMessage({
                   id: 'promotions.promotion.effects.rewardForm.placeholder',

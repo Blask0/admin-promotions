@@ -88,36 +88,37 @@ class PromotionsTable extends Component {
         },
         width: 300,
         cellRenderer: ({ cellData }) => {
-
-          if (cellData.allCatalog) {
-            return (
-              <span className="fw5">
-                {intl.formatMessage({
-                  id: 'promotions.scopeColumn.allProducts',
-                })}
-              </span>
-            )
-          } else {
-            let scopeInfo = []
-            const blackList = ['allCatalog', '__typename']
-
-            Object.keys(cellData).forEach((key, index) => {
-              if (
-                cellData[key] !== 0 &&
-                !blackList.includes(key)
-              ) {
-                scopeInfo = [
-                  ...scopeInfo,
-                  `${intl.formatMessage({
-                    id: `promotions.scopeColumn.${key}`,
-                  }, {
-                    itemCount: cellData[key] 
-                  })}`,
-                ]
-              }
-            })
-
-            return (<span>{scopeInfo.join(', ')}</span>)
+          if(cellData){
+            if (cellData.allCatalog) {
+              return (
+                <span className="fw5">
+                  {intl.formatMessage({
+                    id: 'promotions.scopeColumn.allProducts',
+                  })}
+                </span>
+              )
+            } else {
+              let scopeInfo = []
+              const blackList = ['allCatalog', '__typename']
+  
+              Object.keys(cellData).forEach((key, index) => {
+                if (
+                  cellData[key] !== 0 &&
+                  !blackList.includes(key)
+                ) {
+                  scopeInfo = [
+                    ...scopeInfo,
+                    `${intl.formatMessage({
+                      id: `promotions.scopeColumn.${key}`,
+                    }, {
+                      itemCount: cellData[key] 
+                    })}`,
+                  ]
+                }
+              })
+  
+              return (<span>{scopeInfo.join(', ')}</span>)
+            }
           }
         },
       },

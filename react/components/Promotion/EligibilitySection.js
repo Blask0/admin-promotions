@@ -24,6 +24,42 @@ class EligibilitySection extends Component {
     super(props)
   }
 
+  componentDidUpdate = () => {
+    const {
+      eligibility: { statements },
+      updatePageState,
+    } = this.props
+
+    if (statements.focus) {
+      statements.ref.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
+
+      updatePageState({
+        statements: {
+          ...statements,
+          focus: false,
+        },
+      })
+    }
+  }
+
+  updateEligiblityStatements = statementsValue => {
+    const {
+      eligibility: { statements },
+      updatePageState,
+    } = this.props
+
+    updatePageState({
+      statements: {
+        ...statements,
+        value: statementsValue,
+        error: undefined,
+      },
+    })
+  }
+
   render() {
     const {
       intl,
@@ -33,19 +69,30 @@ class EligibilitySection extends Component {
     } = this.props
 
     const conditionsOptions = {
-      installments: installments(intl, updatePageState),
-      affiliates: affiliates(intl, updatePageState),
-      firstBuy: firstBuy(intl, updatePageState),
-      cartProduct: cartProduct(intl, updatePageState, currencyCode),
-      shippingMethods: shippingMethods(intl, updatePageState),
-      paymentMethods: paymentMethods(intl, updatePageState),
-      utmSource: utm(intl, updatePageState, 'Source'),
-      utmCampaign: utm(intl, updatePageState, 'Campaign'),
-      zipCodeRange: zipCodeRange(intl, updatePageState),
-      totalPriceRange: totalPriceRange(intl, updatePageState, currencyCode),
-      clusterExpressions: clusterExpressions(intl, updatePageState),
-      creditCardBin: creditCardBin(intl, updatePageState),
-      marketingTags: marketingTags(intl, updatePageState),
+      installments: installments(intl, this.updateEligiblityStatements),
+      affiliates: affiliates(intl, this.updateEligiblityStatements),
+      firstBuy: firstBuy(intl, this.updateEligiblityStatements),
+      cartProduct: cartProduct(
+        intl,
+        this.updateEligiblityStatements,
+        currencyCode
+      ),
+      shippingMethods: shippingMethods(intl, this.updateEligiblityStatements),
+      paymentMethods: paymentMethods(intl, this.updateEligiblityStatements),
+      utmSource: utm(intl, this.updateEligiblityStatements, 'Source'),
+      utmCampaign: utm(intl, this.updateEligiblityStatements, 'Campaign'),
+      zipCodeRange: zipCodeRange(intl, this.updateEligiblityStatements),
+      totalPriceRange: totalPriceRange(
+        intl,
+        this.updateEligiblityStatements,
+        currencyCode
+      ),
+      clusterExpressions: clusterExpressions(
+        intl,
+        this.updateEligiblityStatements
+      ),
+      creditCardBin: creditCardBin(intl, this.updateEligiblityStatements),
+      marketingTags: marketingTags(intl, this.updateEligiblityStatements),
     }
 
     const conditionsLabels = {
@@ -89,6 +136,11 @@ class EligibilitySection extends Component {
           onChange={e =>
             updatePageState({
               allCustomers: true,
+              statements: {
+                ...statements,
+                focus: false,
+                error: undefined,
+              },
             })
           }
         />
@@ -106,7 +158,9 @@ class EligibilitySection extends Component {
         />
         {statements.error && (
           <div className="mb5 flex justify-center w-100">
-            <Alert type="error">{statements.error}</Alert>
+            <Alert type="error" ref={statements.ref}>
+              {statements.error}
+            </Alert>
           </div>
         )}
 
@@ -124,10 +178,11 @@ class EligibilitySection extends Component {
               onChangeOperator={({ operator }) => {
                 updatePageState({ operator })
               }}
-              onChangeStatements={statements => {
+              onChangeStatements={statementsValue => {
                 updatePageState({
                   statements: {
-                    value: statements,
+                    ...statements,
+                    value: statementsValue,
                     error: undefined,
                   },
                 })

@@ -8,30 +8,32 @@ const newFieldWithValidation = value => ({
   value,
   error: undefined,
   focus: undefined,
+  ref: React.createRef(),
 })
 
-const INITIAL_PRICE_EFFECT = {
+export const INITIAL_PRICE_EFFECT = {
   discountType: 'nominal',
   discount: newFieldWithValidation(),
   appliesTo: {
-    statements: [],
+    statements: newFieldWithValidation([]),
     allProducts: true,
     operator: 'all',
   },
 }
-const INITIAL_GIFT_EFFECT = {
+
+export const INITIAL_GIFT_EFFECT = {
   skus: newFieldWithValidation([]),
   multiplier: false,
   limitQuantityPerPurchase: false,
   maxQuantityPerPurchase: newFieldWithValidation(),
 }
 
-const INITIAL_SHIPPING_EFFECT = {
+export const INITIAL_SHIPPING_EFFECT = {
   discountType: 'nominal',
   discount: newFieldWithValidation(),
 }
 
-const INITIAL_REWARD_EFFECT = {
+export const INITIAL_REWARD_EFFECT = {
   discountType: 'nominal',
   discount: newFieldWithValidation(),
   applyByOrderStatus: undefined,
@@ -46,7 +48,9 @@ const getPriceEffect = priceEffect =>
       ),
       appliesTo: {
         ...priceEffect.appliesTo,
-        statements: JSON.parse(priceEffect.appliesTo.statements),
+        statements: newFieldWithValidation(
+          JSON.parse(priceEffect.appliesTo.statements)
+        ),
       },
     }
     : INITIAL_PRICE_EFFECT

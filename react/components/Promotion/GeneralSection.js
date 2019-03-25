@@ -1,7 +1,7 @@
 import React, { Fragment, Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
-
+import { applyFocus } from '../../utils/functions'
 import { Checkbox, Input, DatePicker, Toggle } from 'vtex.styleguide'
 
 import { fieldShape } from '../../utils/propTypes'
@@ -10,6 +10,31 @@ import { addDays } from 'date-fns'
 class GeneralSection extends Component {
   constructor(props) {
     super(props)
+  }
+
+  componentDidUpdate = () => {
+    const {
+      generalInfo: { name, endDate },
+      updatePageState,
+    } = this.props
+
+    if (name.focus) {
+      applyFocus({
+        changeObject: {
+          name,
+        },
+        changeFunction: updatePageState,
+      })
+    }
+
+    if (endDate.focus) {
+      applyFocus({
+        changeObject: {
+          endDate,
+        },
+        changeFunction: updatePageState,
+      })
+    }
   }
 
   render() {
@@ -52,10 +77,13 @@ class GeneralSection extends Component {
                 })}
                 errorMessage={generalInfo.name.error}
                 value={generalInfo.name.value}
+                ref={generalInfo.name.ref}
                 onChange={e => {
                   updatePageState({
                     name: {
+                      ...generalInfo.name,
                       value: e.target.value,
+                      error: undefined,
                     },
                   })
                 }}
@@ -97,10 +125,14 @@ class GeneralSection extends Component {
                     hasEndDate: !generalInfo.hasEndDate,
                     endDate: !generalInfo.hasEndDate
                       ? {
+                        ...generalInfo.endDate,
                         value: addDays(new Date(), 1),
+                        error: undefined,
                       }
                       : {
+                        ...generalInfo.endDate,
                         value: undefined,
+                        error: undefined,
                       },
                   })
                 }}
@@ -114,12 +146,15 @@ class GeneralSection extends Component {
                   onChange={date => {
                     updatePageState({
                       endDate: {
+                        ...generalInfo.endDate,
                         value: date,
+                        error: undefined,
                       },
                     })
                   }}
                   errorMessage={generalInfo.endDate.error}
                   value={generalInfo.endDate.value}
+                  ref={generalInfo.endDate.ref}
                   label={intl.formatMessage({
                     id: 'promotions.promotion.generalInfo.endDate',
                   })}
