@@ -13,13 +13,7 @@ const renderInputCurrencyObject = ({
   if (statements[statementIndex].focus) {
     statements[statementIndex].refs.object.current.focus()
     statements[statementIndex].focus = false
-    update({
-      statements: {
-        value: statements,
-        error: undefined,
-        focus: false,
-      },
-    })
+    update(statements)
   }
 
   return (

@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
-import { applyFocus } from '../../utils/functions'
 
 import { Radio, EXPERIMENTAL_Conditions, Alert } from 'vtex.styleguide'
 
@@ -28,6 +27,7 @@ class EligibilitySection extends Component {
   componentDidUpdate = () => {
     const {
       eligibility: { statements },
+      updatePageState,
     } = this.props
 
     if (statements.focus) {
@@ -35,7 +35,29 @@ class EligibilitySection extends Component {
         behavior: 'smooth',
         block: 'center',
       })
+
+      updatePageState({
+        statements: {
+          ...statements,
+          focus: false,
+        },
+      })
     }
+  }
+
+  updateEligiblityStatements = statementsValue => {
+    const {
+      eligibility: { statements },
+      updatePageState,
+    } = this.props
+
+    updatePageState({
+      statements: {
+        ...statements,
+        value: statementsValue,
+        error: undefined,
+      },
+    })
   }
 
   render() {
@@ -47,19 +69,30 @@ class EligibilitySection extends Component {
     } = this.props
 
     const conditionsOptions = {
-      installments: installments(intl, updatePageState),
-      affiliates: affiliates(intl, updatePageState),
-      firstBuy: firstBuy(intl, updatePageState),
-      cartProduct: cartProduct(intl, updatePageState, currencyCode),
-      shippingMethods: shippingMethods(intl, updatePageState),
-      paymentMethods: paymentMethods(intl, updatePageState),
-      utmSource: utm(intl, updatePageState, 'Source'),
-      utmCampaign: utm(intl, updatePageState, 'Campaign'),
-      zipCodeRange: zipCodeRange(intl, updatePageState),
-      totalPriceRange: totalPriceRange(intl, updatePageState, currencyCode),
-      clusterExpressions: clusterExpressions(intl, updatePageState),
-      creditCardBin: creditCardBin(intl, updatePageState),
-      marketingTags: marketingTags(intl, updatePageState),
+      installments: installments(intl, this.updateEligiblityStatements),
+      affiliates: affiliates(intl, this.updateEligiblityStatements),
+      firstBuy: firstBuy(intl, this.updateEligiblityStatements),
+      cartProduct: cartProduct(
+        intl,
+        this.updateEligiblityStatements,
+        currencyCode
+      ),
+      shippingMethods: shippingMethods(intl, this.updateEligiblityStatements),
+      paymentMethods: paymentMethods(intl, this.updateEligiblityStatements),
+      utmSource: utm(intl, this.updateEligiblityStatements, 'Source'),
+      utmCampaign: utm(intl, this.updateEligiblityStatements, 'Campaign'),
+      zipCodeRange: zipCodeRange(intl, this.updateEligiblityStatements),
+      totalPriceRange: totalPriceRange(
+        intl,
+        this.updateEligiblityStatements,
+        currencyCode
+      ),
+      clusterExpressions: clusterExpressions(
+        intl,
+        this.updateEligiblityStatements
+      ),
+      creditCardBin: creditCardBin(intl, this.updateEligiblityStatements),
+      marketingTags: marketingTags(intl, this.updateEligiblityStatements),
     }
 
     const conditionsLabels = {
@@ -145,11 +178,11 @@ class EligibilitySection extends Component {
               onChangeOperator={({ operator }) => {
                 updatePageState({ operator })
               }}
-              onChangeStatements={statementsWithoutValidation => {
+              onChangeStatements={statementsValue => {
                 updatePageState({
                   statements: {
                     ...statements,
-                    value: statementsWithoutValidation,
+                    value: statementsValue,
                     error: undefined,
                   },
                 })

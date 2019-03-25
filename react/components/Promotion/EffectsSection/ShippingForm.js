@@ -10,7 +10,20 @@ class ShippingForm extends Component {
   isDiscountTypeSelected = discountType =>
     this.props.shippingEffect.discountType === discountType
 
-  changeDiscountType = discountType => this.props.onChange({ discountType })
+  changeDiscountType = discountType => {
+    const {
+      onChange,
+      shippingEffect: { discount },
+    } = this.props
+    onChange({
+      discountType,
+      discount: {
+        ...discount,
+        value: undefined,
+        error: undefined,
+      },
+    })
+  }
 
   changeDiscount = discount =>
     this.props.onChange({

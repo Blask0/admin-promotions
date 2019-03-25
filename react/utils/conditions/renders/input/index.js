@@ -13,13 +13,7 @@ const renderInputObject = ({
   if (statements[statementIndex].focus) {
     statements[statementIndex].refs.object.current.focus()
     statements[statementIndex].focus = false
-    update({
-      statements: {
-        value: statements,
-        error: undefined,
-        focus: false,
-      },
-    })
+    update(statements)
   }
 
   return (
@@ -34,13 +28,7 @@ const renderInputObject = ({
           statements[statementIndex].object = e.target.value
           statements[statementIndex].error = undefined
 
-          update({
-            statements: {
-              value: statements,
-              error: undefined,
-              focus: false,
-            },
-          })
+          update(statements)
         }}
       />
     </div>

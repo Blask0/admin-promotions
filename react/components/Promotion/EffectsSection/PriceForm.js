@@ -25,7 +25,20 @@ class PriceForm extends Component {
   isDiscountTypeSelected = discountType =>
     this.props.priceEffect.discountType === discountType
 
-  changeDiscountType = discountType => this.props.onChange({ discountType })
+  changeDiscountType = discountType => {
+    const {
+      onChange,
+      priceEffect: { discount },
+    } = this.props
+    onChange({
+      discountType,
+      discount: {
+        ...discount,
+        value: undefined,
+        error: undefined,
+      },
+    })
+  }
 
   changeDiscount = discountWithoutValidation => {
     const {
@@ -75,19 +88,45 @@ class PriceForm extends Component {
         behavior: 'smooth',
         block: 'center',
       })
+
+      onChange({
+        appliesTo: {
+          ...this.props.priceEffect.appliesTo,
+          statements: {
+            ...statements,
+            focus: false,
+          },
+        },
+      })
     }
+  }
+
+  updateScopeStatements = statementsValue => {
+    const {
+      priceEffect: {
+        appliesTo: { statements },
+      },
+    } = this.props
+
+    this.changeAppliesTo({
+      statements: {
+        ...statements,
+        value: statementsValue,
+        error: undefined,
+      },
+    })
   }
 
   render() {
     const { priceEffect, intl, currencyCode } = this.props
 
     const scopeOptions = {
-      brand: brand(intl, this.changeAppliesTo),
-      category: category(intl, this.changeAppliesTo),
-      collection: collection(intl, this.changeAppliesTo),
-      product: product(intl, this.changeAppliesTo),
-      seller: seller(intl, this.changeAppliesTo),
-      sku: sku(intl, this.changeAppliesTo),
+      brand: brand(intl, this.updateScopeStatements),
+      category: category(intl, this.updateScopeStatements),
+      collection: collection(intl, this.updateScopeStatements),
+      product: product(intl, this.updateScopeStatements),
+      seller: seller(intl, this.updateScopeStatements),
+      sku: sku(intl, this.updateScopeStatements),
     }
 
     const conditionsLabels = {
@@ -219,7 +258,11 @@ class PriceForm extends Component {
             label={intl.formatMessage({
               id: 'promotions.promotion.effects.priceForm.appliesTo.specific',
             })}
-            onChange={() => this.changeAppliesTo({ allProducts: false })}
+            onChange={() =>
+              this.changeAppliesTo({
+                allProducts: false,
+              })
+            }
           />
           {priceEffect.appliesTo.statements.error && (
             <div className="mb5 flex justify-center w-100">
@@ -240,11 +283,11 @@ class PriceForm extends Component {
                 statements={priceEffect.appliesTo.statements.value}
                 operator={priceEffect.appliesTo.operator}
                 showOperator={false}
-                onChangeStatements={statements => {
+                onChangeStatements={statementsValue => {
                   this.changeAppliesTo({
                     statements: {
-                      ...statements,
-                      value: statements,
+                      ...priceEffect.appliesTo.statements,
+                      value: statementsValue,
                       error: undefined,
                     },
                   })

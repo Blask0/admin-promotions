@@ -11,7 +11,7 @@ const newFieldWithValidation = value => ({
   ref: React.createRef(),
 })
 
-const INITIAL_PRICE_EFFECT = {
+export const INITIAL_PRICE_EFFECT = {
   discountType: 'nominal',
   discount: newFieldWithValidation(),
   appliesTo: {
@@ -20,19 +20,20 @@ const INITIAL_PRICE_EFFECT = {
     operator: 'all',
   },
 }
-const INITIAL_GIFT_EFFECT = {
+
+export const INITIAL_GIFT_EFFECT = {
   skus: newFieldWithValidation([]),
   multiplier: false,
   limitQuantityPerPurchase: false,
   maxQuantityPerPurchase: newFieldWithValidation(),
 }
 
-const INITIAL_SHIPPING_EFFECT = {
+export const INITIAL_SHIPPING_EFFECT = {
   discountType: 'nominal',
   discount: newFieldWithValidation(),
 }
 
-const INITIAL_REWARD_EFFECT = {
+export const INITIAL_REWARD_EFFECT = {
   discountType: 'nominal',
   discount: newFieldWithValidation(),
   applyByOrderStatus: undefined,
@@ -168,10 +169,10 @@ export const newPromotion = (intl, promotion, salesChannels) => {
     },
     effects: {
       activeEffectType: newFieldWithValidation(),
-      price: INITIAL_PRICE_EFFECT,
-      gift: INITIAL_GIFT_EFFECT,
-      shipping: INITIAL_SHIPPING_EFFECT,
-      reward: INITIAL_REWARD_EFFECT,
+      price: { ...INITIAL_PRICE_EFFECT },
+      gift: { ...INITIAL_GIFT_EFFECT },
+      shipping: { ...INITIAL_SHIPPING_EFFECT },
+      reward: { ...INITIAL_REWARD_EFFECT },
     },
     restriction: {
       isLimitingPerStore: false,

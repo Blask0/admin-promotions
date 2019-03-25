@@ -16,11 +16,25 @@ class RewardForm extends Component {
   isDiscountTypeSelected = discountType =>
     this.props.rewardEffect.discountType === discountType
 
-  changeDiscountType = discountType => this.props.onChange({ discountType })
+  changeDiscountType = discountType => {
+    const {
+      onChange,
+      rewardEffect: { discount },
+    } = this.props
+    onChange({
+      discountType,
+      discount: {
+        ...discount,
+        value: undefined,
+        error: undefined,
+      },
+    })
+  }
 
   changeDiscount = discount =>
     this.props.onChange({
       discount: {
+        ...this.props.rewardEffect.discount,
         value: discount,
       },
     })
@@ -67,7 +81,7 @@ class RewardForm extends Component {
                 currencyCode={currencyCode}
                 value={rewardEffect.discount.value}
                 ref={rewardEffect.discount.ref}
-                errrorMessage={rewardEffect.discount.error}
+                errorMessage={rewardEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
                 placeholder={intl.formatMessage({
                   id: 'promotions.promotion.effects.rewardForm.placeholder',
@@ -90,7 +104,7 @@ class RewardForm extends Component {
                 type="number"
                 value={rewardEffect.discount.value}
                 ref={rewardEffect.discount.ref}
-                errrorMessage={rewardEffect.discount.error}
+                errorMessage={rewardEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
                 placeholder={intl.formatMessage({
                   id: 'promotions.promotion.effects.rewardForm.placeholder',

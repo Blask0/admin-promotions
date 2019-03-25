@@ -13,13 +13,7 @@ const renderRangeInputCurrencyObject = ({
   if (statements[statementIndex].focus) {
     statements[statementIndex].refs.object.current.focus()
     statements[statementIndex].focus = false
-    update({
-      statements: {
-        value: statements,
-        error: undefined,
-        focus: false,
-      },
-    })
+    update(statements)
   }
 
   return (
@@ -42,13 +36,7 @@ const renderRangeInputCurrencyObject = ({
           currentObject.first = e.target.value
           statements[statementIndex].object = currentObject
           statements[statementIndex].error = undefined
-          update({
-            statements: {
-              value: statements,
-              error: undefined,
-              focus: false,
-            },
-          })
+          update(statementss)
         }}
       />
 
@@ -65,13 +53,7 @@ const renderRangeInputCurrencyObject = ({
           currentObject.last = e.target.value
           statements[statementIndex].object = currentObject
           statements[statementIndex].error = undefined
-          update({
-            statements: {
-              value: statements,
-              error: undefined,
-              focus: false,
-            },
-          })
+          update(statements)
         }}
       />
     </div>

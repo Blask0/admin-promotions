@@ -26,13 +26,7 @@ const renderSelectObject = ({
     if (statements[statementIndex].focus) {
       statements[statementIndex].refs.object.current.focus()
       statements[statementIndex].focus = false
-      update({
-        statements: {
-          value: statements,
-          error: undefined,
-          focus: false,
-        },
-      })
+      update(statements)
     }
 
     return (
@@ -52,13 +46,7 @@ const renderSelectObject = ({
           } else {
             statements[statementIndex].error = validationErrorMessage
           }
-          update({
-            statements: {
-              value: statements,
-              error: undefined,
-              focus: false,
-            },
-          })
+          update(statements)
         }}
         onSearchInputChange={searchedValue => {
           updateQueryParams &&
