@@ -528,7 +528,7 @@ class PromotionPage extends Component {
     }))
   }
 
-  canSave = () => this.validate()
+  canSave = () => this.validate() && false
 
   getAffectedSalesChannels = () => {
     const { salesChannels } = this.props

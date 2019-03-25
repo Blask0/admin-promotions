@@ -1,13 +1,20 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-import { Checkbox, DatePicker } from 'vtex.styleguide'
+import {
+  Checkbox,
+  DatePicker,
+  ButtonWithIcon,
+  IconCaretDown,
+  IconCaretUp,
+} from 'vtex.styleguide'
 
 import { fieldShape } from '../../../utils/propTypes'
-import { addDays } from 'date-fns'
 
 function Scheduling({ intl, generalInfo, updatePageState }) {
+  const [isAdvancedSchedulingOpen, setAdvancedSchedulingOpen] = useState(false)
+
   const tzLabel = Intl.DateTimeFormat().resolvedOptions().timeZone
 
   return (
@@ -88,6 +95,22 @@ function Scheduling({ intl, generalInfo, updatePageState }) {
               />
             </div>
           ) : null}
+          <div className="mv4 c-action-primary">
+            {isAdvancedSchedulingOpen ? <IconCaretUp /> : <IconCaretDown />}
+            <span className="ml3">Recurrency settings</span>
+          </div>
+          <div>
+            <ButtonWithIcon
+              variation="tertiary"
+              icon={
+                isAdvancedSchedulingOpen ? <IconCaretUp /> : <IconCaretDown />
+              }
+              onClick={() =>
+                setAdvancedSchedulingOpen(!isAdvancedSchedulingOpen)
+              }>
+              Back
+            </ButtonWithIcon>
+          </div>
         </div>
       </div>
     </Fragment>
