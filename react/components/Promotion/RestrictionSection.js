@@ -240,7 +240,7 @@ class RestrictionSection extends Component {
             onChange={e =>
               updatePageState({
                 isRestrictingSalesChannels: !isRestrictingSalesChannels,
-                restrictSalesChannelVerb: undefined,
+                restrictSalesChannelVerb: restrictSalesChannelVerb,
                 restrictedSalesChannels: {
                   ...restrictedSalesChannels,
                   value: [],

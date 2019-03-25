@@ -539,14 +539,16 @@ class PromotionPage extends Component {
       promotion: {
         restriction: {
           restrictedSalesChannels: { value: restrictedSalesChannels },
+          restrictSalesChannelVerb: { value: restrictSalesChannelVerb },
         },
       },
     } = this.state
     return restrictedSalesChannels && restrictedSalesChannels.length > 0
-      ? salesChannels.filter(({ id }) =>
-        restrictedSalesChannels.find(({ value }) => id === value)
-      )
-      : salesChannels
+        ? salesChannels.filter(({ id }) => {
+          const f = restrictedSalesChannels.find(({ value }) => id === value)
+          return restrictSalesChannelVerb === 'any' ? f : !f
+        })
+        : salesChannels
   }
 
   getUniqueCurrencyCodes = () => {
