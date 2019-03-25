@@ -43,9 +43,6 @@ class PromotionPage extends Component {
   }
 
   componentDidUpdate() {
-    const {
-      restriction: { isRestrictingSalesChannels, restrictedSalesChannels },
-    } = this.state.promotion
     if (this.multipleCurrencies.focus) {
       this.multipleCurrencies.ref.current.scrollIntoView({
         behavior: 'smooth',
@@ -544,11 +541,11 @@ class PromotionPage extends Component {
       },
     } = this.state
     return restrictedSalesChannels && restrictedSalesChannels.length > 0
-        ? salesChannels.filter(({ id }) => {
-          const f = restrictedSalesChannels.find(({ value }) => id === value)
-          return restrictSalesChannelVerb === 'any' ? f : !f
-        })
-        : salesChannels
+      ? salesChannels.filter(({ id }) => {
+        const f = restrictedSalesChannels.find(({ value }) => id === value)
+        return restrictSalesChannelVerb === 'any' ? f : !f
+      })
+      : salesChannels
   }
 
   getUniqueCurrencyCodes = () => {

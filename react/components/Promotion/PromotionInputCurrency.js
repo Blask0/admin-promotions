@@ -3,13 +3,15 @@ import PropTypes from 'prop-types'
 import { injectIntl, intlShape } from 'react-intl'
 
 import { InputCurrency, Input } from 'vtex.styleguide'
+import { withForwardedRef } from '../utils/withForwardedRef'
 
 function PromotionInputCurrency(props) {
-  const { intl, currencyCode } = props
+  const { intl, forwardedRef, currencyCode } = props
   return currencyCode ? (
-    <InputCurrency {...props} />
+    <InputCurrency {...props} ref={forwardedRef} />
   ) : (
     <Input
+      ref={forwardedRef}
       errorMessage={intl.formatMessage({
         id: 'promotions.promotion.inputCurrency.multipleCurrencies',
       })}
@@ -23,4 +25,4 @@ PromotionInputCurrency.propTypes = {
   intl: intlShape,
 }
 
-export default injectIntl(PromotionInputCurrency)
+export default withForwardedRef(injectIntl(PromotionInputCurrency))
