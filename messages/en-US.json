@@ -13,6 +13,8 @@
   "promotions.promotion.generalInfo.accumulateWithPromotions.label": "Accumulate with other promotions",
   "promotions.promotion.generalInfo.accumulateWithManualPrices.label": "Accumulate with manual prices",
   "promotions.promotion.generalInfo.tz": "Time zone is GMT{tz} ({tzLabel})",
+  "promotions.promotion.generalInfo.scheduling.title": "Scheduling",
+  "promotions.promotion.generalInfo.scheduling.briefExplanation": "Some brief explanation of how scheduling works blabalblabalbalbalba",
   "promotions.promotion.effects.title": "Effects",
   "promotions.promotion.effects.price": "Price",
   "promotions.promotion.effects.priceForm.placeholder": "Enter value…",

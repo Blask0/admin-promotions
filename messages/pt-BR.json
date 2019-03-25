@@ -13,6 +13,8 @@
   "promotions.promotion.generalInfo.accumulateWithPromotions.label": "Acumular com outras promoções",
   "promotions.promotion.generalInfo.accumulateWithManualPrices.label": "Acumular com preços manuais",
   "promotions.promotion.generalInfo.tz": "Fuso horário é GMT{tz} ({tzLabel})",
+  "promotions.promotion.generalInfo.scheduling.title": "Agendamento",
+  "promotions.promotion.generalInfo.scheduling.briefExplanation": "Some brief explanation of how scheduling works blabalblabalbalbalba",
   "promotions.promotion.effects.title": "Efeito",
   "promotions.promotion.effects.price": "Preço",
   "promotions.promotion.effects.gift": "Brinde",
