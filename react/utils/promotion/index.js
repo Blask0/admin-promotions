@@ -169,10 +169,10 @@ export const newPromotion = (intl, promotion, salesChannels) => {
     },
     effects: {
       activeEffectType: newFieldWithValidation(),
-      price: { ...INITIAL_PRICE_EFFECT },
-      gift: { ...INITIAL_GIFT_EFFECT },
-      shipping: { ...INITIAL_SHIPPING_EFFECT },
-      reward: { ...INITIAL_REWARD_EFFECT },
+      price: INITIAL_PRICE_EFFECT,
+      gift: INITIAL_GIFT_EFFECT,
+      shipping: INITIAL_SHIPPING_EFFECT,
+      reward: INITIAL_REWARD_EFFECT,
     },
     restriction: {
       isLimitingPerStore: false,
