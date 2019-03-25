@@ -32,7 +32,10 @@ class PromotionPage extends Component {
       isSaving: false,
     }
 
-    this.multipleCurrenciesRef = React.createRef()
+    this.multipleCurrencies = {
+      ref: React.createRef(),
+      focus: true,
+    }
   }
 
   componentDidMount = () => {
@@ -43,11 +46,12 @@ class PromotionPage extends Component {
     const {
       restriction: { isRestrictingSalesChannels, restrictedSalesChannels },
     } = this.state.promotion
-    if (!isRestrictingSalesChannels && restrictedSalesChannels.error) {
-      this.multipleCurrenciesRef.current.scrollIntoView({
+    if (this.multipleCurrencies.focus) {
+      this.multipleCurrencies.ref.current.scrollIntoView({
         behavior: 'smooth',
         block: 'center',
       })
+      this.multipleCurrencies.focus = false
     }
   }
 
@@ -459,6 +463,7 @@ class PromotionPage extends Component {
         id: 'promotions.validation.multipleCurrencies',
       })
       isValid = false
+      this.multipleCurrencies.focus = true
     }
 
     return { restriction, isValid }
@@ -656,7 +661,7 @@ class PromotionPage extends Component {
         {!currencyCode ? (
           <div className="mb5">
             <Alert
-              ref={this.multipleCurrenciesRef}
+              ref={this.multipleCurrencies.ref}
               type={
                 restriction.restrictedSalesChannels.error ? 'error' : 'warning'
               }
