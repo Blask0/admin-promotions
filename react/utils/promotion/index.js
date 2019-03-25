@@ -182,7 +182,7 @@ export const newPromotion = (intl, promotion, salesChannels) => {
       isLimitingPerNumOfAffectedItems: false,
       maxNumberOfAffectedItems: newFieldWithValidation(),
       isRestrictingSalesChannels: false,
-      restrictSalesChannelVerb: undefined,
+      restrictSalesChannelVerb: getRestrictSalesChannelVerbOptions(intl)[0],
       restrictedSalesChannels: newFieldWithValidation(),
     },
   }

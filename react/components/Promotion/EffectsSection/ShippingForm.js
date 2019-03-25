@@ -2,7 +2,8 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape } from 'react-intl'
 
-import { Radio, Input, InputCurrency } from 'vtex.styleguide'
+import { Radio, Input } from 'vtex.styleguide'
+import PromotionsInputCurrency from '../../../components/Promotion/PromotionInputCurrency'
 
 import { applyFocus } from '../../../utils/functions'
 
@@ -65,7 +66,7 @@ class ShippingForm extends Component {
           />
           {this.isDiscountTypeSelected('nominal') ? (
             <div className="mv4 mh7 w-20">
-              <InputCurrency
+              <PromotionsInputCurrency
                 locale={intl.locale}
                 currencyCode={currencyCode}
                 value={shippingEffect.discount.value}
@@ -113,7 +114,7 @@ class ShippingForm extends Component {
           />
           {this.isDiscountTypeSelected('maximumValue') ? (
             <div className="mv4 mh7 w-20">
-              <InputCurrency
+              <PromotionsInputCurrency
                 locale={intl.locale}
                 currencyCode={currencyCode}
                 value={shippingEffect.discount.value}
