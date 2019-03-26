@@ -4,7 +4,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import { Button, ModalDialog } from 'vtex.styleguide'
 import FileModal from './fileModal'
 
-class Importer extends Component {
+class BulkImporter extends Component {
   constructor(props) {
     super(props)
 
@@ -18,7 +18,7 @@ class Importer extends Component {
   }
 
   render() {
-    const {} = this.props
+    const { update } = this.props
 
     return (
       <Fragment>
@@ -44,8 +44,9 @@ class Importer extends Component {
   }
 }
 
-Importer.propTypes = {
+BulkImporter.propTypes = {
   intl: intlShape,
+  update: PropTypes.func,
 }
 
-export default injectIntl(Importer)
+export default injectIntl(BulkImporter)

@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { EXPERIMENTAL_Select } from 'vtex.styleguide'
-import Importer from '../../../../components/bulkImporter/Importer'
+import BulkImporter from '../../../../components/bulkImporter'
 
 const renderSelectObject = ({
   statements,
@@ -27,6 +27,11 @@ const renderSelectObject = ({
     if (statements[statementIndex].focus) {
       statements[statementIndex].refs.object.current.focus()
       statements[statementIndex].focus = false
+      update(statements)
+    }
+
+    const addBulkValues = values => {
+      statements[statementIndex].object = values
       update(statements)
     }
 
@@ -57,7 +62,7 @@ const renderSelectObject = ({
               })
           }}
         />
-        <Importer />
+        <BulkImporter update={addBulkValues} />
       </Fragment>
     )
   })

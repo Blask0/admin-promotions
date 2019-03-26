@@ -457,6 +457,10 @@ class PromotionsTable extends Component {
   }
 }
 
+PromotionsTable.contextTypes = {
+  navigate: PropTypes.func,
+}
+
 PromotionsTable.propTypes = {
   intl: intlShape,
   promotions: PropTypes.arrayOf(PropTypes.object),
