@@ -10,15 +10,45 @@ class BulkImporter extends Component {
 
     this.state = {
       isImportModalOpen: false,
+      file: undefined,
     }
+  }
+
+  updateFile = file => {
+    this.setState({ file })
   }
 
   handleModalToggle = () => {
     this.setState({ isImportModalOpen: !this.state.isImportModalOpen })
   }
 
-  render() {
+  handleConfirmation = () => {
+    this.handleModalToggle()
+    const { file } = this.state
     const { update } = this.props
+
+    // there is a bug when you try to remove one item from select
+    // Check why do old ui have to make a post
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = function(event) {
+        const contents = event.target.result
+        const lines = contents.split('\n')
+        console.log(lines)
+        const selected = lines.map(row => ({
+          label: row.split(',')[0],
+          id: row.split(',')[1],
+        }))
+        console.log(selected)
+        update(selected)
+      }
+
+      reader.readAsText(file)
+    }
+  }
+
+  render() {
+    const { modalTitle } = this.props
 
     return (
       <Fragment>
@@ -28,7 +58,7 @@ class BulkImporter extends Component {
         <ModalDialog
           centered
           confirmation={{
-            onClick: this.handleModalToggle,
+            onClick: this.handleConfirmation,
             label: 'Ok',
           }}
           cancelation={{
@@ -37,7 +67,7 @@ class BulkImporter extends Component {
           }}
           isOpen={this.state.isImportModalOpen}
           onClose={this.handleModalToggle}>
-          <FileModal />
+          <FileModal titleId={modalTitle} updateFile={this.updateFile} />
         </ModalDialog>
       </Fragment>
     )

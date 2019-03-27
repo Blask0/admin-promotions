@@ -16,12 +16,14 @@ const renderSelectObject = ({
     multi = false,
     queryInfo: { connector, dataGetter },
     validation: { execute: isValid, errorMessage: validationErrorMessage } = {},
+    bulk,
   } = extraParams
 
   const SelectObject = connector(props => {
     const options = dataGetter(props)
     const { loading, updateQueryParams } = props
 
+    // This firs renaming is confusing
     const { object: selected, error: errorMessage } = statements[statementIndex]
 
     if (statements[statementIndex].focus) {
@@ -31,38 +33,43 @@ const renderSelectObject = ({
     }
 
     const addBulkValues = values => {
+      console.log(values)
       statements[statementIndex].object = values
       update(statements)
     }
 
     return (
       <Fragment>
-        <EXPERIMENTAL_Select
-          placeholder={placeholder}
-          options={options}
-          value={selected}
-          multi={multi}
-          ref={statements[statementIndex].refs.object}
-          loading={loading}
-          creatable={creatable}
-          errorMessage={errorMessage}
-          onChange={selected => {
-            if ((isValid && isValid(selected)) || !isValid) {
-              statements[statementIndex].object = selected
-              statements[statementIndex].error = null
-            } else {
-              statements[statementIndex].error = validationErrorMessage
-            }
-            update(statements)
-          }}
-          onSearchInputChange={searchedValue => {
-            updateQueryParams &&
-              updateQueryParams({
-                name: searchedValue,
-              })
-          }}
-        />
-        <BulkImporter update={addBulkValues} />
+        <div className="flex flex-row">
+          <EXPERIMENTAL_Select
+            placeholder={placeholder}
+            options={options}
+            value={selected}
+            multi={multi}
+            ref={statements[statementIndex].refs.object}
+            loading={loading}
+            creatable={creatable}
+            errorMessage={errorMessage}
+            onChange={selected => {
+              if ((isValid && isValid(selected)) || !isValid) {
+                statements[statementIndex].object = selected
+                statements[statementIndex].error = null
+              } else {
+                statements[statementIndex].error = validationErrorMessage
+              }
+              update(statements)
+            }}
+            onSearchInputChange={searchedValue => {
+              updateQueryParams &&
+                updateQueryParams({
+                  name: searchedValue,
+                })
+            }}
+          />
+          {bulk && (
+            <BulkImporter update={addBulkValues} modalTitle={bulk.modalTitle} />
+          )}
+        </div>
       </Fragment>
     )
   })

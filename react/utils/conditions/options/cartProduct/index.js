@@ -182,6 +182,9 @@ const cartProduct = (intl, update, currencyCode) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              modalTitle: 'promotions.promotion.import.modal.title.product',
+            },
           },
         },
       },
