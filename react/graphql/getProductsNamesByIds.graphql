@@ -1,0 +1,9 @@
+query GetProductsNamesById($ids: [String]) {
+  getProductsNamesByIds(ids: $ids) {
+    products {
+      name
+      id
+    }
+    notFound
+  }
+}

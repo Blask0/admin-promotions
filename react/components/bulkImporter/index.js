@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import { Button, ModalDialog } from 'vtex.styleguide'
 import FileModal from './fileModal'
+import withProductsOptions from '../../connectors/withProductsOptions'
 
 class BulkImporter extends Component {
   constructor(props) {
@@ -25,22 +26,28 @@ class BulkImporter extends Component {
   handleConfirmation = () => {
     this.handleModalToggle()
     const { file } = this.state
-    const { update } = this.props
+    const { update, updateQueryParams, uploadedFile } = this.props
 
     // there is a bug when you try to remove one item from select
+
     // Check why do old ui have to make a post
+
     if (file) {
       const reader = new FileReader()
       reader.onload = function(event) {
         const contents = event.target.result
-        const lines = contents.split('\n')
-        console.log(lines)
-        const selected = lines.map(row => ({
-          label: row.split(',')[0],
-          id: row.split(',')[1],
+        const items = contents.split('\n')
+        updateQueryParams &&
+          updateQueryParams({
+            ids: items,
+          })
+        console.log(uploadedFile)
+        const options = uploadedFile.products.map(product => ({
+          label: product.name,
+          id: product.id,
         }))
-        console.log(selected)
-        update(selected)
+        console.log(options)
+        update(options)
       }
 
       reader.readAsText(file)
@@ -77,6 +84,8 @@ class BulkImporter extends Component {
 BulkImporter.propTypes = {
   intl: intlShape,
   update: PropTypes.func,
+  uploadedFile: PropTypes.object,
+  updateQueryParams: PropTypes.func,
 }
 
-export default injectIntl(BulkImporter)
+export default withProductsOptions(injectIntl(BulkImporter))

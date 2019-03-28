@@ -11,6 +11,7 @@ class FileModal extends Component {
     const file = event.target.files[0]
     const { updateFile } = this.props
 
+    // Progress bar?
     updateFile(file)
   }
 
@@ -22,9 +23,16 @@ class FileModal extends Component {
         <h1>
           <FormattedMessage id={titleId} />
         </h1>
-        <span>
-          <input type="file" onChange={this.uploadFile} />
-        </span>
+        <div className="flex flex-column">
+          <span>
+            <input type="file" onChange={this.uploadFile} />
+          </span>
+          <span>
+            <FormattedMessage
+              id={'promotions.promotion.import.modal.placeholder'}
+            />
+          </span>
+        </div>
       </Fragment>
     )
   }

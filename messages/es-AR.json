@@ -206,5 +206,6 @@
   "promotions.promotion.restriction.origin.marketplace.explanation": "Pedidos hechos directamente a su tienda",
   "promotions.promotion.restriction.origin.fulfillment.explanation": "Pedidos donde tu tienda actúa como vendedor",
   "promotions.promotion.import": "Importar",
-  "promotions.promotion.import.modal.title.product": "Importar lista de productos"
+  "promotions.promotion.import.modal.title.product": "Importar lista de productos",
+  "promotions.promotion.import.modal.placeholder": "(archivos *.txt con una entrada por línea)"
 }
