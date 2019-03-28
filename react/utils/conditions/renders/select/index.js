@@ -38,8 +38,20 @@ const renderSelectObject = ({
         statementIndex
       ].error = `We didn't find these Ids in catalog: ${notFound} `
       update(statements)
-      // bulk.notFoundIdCallback && bulk.notFoundIdCallback()
     }
+
+    const BulkImporterObject =
+      bulk &&
+      bulk.connector &&
+      bulk.connector(props => {
+        return (
+          <BulkImporter
+            {...props}
+            update={addBulkValues}
+            modalTitle={bulk.modalTitle}
+          />
+        )
+      })
 
     return (
       <Fragment>
@@ -69,9 +81,7 @@ const renderSelectObject = ({
                 })
             }}
           />
-          {bulk && (
-            <BulkImporter update={addBulkValues} modalTitle={bulk.modalTitle} />
-          )}
+          {bulk && bulk.connector && <BulkImporterObject />}
         </div>
         {/* <Alert /> */}
       </Fragment>

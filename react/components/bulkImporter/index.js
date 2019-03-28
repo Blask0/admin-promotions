@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import { Button, ModalDialog, Spinner } from 'vtex.styleguide'
 import FileModal from './fileModal'
-import withProductsOptions from '../../connectors/withProductsOptions'
 import { mapProductsToSelect } from '../../utils/mappers'
 
 class BulkImporter extends Component {
@@ -102,4 +101,4 @@ BulkImporter.propTypes = {
   updateQueryParams: PropTypes.func,
 }
 
-export default withProductsOptions(injectIntl(BulkImporter))
+export default injectIntl(BulkImporter)
