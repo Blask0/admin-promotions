@@ -21,9 +21,11 @@ function withProductsOptions(WrappedComponent) {
       const { ids } = this.state
 
       return (
-        <Query query={getProductsNamesByIds} variables={{ ids }}>
+        <Query
+          query={getProductsNamesByIds}
+          variables={{ ids }}
+          fetchPolicy="network-only">
           {({ loading, error, data }) => {
-            console.log(data.getProductsNamesByIds)
             return (
               <WrappedComponent
                 {...this.props}
@@ -33,8 +35,8 @@ function withProductsOptions(WrappedComponent) {
                   data
                     ? data.getProductsNamesByIds
                       ? data.getProductsNamesByIds
-                      : []
-                    : []
+                      : {}
+                    : {}
                 }
                 updateQueryParams={this.updateQueryParams}
               />

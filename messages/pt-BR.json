@@ -207,5 +207,6 @@
   "promotions.promotion.restriction.origin.fulfillment.explanation": "Pedidos onde sua loja atua como vendedor",
   "promotions.promotion.import": "Importar",
   "promotions.promotion.import.modal.title.product": "Importar lista de produtos",
-  "promotions.promotion.import.modal.placeholder": "(arquivos *.txt com uma entrada por linha)"
+  "promotions.promotion.import.modal.placeholder": "(arquivos *.txt com uma entrada por linha)",
+  "promotions.promotion.import.modal.catalog": "Checking ids with catalog system…"
 }

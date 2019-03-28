@@ -184,6 +184,7 @@ const cartProduct = (intl, update, currencyCode) => {
             update: update,
             bulk: {
               modalTitle: 'promotions.promotion.import.modal.title.product',
+              notFoundIdCallback: () => alert('ola'),
             },
           },
         },
@@ -207,11 +208,13 @@ const cartProduct = (intl, update, currencyCode) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              modalTitle: 'promotions.promotion.import.modal.title.product',
+            },
           },
         },
       },
       // HAS SKUS
-
       {
         label: intl.formatMessage({
           id: 'promotions.promotion.elligibility.cartProduct.verb.sku.any',
@@ -230,6 +233,9 @@ const cartProduct = (intl, update, currencyCode) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              modalTitle: 'promotions.promotion.import.modal.title.sku',
+            },
           },
         },
       },
@@ -251,6 +257,9 @@ const cartProduct = (intl, update, currencyCode) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              modalTitle: 'promotions.promotion.import.modal.title.sku',
+            },
           },
         },
       },

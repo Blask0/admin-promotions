@@ -10,8 +10,6 @@ class FileModal extends Component {
   uploadFile = event => {
     const file = event.target.files[0]
     const { updateFile } = this.props
-
-    // Progress bar?
     updateFile(file)
   }
 

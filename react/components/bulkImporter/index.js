@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
-import { Button, ModalDialog } from 'vtex.styleguide'
+import { Button, ModalDialog, Spinner } from 'vtex.styleguide'
 import FileModal from './fileModal'
 import withProductsOptions from '../../connectors/withProductsOptions'
+import { mapProductsToSelect } from '../../utils/mappers'
 
 class BulkImporter extends Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class BulkImporter extends Component {
     this.state = {
       isImportModalOpen: false,
       file: undefined,
+      isFileBeingUploaded: false,
     }
   }
 
@@ -26,31 +28,31 @@ class BulkImporter extends Component {
   handleConfirmation = () => {
     this.handleModalToggle()
     const { file } = this.state
-    const { update, updateQueryParams, uploadedFile } = this.props
-
-    // there is a bug when you try to remove one item from select
-
-    // Check why do old ui have to make a post
+    const { updateQueryParams } = this.props
 
     if (file) {
       const reader = new FileReader()
-      reader.onload = function(event) {
-        const contents = event.target.result
-        const items = contents.split('\n')
-        updateQueryParams &&
-          updateQueryParams({
-            ids: items,
-          })
-        console.log(uploadedFile)
-        const options = uploadedFile.products.map(product => ({
-          label: product.name,
-          id: product.id,
-        }))
-        console.log(options)
-        update(options)
-      }
+      reader.onload = (function(that) {
+        return function(event) {
+          const contents = event.target.result
+          const items = contents.split('\n')
+          updateQueryParams && updateQueryParams({ ids: items })
+          that.setState({ isFileBeingUploaded: true })
+        }
+      })(this)
 
       reader.readAsText(file)
+    }
+  }
+
+  componentDidUpdate = () => {
+    const { loading, uploadedFile, update } = this.props
+    const { isFileBeingUploaded } = this.state
+
+    if (!loading && isFileBeingUploaded) {
+      const options = mapProductsToSelect(uploadedFile.products)
+      this.setState({ isFileBeingUploaded: false })
+      update(options, uploadedFile.notFound)
     }
   }
 
@@ -75,6 +77,16 @@ class BulkImporter extends Component {
           isOpen={this.state.isImportModalOpen}
           onClose={this.handleModalToggle}>
           <FileModal titleId={modalTitle} updateFile={this.updateFile} />
+          <div className="flex flex-row">
+            <Spinner
+              status={this.state.isFileBeingUploaded ? 'working' : 'idle'}
+            />
+            {this.state.isFileBeingUploaded && (
+              <span>
+                <FormattedMessage id="promotions.promotion.import.modal.catalog" />
+              </span>
+            )}
+          </div>
         </ModalDialog>
       </Fragment>
     )
@@ -83,8 +95,10 @@ class BulkImporter extends Component {
 
 BulkImporter.propTypes = {
   intl: intlShape,
+  modalTitle: PropTypes.string,
   update: PropTypes.func,
   uploadedFile: PropTypes.object,
+  loading: PropTypes.bool,
   updateQueryParams: PropTypes.func,
 }
 

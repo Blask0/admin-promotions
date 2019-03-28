@@ -25,6 +25,9 @@ const product = (intl, update) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              modalTitle: 'promotions.promotion.import.modal.title.product',
+            },
           },
         },
       },
@@ -45,6 +48,9 @@ const product = (intl, update) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              modalTitle: 'promotions.promotion.import.modal.title.product',
+            },
           },
         },
       },

@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { EXPERIMENTAL_Select } from 'vtex.styleguide'
+import { EXPERIMENTAL_Select, Alert } from 'vtex.styleguide'
 import BulkImporter from '../../../../components/bulkImporter'
 
 const renderSelectObject = ({
@@ -23,7 +23,7 @@ const renderSelectObject = ({
     const options = dataGetter(props)
     const { loading, updateQueryParams } = props
 
-    // This firs renaming is confusing
+    // This first renaming is confusing
     const { object: selected, error: errorMessage } = statements[statementIndex]
 
     if (statements[statementIndex].focus) {
@@ -32,15 +32,18 @@ const renderSelectObject = ({
       update(statements)
     }
 
-    const addBulkValues = values => {
-      console.log(values)
+    const addBulkValues = (values, notFound) => {
       statements[statementIndex].object = values
+      statements[
+        statementIndex
+      ].error = `We didn't find these Ids in catalog: ${notFound} `
       update(statements)
+      // bulk.notFoundIdCallback && bulk.notFoundIdCallback()
     }
 
     return (
       <Fragment>
-        <div className="flex flex-row">
+        <div className="flex flex-row ">
           <EXPERIMENTAL_Select
             placeholder={placeholder}
             options={options}
@@ -70,6 +73,7 @@ const renderSelectObject = ({
             <BulkImporter update={addBulkValues} modalTitle={bulk.modalTitle} />
           )}
         </div>
+        {/* <Alert /> */}
       </Fragment>
     )
   })
