@@ -158,6 +158,7 @@
   "promotions.validation.emptyEffect": "promotions.validation.emptyEffect",
   "promotions.validation.emptyStatement": "promotions.validation.emptyStatement",
   "promotions.validation.incompleteStatement": "promotions.validation.incompleteStatement",
+  "promotions.validation.multipleCurrencies": "promotions.validation.multipleCurrencies",
   "promotions.promotion.scopeSelector.brand.label": "promotions.promotion.scopeSelector.brand.label",
   "promotions.promotion.scopeSelector.brand.verb.any": "promotions.promotion.scopeSelector.brand.verb.any",
   "promotions.promotion.scopeSelector.brand.verb.not.any": "promotions.promotion.scopeSelector.brand.verb.not.any",
@@ -196,5 +197,9 @@
   "promotions.scopeColumn.collections": "promotions.scopeColumn.collections",
   "promotions.scopeColumn.categories": "promotions.scopeColumn.categories",
   "promotions.scopeColumn.products": "promotions.scopeColumn.products",
-  "promotions.scopeColumn.skus": "promotions.scopeColumn.skus"
+  "promotions.scopeColumn.skus": "promotions.scopeColumn.skus",
+  "promotions.promotion.multipleCurrencies.warning": "promotions.promotion.multipleCurrencies.warning",
+  "promotions.promotion.multipleCurrencies.error": "promotions.promotion.multipleCurrencies.error",
+  "promotions.promotion.multipleCurrencies.action": "promotions.promotion.multipleCurrencies.action",
+  "promotions.promotion.inputCurrency.multipleCurrencies": "promotions.promotion.inputCurrency.multipleCurrencies"
 }
