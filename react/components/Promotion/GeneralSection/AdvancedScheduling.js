@@ -3,17 +3,9 @@ import PropTypes from 'prop-types'
 import { injectIntl, intlShape } from 'react-intl'
 
 import { Button, Checkbox, RadioGroup, IconDelete } from 'vtex.styleguide'
-import TimeRange from './TimeRange'
 
-const WEEK_DAYS = {
-  sun: false,
-  mon: false,
-  tue: false,
-  wed: false,
-  thu: false,
-  fri: false,
-  sat: false,
-}
+import TimeRange from './TimeRange'
+import { WEEK_DAYS, isTimeValid } from '../../../utils/promotion/recurrency'
 
 function getDaysOptions(intl) {
   return [
@@ -28,7 +20,7 @@ function getDaysOptions(intl) {
   ]
 }
 
-function getHoursOptions(intl) {
+function getTimesOptions(intl) {
   return [
     {
       value: 'allDay',
@@ -41,79 +33,16 @@ function getHoursOptions(intl) {
   ]
 }
 
-function getSelectedWeekDays(weekDay) {
-  const weekDays = { ...WEEK_DAYS }
-  if (weekDay === '*') {
-    Object.keys(weekDays).forEach(key => {
-      weekDays[key] = true
-    })
-    return weekDays
-  }
-  Object.keys(weekDays).forEach(key => {
-    weekDays[key] = !!weekDay.split(',').includes(key)
-  })
-  return weekDays
-}
-
-function isTimeValid({ hours }) {
-  return hours !== undefined && hours !== '' && hours !== `${undefined}`
-}
-
-function increaseHour(hour) {
-  return hour === 23 ? 0 : hour + 1
-}
-
-function decreaseHour(hour) {
-  return hour === 0 ? 23 : hour - 1
-}
-
-function getSelectedHours(hour) {
-  return hour !== '*'
-    ? hour.split(',').map(range => {
-      const [fromHours, toHours = fromHours] = range.split('-')
-      return {
-        from: {
-          hours: isTimeValid({ hours: fromHours })
-            ? parseInt(fromHours)
-            : undefined,
-          minutes: 0,
-        },
-        to: {
-          hours: isTimeValid({ hours: toHours })
-            ? increaseHour(parseInt(toHours))
-            : undefined,
-          minutes: 0,
-        },
-      }
-    })
-    : []
-}
-
-function createCronWeekDay(selectedWeekDays = { ...WEEK_DAYS }) {
-  const weekDays = Object.keys(selectedWeekDays).filter(
-    day => selectedWeekDays[day]
-  )
-  return weekDays.length !== 0 ? weekDays.join(',') : undefined
-}
-
-function createCronHour(hours) {
-  return hours
-    .map(
-      ({ from, to }) =>
-        `${isTimeValid(from) ? from.hours : ''}-${
-          isTimeValid(to) ? decreaseHour(to.hours) : ''
-        }`
-    )
-    .join(',')
-}
-
-function createCron(minute, hour, day, month, weekDay) {
-  return `${minute} ${hour} ${day} ${month} ${weekDay}`
-}
-
-function canAddTimeRange(hours) {
-  const { from, to } = hours[hours.length - 1] || {}
+function canAddTimeRange(times) {
+  const { from, to } = times[times.length - 1] || {}
   return isTimeValid(from) && isTimeValid(to)
+}
+
+function addTimeRange(times) {
+  return times.concat({
+    from: { hours: undefined, minutes: undefined },
+    to: { hours: undefined, minutes: undefined },
+  })
 }
 
 function handleChange(callback, value) {
@@ -125,14 +54,13 @@ function handleChange(callback, value) {
   callback(event)
 }
 
-function AdvancedScheduling({ intl, value, onChange }) {
-  const [minute, hour, day, month, weekDay] = value.split(' ')
-  console.log(minute, hour, day, month, weekDay)
+function AdvancedScheduling({
+  intl,
+  value: { weekDays = null, times },
+  onChange,
+}) {
   const daysOptions = getDaysOptions()
-  const hoursOptions = getHoursOptions()
-
-  const weekDays = getSelectedWeekDays(weekDay)
-  const hours = getSelectedHours(hour)
+  const timesOptions = getTimesOptions()
 
   return (
     <Fragment>
@@ -143,148 +71,65 @@ function AdvancedScheduling({ intl, value, onChange }) {
         <RadioGroup
           name="days"
           options={daysOptions}
-          value={weekDay === '*' ? 'everyday' : 'specificDays'}
+          value={weekDays === null ? 'everyday' : 'specificDays'}
           onChange={e => {
-            const weekDay =
-              e.currentTarget.value === 'everyday' ? '*' : undefined
-            const value = createCron(minute, hour, day, month, weekDay)
-            handleChange(onChange, value)
+            const weekDays =
+              e.currentTarget.value === 'everyday' ? null : { ...WEEK_DAYS }
+            handleChange(onChange, { weekDays, times })
           }}
         />
       </div>
-      {weekDay !== '*' && (
+      {weekDays !== null && (
         <div className="ml7">
-          {weekDay === `${undefined}` && (
+          {/* {weekDay === `${undefined}` && (
             <div className="c-danger t-small mb3 lh-title">
               You must select at least one day of the week
             </div>
-          )}
-          <div className="mb3">
-            <Checkbox
-              label="Sunday"
-              checked={weekDays.sun}
-              onChange={e => {
-                const weekDay = createCronWeekDay({
-                  ...weekDays,
-                  sun: e.target.checked,
-                })
-                const value = createCron(minute, hour, day, month, weekDay)
-                handleChange(onChange, value)
-              }}
-            />
-          </div>
-          <div className="mb3">
-            <Checkbox
-              label="Monday"
-              checked={weekDays.mon}
-              onChange={e => {
-                const weekDay = createCronWeekDay({
-                  ...weekDays,
-                  mon: e.target.checked,
-                })
-                const value = createCron(minute, hour, day, month, weekDay)
-                handleChange(onChange, value)
-              }}
-            />
-          </div>
-          <div className="mb3">
-            <Checkbox
-              label="Tuesday"
-              checked={weekDays.tue}
-              onChange={e => {
-                const weekDay = createCronWeekDay({
-                  ...weekDays,
-                  tue: e.target.checked,
-                })
-                const value = createCron(minute, hour, day, month, weekDay)
-                handleChange(onChange, value)
-              }}
-            />
-          </div>
-          <div className="mb3">
-            <Checkbox
-              label="Wednesday"
-              checked={weekDays.wed}
-              onChange={e => {
-                const weekDay = createCronWeekDay({
-                  ...weekDays,
-                  wed: e.target.checked,
-                })
-                const value = createCron(minute, hour, day, month, weekDay)
-                handleChange(onChange, value)
-              }}
-            />
-          </div>
-          <div className="mb3">
-            <Checkbox
-              label="Thursday"
-              checked={weekDays.thu}
-              onChange={e => {
-                const weekDay = createCronWeekDay({
-                  ...weekDays,
-                  thu: e.target.checked,
-                })
-                const value = createCron(minute, hour, day, month, weekDay)
-                handleChange(onChange, value)
-              }}
-            />
-          </div>
-          <div className="mb3">
-            <Checkbox
-              label="Friday"
-              checked={weekDays.fri}
-              onChange={e => {
-                const weekDay = createCronWeekDay({
-                  ...weekDays,
-                  fri: e.target.checked,
-                })
-                const value = createCron(minute, hour, day, month, weekDay)
-                handleChange(onChange, value)
-              }}
-            />
-          </div>
-          <div className="mb3">
-            <Checkbox
-              label="Saturday"
-              checked={weekDays.sat}
-              onChange={e => {
-                const weekDay = createCronWeekDay({
-                  ...weekDays,
-                  sat: e.target.checked,
-                })
-                const value = createCron(minute, hour, day, month, weekDay)
-                handleChange(onChange, value)
-              }}
-            />
-          </div>
+          )} */}
+          {Object.keys(weekDays).map(day => (
+            <div className="mb3">
+              <Checkbox
+                name={day}
+                label={weekDays[day].label}
+                checked={weekDays[day].value}
+                onChange={e => {
+                  const newWeekDays = {
+                    ...weekDays,
+                    [day]: { ...weekDays[day], value: e.target.checked },
+                  }
+                  handleChange(onChange, { weekDays: newWeekDays, times })
+                }}
+              />
+            </div>
+          ))}
         </div>
       )}
       <div className="mb4">
         <RadioGroup
-          name="hours"
-          options={hoursOptions}
-          value={hour === '*' ? 'allDay' : 'specificTimes'}
+          name="times"
+          options={timesOptions}
+          value={times === null ? 'allDay' : 'specificTimes'}
           onChange={e => {
-            const hour = e.currentTarget.value === 'allDay' ? '*' : undefined
-            const value = createCron(minute, hour, day, month, weekDay)
-            handleChange(onChange, value)
+            const times =
+              e.currentTarget.value === 'allDay' ? null : addTimeRange([])
+            handleChange(onChange, { weekDays, times })
           }}
         />
       </div>
-      {hour !== '*' && (
+      {times !== null && (
         <div className="ml7">
-          {hour === `${undefined}` && (
+          {/* {hour === `${undefined}` && (
             <div className="c-danger t-small mb3 lh-title">
               You must specify at least one time
             </div>
-          )}
-          {hours.map((hour, idx) => {
+          )} */}
+          {times.map((time, idx) => {
             const from = {
-              ...hour.from,
+              ...time.from,
               label: idx === 0 ? 'From' : undefined,
             }
             const to = {
-              ...hour.to,
+              ...time.to,
               label: idx === 0 ? 'To' : undefined,
             }
             return (
@@ -293,12 +138,10 @@ function AdvancedScheduling({ intl, value, onChange }) {
                   from={from}
                   to={to}
                   onChange={e => {
-                    const newHours = Object.assign([], hours, {
+                    const newTimes = Object.assign([], times, {
                       [idx]: e.target,
                     })
-                    const hour = createCronHour(newHours) || undefined
-                    const value = createCron(minute, hour, day, month, weekDay)
-                    handleChange(onChange, value)
+                    handleChange(onChange, { weekDays, times: newTimes })
                   }}
                 />
                 <div className="mr7 c-muted-1">
@@ -306,18 +149,10 @@ function AdvancedScheduling({ intl, value, onChange }) {
                     <div
                       className="pointer"
                       onClick={() => {
-                        const newHours = hours
+                        const newTimes = times
                           .slice(0, idx)
-                          .concat(hours.slice(idx + 1))
-                        const hour = createCronHour(newHours) || undefined
-                        const value = createCron(
-                          minute,
-                          hour,
-                          day,
-                          month,
-                          weekDay
-                        )
-                        handleChange(onChange, value)
+                          .concat(times.slice(idx + 1))
+                        handleChange(onChange, { weekDays, times: newTimes })
                       }}>
                       <IconDelete />
                     </div>
@@ -331,15 +166,10 @@ function AdvancedScheduling({ intl, value, onChange }) {
           <div className="mb3">
             <Button
               variation="tertiary"
-              disabled={!canAddTimeRange(hours)}
+              disabled={!canAddTimeRange(times)}
               onClick={() => {
-                const newHours = hours.concat({
-                  from: { hours: undefined, minutes: undefined },
-                  to: { hours: undefined, minutes: undefined },
-                })
-                const hour = createCronHour(newHours) || undefined
-                const value = createCron(minute, hour, day, month, weekDay)
-                handleChange(onChange, value)
+                const newTimes = addTimeRange(times)
+                handleChange(onChange, { weekDays, times: newTimes })
               }}>
               ADD RANGE
             </Button>
@@ -350,13 +180,9 @@ function AdvancedScheduling({ intl, value, onChange }) {
   )
 }
 
-AdvancedScheduling.defaultProps = {
-  value: '* * * * *',
-}
-
 AdvancedScheduling.propTypes = {
   intl: intlShape,
-  value: PropTypes.string,
+  value: PropTypes.string.isRequired,
   onChange: PropTypes.func,
 }
 

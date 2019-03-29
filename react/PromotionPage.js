@@ -21,6 +21,11 @@ import {
   getRestrictSalesChannelVerbOptions,
 } from './utils/constants'
 
+import {
+  createCronHour,
+  createCronWeekDay,
+} from './utils/promotion/recurrency'
+
 class PromotionPage extends Component {
   constructor(props) {
     super(props)
@@ -558,18 +563,21 @@ class PromotionPage extends Component {
   prepareToSave = promotion => {
     const { intl } = this.props
     const {
-      generalInfo: { hasEndDate, ...generalInfo },
+      generalInfo: { hasEndDate, recurrency, ...generalInfo },
       eligibility,
       effects,
       restriction,
     } = promotion
     const { limitQuantityPerPurchase, ...giftEffect } = effects.gift
+    const cronWeekDay = createCronWeekDay(recurrency.weekDays)
+    const cronHour = createCronHour(recurrency.times)
     return {
       ...promotion,
       generalInfo: {
         ...generalInfo,
         name: generalInfo.name.value,
         endDate: generalInfo.endDate.value,
+        cron: `* ${cronHour} * * ${cronWeekDay}`,
       },
       effects: {
         ...effects,
@@ -729,9 +737,10 @@ class PromotionPage extends Component {
             variation="primary"
             isLoading={isSaving}
             onClick={() => {
+              const preparedPromotion = this.prepareToSave(promotion)
+              console.log(preparedPromotion.generalInfo)
               if (this.canSave()) {
                 this.setState({ isSaving: true })
-                const preparedPromotion = this.prepareToSave(promotion)
 
                 savePromotion({
                   variables: {

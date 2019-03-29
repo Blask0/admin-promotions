@@ -101,10 +101,10 @@ function Scheduling({ intl, generalInfo, updatePageState }) {
               opened={advancedSchedulingOpened}>
               <div className="ml6">
                 <AdvancedScheduling
-                  value={generalInfo.cron}
+                  value={generalInfo.recurrency}
                   onChange={e => {
                     updatePageState({
-                      cron: e.target.value,
+                      recurrency: e.target.value,
                     })
                   }}
                 />

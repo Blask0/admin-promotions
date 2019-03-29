@@ -2,6 +2,12 @@ import {
   getRestrictSalesChannelVerbOptions,
   getRewardEffectOrderStatusOptions,
 } from '../../utils/constants'
+
+import {
+  getSelectedTimes,
+  getSelectedWeekDays,
+} from '../../utils/promotion/recurrency'
+
 import { mapSalesChannelsToSelect } from '../../utils/mappers'
 
 const newFieldWithValidation = value => ({
@@ -157,6 +163,10 @@ export const newPromotion = (intl, promotion, salesChannels) => {
       hasEndDate: false,
       endDate: newFieldWithValidation(),
       tz: -new Date().getTimezoneOffset() / 60,
+      recurrency: {
+        weekDays: null,
+        times: null,
+      },
       cron: undefined,
       isArchived: false,
       accumulateWithPromotions: false,
