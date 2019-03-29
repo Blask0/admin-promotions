@@ -41,7 +41,7 @@ function TimeRange({ intl, from, to, onChange: callback }) {
   const { fromDate, toDate } = getDates({ from, to })
 
   return (
-    <div className="flex flex-row items-center">
+    <div className="flex flex-row">
       <div className="mr3">
         <TimePicker
           label={from.label}

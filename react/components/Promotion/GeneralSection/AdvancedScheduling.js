@@ -54,26 +54,33 @@ function handleChange(callback, value) {
   callback(event)
 }
 
-function AdvancedScheduling({ intl, value: { weekDays, times }, onChange }) {
+function applyFocus(object, field, onChange) {
+  if (object[field].focus) {
+    object[field].ref.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    })
+
+    handleChange(onChange, {
+      ...object,
+      [field]: { ...object[field], focus: false },
+    })
+  }
+}
+
+function AdvancedScheduling({ intl, value, onChange }) {
+  const { weekDays, times } = value
   const daysOptions = getDaysOptions()
   const timesOptions = getTimesOptions()
 
-  useEffect(
-    () => {
-      if (weekDays.focus) {
-        weekDays.ref.current.scrollIntoView({
-          behavior: 'smooth',
-          block: 'center',
-        })
-
-        handleChange(onChange, {
-          weekDays: { ...weekDays, focus: false },
-          times,
-        })
-      }
-    },
-    [weekDays.error]
-  )
+  useEffect(() => applyFocus(value, 'weekDays', onChange), [
+    weekDays.error,
+    weekDays.focus,
+  ])
+  useEffect(() => applyFocus(value, 'times', onChange), [
+    times.error,
+    times.focus,
+  ])
 
   return (
     <Fragment>
@@ -123,26 +130,27 @@ function AdvancedScheduling({ intl, value: { weekDays, times }, onChange }) {
           ))}
         </div>
       )}
-      <div className="mb4">
+      <div ref={times.ref} className="mb4">
         <RadioGroup
           name="times"
           options={timesOptions}
-          value={times === null ? 'allDay' : 'specificTimes'}
+          value={times.value === null ? 'allDay' : 'specificTimes'}
           onChange={e => {
-            const times =
+            const value =
               e.currentTarget.value === 'allDay' ? null : addTimeRange([])
-            handleChange(onChange, { weekDays, times })
+            handleChange(onChange, {
+              weekDays,
+              times: { ...times, value },
+            })
           }}
         />
       </div>
-      {times !== null && (
+      {times.value !== null && (
         <div className="ml7">
-          {/* {hour === `${undefined}` && (
-            <div className="c-danger t-small mb3 lh-title">
-              You must specify at least one time
-            </div>
-          )} */}
-          {times.map((time, idx) => {
+          {times.error && (
+            <div className="c-danger t-small mb3 lh-title">{times.error}</div>
+          )}
+          {times.value.map((time, idx) => {
             const from = {
               ...time.from,
               label: idx === 0 ? 'From' : undefined,
@@ -157,10 +165,13 @@ function AdvancedScheduling({ intl, value: { weekDays, times }, onChange }) {
                   from={from}
                   to={to}
                   onChange={e => {
-                    const newTimes = Object.assign([], times, {
+                    const value = Object.assign([], times.value, {
                       [idx]: e.target,
                     })
-                    handleChange(onChange, { weekDays, times: newTimes })
+                    handleChange(onChange, {
+                      weekDays,
+                      times: { ...times, value },
+                    })
                   }}
                 />
                 <div className="mr7 c-muted-1">
@@ -168,10 +179,13 @@ function AdvancedScheduling({ intl, value: { weekDays, times }, onChange }) {
                     <div
                       className="pointer"
                       onClick={() => {
-                        const newTimes = times
+                        const value = times.value
                           .slice(0, idx)
-                          .concat(times.slice(idx + 1))
-                        handleChange(onChange, { weekDays, times: newTimes })
+                          .concat(times.value.slice(idx + 1))
+                        handleChange(onChange, {
+                          weekDays,
+                          times: { ...times, value },
+                        })
                       }}>
                       <IconDelete />
                     </div>
@@ -185,10 +199,10 @@ function AdvancedScheduling({ intl, value: { weekDays, times }, onChange }) {
           <div className="mb3">
             <Button
               variation="tertiary"
-              disabled={!canAddTimeRange(times)}
+              disabled={!canAddTimeRange(times.value)}
               onClick={() => {
-                const newTimes = addTimeRange(times)
-                handleChange(onChange, { weekDays, times: newTimes })
+                const value = addTimeRange(times.value)
+                handleChange(onChange, { weekDays, times: { ...times, value } })
               }}>
               ADD RANGE
             </Button>

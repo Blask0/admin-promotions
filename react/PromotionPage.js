@@ -21,7 +21,11 @@ import {
   getRestrictSalesChannelVerbOptions,
 } from './utils/constants'
 
-import { createCronHour, createCronWeekDay } from './utils/promotion/recurrency'
+import {
+  createCronHour,
+  createCronWeekDay,
+  isTimeValid,
+} from './utils/promotion/recurrency'
 
 class PromotionPage extends Component {
   constructor(props) {
@@ -131,7 +135,8 @@ class PromotionPage extends Component {
     }
 
     if (generalInfo.useRecurrency) {
-      const { weekDays } = generalInfo.recurrency
+      const { weekDays, times } = generalInfo.recurrency
+
       if (weekDays.value !== null) {
         const userDidNotSelectAnyWeekDate = Object.keys(weekDays.value)
           .map(day => weekDays.value[day].value)
@@ -144,6 +149,25 @@ class PromotionPage extends Component {
               error: intl.formatMessage({
                 id:
                   'promotions.promotion.validation.userDidNotSelectAnyWeekDate',
+              }),
+              focus: true,
+            },
+          }
+
+          isValid = false
+        }
+      }
+
+      if (times.value !== null) {
+        const { from, to } = times.value[times.value.length - 1]
+        const userDidNotSelectAnyTime = !isTimeValid(from) && !isTimeValid(to)
+        if (userDidNotSelectAnyTime) {
+          generalInfo.recurrency = {
+            ...generalInfo.recurrency,
+            times: {
+              ...generalInfo.recurrency.times,
+              error: intl.formatMessage({
+                id: 'promotions.promotion.validation.userDidNotSelectAnyTime',
               }),
               focus: true,
             },

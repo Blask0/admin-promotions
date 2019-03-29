@@ -174,7 +174,7 @@ export const newPromotion = (intl, promotion, salesChannels) => {
       useRecurrency: false,
       recurrency: {
         weekDays: newFieldWithValidation(null),
-        times: null,
+        times: newFieldWithValidation(null),
       },
       // recurrency: {
       //   weekDays: getSelectedWeekDays(weekDay),
