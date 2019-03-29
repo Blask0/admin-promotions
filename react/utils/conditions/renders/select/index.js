@@ -49,6 +49,7 @@ const renderSelectObject = ({
             {...props}
             update={addBulkValues}
             modalTitle={bulk.modalTitle}
+            productQueryIsLoading={loading}
           />
         )
       })

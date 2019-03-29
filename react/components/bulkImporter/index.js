@@ -56,11 +56,14 @@ class BulkImporter extends Component {
   }
 
   render() {
-    const { modalTitle } = this.props
+    const { modalTitle, productQueryIsLoading } = this.props
 
     return (
       <Fragment>
-        <Button variation="tertiary" onClick={this.handleModalToggle}>
+        <Button
+          variation="tertiary"
+          onClick={this.handleModalToggle}
+          disabled={productQueryIsLoading}>
           <FormattedMessage id="promotions.promotion.import" />
         </Button>
         <ModalDialog
@@ -99,6 +102,7 @@ BulkImporter.propTypes = {
   uploadedFile: PropTypes.object,
   loading: PropTypes.bool,
   updateQueryParams: PropTypes.func,
+  productQueryIsLoading: PropTypes.bool,
 }
 
 export default injectIntl(BulkImporter)
