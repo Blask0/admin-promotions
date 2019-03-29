@@ -25,7 +25,6 @@ class BulkImporter extends Component {
   }
 
   handleConfirmation = () => {
-    this.handleModalToggle()
     const { file } = this.state
     const { updateQueryParams } = this.props
 
@@ -52,6 +51,7 @@ class BulkImporter extends Component {
       const options = mapProductsToSelect(uploadedFile.products)
       this.setState({ isFileBeingUploaded: false })
       update(options, uploadedFile.notFound)
+      this.setState({ isImportModalOpen: !this.state.isImportModalOpen })
     }
   }
 
@@ -76,7 +76,7 @@ class BulkImporter extends Component {
           isOpen={this.state.isImportModalOpen}
           onClose={this.handleModalToggle}>
           <FileModal titleId={modalTitle} updateFile={this.updateFile} />
-          <div className="flex flex-row">
+          <div className="flex flex-row mt5">
             <Spinner
               status={this.state.isFileBeingUploaded ? 'working' : 'idle'}
             />
