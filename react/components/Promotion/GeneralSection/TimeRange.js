@@ -37,7 +37,7 @@ function handleChange(callback, { from, to }) {
     })
 }
 
-function TimeRange({ intl, excludable, from, to, onChange: callback }) {
+function TimeRange({ intl, from, to, onChange: callback }) {
   const { fromDate, toDate } = getDates({ from, to })
 
   return (
@@ -59,22 +59,12 @@ function TimeRange({ intl, excludable, from, to, onChange: callback }) {
           label={to.label}
           locale={intl.locale}
           timeIntervals={60}
-          error={toDate && fromDate && toDate.getTime() <= fromDate.getTime()}
           value={toDate}
           onChange={date => {
             const to = createTime(date)
             handleChange(callback, { from, to })
           }}
         />
-      </div>
-      <div className="mr7 c-muted-1">
-        {excludable ? (
-          <div className="pointer">
-            <IconDelete />
-          </div>
-        ) : (
-          <svg width={16} height={16} />
-        )}
       </div>
     </div>
   )
@@ -86,16 +76,15 @@ TimeRange.propTypes = {
 
 TimeRange.propTypes = {
   intl: intlShape,
-  excludable: PropTypes.bool,
   from: PropTypes.shape({
     label: PropTypes.string,
-    hours: PropTypes.string.isRequired,
-    minutes: PropTypes.string.isRequired,
+    hours: PropTypes.number,
+    minutes: PropTypes.number,
   }).isRequired,
   to: PropTypes.shape({
     label: PropTypes.string,
-    hours: PropTypes.string.isRequired,
-    minutes: PropTypes.string.isRequired,
+    hours: PropTypes.number,
+    minutes: PropTypes.number,
   }).isRequired,
   onChange: PropTypes.func,
 }

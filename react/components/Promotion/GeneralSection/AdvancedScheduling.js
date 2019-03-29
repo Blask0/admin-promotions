@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape } from 'react-intl'
 
-import { Button, Checkbox, RadioGroup } from 'vtex.styleguide'
+import { Button, Checkbox, RadioGroup, IconDelete } from 'vtex.styleguide'
 import TimeRange from './TimeRange'
 
 const WEEK_DAYS = {
@@ -55,17 +55,33 @@ function getSelectedWeekDays(weekDay) {
   return weekDays
 }
 
+function isTimeValid({ hours }) {
+  return hours !== undefined && hours !== '' && hours !== `${undefined}`
+}
+
+function increaseHour(hour) {
+  return hour === 23 ? 0 : hour + 1
+}
+
+function decreaseHour(hour) {
+  return hour === 0 ? 23 : hour - 1
+}
+
 function getSelectedHours(hour) {
   return hour !== '*'
     ? hour.split(',').map(range => {
-      const [from, to = from] = range.split('-')
+      const [fromHours, toHours = fromHours] = range.split('-')
       return {
         from: {
-          hours: from && from !== `${undefined}` ? parseInt(from) : undefined,
+          hours: isTimeValid({ hours: fromHours })
+            ? parseInt(fromHours)
+            : undefined,
           minutes: 0,
         },
         to: {
-          hours: to && to !== `${undefined}` ? parseInt(to) + 1 : undefined,
+          hours: isTimeValid({ hours: toHours })
+            ? increaseHour(parseInt(toHours))
+            : undefined,
           minutes: 0,
         },
       }
@@ -84,13 +100,20 @@ function createCronHour(hours) {
   return hours
     .map(
       ({ from, to }) =>
-        `${from.hours ? from.hours : ''}-${to.hours ? to.hours - 1 : ''}`
+        `${isTimeValid(from) ? from.hours : ''}-${
+          isTimeValid(to) ? decreaseHour(to.hours) : ''
+        }`
     )
     .join(',')
 }
 
 function createCron(minute, hour, day, month, weekDay) {
   return `${minute} ${hour} ${day} ${month} ${weekDay}`
+}
+
+function canAddTimeRange(hours) {
+  const { from, to } = hours[hours.length - 1] || {}
+  return isTimeValid(from) && isTimeValid(to)
 }
 
 function handleChange(callback, value) {
@@ -265,9 +288,8 @@ function AdvancedScheduling({ intl, value, onChange }) {
               label: idx === 0 ? 'To' : undefined,
             }
             return (
-              <div key={idx} className="mb2">
+              <div key={idx} className="mb2 flex flex-row items-center">
                 <TimeRange
-                  excludable={idx !== 0}
                   from={from}
                   to={to}
                   onChange={e => {
@@ -279,14 +301,49 @@ function AdvancedScheduling({ intl, value, onChange }) {
                     handleChange(onChange, value)
                   }}
                 />
+                <div className="mr7 c-muted-1">
+                  {idx !== 0 ? (
+                    <div
+                      className="pointer"
+                      onClick={() => {
+                        const newHours = hours
+                          .slice(0, idx)
+                          .concat(hours.slice(idx + 1))
+                        const hour = createCronHour(newHours) || undefined
+                        const value = createCron(
+                          minute,
+                          hour,
+                          day,
+                          month,
+                          weekDay
+                        )
+                        handleChange(onChange, value)
+                      }}>
+                      <IconDelete />
+                    </div>
+                  ) : (
+                    <svg width={16} height={16} />
+                  )}
+                </div>
               </div>
             )
           })}
-          {/* <div className="mb3">
-            <Button variation="tertiary" onClick={() => {}}>
+          <div className="mb3">
+            <Button
+              variation="tertiary"
+              disabled={!canAddTimeRange(hours)}
+              onClick={() => {
+                const newHours = hours.concat({
+                  from: { hours: undefined, minutes: undefined },
+                  to: { hours: undefined, minutes: undefined },
+                })
+                const hour = createCronHour(newHours) || undefined
+                const value = createCron(minute, hour, day, month, weekDay)
+                handleChange(onChange, value)
+              }}>
               ADD RANGE
             </Button>
-          </div> */}
+          </div>
         </div>
       )}
     </Fragment>
