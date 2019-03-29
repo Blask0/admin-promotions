@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape } from 'react-intl'
 
@@ -54,50 +54,69 @@ function handleChange(callback, value) {
   callback(event)
 }
 
-function AdvancedScheduling({
-  intl,
-  value: { weekDays = null, times },
-  onChange,
-}) {
+function AdvancedScheduling({ intl, value: { weekDays, times }, onChange }) {
   const daysOptions = getDaysOptions()
   const timesOptions = getTimesOptions()
+
+  useEffect(
+    () => {
+      if (weekDays.focus) {
+        weekDays.ref.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        })
+
+        handleChange(onChange, {
+          weekDays: { ...weekDays, focus: false },
+          times,
+        })
+      }
+    },
+    [weekDays.error]
+  )
 
   return (
     <Fragment>
       <div className="mb4">
         <span>Days of the week</span>
       </div>
-      <div className="mb4">
+      <div ref={weekDays.ref} className="mb4">
         <RadioGroup
           name="days"
           options={daysOptions}
-          value={weekDays === null ? 'everyday' : 'specificDays'}
+          value={weekDays.value === null ? 'everyday' : 'specificDays'}
           onChange={e => {
-            const weekDays =
+            const value =
               e.currentTarget.value === 'everyday' ? null : { ...WEEK_DAYS }
-            handleChange(onChange, { weekDays, times })
+            handleChange(onChange, {
+              weekDays: { ...weekDays, value, error: undefined },
+              times,
+            })
           }}
         />
       </div>
-      {weekDays !== null && (
-        <div className="ml7">
-          {/* {weekDay === `${undefined}` && (
+      {weekDays.value !== null && (
+        <div className="ml7 mb3">
+          {weekDays.error && (
             <div className="c-danger t-small mb3 lh-title">
-              You must select at least one day of the week
+              {weekDays.error}
             </div>
-          )} */}
-          {Object.keys(weekDays).map(day => (
+          )}
+          {Object.keys(weekDays.value).map(day => (
             <div className="mb3">
               <Checkbox
                 name={day}
-                label={weekDays[day].label}
-                checked={weekDays[day].value}
+                label={weekDays.value[day].label}
+                checked={weekDays.value[day].value}
                 onChange={e => {
-                  const newWeekDays = {
-                    ...weekDays,
-                    [day]: { ...weekDays[day], value: e.target.checked },
+                  const value = {
+                    ...weekDays.value,
+                    [day]: { ...weekDays.value[day], value: e.target.checked },
                   }
-                  handleChange(onChange, { weekDays: newWeekDays, times })
+                  handleChange(onChange, {
+                    weekDays: { ...weekDays, value, error: undefined },
+                    times,
+                  })
                 }}
               />
             </div>

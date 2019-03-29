@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
@@ -8,10 +8,6 @@ import { fieldShape } from '../../../utils/propTypes'
 import AdvancedScheduling from './AdvancedScheduling'
 
 function Scheduling({ intl, generalInfo, updatePageState }) {
-  const [advancedSchedulingOpened, setAdvancedSchedulingOpened] = useState(
-    false
-  )
-
   const tzLabel = Intl.DateTimeFormat().resolvedOptions().timeZone
 
   return (
@@ -97,8 +93,8 @@ function Scheduling({ intl, generalInfo, updatePageState }) {
               header={
                 <span className="c-action-primary">Recurrency settings</span>
               }
-              onClick={e => setAdvancedSchedulingOpened(e.target.opened)}
-              opened={advancedSchedulingOpened}>
+              onClick={e => updatePageState({ useRecurrency: e.target.opened })}
+              opened={generalInfo.useRecurrency}>
               <div className="ml6">
                 <AdvancedScheduling
                   value={generalInfo.recurrency}

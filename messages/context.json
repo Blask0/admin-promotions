@@ -159,6 +159,7 @@
   "promotions.validation.emptyStatement": "promotions.validation.emptyStatement",
   "promotions.validation.incompleteStatement": "promotions.validation.incompleteStatement",
   "promotions.validation.multipleCurrencies": "promotions.validation.multipleCurrencies",
+  "promotions.promotion.validation.userDidNotSelectAnyWeekDate": "promotions.promotion.validation.userDidNotSelectAnyWeekDate",
   "promotions.promotion.scopeSelector.brand.label": "promotions.promotion.scopeSelector.brand.label",
   "promotions.promotion.scopeSelector.brand.verb.any": "promotions.promotion.scopeSelector.brand.verb.any",
   "promotions.promotion.scopeSelector.brand.verb.not.any": "promotions.promotion.scopeSelector.brand.verb.not.any",

@@ -159,6 +159,7 @@
   "promotions.validation.emptyStatement": "No se puede definir una condición vacía",
   "promotions.validation.incompleteStatement": "No puedes definir una condición incompleta",
   "promotions.validation.multipleCurrencies": "No es posible crear una promoción para políticas comerciales que tienen monedas diferentes",
+  "promotions.promotion.validation.userDidNotSelectAnyWeekDate": "Al menos un día de la semana debe ser seleccionado",
   "promotions.promotion.scopeSelector.brand.label": "Marca",
   "promotions.promotion.scopeSelector.brand.verb.any": "es una de",
   "promotions.promotion.scopeSelector.brand.verb.not.any": "no es una de",

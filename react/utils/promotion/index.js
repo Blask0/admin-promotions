@@ -154,6 +154,14 @@ export const newPromotion = (intl, promotion, salesChannels) => {
     }
   }
 
+  // const [
+  //   minute,
+  //   hour,
+  //   day,
+  //   month,
+  //   weekDay,
+  // ] = '* 3-15,13-17,0-23,17-18 * * sun,tue,thu,sat'.split(' ')
+
   return {
     id: undefined,
     generalInfo: {
@@ -163,10 +171,15 @@ export const newPromotion = (intl, promotion, salesChannels) => {
       hasEndDate: false,
       endDate: newFieldWithValidation(),
       tz: -new Date().getTimezoneOffset() / 60,
+      useRecurrency: false,
       recurrency: {
-        weekDays: null,
+        weekDays: newFieldWithValidation(null),
         times: null,
       },
+      // recurrency: {
+      //   weekDays: getSelectedWeekDays(weekDay),
+      //   times: getSelectedTimes(hour),
+      // },
       cron: undefined,
       isArchived: false,
       accumulateWithPromotions: false,

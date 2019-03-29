@@ -158,6 +158,7 @@
   "promotions.validation.emptyStatement": "You cannot define an empty condition",
   "promotions.validation.incompleteStatement": "You cannot define an incomplete condition",
   "promotions.validation.multipleCurrencies": "You cannot create a promotion for trade policies that have different currencies",
+  "promotions.promotion.validation.userDidNotSelectAnyWeekDate": "At least one day of the week needs to be selected",
   "promotions.promotion.scopeSelector.brand.label": "Brand",
   "promotions.promotion.scopeSelector.brand.verb.any": "is one of",
   "promotions.promotion.scopeSelector.brand.verb.not.any": "is not one of",

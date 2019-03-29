@@ -21,10 +21,7 @@ import {
   getRestrictSalesChannelVerbOptions,
 } from './utils/constants'
 
-import {
-  createCronHour,
-  createCronWeekDay,
-} from './utils/promotion/recurrency'
+import { createCronHour, createCronWeekDay } from './utils/promotion/recurrency'
 
 class PromotionPage extends Component {
   constructor(props) {
@@ -131,6 +128,30 @@ class PromotionPage extends Component {
       }
 
       isValid = false
+    }
+
+    if (generalInfo.useRecurrency) {
+      const { weekDays } = generalInfo.recurrency
+      if (weekDays.value !== null) {
+        const userDidNotSelectAnyWeekDate = Object.keys(weekDays.value)
+          .map(day => weekDays.value[day].value)
+          .every(value => !value)
+        if (userDidNotSelectAnyWeekDate) {
+          generalInfo.recurrency = {
+            ...generalInfo.recurrency,
+            weekDays: {
+              ...generalInfo.recurrency.weekDays,
+              error: intl.formatMessage({
+                id:
+                  'promotions.promotion.validation.userDidNotSelectAnyWeekDate',
+              }),
+              focus: true,
+            },
+          }
+
+          isValid = false
+        }
+      }
     }
 
     return { generalInfo, isValid }
@@ -569,7 +590,7 @@ class PromotionPage extends Component {
       restriction,
     } = promotion
     const { limitQuantityPerPurchase, ...giftEffect } = effects.gift
-    const cronWeekDay = createCronWeekDay(recurrency.weekDays)
+    const cronWeekDay = createCronWeekDay(recurrency.weekDays.value)
     const cronHour = createCronHour(recurrency.times)
     return {
       ...promotion,
@@ -737,10 +758,9 @@ class PromotionPage extends Component {
             variation="primary"
             isLoading={isSaving}
             onClick={() => {
-              const preparedPromotion = this.prepareToSave(promotion)
-              console.log(preparedPromotion.generalInfo)
               if (this.canSave()) {
                 this.setState({ isSaving: true })
+                const preparedPromotion = this.prepareToSave(promotion)
 
                 savePromotion({
                   variables: {
