@@ -157,6 +157,7 @@ export const newPromotion = (intl, promotion, salesChannels) => {
       hasEndDate: false,
       endDate: newFieldWithValidation(),
       tz: -new Date().getTimezoneOffset() / 60,
+      cron: undefined,
       isArchived: false,
       accumulateWithPromotions: false,
       accumulateWithManualPrices: false,

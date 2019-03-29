@@ -2,18 +2,15 @@ import React, { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-import {
-  Checkbox,
-  DatePicker,
-  ButtonWithIcon,
-  IconCaretDown,
-  IconCaretUp,
-} from 'vtex.styleguide'
+import { Checkbox, DatePicker, Collapsible } from 'vtex.styleguide'
 
 import { fieldShape } from '../../../utils/propTypes'
+import AdvancedScheduling from './AdvancedScheduling'
 
 function Scheduling({ intl, generalInfo, updatePageState }) {
-  const [isAdvancedSchedulingOpen, setAdvancedSchedulingOpen] = useState(false)
+  const [advancedSchedulingOpened, setAdvancedSchedulingOpened] = useState(
+    false
+  )
 
   const tzLabel = Intl.DateTimeFormat().resolvedOptions().timeZone
 
@@ -95,21 +92,24 @@ function Scheduling({ intl, generalInfo, updatePageState }) {
               />
             </div>
           ) : null}
-          <div className="mv4 c-action-primary">
-            {isAdvancedSchedulingOpen ? <IconCaretUp /> : <IconCaretDown />}
-            <span className="ml3">Recurrency settings</span>
-          </div>
-          <div>
-            <ButtonWithIcon
-              variation="tertiary"
-              icon={
-                isAdvancedSchedulingOpen ? <IconCaretUp /> : <IconCaretDown />
+          <div className="mv4">
+            <Collapsible
+              header={
+                <span className="c-action-primary">Recurrency settings</span>
               }
-              onClick={() =>
-                setAdvancedSchedulingOpen(!isAdvancedSchedulingOpen)
-              }>
-              Back
-            </ButtonWithIcon>
+              onClick={e => setAdvancedSchedulingOpened(e.target.opened)}
+              opened={advancedSchedulingOpened}>
+              <div className="ml6">
+                <AdvancedScheduling
+                  value={generalInfo.cron}
+                  onChange={e => {
+                    updatePageState({
+                      cron: e.target.value,
+                    })
+                  }}
+                />
+              </div>
+            </Collapsible>
           </div>
         </div>
       </div>
@@ -125,6 +125,8 @@ Scheduling.propTypes = {
     startDate: PropTypes.instanceOf(Date),
     hasEndDate: PropTypes.bool,
     endDate: fieldShape(PropTypes.instanceOf(Date)),
+    tz: PropTypes.number,
+    cron: PropTypes.string,
   }),
   updatePageState: PropTypes.func,
 }

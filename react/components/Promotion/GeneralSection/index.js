@@ -6,7 +6,7 @@ import { Checkbox, Input, Toggle } from 'vtex.styleguide'
 import Scheduling from './Scheduling'
 
 import { fieldShape } from '../../../utils/propTypes'
-import { applyFocus } from '../../utils/functions'
+import { applyFocus } from '../../../utils/functions'
 
 class GeneralSection extends Component {
   constructor(props) {
@@ -160,6 +160,8 @@ GeneralSection.propTypes = {
     startDate: PropTypes.instanceOf(Date),
     hasEndDate: PropTypes.bool,
     endDate: fieldShape(PropTypes.instanceOf(Date)),
+    tz: PropTypes.number,
+    cron: PropTypes.string,
   }),
   updatePageState: PropTypes.func,
 }
