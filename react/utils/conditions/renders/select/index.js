@@ -22,8 +22,6 @@ const renderSelectObject = ({
   const SelectObject = connector(props => {
     const options = dataGetter(props)
     const { loading, updateQueryParams } = props
-
-    // This first renaming is confusing
     const { object: selected, error: errorMessage } = statements[statementIndex]
 
     if (statements[statementIndex].focus) {
@@ -33,23 +31,33 @@ const renderSelectObject = ({
     }
 
     const addBulkValues = (values, notFound) => {
-      statements[statementIndex].object = values
-      statements[
-        statementIndex
-      ].error = `We didn't find these Ids in catalog: ${notFound} `
-      update(statements)
+      console.log()
+      if (values && notFound) {
+        statements[statementIndex].object = values
+
+        // Add i18n here
+        // Think about what to do when user changes subject
+        statements[statementIndex].warning =
+          notFound && notFound.length > 0
+            ? `We didn't find these Ids in catalog: ${notFound} `
+            : undefined
+        update(statements)
+        statements[statementIndex].warning = undefined
+      }
     }
 
     const BulkImporterObject =
       bulk &&
       bulk.connector &&
-      bulk.connector(props => {
+      bulk.connector(innerProps => {
+        console.log('innerProps: ', innerProps)
         return (
           <BulkImporter
-            {...props}
+            {...innerProps}
             update={addBulkValues}
             modalTitle={bulk.modalTitle}
-            productQueryIsLoading={loading}
+            name={bulk.name}
+            // productQueryIsLoading={loading}
           />
         )
       })
@@ -57,34 +65,46 @@ const renderSelectObject = ({
     return (
       <Fragment>
         <div className="flex flex-row ">
-          <EXPERIMENTAL_Select
-            placeholder={placeholder}
-            options={options}
-            value={selected}
-            multi={multi}
-            ref={statements[statementIndex].refs.object}
-            loading={loading}
-            creatable={creatable}
-            errorMessage={errorMessage}
-            onChange={selected => {
-              if ((isValid && isValid(selected)) || !isValid) {
-                statements[statementIndex].object = selected
-                statements[statementIndex].error = null
-              } else {
-                statements[statementIndex].error = validationErrorMessage
-              }
-              update(statements)
-            }}
-            onSearchInputChange={searchedValue => {
-              updateQueryParams &&
-                updateQueryParams({
-                  name: searchedValue,
-                })
-            }}
-          />
-          {bulk && bulk.connector && <BulkImporterObject />}
+          <div>
+            <EXPERIMENTAL_Select
+              placeholder={placeholder}
+              options={options}
+              value={selected}
+              multi={multi}
+              ref={statements[statementIndex].refs.object}
+              loading={loading}
+              creatable={creatable}
+              errorMessage={errorMessage}
+              onChange={selected => {
+                if ((isValid && isValid(selected)) || !isValid) {
+                  statements[statementIndex].object = selected
+                  statements[statementIndex].error = null
+                } else {
+                  statements[statementIndex].error = validationErrorMessage
+                }
+                update(statements)
+              }}
+              onSearchInputChange={searchedValue => {
+                updateQueryParams &&
+                  updateQueryParams({
+                    name: searchedValue,
+                  })
+              }}
+            />
+            {statements[statementIndex].warning && (
+              <div className="mt4">
+                <Alert
+                  type="warning"
+                  onClose={() => {
+                    update(statements)
+                  }}>
+                  {statements[statementIndex].warning}
+                </Alert>
+              </div>
+            )}
+          </div>
+          {bulk && bulk.connector && !loading && <BulkImporterObject />}
         </div>
-        {/* <Alert /> */}
       </Fragment>
     )
   })

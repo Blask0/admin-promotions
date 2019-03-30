@@ -1,0 +1,19 @@
+query GetNamesByIds($ids: [String], $field: UniqueIdentifierField!) {
+  getNamesByIds(ids: { field: $field, value: $ids }) {
+    products {
+      name
+      id
+    }
+    skus {
+      product {
+        name
+        id
+      }
+      sku {
+        id
+        name
+      }
+    }
+    notFound
+  }
+}

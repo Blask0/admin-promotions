@@ -1,0 +1,9 @@
+query GetUploadedProducts($ids: [String]) {
+  getUploadedProducts(ids: $ids) {
+    products {
+      name
+      id
+    }
+    notFound
+  }
+}

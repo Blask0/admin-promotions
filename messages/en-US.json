@@ -206,6 +206,7 @@
   "promotions.promotion.restriction.origin.fulfillment.explanation": "Orders where your store is acting as a seller",
   "promotions.promotion.import": "Import",
   "promotions.promotion.import.modal.title.product": "Import product list",
+  "promotions.promotion.import.modal.title.sku": "Import sku list",
   "promotions.promotion.import.modal.placeholder": "(*.txt files with one entry per line)",
   "promotions.promotion.import.modal.catalog": "Checking ids with catalog system…"
 }
