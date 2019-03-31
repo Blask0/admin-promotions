@@ -11,6 +11,7 @@ import withProducts from '../../../../connectors/withProducts'
 import withSkus from '../../../../connectors/withSkus'
 import withSellers from '../../../../connectors/withSellers'
 import withProductsOptions from '../../../../connectors/withProductsOptions'
+import withSKUsOptions from '../../../../connectors/withSKUsOptions'
 
 import {
   mapBrandsToSelect,
@@ -186,6 +187,7 @@ const cartProduct = (intl, update, currencyCode) => {
             bulk: {
               modalTitle: 'promotions.promotion.import.modal.title.product',
               connector: withProductsOptions,
+              name: 'product',
             },
           },
         },
@@ -212,6 +214,7 @@ const cartProduct = (intl, update, currencyCode) => {
             bulk: {
               modalTitle: 'promotions.promotion.import.modal.title.product',
               connector: withProductsOptions,
+              name: 'product',
             },
           },
         },
@@ -237,6 +240,8 @@ const cartProduct = (intl, update, currencyCode) => {
             update: update,
             bulk: {
               modalTitle: 'promotions.promotion.import.modal.title.sku',
+              connector: withSKUsOptions,
+              name: 'sku',
             },
           },
         },
@@ -261,6 +266,8 @@ const cartProduct = (intl, update, currencyCode) => {
             update: update,
             bulk: {
               modalTitle: 'promotions.promotion.import.modal.title.sku',
+              connector: withSKUsOptions,
+              name: 'sku',
             },
           },
         },

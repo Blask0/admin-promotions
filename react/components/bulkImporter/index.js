@@ -68,7 +68,7 @@ class BulkImporter extends Component {
 
   render() {
     const { modalTitle, productQueryIsLoading } = this.props
-    console.log(this.props)
+
     return (
       <Fragment>
         <Button

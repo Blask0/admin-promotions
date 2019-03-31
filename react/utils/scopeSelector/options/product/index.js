@@ -29,6 +29,7 @@ const product = (intl, update) => {
             bulk: {
               modalTitle: 'promotions.promotion.import.modal.title.product',
               connector: withProductsOptions,
+              name: 'product',
             },
           },
         },
@@ -53,6 +54,7 @@ const product = (intl, update) => {
             bulk: {
               modalTitle: 'promotions.promotion.import.modal.title.product',
               connector: withProductsOptions,
+              name: 'product',
             },
           },
         },
