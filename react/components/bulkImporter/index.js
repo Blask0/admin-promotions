@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import { Button, ModalDialog, Spinner } from 'vtex.styleguide'
 import FileModal from './fileModal'
-import { mapProductsToSelect } from '../../utils/mappers'
+import { mapProductsToSelect, mapSkusToSelect } from '../../utils/mappers'
 
 class BulkImporter extends Component {
   constructor(props) {
@@ -46,13 +46,11 @@ class BulkImporter extends Component {
   componentDidUpdate = () => {
     const { loading, uploadedFile, update, name } = this.props
     const { isFileBeingUploaded } = this.state
-    console.log(uploadedFile.skus)
-    console.log(loading)
-    if (!loading && isFileBeingUploaded && uploadedFile.skus.length > 0) {
+
+    if (!loading && isFileBeingUploaded && uploadedFile) {
       let options = []
       switch (name) {
         case 'sku':
-          console.log(uploadedFile.skus)
           options = uploadedFile.skus ? mapSkusToSelect(uploadedFile.skus) : []
           break
         case 'product':
@@ -61,7 +59,7 @@ class BulkImporter extends Component {
             : []
           break
       }
-      console.dir(options)
+
       this.setState({ isFileBeingUploaded: false })
       update(options, uploadedFile.notFound)
       this.setState({ isImportModalOpen: !this.state.isImportModalOpen })
@@ -69,15 +67,14 @@ class BulkImporter extends Component {
   }
 
   render() {
-    const { modalTitle /* , productQueryIsLoading */ } = this.props
+    const { modalTitle, productQueryIsLoading } = this.props
     console.log(this.props)
     return (
       <Fragment>
         <Button
           variation="tertiary"
           onClick={this.handleModalToggle}
-          /* disabled={productQueryIsLoading} */
-        >
+          disabled={productQueryIsLoading}>
           <FormattedMessage id="promotions.promotion.import" />
         </Button>
         <ModalDialog
@@ -117,7 +114,7 @@ BulkImporter.propTypes = {
   loading: PropTypes.bool,
   updateQueryParams: PropTypes.func,
   productQueryIsLoading: PropTypes.bool,
-  // name: PropTypes.string,
+  name: PropTypes.string,
 }
 
 export default injectIntl(BulkImporter)

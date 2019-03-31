@@ -26,9 +26,6 @@ function withSKUsOptions(WrappedComponent) {
           variables={{ ids: ids, field: 'sku' }}
           fetchPolicy="network-only">
           {({ loading, error, data }) => {
-            console.log('data : ', data)
-            console.log('error : ', error)
-            console.log('loading : ', loading)
             return (
               <WrappedComponent
                 {...this.props}

@@ -31,10 +31,8 @@ const renderSelectObject = ({
     }
 
     const addBulkValues = (values, notFound) => {
-      console.log()
       if (values && notFound) {
         statements[statementIndex].object = values
-
         // Add i18n here
         // Think about what to do when user changes subject
         statements[statementIndex].warning =
@@ -42,7 +40,6 @@ const renderSelectObject = ({
             ? `We didn't find these Ids in catalog: ${notFound} `
             : undefined
         update(statements)
-        statements[statementIndex].warning = undefined
       }
     }
 
@@ -50,14 +47,13 @@ const renderSelectObject = ({
       bulk &&
       bulk.connector &&
       bulk.connector(innerProps => {
-        console.log('innerProps: ', innerProps)
         return (
           <BulkImporter
             {...innerProps}
             update={addBulkValues}
             modalTitle={bulk.modalTitle}
             name={bulk.name}
-            // productQueryIsLoading={loading}
+            productQueryIsLoading={loading}
           />
         )
       })
@@ -103,7 +99,11 @@ const renderSelectObject = ({
               </div>
             )}
           </div>
-          {bulk && bulk.connector && !loading && <BulkImporterObject />}
+          {bulk && bulk.connector && (
+            <div>
+              <BulkImporterObject />
+            </div>
+          )}
         </div>
       </Fragment>
     )
