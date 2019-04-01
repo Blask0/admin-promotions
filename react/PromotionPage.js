@@ -41,7 +41,7 @@ class PromotionPage extends Component {
 
     this.multipleCurrencies = {
       ref: React.createRef(),
-      focus: true,
+      focus: false,
     }
   }
 
@@ -657,14 +657,14 @@ class PromotionPage extends Component {
   prepareToSave = promotion => {
     const { intl } = this.props
     const {
-      generalInfo: { hasEndDate, recurrency, ...generalInfo },
+      generalInfo: { hasEndDate, useRecurrency, recurrency, ...generalInfo },
       eligibility,
       effects,
       restriction,
     } = promotion
     const { limitQuantityPerPurchase, ...giftEffect } = effects.gift
     const cronWeekDay = createCronWeekDay(recurrency.weekDays.value)
-    const cronHour = createCronHour(recurrency.times)
+    const cronHour = createCronHour(recurrency.times.value)
     return {
       ...promotion,
       generalInfo: {
@@ -834,6 +834,7 @@ class PromotionPage extends Component {
               if (this.canSave()) {
                 this.setState({ isSaving: true })
                 const preparedPromotion = this.prepareToSave(promotion)
+                console.log(preparedPromotion)
 
                 savePromotion({
                   variables: {
