@@ -13,7 +13,12 @@ export function isTimeValid({ hours }) {
 }
 
 export function isToBeforeFrom(from, to) {
-  return isTimeValid(from) && isTimeValid(to) && to.hours <= from.hours
+  return (
+    isTimeValid(from) &&
+    isTimeValid(to) &&
+    to.hours > 0 &&
+    to.hours <= from.hours
+  )
 }
 
 function increaseHour(hour) {
