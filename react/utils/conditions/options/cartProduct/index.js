@@ -10,8 +10,7 @@ import withCategories from '../../../../connectors/withCategories'
 import withProducts from '../../../../connectors/withProducts'
 import withSkus from '../../../../connectors/withSkus'
 import withSellers from '../../../../connectors/withSellers'
-import withProductsOptions from '../../../../connectors/withProductsOptions'
-import withSKUsOptions from '../../../../connectors/withSKUsOptions'
+import withUploadedFileInfo from '../../../../connectors/withUploadedFileInfo'
 
 import {
   mapBrandsToSelect,
@@ -47,6 +46,11 @@ const cartProduct = (intl, update, currencyCode) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              connector: withUploadedFileInfo,
+              name: 'brand',
+            },
+            intl: intl,
           },
         },
       },
@@ -69,6 +73,11 @@ const cartProduct = (intl, update, currencyCode) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              connector: withUploadedFileInfo,
+              name: 'brand',
+            },
+            intl: intl,
           },
         },
       },
@@ -93,6 +102,11 @@ const cartProduct = (intl, update, currencyCode) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              connector: withUploadedFileInfo,
+              name: 'collection',
+            },
+            intl: intl,
           },
         },
       },
@@ -116,6 +130,11 @@ const cartProduct = (intl, update, currencyCode) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              connector: withUploadedFileInfo,
+              name: 'collection',
+            },
+            intl: intl,
           },
         },
       },
@@ -139,6 +158,11 @@ const cartProduct = (intl, update, currencyCode) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              connector: withUploadedFileInfo,
+              name: 'category',
+            },
+            intl: intl,
           },
         },
       },
@@ -162,6 +186,11 @@ const cartProduct = (intl, update, currencyCode) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              connector: withUploadedFileInfo,
+              name: 'category',
+            },
+            intl: intl,
           },
         },
       },
@@ -185,10 +214,10 @@ const cartProduct = (intl, update, currencyCode) => {
             multi: true,
             update: update,
             bulk: {
-              modalTitle: 'promotions.promotion.import.modal.title.product',
-              connector: withProductsOptions,
+              connector: withUploadedFileInfo,
               name: 'product',
             },
+            intl: intl,
           },
         },
       },
@@ -212,10 +241,10 @@ const cartProduct = (intl, update, currencyCode) => {
             multi: true,
             update: update,
             bulk: {
-              modalTitle: 'promotions.promotion.import.modal.title.product',
-              connector: withProductsOptions,
+              connector: withUploadedFileInfo,
               name: 'product',
             },
+            intl: intl,
           },
         },
       },
@@ -239,10 +268,10 @@ const cartProduct = (intl, update, currencyCode) => {
             multi: true,
             update: update,
             bulk: {
-              modalTitle: 'promotions.promotion.import.modal.title.sku',
-              connector: withSKUsOptions,
+              connector: withUploadedFileInfo,
               name: 'sku',
             },
+            intl: intl,
           },
         },
       },
@@ -265,10 +294,10 @@ const cartProduct = (intl, update, currencyCode) => {
             multi: true,
             update: update,
             bulk: {
-              modalTitle: 'promotions.promotion.import.modal.title.sku',
-              connector: withSKUsOptions,
+              connector: withUploadedFileInfo,
               name: 'sku',
             },
+            intl: intl,
           },
         },
       },

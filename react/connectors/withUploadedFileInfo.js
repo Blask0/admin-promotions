@@ -15,7 +15,7 @@ function withUploadedFileInfo(WrappedComponent) {
     }
 
     updateQueryParams = newState => {
-      this.setState(newState, () => console.log(this.state))
+      this.setState(newState)
     }
 
     render() {
