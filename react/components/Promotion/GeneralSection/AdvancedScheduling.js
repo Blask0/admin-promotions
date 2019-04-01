@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { injectIntl, intlShape } from 'react-intl'
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
 import { Button, Checkbox, RadioGroup, IconDelete } from 'vtex.styleguide'
 
@@ -12,11 +12,17 @@ function getDaysOptions(intl) {
   return [
     {
       value: 'everyday',
-      label: 'Every day of the week',
+      label: intl.formatMessage({
+        id:
+          'promotions.promotion.generalInfo.scheduling.recurrency.weekDays.everyday',
+      }),
     },
     {
       value: 'specificDays',
-      label: 'Specific days of the week',
+      label: intl.formatMessage({
+        id:
+          'promotions.promotion.generalInfo.scheduling.recurrency.weekDays.specificDays',
+      }),
     },
   ]
 }
@@ -25,11 +31,17 @@ function getTimesOptions(intl) {
   return [
     {
       value: 'allDay',
-      label: 'All day',
+      label: intl.formatMessage({
+        id:
+          'promotions.promotion.generalInfo.scheduling.recurrency.times.allDay',
+      }),
     },
     {
       value: 'specificTimes',
-      label: 'Specific times of the day',
+      label: intl.formatMessage({
+        id:
+          'promotions.promotion.generalInfo.scheduling.recurrency.times.specificTimes',
+      }),
     },
   ]
 }
@@ -71,8 +83,8 @@ function applyFocus(object, field, onChange) {
 
 function AdvancedScheduling({ intl, value, onChange }) {
   const { weekDays, times } = value
-  const daysOptions = getDaysOptions()
-  const timesOptions = getTimesOptions()
+  const daysOptions = getDaysOptions(intl)
+  const timesOptions = getTimesOptions(intl)
 
   useEffect(() => applyFocus(value, 'weekDays', onChange), [
     weekDays.error,
@@ -86,7 +98,9 @@ function AdvancedScheduling({ intl, value, onChange }) {
   return (
     <Fragment>
       <div className="mb4">
-        <span>Days of the week</span>
+        <span>
+          <FormattedMessage id="promotions.promotion.generalInfo.scheduling.recurrency.weekDays" />
+        </span>
       </div>
       <div ref={weekDays.ref} className="mb4">
         <RadioGroup
@@ -131,6 +145,11 @@ function AdvancedScheduling({ intl, value, onChange }) {
           ))}
         </div>
       )}
+      <div className="mb4">
+        <span>
+          <FormattedMessage id="promotions.promotion.generalInfo.scheduling.recurrency.times" />
+        </span>
+      </div>
       <div ref={times.ref} className="mb4">
         <RadioGroup
           name="times"
@@ -214,7 +233,7 @@ function AdvancedScheduling({ intl, value, onChange }) {
                 const value = addTimeRange(times.value)
                 handleChange(onChange, { weekDays, times: { ...times, value } })
               }}>
-              ADD RANGE
+              <FormattedMessage id="promotions.promotion.generalInfo.scheduling.recurrency.times.addRange" />
             </Button>
           </div>
         </div>

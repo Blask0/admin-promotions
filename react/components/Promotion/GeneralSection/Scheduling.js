@@ -91,7 +91,9 @@ function Scheduling({ intl, generalInfo, updatePageState }) {
           <div className="mv4">
             <Collapsible
               header={
-                <span className="c-action-primary">Recurrency settings</span>
+                <span className="c-action-primary">
+                  <FormattedMessage id="promotions.promotion.generalInfo.scheduling.recurrency" />
+                </span>
               }
               onClick={e => updatePageState({ useRecurrency: e.target.opened })}
               opened={generalInfo.useRecurrency}>
