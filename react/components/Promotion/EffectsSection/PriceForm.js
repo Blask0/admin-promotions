@@ -41,7 +41,7 @@ class PriceForm extends Component {
       priceEffect: { discount },
     } = this.props
 
-    onChange({
+    discountWithoutValidation && onChange({
       discount: {
         ...discount,
         value: discountWithoutValidation,
@@ -174,7 +174,7 @@ class PriceForm extends Component {
                 value={priceEffect.discount.value}
                 ref={priceEffect.discount.ref}
                 errorMessage={priceEffect.discount.error}
-                onChange={e => this.changeDiscount(e.target.value)}
+                onChange={e => this.changeDiscount(e.target.floatValue)}
                 placeholder={intl.formatMessage({
                   id: 'promotions.promotion.effects.priceForm.placeholder',
                 })}

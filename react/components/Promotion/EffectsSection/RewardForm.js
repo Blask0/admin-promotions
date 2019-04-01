@@ -28,6 +28,7 @@ class RewardForm extends Component {
   }
 
   changeDiscount = discount =>
+    discount &&
     this.props.onChange({
       discount: {
         ...this.props.rewardEffect.discount,
@@ -78,7 +79,7 @@ class RewardForm extends Component {
                 value={rewardEffect.discount.value}
                 ref={rewardEffect.discount.ref}
                 errorMessage={rewardEffect.discount.error}
-                onChange={e => this.changeDiscount(e.target.value)}
+                onChange={e => this.changeDiscount(e.target.floatValue)}
                 placeholder={intl.formatMessage({
                   id: 'promotions.promotion.effects.rewardForm.placeholder',
                 })}

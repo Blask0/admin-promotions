@@ -27,8 +27,10 @@ class ShippingForm extends Component {
   }
 
   changeDiscount = discount =>
+    discount &&
     this.props.onChange({
       discount: {
+        ...this.props.shippingEffect.discount,
         value: discount,
       },
     })
@@ -72,7 +74,7 @@ class ShippingForm extends Component {
                 value={shippingEffect.discount.value}
                 ref={shippingEffect.discount.ref}
                 errorMessage={shippingEffect.discount.error}
-                onChange={e => this.changeDiscount(e.target.value)}
+                onChange={e => this.changeDiscount(e.target.floatValue)}
                 placeholder={intl.formatMessage({
                   id: 'promotions.promotion.effects.shippingForm.placeholder',
                 })}
@@ -120,7 +122,7 @@ class ShippingForm extends Component {
                 value={shippingEffect.discount.value}
                 ref={shippingEffect.discount.ref}
                 errorMessage={shippingEffect.discount.error}
-                onChange={e => this.changeDiscount(e.target.value)}
+                onChange={e => this.changeDiscount(e.target.floatValue)}
                 placeholder={intl.formatMessage({
                   id: 'promotions.promotion.effects.shippingForm.placeholder',
                 })}

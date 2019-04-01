@@ -33,7 +33,7 @@ const renderRangeInputCurrencyObject = ({
         value={values && values.first ? values.first : ''}
         onChange={e => {
           const currentObject = statements[statementIndex].object || {}
-          currentObject.first = e.target.value
+          currentObject.first = e.target.floatValue
           statements[statementIndex].object = currentObject
           statements[statementIndex].error = undefined
           update(statementss)
@@ -50,7 +50,7 @@ const renderRangeInputCurrencyObject = ({
         errorMessage={statements[statementIndex].error}
         onChange={e => {
           const currentObject = statements[statementIndex].object || {}
-          currentObject.last = e.target.value
+          currentObject.last = e.target.floatValue
           statements[statementIndex].object = currentObject
           statements[statementIndex].error = undefined
           update(statements)
