@@ -1,18 +1,30 @@
 query GetUploadedFileInfo($ids: [String], $field: UniqueIdentifierField!) {
   getUploadedFileInfo(ids: { field: $field, value: $ids }) {
     products {
-      name
       id
+      name
     }
     skus {
       product {
-        name
         id
+        name
       }
       sku {
         id
         name
       }
+    }
+    brands {
+      name
+      id
+    }
+    categories {
+      id
+      name
+    }
+    collections {
+      id
+      name
     }
     notFound
   }

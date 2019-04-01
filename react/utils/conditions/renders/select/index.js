@@ -47,6 +47,7 @@ const renderSelectObject = ({
               }
             )
             : undefined
+
         update(statements)
       }
     }
@@ -99,6 +100,7 @@ const renderSelectObject = ({
                 <Alert
                   type="warning"
                   onClose={() => {
+                    statements[statementIndex].warning = undefined
                     update(statements)
                   }}>
                   {statements[statementIndex].warning}

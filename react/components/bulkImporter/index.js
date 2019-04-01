@@ -3,7 +3,13 @@ import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import { Button, ModalDialog, Spinner } from 'vtex.styleguide'
 import FileModal from './fileModal'
-import { mapProductsToSelect, mapSkusToSelect } from '../../utils/mappers'
+import {
+  mapProductsToSelect,
+  mapSkusToSelect,
+  mapBrandsToSelect,
+  mapCategoriesToSelect,
+  mapCollectionsToSelect,
+} from '../../utils/mappers'
 
 class BulkImporter extends Component {
   constructor(props) {
@@ -58,11 +64,29 @@ class BulkImporter extends Component {
             ? mapProductsToSelect(uploadedFile.products)
             : []
           break
+        case 'brand':
+          options = uploadedFile.brands
+            ? mapBrandsToSelect(uploadedFile.brands)
+            : []
+          break
+        case 'category':
+          options = uploadedFile.categories
+            ? mapCategoriesToSelect(uploadedFile.categories)
+            : []
+          break
+        case 'collection':
+          options = uploadedFile.collections
+            ? mapCollectionsToSelect(uploadedFile.collections)
+            : []
+          break
       }
 
-      this.setState({ isFileBeingUploaded: false })
+      this.setState({
+        isFileBeingUploaded: false,
+        isImportModalOpen: !this.state.isImportModalOpen,
+      })
+
       update(options, uploadedFile.notFound)
-      this.setState({ isImportModalOpen: !this.state.isImportModalOpen })
     }
   }
 
@@ -94,16 +118,14 @@ class BulkImporter extends Component {
             titleId={formattedMessageId}
             updateFile={this.updateFile}
           />
-          <div className="flex flex-row mt5">
-            <Spinner
-              status={this.state.isFileBeingUploaded ? 'working' : 'idle'}
-            />
-            {this.state.isFileBeingUploaded && (
-              <span>
+          {this.state.isFileBeingUploaded && (
+            <div className="flex items-center mt7">
+              <Spinner />
+              <div className="ml5">
                 <FormattedMessage id="promotions.promotion.import.modal.catalog" />
-              </span>
-            )}
-          </div>
+              </div>
+            </div>
+          )}
         </ModalDialog>
       </Fragment>
     )
