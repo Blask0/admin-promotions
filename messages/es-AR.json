@@ -209,5 +209,6 @@
   "promotions.promotion.import.modal.title.product": "Importar lista de productos",
   "promotions.promotion.import.modal.title.sku": "Importar lista de skus",
   "promotions.promotion.import.modal.placeholder": "(archivos *.txt con una entrada por línea)",
-  "promotions.promotion.import.modal.catalog": "Comprobando las identificaciones con el sistema de catálogo…"
+  "promotions.promotion.import.modal.catalog": "Comprobando las identificaciones con el sistema de catálogo…",
+  "promotions.promotion.import.modal.notFound": "No encontramos estos Ids en el catálogo: {notFound}"
 }

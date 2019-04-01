@@ -17,6 +17,7 @@ const renderSelectObject = ({
     queryInfo: { connector, dataGetter },
     validation: { execute: isValid, errorMessage: validationErrorMessage } = {},
     bulk,
+    intl,
   } = extraParams
 
   const SelectObject = connector(props => {
@@ -33,11 +34,18 @@ const renderSelectObject = ({
     const addBulkValues = (values, notFound) => {
       if (values && notFound) {
         statements[statementIndex].object = values
-        // Add i18n here
+
         // Think about what to do when user changes subject
         statements[statementIndex].warning =
-          notFound && notFound.length > 0
-            ? `We didn't find these Ids in catalog: ${notFound} `
+          notFound && notFound.length > 0 && intl
+            ? intl.formatMessage(
+              {
+                id: 'promotions.promotion.import.modal.notFound',
+              },
+              {
+                notFound: notFound,
+              }
+            )
             : undefined
         update(statements)
       }
