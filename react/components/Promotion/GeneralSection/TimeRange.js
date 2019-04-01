@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape } from 'react-intl'
 
@@ -6,24 +6,29 @@ import { IconDelete, TimePicker } from 'vtex.styleguide'
 
 function getDates({ from, to }) {
   let fromDate
-  if (from.hours !== undefined && from.minutes !== undefined) {
+  if (from.value.hours !== undefined && from.value.minutes !== undefined) {
     fromDate = new Date()
-    fromDate.setHours(from.hours, from.minutes, 0, 0)
+    fromDate.setHours(from.value.hours, from.value.minutes, 0, 0)
   }
 
   let toDate
-  if (to.hours !== undefined && to.minutes != undefined) {
+  if (to.value.hours !== undefined && to.value.minutes != undefined) {
     toDate = new Date()
-    toDate.setHours(to.hours, to.minutes, 0, 0)
+    toDate.setHours(to.value.hours, to.value.minutes, 0, 0)
   }
 
   return { fromDate, toDate }
 }
 
-function createTime(date) {
+function createTime(time, date) {
   return {
-    hours: date.getHours(),
-    minutes: date.getMinutes(),
+    ...time,
+    value: {
+      ...time.value,
+      hours: date.getHours(),
+      minutes: date.getMinutes(),
+    },
+    error: undefined,
   }
 }
 
@@ -37,32 +42,59 @@ function handleChange(callback, { from, to }) {
     })
 }
 
+function applyFocus({ from, to }, callback) {
+  if (from.focus) {
+    from.ref.current.focus()
+    handleChange(callback, {
+      from: { ...from, focus: false },
+      to,
+    })
+  } else if (to.focus) {
+    to.ref.current.focus()
+    handleChange(callback, {
+      from,
+      to: { ...to, focus: false },
+    })
+  }
+}
+
 function TimeRange({ intl, from, to, onChange: callback }) {
   const { fromDate, toDate } = getDates({ from, to })
+
+  useEffect(() => applyFocus({ from, to }, callback), [
+    from.error,
+    from.focus,
+    to.error,
+    to.focus,
+  ])
 
   return (
     <div className="flex flex-row">
       <div className="mr3">
         <TimePicker
-          label={from.label}
+          ref={from.ref}
+          label={from.value.label}
           locale={intl.locale}
           timeIntervals={60}
           value={fromDate}
+          errorMessage={from.error}
           onChange={date => {
-            const from = createTime(date)
-            handleChange(callback, { from, to })
+            const newFrom = createTime(from, date)
+            handleChange(callback, { from: newFrom, to })
           }}
         />
       </div>
       <div className="mr3">
         <TimePicker
-          label={to.label}
+          ref={to.ref}
+          label={to.value.label}
           locale={intl.locale}
           timeIntervals={60}
           value={toDate}
+          errorMessage={to.error}
           onChange={date => {
-            const to = createTime(date)
-            handleChange(callback, { from, to })
+            const newTo = createTime(to, date)
+            handleChange(callback, { from, to: newTo })
           }}
         />
       </div>

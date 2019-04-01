@@ -6,6 +6,7 @@ import { Button, Checkbox, RadioGroup, IconDelete } from 'vtex.styleguide'
 
 import TimeRange from './TimeRange'
 import { WEEK_DAYS, isTimeValid } from '../../../utils/promotion/recurrency'
+import { newFieldWithValidation } from '../../../utils/validation'
 
 function getDaysOptions(intl) {
   return [
@@ -35,13 +36,13 @@ function getTimesOptions(intl) {
 
 function canAddTimeRange(times) {
   const { from, to } = times[times.length - 1] || {}
-  return isTimeValid(from) && isTimeValid(to)
+  return isTimeValid(from.value) && isTimeValid(to.value)
 }
 
 function addTimeRange(times) {
   return times.concat({
-    from: { hours: undefined, minutes: undefined },
-    to: { hours: undefined, minutes: undefined },
+    from: newFieldWithValidation({ hours: undefined, minutes: undefined }),
+    to: newFieldWithValidation({ hours: undefined, minutes: undefined }),
   })
 }
 
@@ -140,7 +141,7 @@ function AdvancedScheduling({ intl, value, onChange }) {
               e.currentTarget.value === 'allDay' ? null : addTimeRange([])
             handleChange(onChange, {
               weekDays,
-              times: { ...times, value },
+              times: { ...times, value, error: undefined },
             })
           }}
         />
@@ -168,9 +169,18 @@ function AdvancedScheduling({ intl, value, onChange }) {
                     const value = Object.assign([], times.value, {
                       [idx]: e.target,
                     })
+                    const error =
+                      isTimeValid(e.target.from.value) &&
+                      isTimeValid(e.target.to.value)
+                        ? undefined
+                        : times.error
                     handleChange(onChange, {
                       weekDays,
-                      times: { ...times, value },
+                      times: {
+                        ...times,
+                        value,
+                        error,
+                      },
                     })
                   }}
                 />

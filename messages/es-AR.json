@@ -161,6 +161,7 @@
   "promotions.validation.multipleCurrencies": "No es posible crear una promoción para políticas comerciales que tienen monedas diferentes",
   "promotions.promotion.validation.userDidNotSelectAnyWeekDate": "Al menos un día de la semana debe ser seleccionado",
   "promotions.promotion.validation.userDidNotSelectAnyTime": "Se debe seleccionar al menos un rango de tiempo",
+  "promotions.promotion.validation.toBeforeFrom": "El horario final debe ser mayor que el horario inicial",
   "promotions.promotion.scopeSelector.brand.label": "Marca",
   "promotions.promotion.scopeSelector.brand.verb.any": "es una de",
   "promotions.promotion.scopeSelector.brand.verb.not.any": "no es una de",

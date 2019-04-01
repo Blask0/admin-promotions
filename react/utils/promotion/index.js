@@ -8,14 +8,8 @@ import {
   getSelectedWeekDays,
 } from '../../utils/promotion/recurrency'
 
-import { mapSalesChannelsToSelect } from '../../utils/mappers'
-
-const newFieldWithValidation = value => ({
-  value,
-  error: undefined,
-  focus: undefined,
-  ref: React.createRef(),
-})
+import { newFieldWithValidation } from '../validation'
+import { mapSalesChannelsToSelect } from '../mappers'
 
 export const INITIAL_PRICE_EFFECT = {
   discountType: 'nominal',

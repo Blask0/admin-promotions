@@ -12,6 +12,10 @@ export function isTimeValid({ hours }) {
   return hours !== undefined && hours !== '' && hours !== `${undefined}`
 }
 
+export function isToBeforeFrom(from, to) {
+  return isTimeValid(from) && isTimeValid(to) && to.hours <= from.hours
+}
+
 function increaseHour(hour) {
   return hour === 23 ? 0 : hour + 1
 }

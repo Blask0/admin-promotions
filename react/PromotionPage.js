@@ -25,6 +25,7 @@ import {
   createCronHour,
   createCronWeekDay,
   isTimeValid,
+  isToBeforeFrom,
 } from './utils/promotion/recurrency'
 
 class PromotionPage extends Component {
@@ -160,12 +161,25 @@ class PromotionPage extends Component {
 
       if (times.value !== null) {
         const { from, to } = times.value[times.value.length - 1]
-        const userDidNotSelectAnyTime = !isTimeValid(from) && !isTimeValid(to)
-        if (userDidNotSelectAnyTime) {
+        if (
+          !isTimeValid(from.value) &&
+          !isTimeValid(to.value) &&
+          times.value.length <= 1
+        ) {
           generalInfo.recurrency = {
             ...generalInfo.recurrency,
             times: {
               ...generalInfo.recurrency.times,
+              value: [
+                ...generalInfo.recurrency.times.value.slice(
+                  0,
+                  times.value.length - 1
+                ),
+                {
+                  from: { ...from, error: ' ', focus: true },
+                  to: { ...to, error: ' ', focus: true },
+                },
+              ],
               error: intl.formatMessage({
                 id: 'promotions.promotion.validation.userDidNotSelectAnyTime',
               }),
@@ -174,6 +188,41 @@ class PromotionPage extends Component {
           }
 
           isValid = false
+        } else {
+          generalInfo.recurrency = {
+            ...generalInfo.recurrency,
+            times: {
+              ...generalInfo.recurrency.times,
+              value: times.value.map(({ from, to }) => {
+                return {
+                  from: {
+                    ...from,
+                    error: !isTimeValid(from.value)
+                      ? intl.formatMessage({
+                        id: 'promotions.validation.emptyField',
+                      })
+                      : undefined,
+                    focus: !isTimeValid(from.value),
+                  },
+                  to: {
+                    ...to,
+                    error: !isTimeValid(to.value)
+                      ? intl.formatMessage({
+                        id: 'promotions.validation.emptyField',
+                      })
+                      : isToBeforeFrom(from.value, to.value)
+                        ? intl.formatMessage({
+                          id: 'promotions.promotion.validation.toBeforeFrom',
+                        })
+                        : undefined,
+                    focus:
+                      !isTimeValid(to.value) ||
+                      isToBeforeFrom(from.value, to.value),
+                  },
+                }
+              }),
+            },
+          }
         }
       }
     }
