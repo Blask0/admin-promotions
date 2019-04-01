@@ -59,7 +59,6 @@ const renderSelectObject = ({
           <BulkImporter
             {...innerProps}
             update={addBulkValues}
-            modalTitle={bulk.modalTitle}
             name={bulk.name}
             productQueryIsLoading={loading}
           />

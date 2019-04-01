@@ -1,6 +1,6 @@
 import { renderSelectObject } from '../../../conditions/renders'
 import withProducts from '../../../../connectors/withProducts'
-import withProductsOptions from '../../../../connectors/withProductsOptions'
+import withUploadedFileInfo from '../../../../connectors/withUploadedFileInfo'
 import { mapProductsToSelect } from '../../../mappers'
 
 const product = (intl, update) => {
@@ -27,8 +27,7 @@ const product = (intl, update) => {
             multi: true,
             update: update,
             bulk: {
-              modalTitle: 'promotions.promotion.import.modal.title.product',
-              connector: withProductsOptions,
+              connector: withUploadedFileInfo,
               name: 'product',
             },
             intl: intl,
@@ -53,8 +52,7 @@ const product = (intl, update) => {
             multi: true,
             update: update,
             bulk: {
-              modalTitle: 'promotions.promotion.import.modal.title.product',
-              connector: withProductsOptions,
+              connector: withUploadedFileInfo,
               name: 'product',
             },
             intl: intl,

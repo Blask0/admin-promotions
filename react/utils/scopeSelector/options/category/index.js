@@ -1,5 +1,6 @@
 import { renderSelectObject } from '../../../conditions/renders'
 import withCategories from '../../../../connectors/withCategories'
+import withUploadedFileInfo from '../../../../connectors/withUploadedFileInfo'
 import { mapCategoriesToSelect } from '../../../mappers'
 
 const category = (intl, update) => {
@@ -26,6 +27,10 @@ const category = (intl, update) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              connector: withUploadedFileInfo,
+              name: 'category',
+            },
             intl: intl,
           },
         },
@@ -48,6 +53,10 @@ const category = (intl, update) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              connector: withUploadedFileInfo,
+              name: 'category',
+            },
             intl: intl,
           },
         },

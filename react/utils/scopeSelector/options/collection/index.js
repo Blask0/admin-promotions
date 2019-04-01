@@ -1,5 +1,6 @@
 import { renderSelectObject } from '../../../conditions/renders'
 import withCollections from '../../../../connectors/withCollections'
+import withUploadedFileInfo from '../../../../connectors/withUploadedFileInfo'
 import { mapCollectionsToSelect } from '../../../mappers'
 
 const collection = (intl, update) => {
@@ -26,6 +27,10 @@ const collection = (intl, update) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              connector: withUploadedFileInfo,
+              name: 'collection',
+            },
             intl: intl,
           },
         },
@@ -48,6 +53,10 @@ const collection = (intl, update) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              connector: withUploadedFileInfo,
+              name: 'collection',
+            },
             intl: intl,
           },
         },

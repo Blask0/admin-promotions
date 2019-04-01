@@ -67,7 +67,8 @@ class BulkImporter extends Component {
   }
 
   render() {
-    const { modalTitle, productQueryIsLoading } = this.props
+    const { productQueryIsLoading, name } = this.props
+    const formattedMessageId = `promotions.promotion.import.modal.title.${name}`
 
     return (
       <Fragment>
@@ -89,7 +90,10 @@ class BulkImporter extends Component {
           }}
           isOpen={this.state.isImportModalOpen}
           onClose={this.handleModalToggle}>
-          <FileModal titleId={modalTitle} updateFile={this.updateFile} />
+          <FileModal
+            titleId={formattedMessageId}
+            updateFile={this.updateFile}
+          />
           <div className="flex flex-row mt5">
             <Spinner
               status={this.state.isFileBeingUploaded ? 'working' : 'idle'}
@@ -108,7 +112,6 @@ class BulkImporter extends Component {
 
 BulkImporter.propTypes = {
   intl: intlShape,
-  modalTitle: PropTypes.string,
   update: PropTypes.func,
   uploadedFile: PropTypes.object,
   loading: PropTypes.bool,

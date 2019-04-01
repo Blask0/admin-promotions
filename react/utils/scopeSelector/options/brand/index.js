@@ -1,5 +1,6 @@
 import { renderSelectObject } from '../../../conditions/renders'
 import withBrands from '../../../../connectors/withBrands'
+import withUploadedFileInfo from '../../../../connectors/withUploadedFileInfo'
 import { mapBrandsToSelect } from '../../../mappers'
 
 const brand = (intl, update) => {
@@ -25,6 +26,10 @@ const brand = (intl, update) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              connector: withUploadedFileInfo,
+              name: 'brand',
+            },
             intl: intl,
           },
         },
@@ -46,6 +51,10 @@ const brand = (intl, update) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              connector: withUploadedFileInfo,
+              name: 'brand',
+            },
             intl: intl,
           },
         },

@@ -1,6 +1,5 @@
 import { renderSelectObject } from '../../../conditions/renders'
 import withSkus from '../../../../connectors/withSkus'
-import withSKUsOptions from '../../../../connectors/withSKUsOptions'
 import withUploadedFileInfo from '../../../../connectors/withUploadedFileInfo'
 import { mapSkusToSelect } from '../../../mappers'
 
@@ -28,7 +27,6 @@ const sku = (intl, update) => {
             multi: true,
             update: update,
             bulk: {
-              modalTitle: 'promotions.promotion.import.modal.title.sku',
               connector: withUploadedFileInfo,
               name: 'sku',
             },
@@ -54,8 +52,7 @@ const sku = (intl, update) => {
             multi: true,
             update: update,
             bulk: {
-              modalTitle: 'promotions.promotion.import.modal.title.sku',
-              connector: withSKUsOptions,
+              connector: withUploadedFileInfo,
               name: 'sku',
             },
             intl: intl,
