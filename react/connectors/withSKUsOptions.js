@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Query } from 'react-apollo'
 
-import getNamesByIds from '../graphql/getNamesByIds.graphql'
+import getUploadedFileInfo from '../graphql/getUploadedFileInfo.graphql'
 
 function withSKUsOptions(WrappedComponent) {
   class WithSKUsOptions extends Component {
@@ -22,7 +22,7 @@ function withSKUsOptions(WrappedComponent) {
 
       return (
         <Query
-          query={getNamesByIds}
+          query={getUploadedFileInfo}
           variables={{ ids: ids, field: 'sku' }}
           fetchPolicy="network-only">
           {({ loading, error, data }) => {
@@ -32,7 +32,11 @@ function withSKUsOptions(WrappedComponent) {
                 loading={loading}
                 error={error}
                 uploadedFile={
-                  data ? (data.getNamesByIds ? data.getNamesByIds : {}) : {}
+                  data
+                    ? data.getUploadedFileInfo
+                      ? data.getUploadedFileInfo
+                      : {}
+                    : {}
                 }
                 updateQueryParams={this.updateQueryParams}
               />

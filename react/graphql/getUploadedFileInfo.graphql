@@ -1,5 +1,5 @@
-query GetNamesByIds($ids: [String], $field: UniqueIdentifierField!) {
-  getNamesByIds(ids: { field: $field, value: $ids }) {
+query GetUploadedFileInfo($ids: [String], $field: UniqueIdentifierField!) {
+  getUploadedFileInfo(ids: { field: $field, value: $ids }) {
     products {
       name
       id

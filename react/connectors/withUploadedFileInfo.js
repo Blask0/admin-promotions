@@ -3,27 +3,28 @@ import { Query } from 'react-apollo'
 
 import getUploadedFileInfo from '../graphql/getUploadedFileInfo.graphql'
 
-function withProductsOptions(WrappedComponent) {
-  class WithProductsOptions extends Component {
+function withUploadedFileInfo(WrappedComponent) {
+  class WithUploadedFileInfo extends Component {
     constructor(props) {
       super(props)
 
       this.state = {
         ids: [],
+        field: '',
       }
     }
 
-    updateQueryParams = ({ ids }) => {
-      this.setState({ ids })
+    updateQueryParams = newState => {
+      this.setState(newState, () => console.log(this.state))
     }
 
     render() {
-      const { ids } = this.state
+      const { ids, field } = this.state
 
       return (
         <Query
           query={getUploadedFileInfo}
-          variables={{ ids: ids, field: 'product' }}
+          variables={{ ids: ids, field: field }}
           fetchPolicy="network-only">
           {({ loading, error, data }) => {
             return (
@@ -47,7 +48,7 @@ function withProductsOptions(WrappedComponent) {
     }
   }
 
-  return WithProductsOptions
+  return WithUploadedFileInfo
 }
 
-export default withProductsOptions
+export default withUploadedFileInfo

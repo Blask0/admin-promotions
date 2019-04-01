@@ -26,7 +26,7 @@ class BulkImporter extends Component {
 
   handleConfirmation = () => {
     const { file } = this.state
-    const { updateQueryParams } = this.props
+    const { updateQueryParams, name } = this.props
 
     if (file) {
       const reader = new FileReader()
@@ -34,7 +34,7 @@ class BulkImporter extends Component {
         return function(event) {
           const contents = event.target.result
           const items = contents.split('\n')
-          updateQueryParams && updateQueryParams({ ids: items })
+          updateQueryParams && updateQueryParams({ ids: items, field: name })
           that.setState({ isFileBeingUploaded: true })
         }
       })(this)
