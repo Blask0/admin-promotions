@@ -1,0 +1,21 @@
+query GetUploadedFileInfo($ids: [String], $field: UniqueIdentifierField!) {
+  getUploadedFileInfo(ids: { field: $field, value: $ids }) {
+    uploadedInfo {
+      ... on BasicBulkImporterInfo {
+        id
+        name
+      }
+      ... on SkuWithProduct {
+        product {
+          id
+          name
+        }
+        sku {
+          id
+          name
+        }
+      }
+    }
+    notFound
+  }
+}

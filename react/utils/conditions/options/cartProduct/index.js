@@ -10,6 +10,7 @@ import withCategories from '../../../../connectors/withCategories'
 import withProducts from '../../../../connectors/withProducts'
 import withSkus from '../../../../connectors/withSkus'
 import withSellers from '../../../../connectors/withSellers'
+import withUploadedFileInfo from '../../../../connectors/withUploadedFileInfo'
 
 import {
   mapBrandsToSelect,
@@ -45,6 +46,11 @@ const cartProduct = (intl, update, currencyCode) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              connector: withUploadedFileInfo,
+              name: 'brand',
+            },
+            intl: intl,
           },
         },
       },
@@ -67,6 +73,11 @@ const cartProduct = (intl, update, currencyCode) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              connector: withUploadedFileInfo,
+              name: 'brand',
+            },
+            intl: intl,
           },
         },
       },
@@ -91,6 +102,11 @@ const cartProduct = (intl, update, currencyCode) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              connector: withUploadedFileInfo,
+              name: 'collection',
+            },
+            intl: intl,
           },
         },
       },
@@ -114,6 +130,11 @@ const cartProduct = (intl, update, currencyCode) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              connector: withUploadedFileInfo,
+              name: 'collection',
+            },
+            intl: intl,
           },
         },
       },
@@ -137,6 +158,11 @@ const cartProduct = (intl, update, currencyCode) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              connector: withUploadedFileInfo,
+              name: 'category',
+            },
+            intl: intl,
           },
         },
       },
@@ -160,6 +186,11 @@ const cartProduct = (intl, update, currencyCode) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              connector: withUploadedFileInfo,
+              name: 'category',
+            },
+            intl: intl,
           },
         },
       },
@@ -182,6 +213,11 @@ const cartProduct = (intl, update, currencyCode) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              connector: withUploadedFileInfo,
+              name: 'product',
+            },
+            intl: intl,
           },
         },
       },
@@ -204,11 +240,15 @@ const cartProduct = (intl, update, currencyCode) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              connector: withUploadedFileInfo,
+              name: 'product',
+            },
+            intl: intl,
           },
         },
       },
       // HAS SKUS
-
       {
         label: intl.formatMessage({
           id: 'promotions.promotion.elligibility.cartProduct.verb.sku.any',
@@ -227,6 +267,11 @@ const cartProduct = (intl, update, currencyCode) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              connector: withUploadedFileInfo,
+              name: 'sku',
+            },
+            intl: intl,
           },
         },
       },
@@ -248,6 +293,11 @@ const cartProduct = (intl, update, currencyCode) => {
             }),
             multi: true,
             update: update,
+            bulk: {
+              connector: withUploadedFileInfo,
+              name: 'sku',
+            },
+            intl: intl,
           },
         },
       },

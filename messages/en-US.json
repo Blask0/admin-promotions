@@ -198,5 +198,19 @@
   "promotions.promotion.multipleCurrencies.warning": "This promotion is being created for trade policies that use different currencies ({currencies}). Please restrict trade policies to use only one currency.",
   "promotions.promotion.multipleCurrencies.error": "It is not possible to create promotions for trade policies that use different currencies ({currencies}). Please restrict trade policies to use only one currency.",
   "promotions.promotion.multipleCurrencies.action": "Restrict policies",
-  "promotions.promotion.inputCurrency.multipleCurrencies": "The promotion does not have a well-defined currency. Check your commercial policies."
+  "promotions.promotion.inputCurrency.multipleCurrencies": "The promotion does not have a well-defined currency. Check your commercial policies.",
+  "promotions.promotion.restriction.origin": "Origin",
+  "promotions.promotion.restriction.origin.marketplace": "Marketplace",
+  "promotions.promotion.restriction.origin.fulfillment": "Fulfillment",
+  "promotions.promotion.restriction.origin.marketplace.explanation": "Orders made directly to your store",
+  "promotions.promotion.restriction.origin.fulfillment.explanation": "Orders where your store is acting as a seller",
+  "promotions.promotion.import": "Import",
+  "promotions.promotion.import.modal.title.product": "Import product list",
+  "promotions.promotion.import.modal.title.sku": "Import sku list",
+  "promotions.promotion.import.modal.title.brand": "Import brand list",
+  "promotions.promotion.import.modal.title.category": "Import category list",
+  "promotions.promotion.import.modal.title.collection": "Import collection list",
+  "promotions.promotion.import.modal.placeholder": "(*.txt files with one entry per line)",
+  "promotions.promotion.import.modal.catalog": "Checking ids with catalog system…",
+  "promotions.promotion.import.modal.notFound": "We didn't find these Ids in catalog: {notFound}"
 }
