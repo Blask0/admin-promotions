@@ -24,21 +24,14 @@ function withUploadedFileInfo(WrappedComponent) {
       return (
         <Query
           query={getUploadedFileInfo}
-          variables={{ ids: ids, field: field }}
-          fetchPolicy="network-only">
+          variables={{ ids: ids, field: field }}>
           {({ loading, error, data }) => {
             return (
               <WrappedComponent
                 {...this.props}
                 loading={loading}
                 error={error}
-                uploadedFile={
-                  data
-                    ? data.getUploadedFileInfo
-                      ? data.getUploadedFileInfo
-                      : {}
-                    : {}
-                }
+                bulkInfo={data ? data.getUploadedFileInfo || {} : {}}
                 updateQueryParams={this.updateQueryParams}
               />
             )

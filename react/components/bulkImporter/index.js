@@ -19,6 +19,13 @@ class BulkImporter extends Component {
       isImportModalOpen: false,
       file: undefined,
       isFileBeingUploaded: false,
+      mappers: {
+        product: mapProductsToSelect,
+        sku: mapSkusToSelect,
+        brand: mapBrandsToSelect,
+        category: mapCategoriesToSelect,
+        collection: mapCollectionsToSelect,
+      },
     }
   }
 
@@ -50,43 +57,18 @@ class BulkImporter extends Component {
   }
 
   componentDidUpdate = () => {
-    const { loading, uploadedFile, update, name } = this.props
-    const { isFileBeingUploaded } = this.state
+    const { loading, bulkInfo, update, name } = this.props
+    const { isFileBeingUploaded, mappers } = this.state
 
-    if (!loading && isFileBeingUploaded && uploadedFile) {
-      let options = []
-      switch (name) {
-        case 'sku':
-          options = uploadedFile.skus ? mapSkusToSelect(uploadedFile.skus) : []
-          break
-        case 'product':
-          options = uploadedFile.products
-            ? mapProductsToSelect(uploadedFile.products)
-            : []
-          break
-        case 'brand':
-          options = uploadedFile.brands
-            ? mapBrandsToSelect(uploadedFile.brands)
-            : []
-          break
-        case 'category':
-          options = uploadedFile.categories
-            ? mapCategoriesToSelect(uploadedFile.categories)
-            : []
-          break
-        case 'collection':
-          options = uploadedFile.collections
-            ? mapCollectionsToSelect(uploadedFile.collections)
-            : []
-          break
-      }
+    if (!loading && isFileBeingUploaded && bulkInfo) {
+      const options = bulkInfo ? mappers[name](bulkInfo.uploadedInfo) : []
 
       this.setState({
         isFileBeingUploaded: false,
         isImportModalOpen: !this.state.isImportModalOpen,
       })
 
-      update(options, uploadedFile.notFound)
+      update(options, bulkInfo.notFound)
     }
   }
 
@@ -135,7 +117,7 @@ class BulkImporter extends Component {
 BulkImporter.propTypes = {
   intl: intlShape,
   update: PropTypes.func,
-  uploadedFile: PropTypes.object,
+  bulkInfo: PropTypes.object,
   loading: PropTypes.bool,
   updateQueryParams: PropTypes.func,
   productQueryIsLoading: PropTypes.bool,
