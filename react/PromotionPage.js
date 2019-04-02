@@ -140,7 +140,7 @@ class PromotionPage extends Component {
 
       if (weekDays.value !== null) {
         const userDidNotSelectAnyWeekDate = Object.keys(weekDays.value)
-          .map(day => weekDays.value[day].value)
+          .map(day => weekDays.value[day])
           .every(value => !value)
         if (userDidNotSelectAnyWeekDate) {
           generalInfo.recurrency = {
@@ -667,10 +667,12 @@ class PromotionPage extends Component {
       weekDays: { value: weekDays },
       times: { value: timesWithValidation },
     } = recurrency
-    const times = timesWithValidation.map(time => ({
-      from: time.from.value,
-      to: time.to.value,
-    }))
+    const times = timesWithValidation
+      ? timesWithValidation.map(time => ({
+        from: time.from.value,
+        to: time.to.value,
+      }))
+      : timesWithValidation
     const cronWeekDay = createCronWeekDay(weekDays)
     const cronHour = createCronHour(times)
     return {
@@ -842,7 +844,6 @@ class PromotionPage extends Component {
               if (this.canSave()) {
                 this.setState({ isSaving: true })
                 const preparedPromotion = this.prepareToSave(promotion)
-                console.log(preparedPromotion)
 
                 savePromotion({
                   variables: {

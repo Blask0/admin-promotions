@@ -5,8 +5,13 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import { Button, Checkbox, RadioGroup, IconDelete } from 'vtex.styleguide'
 
 import TimeRange from './TimeRange'
-import { WEEK_DAYS, isTimeValid } from '../../../utils/promotion/recurrency'
 import { newFieldWithValidation } from '../../../utils/validation'
+
+import {
+  WEEK_DAYS,
+  getWeekDayLabel,
+  isTimeValid,
+} from '../../../utils/promotion/recurrency'
 
 function getDaysOptions(intl) {
   return [
@@ -128,12 +133,12 @@ function AdvancedScheduling({ intl, value, onChange }) {
             <div className="mb3">
               <Checkbox
                 name={day}
-                label={weekDays.value[day].label}
-                checked={weekDays.value[day].value}
+                label={getWeekDayLabel(day, intl)}
+                checked={weekDays.value[day]}
                 onChange={e => {
                   const value = {
                     ...weekDays.value,
-                    [day]: { ...weekDays.value[day], value: e.target.checked },
+                    [day]: e.target.checked,
                   }
                   handleChange(onChange, {
                     weekDays: { ...weekDays, value, error: undefined },

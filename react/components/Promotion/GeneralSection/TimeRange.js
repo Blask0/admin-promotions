@@ -2,7 +2,9 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape } from 'react-intl'
 
-import { IconDelete, TimePicker } from 'vtex.styleguide'
+import { TimePicker } from 'vtex.styleguide'
+
+const TIME_INTERVALS = 60
 
 function getDates({ from, to }) {
   let fromDate
@@ -75,7 +77,7 @@ function TimeRange({ intl, from, to, onChange: callback }) {
           ref={from.ref}
           label={from.value.label}
           locale={intl.locale}
-          timeIntervals={60}
+          timeIntervals={TIME_INTERVALS}
           value={fromDate}
           errorMessage={from.error}
           onChange={date => {
@@ -89,7 +91,7 @@ function TimeRange({ intl, from, to, onChange: callback }) {
           ref={to.ref}
           label={to.value.label}
           locale={intl.locale}
-          timeIntervals={60}
+          timeIntervals={TIME_INTERVALS}
           value={toDate}
           errorMessage={to.error}
           onChange={date => {

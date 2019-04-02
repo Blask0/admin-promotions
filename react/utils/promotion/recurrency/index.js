@@ -1,13 +1,31 @@
+import { ucfirst } from '../../index'
 import { newFieldWithValidation } from '../../validation'
 
+const NOW = new Date()
+const WEEK_DAYS_DATE_LABELS = {
+  sun: new Date(NOW.setDate(NOW.getDate() - NOW.getDay())),
+  mon: new Date(NOW.setDate(NOW.getDate() - NOW.getDay() + 1)),
+  tue: new Date(NOW.setDate(NOW.getDate() - NOW.getDay() + 2)),
+  wed: new Date(NOW.setDate(NOW.getDate() - NOW.getDay() + 3)),
+  thu: new Date(NOW.setDate(NOW.getDate() - NOW.getDay() + 4)),
+  fri: new Date(NOW.setDate(NOW.getDate() - NOW.getDay() + 5)),
+  sat: new Date(NOW.setDate(NOW.getDate() - NOW.getDay() + 6)),
+}
+
 export const WEEK_DAYS = {
-  sun: { label: 'Sunday', value: false },
-  mon: { label: 'Monday', value: false },
-  tue: { label: 'Tuesday', value: false },
-  wed: { label: 'Wednesday', value: false },
-  thu: { label: 'Thursay', value: false },
-  fri: { label: 'Friday', value: false },
-  sat: { label: 'Saturday', value: false },
+  sun: false,
+  mon: false,
+  tue: false,
+  wed: false,
+  thu: false,
+  fri: false,
+  sat: false,
+}
+
+export function getWeekDayLabel(day, intl) {
+  return ucfirst(
+    intl.formatDate(WEEK_DAYS_DATE_LABELS[day], { weekday: 'long' })
+  )
 }
 
 export function isTimeValid({ hours }) {
@@ -36,10 +54,7 @@ export function getSelectedWeekDays(weekDay) {
   if (weekDay === '*') return null
   const weekDays = { ...WEEK_DAYS }
   Object.keys(weekDays).forEach(key => {
-    weekDays[key] = {
-      ...weekDays[key],
-      value: !!weekDay.split(',').includes(key),
-    }
+    weekDays[key] = !!weekDay.split(',').includes(key)
   })
   return weekDays
 }
@@ -47,7 +62,7 @@ export function getSelectedWeekDays(weekDay) {
 export function createCronWeekDay(selectedWeekDays) {
   if (selectedWeekDays === null) return '*'
   const weekDays = Object.keys(selectedWeekDays).filter(
-    day => selectedWeekDays[day].value
+    day => selectedWeekDays[day]
   )
   return weekDays.length !== 0 ? weekDays.join(',') : undefined
 }
