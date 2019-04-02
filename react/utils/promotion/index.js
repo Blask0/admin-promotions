@@ -98,6 +98,15 @@ const getRewardEffect = (intl, rewardEffect) =>
 export const newPromotion = (intl, promotion, salesChannels) => {
   if (promotion) {
     const { generalInfo, eligibility, effects, restriction } = promotion
+    const useRecurrency = !!generalInfo.cron
+    const [minute, hour, day, month, weekDay] = useRecurrency
+      ? generalInfo.cron.split(' ')
+      : []
+
+    const r = getRestrictSalesChannelVerbOptions(intl)
+    const w = getSelectedWeekDays(weekDay)
+    const t = getSelectedTimes(hour)
+    const nfv = newFieldWithValidation
 
     return {
       ...promotion,
@@ -109,6 +118,15 @@ export const newPromotion = (intl, promotion, salesChannels) => {
         endDate: generalInfo.endDate
           ? newFieldWithValidation(new Date(generalInfo.endDate))
           : newFieldWithValidation(),
+        useRecurrency,
+        recurrency: {
+          weekDays: useRecurrency
+            ? newFieldWithValidation(getSelectedWeekDays(weekDay))
+            : newFieldWithValidation(null),
+          times: useRecurrency
+            ? newFieldWithValidation(getSelectedTimes(hour))
+            : newFieldWithValidation(null),
+        },
       },
       effects: {
         ...effects,
@@ -135,7 +153,7 @@ export const newPromotion = (intl, promotion, salesChannels) => {
         isRestrictingSalesChannels:
           restriction.restrictedSalesChannels.length > 0,
         restrictSalesChannelVerb: getRestrictSalesChannelVerbOptions(intl).find(
-          verb => verb.value === restriction.restrictSalesChannelVerb.value
+          verb => verb.value === restriction.restrictSalesChannelVerb
         ),
         restrictedSalesChannels: newFieldWithValidation(
           mapSalesChannelsToSelect(
@@ -147,14 +165,6 @@ export const newPromotion = (intl, promotion, salesChannels) => {
       },
     }
   }
-
-  // const [
-  //   minute,
-  //   hour,
-  //   day,
-  //   month,
-  //   weekDay,
-  // ] = '* 3-15,13-17,0-23,17-18 * * sun,tue,thu,sat'.split(' ')
 
   return {
     id: undefined,
@@ -170,10 +180,6 @@ export const newPromotion = (intl, promotion, salesChannels) => {
         weekDays: newFieldWithValidation(null),
         times: newFieldWithValidation(null),
       },
-      // recurrency: {
-      //   weekDays: getSelectedWeekDays(weekDay),
-      //   times: getSelectedTimes(hour),
-      // },
       cron: undefined,
       isArchived: false,
       accumulateWithPromotions: false,

@@ -1,3 +1,5 @@
+import { newFieldWithValidation } from '../../validation'
+
 export const WEEK_DAYS = {
   sun: { label: 'Sunday', value: false },
   mon: { label: 'Monday', value: false },
@@ -30,6 +32,7 @@ function decreaseHour(hour) {
 }
 
 export function getSelectedWeekDays(weekDay) {
+  if (weekDay === undefined) return undefined
   if (weekDay === '*') return null
   const weekDays = { ...WEEK_DAYS }
   Object.keys(weekDays).forEach(key => {
@@ -50,23 +53,24 @@ export function createCronWeekDay(selectedWeekDays) {
 }
 
 export function getSelectedTimes(hour) {
+  if (hour === undefined) return undefined
   return hour === '*'
     ? null
     : hour.split(',').map(range => {
       const [fromHours, toHours = fromHours] = range.split('-')
       return {
-        from: {
+        from: newFieldWithValidation({
           hours: isTimeValid({ hours: fromHours })
             ? parseInt(fromHours)
             : undefined,
           minutes: 0,
-        },
-        to: {
+        }),
+        to: newFieldWithValidation({
           hours: isTimeValid({ hours: toHours })
             ? increaseHour(parseInt(toHours))
             : undefined,
           minutes: 0,
-        },
+        }),
       }
     })
 }

@@ -663,8 +663,16 @@ class PromotionPage extends Component {
       restriction,
     } = promotion
     const { limitQuantityPerPurchase, ...giftEffect } = effects.gift
-    const cronWeekDay = createCronWeekDay(recurrency.weekDays.value)
-    const cronHour = createCronHour(recurrency.times.value)
+    const {
+      weekDays: { value: weekDays },
+      times: { value: timesWithValidation },
+    } = recurrency
+    const times = timesWithValidation.map(time => ({
+      from: time.from.value,
+      to: time.to.value,
+    }))
+    const cronWeekDay = createCronWeekDay(weekDays)
+    const cronHour = createCronHour(times)
     return {
       ...promotion,
       generalInfo: {
