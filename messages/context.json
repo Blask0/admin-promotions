@@ -212,5 +212,19 @@
   "promotions.promotion.multipleCurrencies.warning": "promotions.promotion.multipleCurrencies.warning",
   "promotions.promotion.multipleCurrencies.error": "promotions.promotion.multipleCurrencies.error",
   "promotions.promotion.multipleCurrencies.action": "promotions.promotion.multipleCurrencies.action",
-  "promotions.promotion.inputCurrency.multipleCurrencies": "promotions.promotion.inputCurrency.multipleCurrencies"
+  "promotions.promotion.inputCurrency.multipleCurrencies": "promotions.promotion.inputCurrency.multipleCurrencies",
+  "promotions.promotion.restriction.origin": "promotions.promotion.restriction.origin",
+  "promotions.promotion.restriction.origin.marketplace": "promotions.promotion.restriction.origin.marketplace",
+  "promotions.promotion.restriction.origin.fulfillment": "promotions.promotion.restriction.origin.fulfillment",
+  "promotions.promotion.restriction.origin.marketplace.explanation": "promotions.promotion.restriction.origin.marketplace.explanation",
+  "promotions.promotion.restriction.origin.fulfillment.explanation": "promotions.promotion.restriction.origin.fulfillment.explanation",
+  "promotions.promotion.import": "promotions.promotion.import",
+  "promotions.promotion.import.modal.title.product": "promotions.promotion.import.modal.title.product",
+  "promotions.promotion.import.modal.title.sku": "promotions.promotion.import.modal.title.sku",
+  "promotions.promotion.import.modal.title.brand": "promotions.promotion.import.modal.title.brand",
+  "promotions.promotion.import.modal.title.category": "promotions.promotion.import.modal.title.category",
+  "promotions.promotion.import.modal.title.collection": "promotions.promotion.import.modal.title.collection",
+  "promotions.promotion.import.modal.placeholder": "promotions.promotion.import.modal.placeholder",
+  "promotions.promotion.import.modal.catalog": "promotions.promotion.import.modal.catalog",
+  "promotions.promotion.import.modal.notFound": "promotions.promotion.import.modal.notFound"
 }
