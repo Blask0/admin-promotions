@@ -654,6 +654,10 @@ class PromotionPage extends Component {
     return [...new Set(currencyCodes)]
   }
 
+  removeRefsFromStatements(statements) {
+    return statements.map(({ refs, ...statement}) => statement)
+  }
+
   prepareToSave = promotion => {
     const { intl } = this.props
     const {
@@ -662,7 +666,20 @@ class PromotionPage extends Component {
       effects,
       restriction,
     } = promotion
+
     const { limitQuantityPerPurchase, ...giftEffect } = effects.gift
+
+    const {
+      statements: { value: scopeStatementsWithRefs },
+    } = effects.price.appliesTo
+    const {
+      statements: { value: eligibilityStatementsWithRefs },
+    } = eligibility
+    const scopeStatements = this.removeRefsFromStatements(scopeStatementsWithRefs)
+    const eligibilityStatements = this.removeRefsFromStatements(
+      eligibilityStatementsWithRefs
+    )
+
     const {
       weekDays: { value: weekDays },
       times: { value: timesWithValidation },
@@ -675,6 +692,7 @@ class PromotionPage extends Component {
       : timesWithValidation
     const cronWeekDay = createCronWeekDay(weekDays)
     const cronHour = createCronHour(times)
+
     return {
       ...promotion,
       generalInfo: {
@@ -691,9 +709,7 @@ class PromotionPage extends Component {
           discount: effects.price.discount.value,
           appliesTo: {
             ...effects.price.appliesTo,
-            statements: JSON.stringify(
-              effects.price.appliesTo.statements.value
-            ),
+            statements: JSON.stringify(scopeStatements),
           },
         },
         gift: {
@@ -718,7 +734,7 @@ class PromotionPage extends Component {
       },
       eligibility: {
         ...eligibility,
-        statements: JSON.stringify(eligibility.statements.value),
+        statements: JSON.stringify(eligibilityStatements),
       },
       restriction: {
         ...restriction,
