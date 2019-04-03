@@ -21,6 +21,13 @@ import {
   getRestrictSalesChannelVerbOptions,
 } from './utils/constants'
 
+import {
+  createCronHour,
+  createCronWeekDay,
+  isTimeValid,
+  isToBeforeFrom,
+} from './utils/promotion/recurrency'
+
 class PromotionPage extends Component {
   constructor(props) {
     super(props)
@@ -34,7 +41,7 @@ class PromotionPage extends Component {
 
     this.multipleCurrencies = {
       ref: React.createRef(),
-      focus: true,
+      focus: false,
     }
   }
 
@@ -126,6 +133,98 @@ class PromotionPage extends Component {
       }
 
       isValid = false
+    }
+
+    if (generalInfo.useRecurrency) {
+      const { weekDays, times } = generalInfo.recurrency
+
+      if (weekDays.value !== null) {
+        const userDidNotSelectAnyWeekDate = Object.keys(weekDays.value)
+          .map(day => weekDays.value[day])
+          .every(value => !value)
+        if (userDidNotSelectAnyWeekDate) {
+          generalInfo.recurrency = {
+            ...generalInfo.recurrency,
+            weekDays: {
+              ...generalInfo.recurrency.weekDays,
+              error: intl.formatMessage({
+                id:
+                  'promotions.promotion.validation.userDidNotSelectAnyWeekDate',
+              }),
+              focus: true,
+            },
+          }
+
+          isValid = false
+        }
+      }
+
+      if (times.value !== null) {
+        const { from, to } = times.value[times.value.length - 1]
+        if (
+          !isTimeValid(from.value) &&
+          !isTimeValid(to.value) &&
+          times.value.length <= 1
+        ) {
+          generalInfo.recurrency = {
+            ...generalInfo.recurrency,
+            times: {
+              ...generalInfo.recurrency.times,
+              value: [
+                ...generalInfo.recurrency.times.value.slice(
+                  0,
+                  times.value.length - 1
+                ),
+                {
+                  from: { ...from, error: ' ', focus: true },
+                  to: { ...to, error: ' ', focus: true },
+                },
+              ],
+              error: intl.formatMessage({
+                id: 'promotions.promotion.validation.userDidNotSelectAnyTime',
+              }),
+              focus: true,
+            },
+          }
+
+          isValid = false
+        } else {
+          generalInfo.recurrency = {
+            ...generalInfo.recurrency,
+            times: {
+              ...generalInfo.recurrency.times,
+              value: times.value.map(({ from, to }) => {
+                return {
+                  from: {
+                    ...from,
+                    error: !isTimeValid(from.value)
+                      ? intl.formatMessage({
+                        id: 'promotions.validation.emptyField',
+                      })
+                      : undefined,
+                    focus: !isTimeValid(from.value),
+                  },
+                  to: {
+                    ...to,
+                    error: !isTimeValid(to.value)
+                      ? intl.formatMessage({
+                        id: 'promotions.validation.emptyField',
+                      })
+                      : isToBeforeFrom(from.value, to.value)
+                        ? intl.formatMessage({
+                          id: 'promotions.promotion.validation.toBeforeFrom',
+                        })
+                        : undefined,
+                    focus:
+                      !isTimeValid(to.value) ||
+                      isToBeforeFrom(from.value, to.value),
+                  },
+                }
+              }),
+            },
+          }
+        }
+      }
     }
 
     return { generalInfo, isValid }
@@ -555,21 +654,52 @@ class PromotionPage extends Component {
     return [...new Set(currencyCodes)]
   }
 
+  removeRefsFromStatements(statements) {
+    return statements.map(({ refs, ...statement}) => statement)
+  }
+
   prepareToSave = promotion => {
     const { intl } = this.props
     const {
-      generalInfo: { hasEndDate, ...generalInfo },
+      generalInfo: { hasEndDate, useRecurrency, recurrency, ...generalInfo },
       eligibility,
       effects,
       restriction,
     } = promotion
+
     const { limitQuantityPerPurchase, ...giftEffect } = effects.gift
+
+    const {
+      statements: { value: scopeStatementsWithRefs },
+    } = effects.price.appliesTo
+    const {
+      statements: { value: eligibilityStatementsWithRefs },
+    } = eligibility
+    const scopeStatements = this.removeRefsFromStatements(scopeStatementsWithRefs)
+    const eligibilityStatements = this.removeRefsFromStatements(
+      eligibilityStatementsWithRefs
+    )
+
+    const {
+      weekDays: { value: weekDays },
+      times: { value: timesWithValidation },
+    } = recurrency
+    const times = timesWithValidation
+      ? timesWithValidation.map(time => ({
+        from: time.from.value,
+        to: time.to.value,
+      }))
+      : timesWithValidation
+    const cronWeekDay = createCronWeekDay(weekDays)
+    const cronHour = createCronHour(times)
+
     return {
       ...promotion,
       generalInfo: {
         ...generalInfo,
         name: generalInfo.name.value,
         endDate: generalInfo.endDate.value,
+        cron: `* ${cronHour} * * ${cronWeekDay}`,
       },
       effects: {
         ...effects,
@@ -579,9 +709,7 @@ class PromotionPage extends Component {
           discount: effects.price.discount.value,
           appliesTo: {
             ...effects.price.appliesTo,
-            statements: JSON.stringify(
-              effects.price.appliesTo.statements.value
-            ),
+            statements: JSON.stringify(scopeStatements),
           },
         },
         gift: {
@@ -606,7 +734,7 @@ class PromotionPage extends Component {
       },
       eligibility: {
         ...eligibility,
-        statements: JSON.stringify(eligibility.statements.value),
+        statements: JSON.stringify(eligibilityStatements),
       },
       restriction: {
         ...restriction,
@@ -647,7 +775,7 @@ class PromotionPage extends Component {
             })}
             onLinkClick={() => {
               navigate({
-                page: 'admin/promotions',
+                page: 'admin.promotions',
               })
             }}
             title={
@@ -740,7 +868,7 @@ class PromotionPage extends Component {
                 })
                   .then(() =>
                     navigate({
-                      page: 'admin/promotions',
+                      page: 'admin.promotions',
                     })
                   )
                   .finally(() => this.setState({ isSaving: false }))

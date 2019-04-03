@@ -27,8 +27,10 @@ class ShippingForm extends Component {
   }
 
   changeDiscount = discount =>
+    discount &&
     this.props.onChange({
       discount: {
+        ...this.props.shippingEffect.discount,
         value: discount,
       },
     })

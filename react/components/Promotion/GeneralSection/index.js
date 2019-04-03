@@ -1,11 +1,12 @@
 import React, { Fragment, Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
-import { applyFocus } from '../../utils/functions'
-import { Checkbox, Input, DatePicker, Toggle } from 'vtex.styleguide'
 
-import { fieldShape } from '../../utils/propTypes'
-import { addDays } from 'date-fns'
+import { Checkbox, Input, Toggle } from 'vtex.styleguide'
+import Scheduling from './Scheduling'
+
+import { fieldShape } from '../../../utils/propTypes'
+import { applyFocus } from '../../../utils/functions'
 
 class GeneralSection extends Component {
   constructor(props) {
@@ -39,7 +40,6 @@ class GeneralSection extends Component {
 
   render() {
     const { intl, generalInfo, updatePageState } = this.props
-    const tzLabel = Intl.DateTimeFormat().resolvedOptions().timeZone
 
     return (
       <Fragment>
@@ -89,80 +89,12 @@ class GeneralSection extends Component {
                 }}
               />
             </div>
-            <div className="mv4">
-              <DatePicker
-                locale={intl.locale}
-                onChange={date => {
-                  updatePageState({
-                    startDate: date,
-                  })
-                }}
-                value={generalInfo.startDate}
-                helpText={intl.formatMessage(
-                  {
-                    id: 'promotions.promotion.generalInfo.tz',
-                  },
-                  {
-                    tz: generalInfo.tz,
-                    tzLabel,
-                  }
-                )}
-                label={intl.formatMessage({
-                  id: 'promotions.promotion.generalInfo.startDate',
-                })}
-              />
-            </div>
-            <div className="mv4">
-              <Checkbox
-                checked={generalInfo.hasEndDate}
-                id="hasEndDate"
-                label={intl.formatMessage({
-                  id: 'promotions.promotion.generalInfo.hasEndDate',
-                })}
-                name="limitPerActivation-checkbox-group"
-                onChange={() => {
-                  updatePageState({
-                    hasEndDate: !generalInfo.hasEndDate,
-                    endDate: !generalInfo.hasEndDate
-                      ? {
-                        ...generalInfo.endDate,
-                        value: addDays(new Date(), 1),
-                        error: undefined,
-                      }
-                      : {
-                        ...generalInfo.endDate,
-                        value: undefined,
-                        error: undefined,
-                      },
-                  })
-                }}
-                value="hasEndDate"
-              />
-            </div>
-            {generalInfo.hasEndDate ? (
-              <div className="mt4">
-                <DatePicker
-                  locale={intl.locale}
-                  onChange={date => {
-                    updatePageState({
-                      endDate: {
-                        ...generalInfo.endDate,
-                        value: date,
-                        error: undefined,
-                      },
-                    })
-                  }}
-                  errorMessage={generalInfo.endDate.error}
-                  value={generalInfo.endDate.value}
-                  ref={generalInfo.endDate.ref}
-                  label={intl.formatMessage({
-                    id: 'promotions.promotion.generalInfo.endDate',
-                  })}
-                />
-              </div>
-            ) : null}
           </div>
         </div>
+        <Scheduling
+          generalInfo={generalInfo}
+          updatePageState={updatePageState}
+        />
         <hr className="b--muted-4 bt-0" />
         <div className="flex flex-row mt7">
           <div className="w-50">
@@ -228,6 +160,8 @@ GeneralSection.propTypes = {
     startDate: PropTypes.instanceOf(Date),
     hasEndDate: PropTypes.bool,
     endDate: fieldShape(PropTypes.instanceOf(Date)),
+    tz: PropTypes.number,
+    cron: PropTypes.string,
   }),
   updatePageState: PropTypes.func,
 }

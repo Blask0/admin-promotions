@@ -2,14 +2,14 @@ import {
   getRestrictSalesChannelVerbOptions,
   getRewardEffectOrderStatusOptions,
 } from '../../utils/constants'
-import { mapSalesChannelsToSelect } from '../../utils/mappers'
 
-const newFieldWithValidation = value => ({
-  value,
-  error: undefined,
-  focus: undefined,
-  ref: React.createRef(),
-})
+import {
+  getSelectedTimes,
+  getSelectedWeekDays,
+} from '../../utils/promotion/recurrency'
+
+import { newFieldWithValidation } from '../validation'
+import { mapSalesChannelsToSelect } from '../mappers'
 
 export const INITIAL_PRICE_EFFECT = {
   discountType: 'nominal',
@@ -98,6 +98,15 @@ const getRewardEffect = (intl, rewardEffect) =>
 export const newPromotion = (intl, promotion, salesChannels) => {
   if (promotion) {
     const { generalInfo, eligibility, effects, restriction } = promotion
+    const useRecurrency = !!generalInfo.cron
+    const [minute, hour, day, month, weekDay] = useRecurrency
+      ? generalInfo.cron.split(' ')
+      : []
+
+    const r = getRestrictSalesChannelVerbOptions(intl)
+    const w = getSelectedWeekDays(weekDay)
+    const t = getSelectedTimes(hour)
+    const nfv = newFieldWithValidation
 
     return {
       ...promotion,
@@ -109,6 +118,15 @@ export const newPromotion = (intl, promotion, salesChannels) => {
         endDate: generalInfo.endDate
           ? newFieldWithValidation(new Date(generalInfo.endDate))
           : newFieldWithValidation(),
+        useRecurrency,
+        recurrency: {
+          weekDays: useRecurrency
+            ? newFieldWithValidation(getSelectedWeekDays(weekDay))
+            : newFieldWithValidation(null),
+          times: useRecurrency
+            ? newFieldWithValidation(getSelectedTimes(hour))
+            : newFieldWithValidation(null),
+        },
       },
       effects: {
         ...effects,
@@ -135,7 +153,7 @@ export const newPromotion = (intl, promotion, salesChannels) => {
         isRestrictingSalesChannels:
           restriction.restrictedSalesChannels.length > 0,
         restrictSalesChannelVerb: getRestrictSalesChannelVerbOptions(intl).find(
-          verb => verb.value === restriction.restrictSalesChannelVerb.value
+          verb => verb.value === restriction.restrictSalesChannelVerb
         ),
         restrictedSalesChannels: newFieldWithValidation(
           mapSalesChannelsToSelect(
@@ -157,6 +175,12 @@ export const newPromotion = (intl, promotion, salesChannels) => {
       hasEndDate: false,
       endDate: newFieldWithValidation(),
       tz: -new Date().getTimezoneOffset() / 60,
+      useRecurrency: false,
+      recurrency: {
+        weekDays: newFieldWithValidation(null),
+        times: newFieldWithValidation(null),
+      },
+      cron: undefined,
       isArchived: false,
       accumulateWithPromotions: false,
       accumulateWithManualPrices: false,

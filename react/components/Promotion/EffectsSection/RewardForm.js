@@ -28,6 +28,7 @@ class RewardForm extends Component {
   }
 
   changeDiscount = discount =>
+    discount &&
     this.props.onChange({
       discount: {
         ...this.props.rewardEffect.discount,

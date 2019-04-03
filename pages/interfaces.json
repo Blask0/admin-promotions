@@ -1,0 +1,8 @@
+{
+  "admin.promotions": {
+    "component": "PromotionsPage"
+  },
+  "admin.promotion": {
+    "component": "PromotionPage"
+  }
+}

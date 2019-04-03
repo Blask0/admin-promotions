@@ -6,6 +6,7 @@ mutation SavePromotions($promotion: PromotionInput!) {
       startDate
       endDate
       tz
+      cron
       isActive
       isArchived
       accumulateWithPromotions
@@ -28,7 +29,6 @@ mutation SavePromotions($promotion: PromotionInput!) {
           name
         }
         multiplier
-        limitQuantityPerPurchase
       }
       shipping {
         discountType

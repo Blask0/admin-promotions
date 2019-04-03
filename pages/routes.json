@@ -1,0 +1,8 @@
+{
+  "admin.promotions": {
+    "path": "/admin/promotions"
+  },
+  "admin.promotion": {
+    "path": "/admin/promotions/:id"
+  }
+}

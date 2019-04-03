@@ -41,7 +41,7 @@ class PriceForm extends Component {
       priceEffect: { discount },
     } = this.props
 
-    onChange({
+    discountWithoutValidation && onChange({
       discount: {
         ...discount,
         value: discountWithoutValidation,
