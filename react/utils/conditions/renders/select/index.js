@@ -109,7 +109,7 @@ const renderSelectObject = ({
             )}
           </div>
           {bulk && bulk.connector && (
-            <div>
+            <div className="ml3">
               <BulkImporterObject />
             </div>
           )}
