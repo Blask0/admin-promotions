@@ -20,18 +20,20 @@ function withUploadedFileInfo(WrappedComponent) {
 
     render() {
       const { ids, field } = this.state
+      const skip = !ids || ids.length === 0 || !field
 
       return (
         <Query
           query={getUploadedFileInfo}
-          variables={{ ids: ids, field: field }}>
+          variables={{ ids: ids, field: field }}
+          skip={skip}>
           {({ loading, error, data }) => {
             return (
               <WrappedComponent
                 {...this.props}
                 loading={loading}
                 error={error}
-                bulkInfo={data ? data.getUploadedFileInfo || {} : {}}
+                bulkInfo={data ? data.getUploadedFileInfo || {} : null}
                 updateQueryParams={this.updateQueryParams}
               />
             )

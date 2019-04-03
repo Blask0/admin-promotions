@@ -18,7 +18,6 @@ class BulkImporter extends Component {
     this.state = {
       isImportModalOpen: false,
       file: undefined,
-      isFileBeingUploaded: false,
       mappers: {
         product: mapProductsToSelect,
         sku: mapSkusToSelect,
@@ -34,7 +33,9 @@ class BulkImporter extends Component {
   }
 
   handleModalToggle = () => {
-    this.setState({ isImportModalOpen: !this.state.isImportModalOpen })
+    this.setState(prevState => ({
+      isImportModalOpen: !prevState.isImportModalOpen,
+    }))
   }
 
   handleConfirmation = () => {
@@ -48,7 +49,6 @@ class BulkImporter extends Component {
           const contents = event.target.result
           const items = contents.split('\n')
           updateQueryParams && updateQueryParams({ ids: items, field: name })
-          that.setState({ isFileBeingUploaded: true })
         }
       })(this)
 
@@ -58,14 +58,13 @@ class BulkImporter extends Component {
 
   componentDidUpdate = () => {
     const { loading, bulkInfo, update, name } = this.props
-    const { isFileBeingUploaded, mappers } = this.state
+    const { mappers } = this.state
 
-    if (!loading && isFileBeingUploaded && bulkInfo) {
+    if (!loading && bulkInfo) {
       const options = bulkInfo ? mappers[name](bulkInfo.uploadedInfo) : []
 
       this.setState({
-        isFileBeingUploaded: false,
-        isImportModalOpen: !this.state.isImportModalOpen,
+        isImportModalOpen: false,
       })
 
       update(options, bulkInfo.notFound)
@@ -73,7 +72,7 @@ class BulkImporter extends Component {
   }
 
   render() {
-    const { productQueryIsLoading, name } = this.props
+    const { loading, productQueryIsLoading, name } = this.props
     const formattedMessageId = `promotions.promotion.import.modal.title.${name}`
 
     return (
@@ -100,7 +99,7 @@ class BulkImporter extends Component {
             titleId={formattedMessageId}
             updateFile={this.updateFile}
           />
-          {this.state.isFileBeingUploaded && (
+          {loading && (
             <div className="flex items-center mt7">
               <Spinner />
               <div className="ml5">
