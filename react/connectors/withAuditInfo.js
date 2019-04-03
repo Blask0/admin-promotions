@@ -9,12 +9,12 @@ function withAuditInfo(WrappedComponent) {
       super(props)
 
       this.state = {
-        name: '',
+        promoId: '',
       }
     }
 
-    updateQueryParams = ({ name }) => {
-      this.setState({ name })
+    updateQueryParams = ({ promoId }) => {
+      this.setState({ promoId })
     }
 
     render = () => {
