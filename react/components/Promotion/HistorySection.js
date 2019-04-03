@@ -28,7 +28,6 @@ class HistorySection extends Component {
   render() {
     const { auditInfo, intl } = this.props
     const timeAgo = new TimeAgo(intl.locale)
-    console.log(auditInfo)
     const listItems = auditInfo
       ? auditInfo.map(element => {
         const offset = this.calculateOffset(element.eventTime, timeAgo)
@@ -50,7 +49,15 @@ class HistorySection extends Component {
         <h4 className="t-heading-4 mt0">
           <FormattedMessage id="promotions.promotion.history.title" />
         </h4>
-        {auditInfo ? <ul> {listItems} </ul> : <Spinner />}
+        {auditInfo ? (
+          auditInfo.length > 0 ? (
+            <ul> {listItems} </ul>
+          ) : (
+            <FormattedMessage id="promotions.promotion.history.nothingToShow" />
+          )
+        ) : (
+          <Spinner />
+        )}
       </div>
     )
   }

@@ -1,5 +1,5 @@
-query GetAuditInfo($id: String) {
-  getAuditInfo(promoId: $id) {
+query GetAuditInfo($promoId: String) {
+  getAuditInfo(promoId: $promoId) {
     author
     subject
     evidenceHash

@@ -28,7 +28,6 @@ mutation SavePromotions($promotion: PromotionInput!) {
           name
         }
         multiplier
-        limitQuantityPerPurchase
       }
       shipping {
         discountType

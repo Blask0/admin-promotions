@@ -35,7 +35,7 @@ class PromotionPage extends Component {
 
     this.multipleCurrencies = {
       ref: React.createRef(),
-      focus: true,
+      focus: false,
     }
   }
 
@@ -725,9 +725,13 @@ class PromotionPage extends Component {
             updatePageState={this.handleRestrictionSectionChange}
           />
         </PageBlock>
-        <PageBlock>
-        <HistorySection promoId={this.state.promotion.generalInfo.id} />
-        </PageBlock>
+
+        {generalInfo.id && (
+          <PageBlock>
+            <HistorySection promoId={generalInfo.id} />
+          </PageBlock>
+        )}
+
         <div className="flex flex-row">
           <Button
             variation="primary"
