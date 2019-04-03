@@ -26,7 +26,7 @@ const renderInputCurrencyObject = ({
         ref={statements[statementIndex].refs.object}
         errorMessage={statements[statementIndex].error}
         onChange={e => {
-          statements[statementIndex].object = e.target.floatValue
+          statements[statementIndex].object = e.target.value
           statements[statementIndex].error = undefined
           update({
             statements: {

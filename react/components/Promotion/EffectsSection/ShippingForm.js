@@ -74,7 +74,7 @@ class ShippingForm extends Component {
                 value={shippingEffect.discount.value}
                 ref={shippingEffect.discount.ref}
                 errorMessage={shippingEffect.discount.error}
-                onChange={e => this.changeDiscount(e.target.floatValue)}
+                onChange={e => this.changeDiscount(e.target.value)}
                 placeholder={intl.formatMessage({
                   id: 'promotions.promotion.effects.shippingForm.placeholder',
                 })}
@@ -122,7 +122,7 @@ class ShippingForm extends Component {
                 value={shippingEffect.discount.value}
                 ref={shippingEffect.discount.ref}
                 errorMessage={shippingEffect.discount.error}
-                onChange={e => this.changeDiscount(e.target.floatValue)}
+                onChange={e => this.changeDiscount(e.target.value)}
                 placeholder={intl.formatMessage({
                   id: 'promotions.promotion.effects.shippingForm.placeholder',
                 })}

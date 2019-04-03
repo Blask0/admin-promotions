@@ -95,8 +95,8 @@ function Scheduling({ intl, generalInfo, updatePageState }) {
                   <FormattedMessage id="promotions.promotion.generalInfo.scheduling.recurrency" />
                 </span>
               }
-              onClick={e => updatePageState({ useRecurrency: e.target.opened })}
-              opened={generalInfo.useRecurrency}>
+              onClick={e => updatePageState({ useRecurrency: e.target.isOpen })}
+              isOpen={generalInfo.useRecurrency}>
               <div className="ml6">
                 <AdvancedScheduling
                   value={generalInfo.recurrency}
