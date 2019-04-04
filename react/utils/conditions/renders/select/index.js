@@ -52,6 +52,8 @@ const renderSelectObject = ({
       }
     }
 
+    const valuesMaxHeight = 1000
+
     const BulkImporterObject =
       bulk &&
       bulk.connector &&
@@ -94,6 +96,7 @@ const renderSelectObject = ({
                     name: searchedValue,
                   })
               }}
+              valuesMaxHeight={valuesMaxHeight}
             />
             {statements[statementIndex].warning && (
               <div className="mt4">
