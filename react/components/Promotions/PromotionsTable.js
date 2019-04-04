@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
+import { compose } from 'react-apollo'
 
 import { Tag, Table, ModalDialog } from 'vtex.styleguide'
 import { PromotionActivationToggle } from './PromotionActivationToggle'
@@ -13,7 +14,7 @@ import Reward from '../Icon/Reward'
 import { toDate, format } from 'date-fns'
 
 import archivingPromotionById from '../../connectors/archivingPromotionById'
-import { compose } from 'react-apollo'
+import { sortPromotions } from '../../utils/promotions'
 
 class PromotionsTable extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class PromotionsTable extends Component {
         sortedBy: null,
         sortOrder: null,
       },
+      inputSearchValue: '',
       isPromotionModalOpened: false,
     }
   }
@@ -34,9 +36,7 @@ class PromotionsTable extends Component {
         title: ' ',
         width: 60,
         cellRenderer: ({ rowData: promotion }) => (
-          <PromotionActivationToggle
-            promotion={promotion}
-          />
+          <PromotionActivationToggle promotion={promotion} />
         ),
       },
       name: {
@@ -88,7 +88,7 @@ class PromotionsTable extends Component {
         },
         width: 300,
         cellRenderer: ({ cellData }) => {
-          if(cellData){
+          if (cellData) {
             if (cellData.allCatalog) {
               return (
                 <span className="fw5">
@@ -97,28 +97,27 @@ class PromotionsTable extends Component {
                   })}
                 </span>
               )
-            } else {
-              let scopeInfo = []
-              const blackList = ['allCatalog', '__typename']
-  
-              Object.keys(cellData).forEach((key, index) => {
-                if (
-                  cellData[key] !== 0 &&
-                  !blackList.includes(key)
-                ) {
-                  scopeInfo = [
-                    ...scopeInfo,
-                    `${intl.formatMessage({
-                      id: `promotions.scopeColumn.${key}`,
-                    }, {
-                      itemCount: cellData[key] 
-                    })}`,
-                  ]
-                }
-              })
-  
-              return (<span>{scopeInfo.join(', ')}</span>)
             }
+            let scopeInfo = []
+            const blackList = ['allCatalog', '__typename']
+
+            Object.keys(cellData).forEach((key, index) => {
+              if (cellData[key] !== 0 && !blackList.includes(key)) {
+                scopeInfo = [
+                  ...scopeInfo,
+                  `${intl.formatMessage(
+                    {
+                      id: `promotions.scopeColumn.${key}`,
+                    },
+                    {
+                      itemCount: cellData[key],
+                    }
+                  )}`,
+                ]
+              }
+            })
+
+            return <span>{scopeInfo.join(', ')}</span>
           }
         },
       },
@@ -140,9 +139,9 @@ class PromotionsTable extends Component {
                 <span className="dtc v-mid">{time}</span>
               </div>
             </div>
-            )
-          },
+          )
         },
+      },
       endDate: {
         type: 'string',
         title: intl.formatMessage({
@@ -235,86 +234,31 @@ class PromotionsTable extends Component {
     }
   }
 
-  sortNameAlphapeticallyASC = (a, b) => {
-    return a.name < b.name ? -1 : a.name > b.name ? 1 : 0
+  handleSearchChange = e => {
+    this.setState({
+      inputSearchValue: e.target.value,
+    })
   }
 
-  sortNameAlphapeticallyDESC = (a, b) => {
-    return a.name < b.name ? 1 : a.name > b.name ? -1 : 0
+  handleSearchClear = e => {
+    this.setState({
+      inputSearchValue: '',
+    })
+    this.props.updatePromotionsSearchParams({
+      name: '',
+      effect: '',
+    })
   }
 
-  sortEffectAlphapeticallyASC = (a, b) => {
-    return a.effectType < b.effectType
-      ? -1
-      : a.effectType > b.effectType
-        ? 1
-        : 0
-  }
+  handleSearchSubmit = e => {
+    e.preventDefault()
 
-  sortEffectAlphapeticallyDESC = (a, b) => {
-    return a.effectType < b.effectType
-      ? 1
-      : a.effectType > b.effectType
-        ? -1
-        : 0
-  }
+    const { inputSearchValue } = this.state
 
-  sortStartDateASC = (a, b) => {
-    return new Date(a.beginDate).getTime() < new Date(b.beginDate).getTime()
-      ? -1
-      : new Date(a.beginDate).getTime() > new Date(b.beginDate).getTime()
-        ? 1
-        : 0
-  }
-
-  sortStartDateDESC = (a, b) => {
-    return new Date(a.beginDate).getTime() < new Date(b.beginDate).getTime()
-      ? 1
-      : new Date(a.beginDate).getTime() > new Date(b.beginDate).getTime()
-        ? -1
-        : 0
-  }
-
-  sortEndDateASC = (a, b) => {
-    return new Date(a.endDate).getTime() < new Date(b.endDate).getTime()
-      ? -1
-      : new Date(a.endDate).getTime() > new Date(b.endDate).getTime()
-        ? 1
-        : 0
-  }
-
-  sortEndDateDESC = (a, b) => {
-    return new Date(a.endDate).getTime() < new Date(b.endDate).getTime()
-      ? 1
-      : new Date(a.endDate).getTime() > new Date(b.endDate).getTime()
-        ? -1
-        : 0
-  }
-
-  sortPromotions = promotions => {
-    const {
-      dataSort: { sortedBy, sortOrder },
-    } = this.state
-    switch (sortedBy) {
-      case 'name':
-        return sortOrder === 'ASC'
-          ? promotions.slice().sort(this.sortNameAlphapeticallyASC)
-          : promotions.slice().sort(this.sortNameAlphapeticallyDESC)
-      case 'effectType':
-        return sortOrder === 'ASC'
-          ? promotions.slice().sort(this.sortEffectAlphapeticallyASC)
-          : promotions.slice().sort(this.sortEffectAlphapeticallyDESC)
-      case 'beginDate':
-        return sortOrder === 'ASC'
-          ? promotions.slice().sort(this.sortStartDateASC)
-          : promotions.slice().sort(this.sortStartDateDESC)
-      case 'endDate':
-        return sortOrder === 'ASC'
-          ? promotions.slice().sort(this.sortEndDateASC)
-          : promotions.slice().sort(this.sortEndDateDESC)
-      default:
-        return promotions
-    }
+    this.props.updatePromotionsSearchParams({
+      name: inputSearchValue,
+      effect: inputSearchValue,
+    })
   }
 
   handleSort = ({ sortOrder, sortedBy }) => {
@@ -354,17 +298,10 @@ class PromotionsTable extends Component {
 
   render() {
     const { navigate } = this.context
-    const {
-      intl,
-      loading,
-      promotions,
-      inputSearchValue,
-      handleSearchChange,
-      handleSearchClear,
-      handleSearchSubmit,
-    } = this.props
+    const { intl, loading, promotions } = this.props
     const {
       dataSort,
+      inputSearchValue,
       isPromotionModalOpened,
       promotionToBeDeleted: { name: promotionToBeDeletedName } = {},
     } = this.state
@@ -374,7 +311,7 @@ class PromotionsTable extends Component {
       <div>
         <Table
           schema={schema}
-          items={this.sortPromotions(promotions)}
+          items={sortPromotions(promotions, dataSort)}
           density="low"
           loading={loading}
           onRowClick={({ rowData: { id } }) => {
@@ -391,9 +328,9 @@ class PromotionsTable extends Component {
               placeholder: intl.formatMessage({
                 id: 'promotions.promotions.search',
               }),
-              onChange: handleSearchChange,
-              onClear: handleSearchClear,
-              onSubmit: handleSearchSubmit,
+              onChange: this.handleSearchChange,
+              onClear: this.handleSearchClear,
+              onSubmit: this.handleSearchSubmit,
             },
             fields: {
               label: intl.formatMessage({
@@ -466,10 +403,7 @@ PromotionsTable.propTypes = {
   promotions: PropTypes.arrayOf(PropTypes.object),
   loading: PropTypes.bool,
   inputSearchValue: PropTypes.string,
-  handleSearchChange: PropTypes.func,
-  handleSearchClear: PropTypes.func,
-  handleSearchSubmit: PropTypes.func,
-  handlePromotionDeletion: PropTypes.func,
+  updatePromotionsSearchParams: PropTypes.func,
 }
 
 export default compose(
