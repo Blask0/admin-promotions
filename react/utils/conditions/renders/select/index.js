@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import { EXPERIMENTAL_Select, Alert } from 'vtex.styleguide'
 import BulkImporter from '../../../../components/bulkImporter'
+const SELECT_TEXTAREA_MAX_HEIGHT = 100
 
 const renderSelectObject = ({
   statements,
@@ -52,8 +53,6 @@ const renderSelectObject = ({
       }
     }
 
-    const valuesMaxHeight = 1000
-
     const BulkImporterObject =
       bulk &&
       bulk.connector &&
@@ -96,7 +95,7 @@ const renderSelectObject = ({
                     name: searchedValue,
                   })
               }}
-              valuesMaxHeight={valuesMaxHeight}
+              valuesMaxHeight={SELECT_TEXTAREA_MAX_HEIGHT}
             />
             {statements[statementIndex].warning && (
               <div className="mt4">
