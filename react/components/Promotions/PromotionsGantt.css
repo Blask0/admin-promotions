@@ -1,0 +1,43 @@
+.timeLine {
+    border: none;
+}
+
+.verticalResizer {
+    border: none;
+    box-shadow: 4px 0px 8px rgba(0,0,0,0.1);
+    z-index: 2;
+    flex: 0 0 2px;
+    background: #F2F4F5;
+}
+
+.timeLine-side-task-viewPort {
+    background-color: transparent;
+}
+
+.timeLine-side-task-row {
+    background: transparent !important;
+}
+
+.timeLine-side-title {
+    border: none !important;
+}
+
+.timeLine-side-task-row {
+}
+
+.timeLine-side {
+    border: none;
+}
+
+.timeLine-main-data-row div {
+    height: 12px !important;
+    transform: translateY(6px);
+}
+
+.header-middle div,
+.header-top div,
+.header-bottom div {
+    border: none !important;
+}
+
+.squareGrip {display: none;}
