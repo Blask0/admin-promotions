@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { injectIntl, intlShape } from 'react-intl'
 
-import { Layout, PageHeader, PageBlock, Button } from 'vtex.styleguide'
+import { Layout, PageHeader, PageBlock } from 'vtex.styleguide'
 
 import PromotionsTable from './components/Promotions/PromotionsTable'
 import withPromotions from './connectors/withPromotions'
+import { getErrorReasons } from './utils/errors'
 
 class PromotionsPage extends Component {
   constructor(props) {
@@ -52,7 +54,16 @@ class PromotionsPage extends Component {
 
   render() {
     const { inputSearchValue } = this.state
-    const { promotions = [], loading } = this.props
+    const { intl, promotions = [], loading, error } = this.props
+
+    const [errorReason] = getErrorReasons(error)
+    const emptyPromotionsLabel = error
+      ? intl.formatMessage({
+        id: `promotions.promotion.error.reason.${errorReason}`,
+      })
+      : intl.formatMessage({
+        id: 'promotions.promotions.table.emptyLabel',
+      })
 
     return (
       <Layout fullWidth pageHeader={<PageHeader title="Promotions" />}>
@@ -60,6 +71,7 @@ class PromotionsPage extends Component {
           <PromotionsTable
             promotions={promotions}
             loading={loading}
+            emptyPromotionsLabel={emptyPromotionsLabel}
             inputSearchValue={inputSearchValue}
             handleSearchChange={this.handleSearchChange}
             handleSearchClear={this.handleSearchClear}
@@ -73,6 +85,7 @@ class PromotionsPage extends Component {
 }
 
 PromotionsPage.propTypes = {
+  intl: intlShape,
   promotions: PropTypes.arrayOf(PropTypes.object),
   error: PropTypes.object,
   loading: PropTypes.bool,
@@ -80,4 +93,4 @@ PromotionsPage.propTypes = {
   updateQueryParams: PropTypes.func,
 }
 
-export default withPromotions(PromotionsPage)
+export default withPromotions(injectIntl(PromotionsPage))

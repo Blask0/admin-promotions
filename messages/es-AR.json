@@ -194,6 +194,7 @@
   "promotions.promotion.scopeSelector.sku.verb.any": "es uno de",
   "promotions.promotion.scopeSelector.sku.verb.not.any": "no es uno de",
   "promotions.promotion.scopeSelector.sku.placeholder": "Seleccione los SKUs deseados…",
+  "promotions.promotions.table.emptyLabel": "No hay promociones configuradas en el momento",
   "promotions.promotions.table.filter.label": "Alternar campos visibles",
   "promotions.promotions.table.filter.showAll": "Mostrar Todo",
   "promotions.promotions.table.filter.hideAll": "Ocultar Todo",
@@ -228,6 +229,7 @@
   "promotions.promotion.import.modal.catalog": "Comprobando las identificaciones con el sistema de catálogo…",
   "promotions.promotion.import.modal.notFound": "No encontramos estos Ids en el catálogo: {notFound}",
   "promotions.promotion.error.retry": "Procesar de nuevo",
+  "promotions.promotion.error.reason.RNB-E0012": "Se ha producido un error al buscar las promociones.",
   "promotions.promotion.error.reason.RNB-E1004": "Error al guardar las condiciones de elegibilidad",
   "promotions.promotion.error.reason.RNB-E1005": "Error al guardar la promoción"
 }

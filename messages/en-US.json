@@ -193,6 +193,7 @@
   "promotions.promotion.scopeSelector.sku.verb.any": "is one of",
   "promotions.promotion.scopeSelector.sku.verb.not.any": "is not one of",
   "promotions.promotion.scopeSelector.sku.placeholder": "Select the desired SKUs…",
+  "promotions.promotions.table.emptyLabel": "There are no promotions currently configured",
   "promotions.promotions.table.filter.label": "Toggle visible fields",
   "promotions.promotions.table.filter.showAll": "Show All",
   "promotions.promotions.table.filter.hideAll": "Hide All",
@@ -227,6 +228,7 @@
   "promotions.promotion.import.modal.catalog": "Checking ids with catalog system…",
   "promotions.promotion.import.modal.notFound": "We didn't find these Ids in catalog: {notFound}",
   "promotions.promotion.error.retry": "Retry",
+  "promotions.promotion.error.reason.RNB-E0012": "An error occurred while fetching for promotions",
   "promotions.promotion.error.reason.RNB-E1004": "Error saving eligibility conditions",
   "promotions.promotion.error.reason.RNB-E1005": "Error saving promotion"
 }

@@ -358,6 +358,7 @@ class PromotionsTable extends Component {
       intl,
       loading,
       promotions,
+      emptyPromotionsLabel,
       inputSearchValue,
       handleSearchChange,
       handleSearchClear,
@@ -377,6 +378,7 @@ class PromotionsTable extends Component {
           items={this.sortPromotions(promotions)}
           density="low"
           loading={loading}
+          emptyStateLabel={emptyPromotionsLabel}
           onRowClick={({ rowData: { id } }) => {
             navigate({
               page: 'admin.promotions.PromotionPage',
@@ -465,6 +467,7 @@ PromotionsTable.propTypes = {
   intl: intlShape,
   promotions: PropTypes.arrayOf(PropTypes.object),
   loading: PropTypes.bool,
+  emptyPromotionsLabel: PropTypes.string,
   inputSearchValue: PropTypes.string,
   handleSearchChange: PropTypes.func,
   handleSearchClear: PropTypes.func,

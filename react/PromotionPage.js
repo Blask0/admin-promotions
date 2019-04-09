@@ -34,6 +34,7 @@ import {
   isTimeValid,
   isToBeforeFrom,
 } from './utils/promotion/recurrency'
+import { getErrorReasons } from './utils/errors'
 
 class PromotionPage extends Component {
   constructor(props) {
@@ -776,11 +777,8 @@ class PromotionPage extends Component {
           page: 'admin.promotions.PromotionsPage',
         })
       })
-      .catch(err => {
-        const errorReason = err.graphQLErrors.reduce(
-          (_, error) => error.extensions.exception.reason,
-          ''
-        )
+      .catch(error => {
+        const [errorReason] = getErrorReasons(error)
         showToast({
           message: intl.formatMessage({
             id: `promotions.promotion.error.reason.${errorReason}`,
