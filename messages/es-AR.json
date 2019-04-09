@@ -226,5 +226,8 @@
   "promotions.promotion.import.modal.title.collection": "Importar lista de colecciones",
   "promotions.promotion.import.modal.placeholder": "(archivos *.txt con una entrada por línea)",
   "promotions.promotion.import.modal.catalog": "Comprobando las identificaciones con el sistema de catálogo…",
-  "promotions.promotion.import.modal.notFound": "No encontramos estos Ids en el catálogo: {notFound}"
+  "promotions.promotion.import.modal.notFound": "No encontramos estos Ids en el catálogo: {notFound}",
+  "promotions.promotion.error.retry": "Procesar de nuevo",
+  "promotions.promotion.error.reason.RNB-E1004": "Error al guardar las condiciones de elegibilidad",
+  "promotions.promotion.error.reason.RNB-E1005": "Error al guardar la promoción"
 }

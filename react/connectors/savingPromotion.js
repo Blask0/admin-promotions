@@ -12,8 +12,12 @@ function savingPromotion(WrappedComponent) {
           mutation={savePromotion}
           refetchQueries={[{ query: getPromotions }]}
           awaitRefetchQueries>
-          {(savePromotion, { data }) => (
-            <WrappedComponent {...this.props} savePromotion={savePromotion} />
+          {(savePromotion, { data, error }) => (
+            <WrappedComponent
+              {...this.props}
+              error={error}
+              savePromotion={savePromotion}
+            />
           )}
         </Mutation>
       )

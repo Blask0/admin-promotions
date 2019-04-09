@@ -2,7 +2,14 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-import { Layout, PageBlock, PageHeader, Button, Alert } from 'vtex.styleguide'
+import {
+  Layout,
+  PageBlock,
+  PageHeader,
+  Button,
+  Alert,
+  withToast,
+} from 'vtex.styleguide'
 
 import EffectsSection from './components/Promotion/EffectsSection'
 import EligibilitySection from './components/Promotion/EligibilitySection'
@@ -655,7 +662,7 @@ class PromotionPage extends Component {
   }
 
   removeRefsFromStatements(statements) {
-    return statements.map(({ refs, ...statement}) => statement)
+    return statements.map(({ refs, ...statement }) => statement)
   }
 
   prepareToSave = promotion => {
@@ -675,7 +682,9 @@ class PromotionPage extends Component {
     const {
       statements: { value: eligibilityStatementsWithRefs },
     } = eligibility
-    const scopeStatements = this.removeRefsFromStatements(scopeStatementsWithRefs)
+    const scopeStatements = this.removeRefsFromStatements(
+      scopeStatementsWithRefs
+    )
     const eligibilityStatements = this.removeRefsFromStatements(
       eligibilityStatementsWithRefs
     )
@@ -753,6 +762,40 @@ class PromotionPage extends Component {
     }
   }
 
+  handleSave = promotion => {
+    const { intl } = this.props
+    this.setState({ isSaving: true })
+    const { showToast, savePromotion } = this.props
+    savePromotion({
+      variables: {
+        promotion,
+      },
+    })
+      .then(() => {
+        navigate({
+          page: 'admin.promotions.PromotionsPage',
+        })
+      })
+      .catch(err => {
+        const errorReason = err.graphQLErrors.reduce(
+          (_, error) => error.extensions.exception.reason,
+          ''
+        )
+        showToast({
+          message: intl.formatMessage({
+            id: `promotions.promotion.error.reason.${errorReason}`,
+          }),
+          action: {
+            label: intl.formatMessage({
+              id: 'promotions.promotion.error.retry',
+            }),
+            onClick: () => this.save(promotion),
+          },
+        })
+      })
+      .finally(() => this.setState({ isSaving: false }))
+  }
+
   render() {
     const { navigate } = this.context
     const { promotion, isSaving } = this.state
@@ -775,7 +818,7 @@ class PromotionPage extends Component {
             })}
             onLinkClick={() => {
               navigate({
-                page: 'admin.promotions',
+                page: 'admin.promotions.PromotionsPage',
               })
             }}
             title={
@@ -858,20 +901,8 @@ class PromotionPage extends Component {
             isLoading={isSaving}
             onClick={() => {
               if (this.canSave()) {
-                this.setState({ isSaving: true })
                 const preparedPromotion = this.prepareToSave(promotion)
-
-                savePromotion({
-                  variables: {
-                    promotion: preparedPromotion,
-                  },
-                })
-                  .then(() =>
-                    navigate({
-                      page: 'admin.promotions',
-                    })
-                  )
-                  .finally(() => this.setState({ isSaving: false }))
+                this.handleSave(preparedPromotion)
               }
             }}>
             <FormattedMessage id="promotions.promotion.save" />
@@ -898,5 +929,6 @@ export default compose(
   withSalesChannels,
   withPromotion,
   savingPromotion,
+  withToast,
   injectIntl
 )(PromotionPage)

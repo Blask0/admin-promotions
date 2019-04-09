@@ -195,7 +195,7 @@ class PromotionsTable extends Component {
           }),
         onClick: ({ rowData: { id } }) => {
           navigate({
-            page: 'admin.promotion',
+            page: 'admin.promotions.PromotionPage',
             params: {
               id: 'new',
               duplicate: id,
@@ -379,7 +379,7 @@ class PromotionsTable extends Component {
           loading={loading}
           onRowClick={({ rowData: { id } }) => {
             navigate({
-              page: 'admin.promotion',
+              page: 'admin.promotions.PromotionPage',
               params: {
                 id: id,
               },
@@ -412,7 +412,7 @@ class PromotionsTable extends Component {
               }),
               handleCallback: () => {
                 navigate({
-                  page: 'admin.promotion',
+                  page: 'admin.promotions.PromotionPage',
                   params: {
                     id: 'new',
                   },

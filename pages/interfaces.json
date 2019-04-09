@@ -1,8 +1,14 @@
 {
+  "toastr": {
+    "component": "toastr"
+  },
   "admin.promotions": {
+    "around": ["toastr"]
+  },
+  "admin.promotions.PromotionsPage": {
     "component": "PromotionsPage"
   },
-  "admin.promotion": {
+  "admin.promotions.PromotionPage": {
     "component": "PromotionPage"
   }
 }
