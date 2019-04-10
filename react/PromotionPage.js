@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
@@ -34,7 +34,7 @@ import {
   isTimeValid,
   isToBeforeFrom,
 } from './utils/promotion/recurrency'
-import { getErrorReasons } from './utils/errors'
+import { getErrorsInfo } from './utils/errors'
 
 class PromotionPage extends Component {
   constructor(props) {
@@ -55,13 +55,22 @@ class PromotionPage extends Component {
 
   checkError = () => {
     const { navigate } = this.context
-    const { intl, error, showToast } = this.props
+    const { error, showToast } = this.props
     if (error) {
-      const [errorReason] = getErrorReasons(error)
+      const [errorInfo] = getErrorsInfo(error)
       showToast({
-        message: intl.formatMessage({
-          id: `promotions.promotion.error.reason.${errorReason}`,
-        }),
+        message: (
+          <Fragment>
+            <div>
+              <FormattedMessage
+                id={`promotions.promotion.error.reason.${errorInfo.reason}`}
+              />
+            </div>
+            <span>
+              OperationId: <strong>{errorInfo.operationId}</strong>
+            </span>
+          </Fragment>
+        ),
       })
       navigate({
         page: 'admin.promotions.PromotionsPage',
@@ -795,11 +804,20 @@ class PromotionPage extends Component {
         })
       })
       .catch(error => {
-        const [errorReason] = getErrorReasons(error)
+        const [errorInfo] = getErrorsInfo(error)
         showToast({
-          message: intl.formatMessage({
-            id: `promotions.promotion.error.reason.${errorReason}`,
-          }),
+          message: (
+            <Fragment>
+              <div>
+                <FormattedMessage
+                  id={`promotions.promotion.error.reason.${errorInfo.reason}`}
+                />
+              </div>
+              <span>
+                OperationId: <strong>{errorInfo.operationId}</strong>
+              </span>
+            </Fragment>
+          ),
           action: {
             label: intl.formatMessage({
               id: 'promotions.promotion.error.retry',
