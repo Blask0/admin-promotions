@@ -35,14 +35,14 @@ function withPromotion(WrappedComponent) {
         : promotion
 
     render() {
-      const { id, isDuplicating } = this.state
+      const { id } = this.state
       return id ? (
         <Query
           query={getPromotion}
           variables={{ id }}
           fetchPolicy="network-only">
-          {({ loading, error, data }) =>
-            loading ? null : (
+          {({ loading, error, data }) => {
+            return loading ? null : (
               <WrappedComponent
                 {...this.props}
                 loading={loading}
@@ -52,7 +52,7 @@ function withPromotion(WrappedComponent) {
                 }
               />
             )
-          }
+          }}
         </Query>
       ) : (
         <WrappedComponent {...this.props} />

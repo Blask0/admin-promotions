@@ -53,7 +53,24 @@ class PromotionPage extends Component {
     }
   }
 
+  checkError = () => {
+    const { navigate } = this.context
+    const { intl, error, showToast } = this.props
+    if (error) {
+      const [errorReason] = getErrorReasons(error)
+      showToast({
+        message: intl.formatMessage({
+          id: `promotions.promotion.error.reason.${errorReason}`,
+        }),
+      })
+      navigate({
+        page: 'admin.promotions.PromotionsPage',
+      })
+    }
+  }
+
   componentDidMount = () => {
+    this.checkError()
     window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
   }
 
@@ -801,8 +818,8 @@ class PromotionPage extends Component {
     const {
       intl,
       params: { id },
-      savePromotion,
     } = this.props
+
     const uniqueCurrencyCodes = this.getUniqueCurrencyCodes()
     const currencyCode =
       uniqueCurrencyCodes.length === 1 ? uniqueCurrencyCodes[0] : undefined
@@ -924,9 +941,9 @@ PromotionPage.propTypes = {
 }
 
 export default compose(
+  savingPromotion,
   withSalesChannels,
   withPromotion,
-  savingPromotion,
   withToast,
   injectIntl
 )(PromotionPage)
