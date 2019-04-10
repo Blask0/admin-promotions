@@ -53,37 +53,42 @@ class PromotionPage extends Component {
     }
   }
 
-  checkError = () => {
+  handleError = error => {
     const { navigate } = this.context
-    const { error, showToast } = this.props
-    if (error) {
-      const [errorInfo] = getErrorsInfo(error)
-      showToast({
-        message: (
-          <Fragment>
-            <div>
-              <FormattedMessage
-                id={`promotions.promotion.error.reason.${errorInfo.reason}`}
-              />
-            </div>
-            <span>
-              OperationId: <strong>{errorInfo.operationId}</strong>
-            </span>
-          </Fragment>
-        ),
-      })
-      navigate({
-        page: 'admin.promotions.PromotionsPage',
-      })
+    const { showToast } = this.props
+    const [errorInfo] = getErrorsInfo(error)
+    showToast({
+      message: (
+        <Fragment>
+          <div>
+            <FormattedMessage
+              id={`promotions.promotion.error.reason.${errorInfo.reason}`}
+            />
+          </div>
+          <span>
+            OperationId: <strong>{errorInfo.operationId}</strong>
+          </span>
+        </Fragment>
+      ),
+    })
+    navigate({
+      page: 'admin.promotions.PromotionsPage',
+    })
+  }
+
+  componentDidUpdate(prevProps) {
+    const { intl, loading, error, promotion, salesChannels } = this.props
+    if (prevProps.loading && !loading) {
+      if (error) {
+        this.handleError(error)
+      } else {
+        this.setState({
+          promotion: newPromotion(intl, promotion, salesChannels),
+        })
+        window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
+      }
     }
-  }
 
-  componentDidMount = () => {
-    this.checkError()
-    window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
-  }
-
-  componentDidUpdate() {
     if (this.multipleCurrencies.focus) {
       this.multipleCurrencies.ref.current.scrollIntoView({
         behavior: 'smooth',
@@ -836,13 +841,15 @@ class PromotionPage extends Component {
     const {
       intl,
       params: { id },
+      loading,
+      error,
     } = this.props
 
     const uniqueCurrencyCodes = this.getUniqueCurrencyCodes()
     const currencyCode =
       uniqueCurrencyCodes.length === 1 ? uniqueCurrencyCodes[0] : undefined
 
-    return (
+    return loading || error ? null : (
       <Layout
         pageHeader={
           <PageHeader

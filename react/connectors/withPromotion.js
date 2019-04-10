@@ -42,7 +42,7 @@ function withPromotion(WrappedComponent) {
           variables={{ id }}
           fetchPolicy="network-only">
           {({ loading, error, data }) => {
-            return loading ? null : (
+            return (
               <WrappedComponent
                 {...this.props}
                 loading={loading}
