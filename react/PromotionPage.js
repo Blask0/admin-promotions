@@ -868,7 +868,7 @@ class PromotionPage extends Component {
             }
           />
         }>
-        {!currencyCode ? (
+        {!loading && !currencyCode ? (
           <div className="mb5">
             <Alert
               ref={this.multipleCurrencies.ref}

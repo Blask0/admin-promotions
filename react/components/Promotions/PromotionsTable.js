@@ -14,7 +14,7 @@ import Reward from '../Icon/Reward'
 import { toDate, format } from 'date-fns'
 
 import archivingPromotionById from '../../connectors/archivingPromotionById'
-import { getErrorsInfo } from '../../utils/errors';
+import { getErrorsInfo } from '../../utils/errors'
 
 class PromotionsTable extends Component {
   constructor(props) {
@@ -369,19 +369,10 @@ class PromotionsTable extends Component {
     } = this.state
     const schema = this.getTableSchema(intl)
 
-    const [errorInfo] = getErrorsInfo(error)
-    const emptyStateLabel = error
-      ? intl.formatMessage({
-        id: `promotions.promotion.error.reason.${errorInfo.reason}`,
-      })
-      : intl.formatMessage({
-        id: 'promotions.promotions.table.emptyLabel',
-      })
-    const emptyStateChildren = error && (
-      <span>
-        OperationId: <strong>{errorInfo.operationId}</strong>
-      </span>
-    )
+    const emptyStateLabel =
+      !loading && error
+        ? intl.formatMessage({ id: 'promotions.promotions.table.errorLabel' })
+        : intl.formatMessage({ id: 'promotions.promotions.table.emptyLabel' })
 
     return (
       <div>
@@ -391,7 +382,6 @@ class PromotionsTable extends Component {
           density="low"
           loading={loading}
           emptyStateLabel={emptyStateLabel}
-          emptyStateChildren={emptyStateChildren}
           onRowClick={({ rowData: { id } }) => {
             navigate({
               page: 'admin.promotions.PromotionPage',

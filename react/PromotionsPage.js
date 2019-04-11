@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { compose } from 'react-apollo'
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-import { Layout, PageHeader, PageBlock } from 'vtex.styleguide'
+import { Alert, Layout, PageHeader, PageBlock } from 'vtex.styleguide'
 
 import PromotionsTable from './components/Promotions/PromotionsTable'
 import withPromotions from './connectors/withPromotions'
+import { getErrorsInfo } from './utils/errors'
 
 class PromotionsPage extends Component {
   constructor(props) {
@@ -12,6 +15,20 @@ class PromotionsPage extends Component {
 
     this.state = {
       inputSearchValue: '',
+      showError: true,
+    }
+
+    this.alertRef = React.createRef()
+  }
+
+  componentDidUpdate() {
+    const { showError } = this.state
+    const { error } = this.props
+    if (error && showError) {
+      this.alertRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
     }
   }
 
@@ -51,11 +68,42 @@ class PromotionsPage extends Component {
   }
 
   render() {
-    const { inputSearchValue } = this.state
-    const { promotions = [], loading, error } = this.props
+    const { inputSearchValue, showError } = this.state
+    const {
+      intl,
+      promotions = [],
+      loading,
+      error,
+      refetchPromotions,
+    } = this.props
+
+    const [errorInfo] = getErrorsInfo(error)
 
     return (
       <Layout fullWidth pageHeader={<PageHeader title="Promotions" />}>
+        {error && showError && (
+          <div className="mb5">
+            <Alert
+              ref={this.alertRef}
+              type="error"
+              onClose={() => this.setState({ showError: false })}
+              action={{
+                label: intl.formatMessage({
+                  id: 'promotions.promotion.error.reload',
+                }),
+                onClick: () => window.location.reload(),
+              }}>
+              <div className="flex flex-column">
+                <FormattedMessage
+                  id={`promotions.promotion.error.reason.${errorInfo.reason}`}
+                />
+                <span>
+                  OperationId: <strong>{errorInfo.operationId}</strong>
+                </span>
+              </div>
+            </Alert>
+          </div>
+        )}
         <PageBlock>
           <PromotionsTable
             promotions={promotions}
@@ -74,6 +122,7 @@ class PromotionsPage extends Component {
 }
 
 PromotionsPage.propTypes = {
+  intl: intlShape,
   promotions: PropTypes.arrayOf(PropTypes.object),
   error: PropTypes.object,
   loading: PropTypes.bool,
@@ -81,4 +130,7 @@ PromotionsPage.propTypes = {
   updateQueryParams: PropTypes.func,
 }
 
-export default withPromotions(PromotionsPage)
+export default compose(
+  withPromotions,
+  injectIntl
+)(PromotionsPage)
