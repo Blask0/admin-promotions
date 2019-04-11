@@ -45,9 +45,15 @@ class PromotionPage extends Component {
     this.state = {
       promotion: newPromotion(intl, promotion, salesChannels),
       isSaving: false,
+      showError: true,
     }
 
     this.multipleCurrencies = {
+      ref: React.createRef(),
+      focus: false,
+    }
+
+    this.errorAlert = {
       ref: React.createRef(),
       focus: false,
     }
@@ -77,6 +83,7 @@ class PromotionPage extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    const { showError } = this.state
     const { intl, loading, error, promotion, salesChannels } = this.props
     if (prevProps.loading && !loading) {
       if (error) {
@@ -87,6 +94,14 @@ class PromotionPage extends Component {
         })
         window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
       }
+    }
+
+    if (error && showError) {
+      this.errorAlert.ref.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
+      this.errorAlert.focus = false
     }
 
     if (this.multipleCurrencies.focus) {
@@ -795,9 +810,9 @@ class PromotionPage extends Component {
   }
 
   handleSave = promotion => {
-    const { intl } = this.props
-    this.setState({ isSaving: true })
-    const { showToast, savePromotion } = this.props
+    this.setState({ isSaving: true, showError: true })
+    this.errorAlert.focus = true
+    const { savePromotion } = this.props
     savePromotion({
       variables: {
         promotion,
@@ -808,35 +823,12 @@ class PromotionPage extends Component {
           page: 'admin.promotions.PromotionsPage',
         })
       })
-      .catch(error => {
-        const [errorInfo] = getErrorsInfo(error)
-        showToast({
-          message: (
-            <Fragment>
-              <div>
-                <FormattedMessage
-                  id={`promotions.promotion.error.reason.${errorInfo.reason}`}
-                />
-              </div>
-              <span>
-                OperationId: <strong>{errorInfo.operationId}</strong>
-              </span>
-            </Fragment>
-          ),
-          action: {
-            label: intl.formatMessage({
-              id: 'promotions.promotion.error.retry',
-            }),
-            onClick: () => this.save(promotion),
-          },
-        })
-      })
       .finally(() => this.setState({ isSaving: false }))
   }
 
   render() {
     const { navigate } = this.context
-    const { promotion, isSaving } = this.state
+    const { promotion, isSaving, showError } = this.state
     const { generalInfo, eligibility, effects, restriction } = promotion
     const {
       intl,
@@ -845,11 +837,13 @@ class PromotionPage extends Component {
       error,
     } = this.props
 
+    const [errorInfo] = getErrorsInfo(error)
+
     const uniqueCurrencyCodes = this.getUniqueCurrencyCodes()
     const currencyCode =
       uniqueCurrencyCodes.length === 1 ? uniqueCurrencyCodes[0] : undefined
 
-    return loading || error ? null : (
+    return loading ? null : (
       <Layout
         pageHeader={
           <PageHeader
@@ -868,6 +862,23 @@ class PromotionPage extends Component {
             }
           />
         }>
+        {error && showError && (
+          <div className="mb5">
+            <Alert
+              ref={this.errorAlert.ref}
+              type="error"
+              onClose={() => this.setState({ showError: false })}>
+              <div className="flex flex-column">
+                <FormattedMessage
+                  id={`promotions.promotion.error.reason.${errorInfo.reason}`}
+                />
+                <span>
+                  OperationId: <strong>{errorInfo.operationId}</strong>
+                </span>
+              </div>
+            </Alert>
+          </div>
+        )}
         {!loading && !currencyCode ? (
           <div className="mb5">
             <Alert
@@ -966,9 +977,9 @@ PromotionPage.propTypes = {
 }
 
 export default compose(
-  savingPromotion,
   withSalesChannels,
   withPromotion,
+  savingPromotion,
   withToast,
   injectIntl
 )(PromotionPage)
