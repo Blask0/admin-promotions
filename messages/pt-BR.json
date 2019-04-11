@@ -231,6 +231,7 @@
   "promotions.promotion.import.modal.notFound": "Não encontramos estes ids no catálogo: {notFound}",
   "promotions.promotion.error.reload": "Recarregar",
   "promotions.promotion.error.retry": "Tentar novamente",
+  "promotions.promotion.error.goToPromotions": "Retornar à lista de promoções",
   "promotions.promotion.error.reason.RNB-E0012": "Ocorreu um erro ao buscar as promoções",
   "promotions.promotion.error.reason.RNB-E0013": "Erro ao buscar as condições de elegibilidade",
   "promotions.promotion.error.reason.RNB-E0014": "Erro ao buscar promoção",

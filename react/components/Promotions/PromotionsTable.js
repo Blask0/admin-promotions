@@ -389,6 +389,7 @@ class PromotionsTable extends Component {
                 id: id,
               },
             })
+            window.postMessage({ action: { type: 'START_LOADING' } }, '*')
           }}
           toolbar={{
             inputSearch: {

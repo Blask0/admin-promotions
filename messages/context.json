@@ -231,6 +231,7 @@
   "promotions.promotion.import.modal.notFound": "promotions.promotion.import.modal.notFound",
   "promotions.promotion.error.reload": "promotions.promotion.error.reload",
   "promotions.promotion.error.retry": "promotions.promotion.error.retry",
+  "promotions.promotion.error.goToPromotions": "promotions.promotion.error.goToPromotions",
   "promotions.promotion.error.reason.RNB-E0012": "promotions.promotion.error.reason.RNB-E0012",
   "promotions.promotion.error.reason.RNB-E0013": "promotions.promotion.error.reason.RNB-E0013",
   "promotions.promotion.error.reason.RNB-E0014": "promotions.promotion.error.reason.RNB-E0014",

@@ -59,43 +59,9 @@ class PromotionPage extends Component {
     }
   }
 
-  handleError = error => {
-    const { navigate } = this.context
-    const { showToast } = this.props
-    const [errorInfo] = getErrorsInfo(error)
-    showToast({
-      message: (
-        <Fragment>
-          <div>
-            <FormattedMessage
-              id={`promotions.promotion.error.reason.${errorInfo.reason}`}
-            />
-          </div>
-          <span>
-            OperationId: <strong>{errorInfo.operationId}</strong>
-          </span>
-        </Fragment>
-      ),
-    })
-    navigate({
-      page: 'admin.promotions.PromotionsPage',
-    })
-  }
-
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     const { showError } = this.state
-    const { intl, loading, error, promotion, salesChannels } = this.props
-    if (prevProps.loading && !loading) {
-      if (error) {
-        this.handleError(error)
-      } else {
-        this.setState({
-          promotion: newPromotion(intl, promotion, salesChannels),
-        })
-        window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
-      }
-    }
-
+    const { error } = this.props
     if (error && showError) {
       this.errorAlert.ref.current.scrollIntoView({
         behavior: 'smooth',
@@ -111,6 +77,10 @@ class PromotionPage extends Component {
       })
       this.multipleCurrencies.focus = false
     }
+  }
+
+  componentDidMount() {
+    window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
   }
 
   validate = () => {
@@ -822,6 +792,7 @@ class PromotionPage extends Component {
         navigate({
           page: 'admin.promotions.PromotionsPage',
         })
+        window.postMessage({ action: { type: 'START_LOADING' } }, '*')
       })
       .finally(() => this.setState({ isSaving: false }))
   }
