@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Campaigns Admin",
   "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint -c .eslintrc './**/*.js'"
+  },
   "dependencies": {
     "apollo-client": "^2.4.7",
     "date-fns": "^2.0.0-alpha.26",
@@ -44,9 +48,6 @@
       "\\.(gql|graphql)$": "jest-transform-graphql",
       ".*": "babel-jest"
     }
-  },
-  "scripts": {
-    "test": "jest"
   },
   "repository": {
     "type": "git",

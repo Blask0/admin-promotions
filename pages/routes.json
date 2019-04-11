@@ -1,8 +1,8 @@
 {
-  "admin.promotions": {
+  "admin.promotions.PromotionsPage": {
     "path": "/admin/promotions"
   },
-  "admin.promotion": {
+  "admin.promotions.PromotionPage": {
     "path": "/admin/promotions/:id"
   }
 }

@@ -3,6 +3,9 @@ import { Query } from 'react-apollo'
 
 import getPromotion from '../graphql/getPromotion.graphql'
 
+import { getErrorsInfo } from '../utils/errors'
+import ErrorPage from '../ErrorPage'
+
 function withPromotion(WrappedComponent) {
   class WithPromotion extends Component {
     constructor(props) {
@@ -35,14 +38,27 @@ function withPromotion(WrappedComponent) {
         : promotion
 
     render() {
-      const { id, isDuplicating } = this.state
+      const { navigate } = this.context
+      const { id } = this.state
       return id ? (
         <Query
           query={getPromotion}
           variables={{ id }}
           fetchPolicy="network-only">
-          {({ loading, error, data }) =>
-            loading ? null : (
+          {({ loading, error, data }) => {
+            const [errorInfo] = getErrorsInfo(error)
+            return error ? (
+              <ErrorPage
+                error={errorInfo}
+                actionMessageId="promotions.promotion.error.goToPromotions"
+                onActionExecuted={() => {
+                  navigate({
+                    page: 'admin.promotions.PromotionsPage',
+                  })
+                  window.postMessage({ action: { type: 'START_LOADING' } }, '*')
+                }}
+              />
+            ) : (
               <WrappedComponent
                 {...this.props}
                 loading={loading}
@@ -52,12 +68,16 @@ function withPromotion(WrappedComponent) {
                 }
               />
             )
-          }
+          }}
         </Query>
       ) : (
         <WrappedComponent {...this.props} />
       )
     }
+  }
+
+  WithPromotion.contextTypes = {
+    navigate: PropTypes.func,
   }
 
   return WithPromotion

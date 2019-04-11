@@ -1,8 +1,15 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-import { Layout, PageBlock, PageHeader, Button, Alert } from 'vtex.styleguide'
+import {
+  Layout,
+  PageBlock,
+  PageHeader,
+  Button,
+  Alert,
+  withToast,
+} from 'vtex.styleguide'
 
 import EffectsSection from './components/Promotion/EffectsSection'
 import EligibilitySection from './components/Promotion/EligibilitySection'
@@ -27,6 +34,7 @@ import {
   isTimeValid,
   isToBeforeFrom,
 } from './utils/promotion/recurrency'
+import { getErrorsInfo } from './utils/errors'
 
 class PromotionPage extends Component {
   constructor(props) {
@@ -37,19 +45,31 @@ class PromotionPage extends Component {
     this.state = {
       promotion: newPromotion(intl, promotion, salesChannels),
       isSaving: false,
+      showError: true,
     }
 
     this.multipleCurrencies = {
       ref: React.createRef(),
       focus: false,
     }
-  }
 
-  componentDidMount = () => {
-    window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
+    this.errorAlert = {
+      ref: React.createRef(),
+      focus: false,
+    }
   }
 
   componentDidUpdate() {
+    const { showError } = this.state
+    const { error } = this.props
+    if (error && showError) {
+      this.errorAlert.ref.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
+      this.errorAlert.focus = false
+    }
+
     if (this.multipleCurrencies.focus) {
       this.multipleCurrencies.ref.current.scrollIntoView({
         behavior: 'smooth',
@@ -57,6 +77,10 @@ class PromotionPage extends Component {
       })
       this.multipleCurrencies.focus = false
     }
+  }
+
+  componentDidMount() {
+    window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
   }
 
   validate = () => {
@@ -655,7 +679,7 @@ class PromotionPage extends Component {
   }
 
   removeRefsFromStatements(statements) {
-    return statements.map(({ refs, ...statement}) => statement)
+    return statements.map(({ refs, ...statement }) => statement)
   }
 
   prepareToSave = promotion => {
@@ -675,7 +699,9 @@ class PromotionPage extends Component {
     const {
       statements: { value: eligibilityStatementsWithRefs },
     } = eligibility
-    const scopeStatements = this.removeRefsFromStatements(scopeStatementsWithRefs)
+    const scopeStatements = this.removeRefsFromStatements(
+      scopeStatementsWithRefs
+    )
     const eligibilityStatements = this.removeRefsFromStatements(
       eligibilityStatementsWithRefs
     )
@@ -753,20 +779,42 @@ class PromotionPage extends Component {
     }
   }
 
+  handleSave = promotion => {
+    this.setState({ isSaving: true, showError: true })
+    this.errorAlert.focus = true
+    const { savePromotion } = this.props
+    savePromotion({
+      variables: {
+        promotion,
+      },
+    })
+      .then(() => {
+        navigate({
+          page: 'admin.promotions.PromotionsPage',
+        })
+        window.postMessage({ action: { type: 'START_LOADING' } }, '*')
+      })
+      .finally(() => this.setState({ isSaving: false }))
+  }
+
   render() {
     const { navigate } = this.context
-    const { promotion, isSaving } = this.state
+    const { promotion, isSaving, showError } = this.state
     const { generalInfo, eligibility, effects, restriction } = promotion
     const {
       intl,
       params: { id },
-      savePromotion,
+      loading,
+      error,
     } = this.props
+
+    const [errorInfo] = getErrorsInfo(error)
+
     const uniqueCurrencyCodes = this.getUniqueCurrencyCodes()
     const currencyCode =
       uniqueCurrencyCodes.length === 1 ? uniqueCurrencyCodes[0] : undefined
 
-    return (
+    return loading ? null : (
       <Layout
         pageHeader={
           <PageHeader
@@ -775,7 +823,7 @@ class PromotionPage extends Component {
             })}
             onLinkClick={() => {
               navigate({
-                page: 'admin.promotions',
+                page: 'admin.promotions.PromotionsPage',
               })
             }}
             title={
@@ -785,7 +833,24 @@ class PromotionPage extends Component {
             }
           />
         }>
-        {!currencyCode ? (
+        {error && showError && (
+          <div className="mb5">
+            <Alert
+              ref={this.errorAlert.ref}
+              type="error"
+              onClose={() => this.setState({ showError: false })}>
+              <div className="flex flex-column">
+                <FormattedMessage
+                  id={`promotions.promotion.error.reason.${errorInfo.reason}`}
+                />
+                <span>
+                  OperationId: <strong>{errorInfo.operationId}</strong>
+                </span>
+              </div>
+            </Alert>
+          </div>
+        )}
+        {!loading && !currencyCode ? (
           <div className="mb5">
             <Alert
               ref={this.multipleCurrencies.ref}
@@ -858,20 +923,8 @@ class PromotionPage extends Component {
             isLoading={isSaving}
             onClick={() => {
               if (this.canSave()) {
-                this.setState({ isSaving: true })
                 const preparedPromotion = this.prepareToSave(promotion)
-
-                savePromotion({
-                  variables: {
-                    promotion: preparedPromotion,
-                  },
-                })
-                  .then(() =>
-                    navigate({
-                      page: 'admin.promotions',
-                    })
-                  )
-                  .finally(() => this.setState({ isSaving: false }))
+                this.handleSave(preparedPromotion)
               }
             }}>
             <FormattedMessage id="promotions.promotion.save" />
@@ -898,5 +951,6 @@ export default compose(
   withSalesChannels,
   withPromotion,
   savingPromotion,
+  withToast,
   injectIntl
 )(PromotionPage)

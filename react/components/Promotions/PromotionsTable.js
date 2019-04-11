@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
+import { compose } from 'react-apollo'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
 import { Tag, Table, ModalDialog } from 'vtex.styleguide'
@@ -13,7 +14,7 @@ import Reward from '../Icon/Reward'
 import { toDate, format } from 'date-fns'
 
 import archivingPromotionById from '../../connectors/archivingPromotionById'
-import { compose } from 'react-apollo'
+import { getErrorsInfo } from '../../utils/errors'
 
 class PromotionsTable extends Component {
   constructor(props) {
@@ -34,9 +35,7 @@ class PromotionsTable extends Component {
         title: ' ',
         width: 60,
         cellRenderer: ({ rowData: promotion }) => (
-          <PromotionActivationToggle
-            promotion={promotion}
-          />
+          <PromotionActivationToggle promotion={promotion} />
         ),
       },
       name: {
@@ -88,7 +87,7 @@ class PromotionsTable extends Component {
         },
         width: 300,
         cellRenderer: ({ cellData }) => {
-          if(cellData){
+          if (cellData) {
             if (cellData.allCatalog) {
               return (
                 <span className="fw5">
@@ -97,28 +96,27 @@ class PromotionsTable extends Component {
                   })}
                 </span>
               )
-            } else {
-              let scopeInfo = []
-              const blackList = ['allCatalog', '__typename']
-  
-              Object.keys(cellData).forEach((key, index) => {
-                if (
-                  cellData[key] !== 0 &&
-                  !blackList.includes(key)
-                ) {
-                  scopeInfo = [
-                    ...scopeInfo,
-                    `${intl.formatMessage({
-                      id: `promotions.scopeColumn.${key}`,
-                    }, {
-                      itemCount: cellData[key] 
-                    })}`,
-                  ]
-                }
-              })
-  
-              return (<span>{scopeInfo.join(', ')}</span>)
             }
+            let scopeInfo = []
+            const blackList = ['allCatalog', '__typename']
+
+            Object.keys(cellData).forEach((key, index) => {
+              if (cellData[key] !== 0 && !blackList.includes(key)) {
+                scopeInfo = [
+                  ...scopeInfo,
+                  `${intl.formatMessage(
+                    {
+                      id: `promotions.scopeColumn.${key}`,
+                    },
+                    {
+                      itemCount: cellData[key],
+                    }
+                  )}`,
+                ]
+              }
+            })
+
+            return <span>{scopeInfo.join(', ')}</span>
           }
         },
       },
@@ -140,9 +138,9 @@ class PromotionsTable extends Component {
                 <span className="dtc v-mid">{time}</span>
               </div>
             </div>
-            )
-          },
+          )
         },
+      },
       endDate: {
         type: 'string',
         title: intl.formatMessage({
@@ -195,7 +193,7 @@ class PromotionsTable extends Component {
           }),
         onClick: ({ rowData: { id } }) => {
           navigate({
-            page: 'admin.promotion',
+            page: 'admin.promotions.PromotionPage',
             params: {
               id: 'new',
               duplicate: id,
@@ -358,6 +356,7 @@ class PromotionsTable extends Component {
       intl,
       loading,
       promotions,
+      error,
       inputSearchValue,
       handleSearchChange,
       handleSearchClear,
@@ -370,6 +369,11 @@ class PromotionsTable extends Component {
     } = this.state
     const schema = this.getTableSchema(intl)
 
+    const emptyStateLabel =
+      !loading && error
+        ? intl.formatMessage({ id: 'promotions.promotions.table.errorLabel' })
+        : intl.formatMessage({ id: 'promotions.promotions.table.emptyLabel' })
+
     return (
       <div>
         <Table
@@ -377,13 +381,15 @@ class PromotionsTable extends Component {
           items={this.sortPromotions(promotions)}
           density="low"
           loading={loading}
+          emptyStateLabel={emptyStateLabel}
           onRowClick={({ rowData: { id } }) => {
             navigate({
-              page: 'admin.promotion',
+              page: 'admin.promotions.PromotionPage',
               params: {
                 id: id,
               },
             })
+            window.postMessage({ action: { type: 'START_LOADING' } }, '*')
           }}
           toolbar={{
             inputSearch: {
@@ -412,7 +418,7 @@ class PromotionsTable extends Component {
               }),
               handleCallback: () => {
                 navigate({
-                  page: 'admin.promotion',
+                  page: 'admin.promotions.PromotionPage',
                   params: {
                     id: 'new',
                   },
@@ -465,6 +471,7 @@ PromotionsTable.propTypes = {
   intl: intlShape,
   promotions: PropTypes.arrayOf(PropTypes.object),
   loading: PropTypes.bool,
+  error: PropTypes.object,
   inputSearchValue: PropTypes.string,
   handleSearchChange: PropTypes.func,
   handleSearchClear: PropTypes.func,
