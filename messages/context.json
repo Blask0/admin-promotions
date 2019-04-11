@@ -229,6 +229,7 @@
   "promotions.promotion.import.modal.placeholder": "promotions.promotion.import.modal.placeholder",
   "promotions.promotion.import.modal.catalog": "promotions.promotion.import.modal.catalog",
   "promotions.promotion.import.modal.notFound": "promotions.promotion.import.modal.notFound",
+  "promotions.promotion.error.noAccess": "promotions.promotion.error.noAccess",
   "promotions.promotion.error.reload": "promotions.promotion.error.reload",
   "promotions.promotion.error.retry": "promotions.promotion.error.retry",
   "promotions.promotion.error.goToPromotions": "promotions.promotion.error.goToPromotions",

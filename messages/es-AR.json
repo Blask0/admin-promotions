@@ -229,6 +229,7 @@
   "promotions.promotion.import.modal.placeholder": "(archivos *.txt con una entrada por línea)",
   "promotions.promotion.import.modal.catalog": "Comprobando las identificaciones con el sistema de catálogo…",
   "promotions.promotion.import.modal.notFound": "No encontramos estos Ids en el catálogo: {notFound}",
+  "promotions.promotion.error.noAccess": "El usuario no puede acceder a este recurso.",
   "promotions.promotion.error.reload": "Recargar",
   "promotions.promotion.error.retry": "Procesar de nuevo",
   "promotions.promotion.error.goToPromotions": "Volver a la lista de promociones",
