@@ -8,6 +8,8 @@ import { Alert, Layout, PageHeader, PageBlock } from 'vtex.styleguide'
 import PromotionsTable from './components/Promotions/PromotionsTable'
 import withPromotions from './connectors/withPromotions'
 import { getErrorsInfo } from './utils/errors'
+import withAccountLimits from './connectors/withAccountLimits'
+import AccountLimitsAlert from './components/Promotions/AccountLimitsAlert'
 
 class PromotionsPage extends Component {
   constructor(props) {
@@ -18,14 +20,16 @@ class PromotionsPage extends Component {
       showError: true,
     }
 
-    this.alertRef = React.createRef()
+    this.errorAlert = {
+      ref: React.createRef(),
+    }
   }
 
   componentDidUpdate() {
     const { showError } = this.state
     const { error } = this.props
     if (error && showError) {
-      this.alertRef.current.scrollIntoView({
+      this.errorAlert.ref.current.scrollIntoView({
         behavior: 'smooth',
         block: 'center',
       })
@@ -67,15 +71,11 @@ class PromotionsPage extends Component {
     this.props.refetchPromotions()
   }
 
+  accountLimitsAlert = () => {}
+
   render() {
     const { inputSearchValue, showError } = this.state
-    const {
-      intl,
-      promotions = [],
-      loading,
-      error,
-      refetchPromotions,
-    } = this.props
+    const { intl, loading, error, promotions = [], accountLimits } = this.props
 
     const [errorInfo] = getErrorsInfo(error)
 
@@ -84,7 +84,7 @@ class PromotionsPage extends Component {
         {error && showError && (
           <div className="mb5">
             <Alert
-              ref={this.alertRef}
+              ref={this.errorAlert.ref}
               type="error"
               onClose={() => this.setState({ showError: false })}
               action={{
@@ -104,11 +104,20 @@ class PromotionsPage extends Component {
             </Alert>
           </div>
         )}
+        {accountLimits && (
+          <div className="mb5">
+            <AccountLimitsAlert
+              promotions={promotions}
+              accountLimits={accountLimits}
+            />
+          </div>
+        )}
         <PageBlock>
           <PromotionsTable
             promotions={promotions}
             loading={loading}
             error={error}
+            accountLimits={accountLimits}
             inputSearchValue={inputSearchValue}
             handleSearchChange={this.handleSearchChange}
             handleSearchClear={this.handleSearchClear}
@@ -131,6 +140,7 @@ PromotionsPage.propTypes = {
 }
 
 export default compose(
+  withAccountLimits,
   withPromotions,
   injectIntl
 )(PromotionsPage)

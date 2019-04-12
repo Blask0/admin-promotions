@@ -236,5 +236,8 @@
   "promotions.promotion.error.reason.RNB-E0013": "Erro ao buscar as condições de elegibilidade",
   "promotions.promotion.error.reason.RNB-E0014": "Erro ao buscar promoção",
   "promotions.promotion.error.reason.RNB-E1004": "Erro ao salvar condições de elegibilidade",
-  "promotions.promotion.error.reason.RNB-E1005": "Erro ao salvar promoção"
+  "promotions.promotion.error.reason.RNB-E1005": "Erro ao salvar promoção",
+  "promotions.promotion.accountLimit.exceeded": "Você está utilizando todos os {limit} slots de promoção disponíveis. Remova algumas promoções para poder criar mais.",
+  "promotions.promotion.accountLimit.warning": "Você está usando {current} de {limit} slots de promoção. Remova algumas promoções para liberar mais vagas.",
+  "promotions.promotion.accountLimit.moreInfo": "Mais informações"
 }
