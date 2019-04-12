@@ -1,0 +1,5 @@
+query AccountLimits {
+  accountLimits {
+    activePromotions
+  }
+}

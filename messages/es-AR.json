@@ -236,5 +236,8 @@
   "promotions.promotion.error.reason.RNB-E0013": "Error al buscar las condiciones de elegibilidad",
   "promotions.promotion.error.reason.RNB-E0014": "Error al buscar promoción",
   "promotions.promotion.error.reason.RNB-E1004": "Error al guardar las condiciones de elegibilidad",
-  "promotions.promotion.error.reason.RNB-E1005": "Error al guardar la promoción"
+  "promotions.promotion.error.reason.RNB-E1005": "Error al guardar la promoción",
+  "promotions.promotion.accountLimit.exceeded": "Está utilizando todo el {limit} de espacios de promoción disponibles. Libere sus espacios para poder crear más.",
+  "promotions.promotion.accountLimit.warning": "Estás utilizando {current} fuera de las ranuras de promoción {limit}. Borra las promociones expried para liberar más ranuras.",
+  "promotions.promotion.accountLimit.moreInfo": "Más información"
 }

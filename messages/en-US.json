@@ -235,5 +235,8 @@
   "promotions.promotion.error.reason.RNB-E0013": "Error fetching eligibility conditions",
   "promotions.promotion.error.reason.RNB-E0014": "Error fetching promotion",
   "promotions.promotion.error.reason.RNB-E1004": "Error saving eligibility conditions",
-  "promotions.promotion.error.reason.RNB-E1005": "Error saving promotion"
+  "promotions.promotion.error.reason.RNB-E1005": "Error saving promotion",
+  "promotions.promotion.accountLimit.exceeded": "You are using all {limit} of available promotion slots. Please free up your slots to be able to create more.",
+  "promotions.promotion.accountLimit.warning": "You are using {current} out of {limit} promotion slots. Please delete expried promotions to free up more slots.",
+  "promotions.promotion.accountLimit.moreInfo": "More info"
 }

@@ -236,5 +236,8 @@
   "promotions.promotion.error.reason.RNB-E0013": "promotions.promotion.error.reason.RNB-E0013",
   "promotions.promotion.error.reason.RNB-E0014": "promotions.promotion.error.reason.RNB-E0014",
   "promotions.promotion.error.reason.RNB-E1004": "promotions.promotion.error.reason.RNB-E1004",
-  "promotions.promotion.error.reason.RNB-E1005": "promotions.promotion.error.reason.RNB-E1005"
+  "promotions.promotion.error.reason.RNB-E1005": "promotions.promotion.error.reason.RNB-E1005",
+  "promotions.promotion.accountLimit.exceeded": "promotions.promotion.accountLimit.exceeded",
+  "promotions.promotion.accountLimit.warning": "promotions.promotion.accountLimit.warning",
+  "promotions.promotion.accountLimit.moreInfo": "promotions.promotion.accountLimit.moreInfo"
 }
