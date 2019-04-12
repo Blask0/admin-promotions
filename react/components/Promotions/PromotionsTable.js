@@ -350,13 +350,21 @@ class PromotionsTable extends Component {
     })
   }
 
+  isCreationDisabled = () => {
+    const { promotions, accountLimits } = this.props
+    const activePromotions = promotions.filter(({ isActive }) => isActive)
+    return (
+      accountLimits && activePromotions.length >= accountLimits.activePromotions
+    )
+  }
+
   render() {
     const { navigate } = this.context
     const {
       intl,
       loading,
-      promotions,
       error,
+      promotions,
       inputSearchValue,
       handleSearchChange,
       handleSearchClear,
@@ -424,6 +432,7 @@ class PromotionsTable extends Component {
                   },
                 })
               },
+              disabled: this.isCreationDisabled(),
             },
           }}
           sort={dataSort}
@@ -469,9 +478,12 @@ PromotionsTable.contextTypes = {
 
 PromotionsTable.propTypes = {
   intl: intlShape,
-  promotions: PropTypes.arrayOf(PropTypes.object),
   loading: PropTypes.bool,
   error: PropTypes.object,
+  promotions: PropTypes.arrayOf(PropTypes.object),
+  accountLimits: PropTypes.shape({
+    activePromotions: PropTypes.number,
+  }),
   inputSearchValue: PropTypes.string,
   handleSearchChange: PropTypes.func,
   handleSearchClear: PropTypes.func,

@@ -117,6 +117,7 @@ class PromotionsPage extends Component {
             promotions={promotions}
             loading={loading}
             error={error}
+            accountLimits={accountLimits}
             inputSearchValue={inputSearchValue}
             handleSearchChange={this.handleSearchChange}
             handleSearchClear={this.handleSearchClear}
