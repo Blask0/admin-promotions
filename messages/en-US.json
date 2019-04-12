@@ -228,6 +228,7 @@
   "promotions.promotion.import.modal.placeholder": "(*.txt files with one entry per line)",
   "promotions.promotion.import.modal.catalog": "Checking ids with catalog system…",
   "promotions.promotion.import.modal.notFound": "We didn't find these Ids in catalog: {notFound}",
+  "promotions.promotion.error.noAccess": "User cannot access this resource.",
   "promotions.promotion.error.reload": "Reload",
   "promotions.promotion.error.retry": "Retry",
   "promotions.promotion.error.goToPromotions": "Go back to promotions list",

@@ -3,8 +3,9 @@ import { Query } from 'react-apollo'
 
 import getPromotion from '../graphql/getPromotion.graphql'
 
-import { getErrorsInfo } from '../utils/errors'
+import { getErrorsInfo, cannotAccess } from '../utils/errors'
 import ErrorPage from '../ErrorPage'
+import NoAccessPage from '../NoAccessPage'
 
 function withPromotion(WrappedComponent) {
   class WithPromotion extends Component {
@@ -47,7 +48,9 @@ function withPromotion(WrappedComponent) {
           fetchPolicy="network-only">
           {({ loading, error, data }) => {
             const [errorInfo] = getErrorsInfo(error)
-            return error ? (
+            return cannotAccess(errorInfo) ? (
+              <NoAccessPage />
+            ) : error ? (
               <ErrorPage
                 error={errorInfo}
                 actionMessageId="promotions.promotion.error.goToPromotions"

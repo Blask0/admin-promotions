@@ -39,8 +39,8 @@ function ErrorPage({ error, actionMessageId, onActionExecuted }) {
 
 ErrorPage.proptypes = {
   error: PropTypes.object.isRequired,
-  retryMessage: PropTypes.string.isRequired,
-  onRetry: PropTypes.func,
+  actionMessageId: PropTypes.string.isRequired,
+  onActionExecuted: PropTypes.func,
 }
 
 export default injectIntl(ErrorPage)
