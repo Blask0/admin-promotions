@@ -1,0 +1,19 @@
+query ArchivedPromotions($name: String, $effect: String) {
+  archivedPromotions(name: $name, effect: $effect) {
+    cacheId
+    id
+    name
+    beginDate
+    endDate
+    scope {
+      allCatalog
+      skus
+      products
+      collections
+      categories
+      brands
+    }
+    isActive
+    effectType
+  }
+}

@@ -28,7 +28,7 @@ function withPromotions(WrappedComponent) {
           query={getPromotions}
           variables={{ name, effect }}
           fetchPolicy="network-only">
-          {({ loading, error, data, refetch }) => {
+          {({ loading, error, data }) => {
             const [errorInfo] = getErrorsInfo(error)
             return cannotAccess(errorInfo) ? (
               <NoAccessPage />
@@ -37,9 +37,8 @@ function withPromotions(WrappedComponent) {
                 {...this.props}
                 loading={loading}
                 error={error}
-                refetchPromotions={refetch}
                 promotions={data ? data.getPromotions : []}
-                updateQueryParams={this.updateQueryParams}
+                updatePromotionsQueryParams={this.updateQueryParams}
               />
             )
           }}
