@@ -114,7 +114,10 @@ class PromotionsPage extends Component {
             variables: {
               id,
             },
-          }).then(() => window.location.reload())
+          }).then(() => {
+            window.postMessage({ action: { type: 'START_LOADING' } }, '*')
+            window.location.reload()
+          })
         },
       },
     ]
@@ -131,6 +134,7 @@ class PromotionsPage extends Component {
       },
     })
     archive.then(() => {
+      window.postMessage({ action: { type: 'START_LOADING' } }, '*')
       window.location.reload()
       this.setState({
         isPromotionModalOpened: false,
