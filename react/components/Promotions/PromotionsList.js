@@ -195,33 +195,6 @@ class PromotionsList extends Component {
     }
   }
 
-  handlePromotionDeletionModalConfirmed = () => {
-    const {
-      promotionToBeDeleted: { id },
-    } = this.state
-    const { archivePromotionById } = this.props
-    const archive = archivePromotionById({
-      variables: {
-        id,
-      },
-    })
-    archive.then(() => {
-      window.postMessage({ action: { type: 'START_LOADING' } }, '*')
-      window.location.reload()
-      this.setState({
-        isPromotionModalOpened: false,
-        promotionToBeDeleted: undefined,
-      })
-    })
-  }
-
-  handlePromotionDeletionModalCanceled = () => {
-    this.setState({
-      isPromotionModalOpened: false,
-      promotionToBeDeleted: undefined,
-    })
-  }
-
   getLineActions = () => {
     const { navigate } = this.context
     const { intl } = this.props
@@ -260,12 +233,49 @@ class PromotionsList extends Component {
     ]
   }
 
+  handlePromotionDeletionModalConfirmed = () => {
+    const {
+      promotionToBeDeleted: { id },
+    } = this.state
+    const { archivePromotionById } = this.props
+    const archive = archivePromotionById({
+      variables: {
+        id,
+      },
+    })
+    archive.then(() => {
+      window.postMessage({ action: { type: 'START_LOADING' } }, '*')
+      window.location.reload()
+      this.setState({
+        isPromotionModalOpened: false,
+        promotionToBeDeleted: undefined,
+      })
+    })
+  }
+
+  handlePromotionDeletionModalCanceled = () => {
+    this.setState({
+      isPromotionModalOpened: false,
+      promotionToBeDeleted: undefined,
+    })
+  }
+
+  handlePromotionSelection = id => {
+    const { navigate } = this.context
+    navigate({
+      page: 'admin.promotions.PromotionPage',
+      params: {
+        id,
+      },
+    })
+    window.postMessage({ action: { type: 'START_LOADING' } }, '*')
+  }
+
   render() {
     const {
       isPromotionModalOpened,
       promotionToBeDeleted: { name: promotionToBeDeletedName } = {},
     } = this.state
-    const { navigate } = this.context
     const {
       intl,
       loading,
@@ -290,15 +300,9 @@ class PromotionsList extends Component {
           emptyStateLabel={emptyStateLabel}
           lineActions={this.getLineActions()}
           creationDisabled={creationDisabled}
-          onRowClick={({ rowData: { id } }) => {
-            navigate({
-              page: 'admin.promotions.PromotionPage',
-              params: {
-                id: id,
-              },
-            })
-            window.postMessage({ action: { type: 'START_LOADING' } }, '*')
-          }}
+          onRowClick={({ rowData: { id } }) =>
+            this.handlePromotionSelection(id)
+          }
           onSearch={updatePromotionsQueryParams}
         />
 
@@ -333,11 +337,11 @@ class PromotionsList extends Component {
   }
 }
 
-PromotionsTable.contextTypes = {
+PromotionsList.contextTypes = {
   navigate: PropTypes.func,
 }
 
-PromotionsTable.propTypes = {
+PromotionsList.propTypes = {
   intl: intlShape,
   loading: PropTypes.bool,
   error: PropTypes.object,
