@@ -114,6 +114,53 @@ class PromotionsTable extends Component {
                   })
                 },
                 disabled: creationDisabled,
+                actions: [
+                  {
+                    label: intl.formatMessage({
+                      id: 'promotions.promotions.newPromotion.regular',
+                    }),
+                    onClick: () =>
+                      navigate({
+                        to: '/admin/rnb/#/benefit/new?type=regular',
+                      }),
+                  },
+                  {
+                    label: intl.formatMessage({
+                      id: 'promotions.promotions.newPromotion.combo',
+                    }),
+                    onClick: () =>
+                      navigate({
+                        to: '/admin/rnb/#/benefit/new?type=combo',
+                      }),
+                  },
+                  {
+                    label: intl.formatMessage({
+                      id: 'promotions.promotions.newPromotion.forThePriceOf',
+                    }),
+                    onClick: () =>
+                      navigate({
+                        to: '/admin/rnb/#/benefit/new?type=forThePriceOf',
+                      }),
+                  },
+                  {
+                    label: intl.formatMessage({
+                      id: 'promotions.promotions.newPromotion.progressive',
+                    }),
+                    onClick: () =>
+                      navigate({
+                        to: '/admin/rnb/#/benefit/new?type=progressive',
+                      }),
+                  },
+                  {
+                    label: intl.formatMessage({
+                      id: 'promotions.promotions.newPromotion.buyAndWin',
+                    }),
+                    onClick: () =>
+                      navigate({
+                        to: '/admin/rnb/#/benefit/new?type=buyAndWin',
+                      }),
+                  },
+                ],
               },
           }}
           sort={dataSort}
