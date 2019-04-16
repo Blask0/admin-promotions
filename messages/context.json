@@ -205,6 +205,7 @@
   "promotions.promotions.deletionModal.confirm": "promotions.promotions.deletionModal.confirm",
   "promotions.promotions.deletionModal.cancel": "promotions.promotions.deletionModal.cancel",
   "promotions.promotions.actions.duplicate": "promotions.promotions.actions.duplicate",
+  "promotions.promotions.actions.recover": "promotions.promotions.actions.recover",
   "promotions.scopeColumn.allProducts": "promotions.scopeColumn.allProducts",
   "promotions.scopeColumn.brands": "promotions.scopeColumn.brands",
   "promotions.scopeColumn.collections": "promotions.scopeColumn.collections",

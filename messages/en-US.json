@@ -204,6 +204,7 @@
   "promotions.promotions.deletionModal.confirm": "Yes",
   "promotions.promotions.deletionModal.cancel": "Cancel",
   "promotions.promotions.actions.duplicate": "Duplicate",
+  "promotions.promotions.actions.recover": "Recover",
   "promotions.scopeColumn.allProducts": "All products",
   "promotions.scopeColumn.brands": "{itemCount, plural, one {1 brand} other {{itemCount} brands}}",
   "promotions.scopeColumn.collections": "{itemCount, plural, one {1 collection} other {{itemCount} collections}}",

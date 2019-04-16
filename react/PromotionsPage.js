@@ -1,22 +1,40 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { compose } from 'react-apollo'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-import { Alert, Layout, PageHeader, PageBlock } from 'vtex.styleguide'
+import {
+  Alert,
+  Layout,
+  PageHeader,
+  PageBlock,
+  Tab,
+  Tabs,
+} from 'vtex.styleguide'
 
 import PromotionsTable from './components/Promotions/PromotionsTable'
-import withPromotions from './connectors/withPromotions'
-import { getErrorsInfo } from './utils/errors'
-import withAccountLimits from './connectors/withAccountLimits'
 import AccountLimitsAlert from './components/Promotions/AccountLimitsAlert'
+
+import withAccountLimits from './connectors/withAccountLimits'
+import withPromotions from './connectors/withPromotions'
+import withArchivedPromotions from './connectors/withArchivedPromotions'
+
+import { getErrorsInfo } from './utils/errors'
+import unarchivePromotionById from './connectors/unarchivingPromotionById'
+import PromotionsList from './components/Promotions/PromotionsList'
+import ArchivedPromotionsList from './components/Promotions/ArchivedPromotionsList'
+
+const TABS = {
+  table: 'table',
+  trash: 'trash',
+}
 
 class PromotionsPage extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      inputSearchValue: '',
+      currentTab: TABS.table,
       showError: true,
     }
 
@@ -40,103 +58,93 @@ class PromotionsPage extends Component {
     window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
   }
 
-  handleSearchChange = e => {
-    this.setState({
-      inputSearchValue: e.target.value,
-    })
+  handleTabChange = tabKey => {
+    this.setState({ currentTab: TABS[tabKey] })
   }
 
-  handleSearchClear = e => {
-    this.setState({
-      inputSearchValue: '',
-    })
-    this.props.updateQueryParams({
-      name: '',
-      effect: '',
-    })
+  getArchivedLineActions = () => {}
+
+  isCreationDisabled = () => {
+    const { promotions = [], accountLimits } = this.props
+    const activePromotions = promotions.filter(({ isActive }) => isActive)
+    return (
+      accountLimits && activePromotions.length >= accountLimits.activePromotions
+    )
   }
-
-  handleSearchSubmit = e => {
-    e.preventDefault()
-
-    const { inputSearchValue } = this.state
-
-    this.props.updateQueryParams({
-      name: inputSearchValue,
-      effect: inputSearchValue,
-    })
-  }
-
-  handlePromotionDeletion = () => {
-    this.props.refetchPromotions()
-  }
-
-  accountLimitsAlert = () => {}
 
   render() {
-    const { inputSearchValue, showError } = this.state
-    const { intl, loading, error, promotions = [], accountLimits } = this.props
+    const { currentTab, showError } = this.state
+    const { intl, error, promotions = [], accountLimits } = this.props
 
     const [errorInfo] = getErrorsInfo(error)
 
     return (
-      <Layout fullWidth pageHeader={<PageHeader title="Promotions" />}>
-        {error && showError && (
-          <div className="mb5">
-            <Alert
-              ref={this.errorAlert.ref}
-              type="error"
-              onClose={() => this.setState({ showError: false })}
-              action={{
-                label: intl.formatMessage({
-                  id: 'promotions.promotion.error.reload',
-                }),
-                onClick: () => window.location.reload(),
-              }}>
-              <div className="flex flex-column">
-                <FormattedMessage
-                  id={`promotions.promotion.error.reason.${errorInfo.reason}`}
-                />
-                <span>
-                  OperationId: <strong>{errorInfo.operationId}</strong>
-                </span>
-              </div>
-            </Alert>
-          </div>
-        )}
-        {accountLimits && (
-          <div className="mb5">
-            <AccountLimitsAlert
-              promotions={promotions}
-              accountLimits={accountLimits}
-            />
-          </div>
-        )}
-        <PageBlock>
-          <PromotionsTable
-            promotions={promotions}
-            loading={loading}
-            error={error}
-            accountLimits={accountLimits}
-            inputSearchValue={inputSearchValue}
-            handleSearchChange={this.handleSearchChange}
-            handleSearchClear={this.handleSearchClear}
-            handleSearchSubmit={this.handleSearchSubmit}
-            handlePromotionDeletion={this.handlePromotionDeletion}
-          />
-        </PageBlock>
-      </Layout>
+      <Fragment>
+        <Layout fullWidth pageHeader={<PageHeader title="Promotions" />}>
+          {error && showError && (
+            <div className="mb5">
+              <Alert
+                ref={this.errorAlert.ref}
+                type="error"
+                onClose={() => this.setState({ showError: false })}
+                action={{
+                  label: intl.formatMessage({
+                    id: 'promotions.promotion.error.reload',
+                  }),
+                  onClick: () => window.location.reload(),
+                }}>
+                <div className="flex flex-column">
+                  <FormattedMessage
+                    id={`promotions.promotion.error.reason.${errorInfo.reason}`}
+                  />
+                  <span>
+                    OperationId: <strong>{errorInfo.operationId}</strong>
+                  </span>
+                </div>
+              </Alert>
+            </div>
+          )}
+          {accountLimits && (
+            <div className="mb5">
+              <AccountLimitsAlert
+                promotions={promotions}
+                accountLimits={accountLimits}
+              />
+            </div>
+          )}
+          <PageBlock>
+            <Tabs>
+              <Tab
+                label="Promotions"
+                active={currentTab === TABS.table}
+                onClick={() => this.handleTabChange('table')}>
+                <div className="mt4 w-100">
+                  <PromotionsList
+                    creationDisabled={this.isCreationDisabled()}
+                  />
+                </div>
+              </Tab>
+              <Tab
+                label="🗑 Trash"
+                active={currentTab === TABS.trash}
+                onClick={() => this.handleTabChange('trash')}>
+                <div className="mt4 w-100">
+                  <ArchivedPromotionsList />
+                </div>
+              </Tab>
+            </Tabs>
+          </PageBlock>
+        </Layout>
+      </Fragment>
     )
   }
 }
 
 PromotionsPage.propTypes = {
   intl: intlShape,
-  promotions: PropTypes.arrayOf(PropTypes.object),
   error: PropTypes.object,
   loading: PropTypes.bool,
-  refetch: PropTypes.func,
-  updateQueryParams: PropTypes.func,
+  promotions: PropTypes.arrayOf(PropTypes.object),
 }
 
 export default compose(
