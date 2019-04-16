@@ -26,8 +26,8 @@ function withArchivedPromotions(WrappedComponent) {
           {({ loading, error, data }) => (
             <WrappedComponent
               {...this.props}
-              archivedPromotionsLoading={loading}
-              archivedPromotionsError={error}
+              loading={loading}
+              error={error}
               archivedPromotions={data ? data.archivedPromotions : []}
               updateArchivedPromotionsQueryParams={this.updateQueryParams}
             />

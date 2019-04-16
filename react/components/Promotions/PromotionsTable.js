@@ -2,15 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape } from 'react-intl'
 
-import { Tag, Table } from 'vtex.styleguide'
-import { PromotionActivationToggle } from './PromotionActivationToggle'
-
-import Price from '../Icon/Price'
-import Gift from '../Icon/Gift'
-import Shipping from '../Icon/Shipping'
-import Reward from '../Icon/Reward'
-
-import { toDate, format } from 'date-fns'
+import { Table } from 'vtex.styleguide'
 
 import { sortPromotions } from '../../utils/promotions'
 
@@ -27,172 +19,6 @@ class PromotionsTable extends Component {
     }
   }
 
-  getTableSchema = intl => ({
-    properties: {
-      activation: {
-        title: ' ',
-        width: 60,
-        cellRenderer: ({ rowData: promotion }) => (
-          <PromotionActivationToggle promotion={promotion} />
-        ),
-      },
-      name: {
-        type: 'string',
-        title: intl.formatMessage({
-          id: 'promotions.promotion.generalInfo.name',
-        }),
-        sortable: true,
-      },
-      effectType: {
-        type: 'string',
-        title: intl.formatMessage({
-          id: 'promotions.promotion.effects.title',
-        }),
-        sortable: true,
-        cellRenderer: ({ cellData: effectType }) => {
-          return (
-            <div className="dt">
-              {this.getEffectIcon(effectType)}
-              <span className="dtc v-mid pl3">{effectType}</span>
-            </div>
-          )
-        },
-      },
-      scope: {
-        type: 'object',
-        title: intl.formatMessage({
-          id: 'promotions.promotion.effects.scope.title',
-        }),
-        properties: {
-          allCatalog: {
-            type: 'boolean',
-          },
-          skus: {
-            type: 'int',
-          },
-          products: {
-            type: 'int',
-          },
-          categories: {
-            type: 'int',
-          },
-          collections: {
-            type: 'int',
-          },
-          brands: {
-            type: 'int',
-          },
-        },
-        width: 300,
-        cellRenderer: ({ cellData }) => {
-          if (cellData) {
-            if (cellData.allCatalog) {
-              return (
-                <span className="fw5">
-                  {intl.formatMessage({
-                    id: 'promotions.scopeColumn.allProducts',
-                  })}
-                </span>
-              )
-            }
-            let scopeInfo = []
-            const blackList = ['allCatalog', '__typename']
-
-            Object.keys(cellData).forEach((key, index) => {
-              if (cellData[key] !== 0 && !blackList.includes(key)) {
-                scopeInfo = [
-                  ...scopeInfo,
-                  `${intl.formatMessage(
-                    {
-                      id: `promotions.scopeColumn.${key}`,
-                    },
-                    {
-                      itemCount: cellData[key],
-                    }
-                  )}`,
-                ]
-              }
-            })
-
-            return <span>{scopeInfo.join(', ')}</span>
-          }
-        },
-      },
-      beginDate: {
-        type: 'string',
-        title: intl.formatMessage({
-          id: 'promotions.promotion.generalInfo.startDate',
-        }),
-        sortable: true,
-        cellRenderer: ({ cellData: beginDate }) => {
-          const date = format(toDate(beginDate), 'PP')
-          const time = format(toDate(beginDate), 'p')
-          return (
-            <div>
-              <div className="dt">
-                <span className="dtc v-mid">{date}</span>
-              </div>
-              <div className="dt">
-                <span className="dtc v-mid">{time}</span>
-              </div>
-            </div>
-          )
-        },
-      },
-      endDate: {
-        type: 'string',
-        title: intl.formatMessage({
-          id: 'promotions.promotion.generalInfo.endDate',
-        }),
-        sortable: true,
-        cellRenderer: ({ cellData: endDate }) => {
-          if (!endDate) {
-            return (
-              <div className="dt">
-                <span className="dtc v-mid">-</span>
-              </div>
-            )
-          }
-          const date = format(toDate(endDate), 'PP')
-          const time = format(toDate(endDate), 'p')
-          return (
-            <div>
-              <div className="dt">
-                <span className="dtc v-mid">{date}</span>
-              </div>
-              <div className="dt">
-                <span className="dtc v-mid">{time}</span>
-              </div>
-            </div>
-          )
-        },
-      },
-      isActive: {
-        type: 'boolean',
-        title: 'Status',
-        cellRenderer: ({ cellData: isActive }) => {
-          const badgeProps = isActive
-            ? { bgColor: '#8BC34A', color: '#FFFFFF', children: 'Active' }
-            : { bgColor: '#727273', color: '#FFFFFF', children: 'Inactive' }
-          return <Tag {...badgeProps} />
-        },
-      },
-    },
-  })
-
-  getEffectIcon = effectType => {
-    switch (effectType) {
-      case 'price':
-        return <Price />
-      case 'gift':
-        return <Gift />
-      case 'shipping':
-        return <Shipping />
-      case 'reward':
-        return <Reward />
-    }
-  }
-
   handleSearchChange = e => {
     this.setState({
       inputSearchValue: e.target.value,
@@ -200,13 +26,12 @@ class PromotionsTable extends Component {
   }
 
   handleSearchClear = e => {
-    this.setState({
-      inputSearchValue: '',
-    })
-    this.props.updatePromotionsSearchParams({
-      name: '',
-      effect: '',
-    })
+    this.setState(
+      {
+        inputSearchValue: '',
+      },
+      () => this.handleSearchSubmit(e)
+    )
   }
 
   handleSearchSubmit = e => {
@@ -214,7 +39,7 @@ class PromotionsTable extends Component {
 
     const { inputSearchValue } = this.state
 
-    this.props.updatePromotionsSearchParams({
+    this.props.onSearch({
       name: inputSearchValue,
       effect: inputSearchValue,
     })
@@ -233,37 +58,26 @@ class PromotionsTable extends Component {
     const { navigate } = this.context
     const { dataSort, inputSearchValue } = this.state
     const {
-      intl,
-      loading,
-      error,
-      promotions,
       creationDisabled,
+      emptyStateLabel,
+      intl,
       lineActions,
+      loading,
+      noNewLine,
+      onRowClick,
+      promotions,
+      schema,
     } = this.props
-    const schema = this.getTableSchema(intl)
-
-    const emptyStateLabel =
-      !loading && error
-        ? intl.formatMessage({ id: 'promotions.promotions.table.errorLabel' })
-        : intl.formatMessage({ id: 'promotions.promotions.table.emptyLabel' })
 
     return (
       <div>
         <Table
-          schema={schema}
-          items={sortPromotions(promotions, dataSort)}
           density="low"
+          schema={schema}
           loading={loading}
           emptyStateLabel={emptyStateLabel}
-          onRowClick={({ rowData: { id } }) => {
-            navigate({
-              page: 'admin.promotions.PromotionPage',
-              params: {
-                id: id,
-              },
-            })
-            window.postMessage({ action: { type: 'START_LOADING' } }, '*')
-          }}
+          items={sortPromotions(promotions, dataSort)}
+          onRowClick={onRowClick}
           toolbar={{
             inputSearch: {
               value: inputSearchValue,
@@ -285,20 +99,22 @@ class PromotionsTable extends Component {
                 id: 'promotions.promotions.table.filter.hideAll',
               }),
             },
-            newLine: {
-              label: intl.formatMessage({
-                id: 'promotions.promotions.newPromotion',
-              }),
-              handleCallback: () => {
-                navigate({
-                  page: 'admin.promotions.PromotionPage',
-                  params: {
-                    id: 'new',
-                  },
-                })
+            newLine: noNewLine
+              ? null
+              : {
+                label: intl.formatMessage({
+                  id: 'promotions.promotions.newPromotion',
+                }),
+                handleCallback: () => {
+                  navigate({
+                    page: 'admin.promotions.PromotionPage',
+                    params: {
+                      id: 'new',
+                    },
+                  })
+                },
+                disabled: creationDisabled,
               },
-              disabled: creationDisabled,
-            },
           }}
           sort={dataSort}
           onSort={this.handleSort}
@@ -315,17 +131,18 @@ PromotionsTable.contextTypes = {
 }
 
 PromotionsTable.propTypes = {
-  intl: intlShape,
-  loading: PropTypes.bool,
-  error: PropTypes.object,
-  promotions: PropTypes.arrayOf(PropTypes.object),
   creationDisabled: PropTypes.bool,
-  lineAction: PropTypes.shape({
+  emptyStateLabel: PropTypes.string,
+  intl: intlShape,
+  lineActions: PropTypes.shape({
     isDangerous: PropTypes.bool,
     label: PropTypes.func.isRequired,
     onClick: PropTypes.func.isRequired,
   }),
-  updatePromotionsSearchParams: PropTypes.func,
+  loading: PropTypes.bool,
+  noNewLine: PropTypes.bool,
+  promotions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  schema: PropTypes.object.isRequired,
 }
 
-export default injectIntl(PromotionsTable)
+export default PromotionsTable

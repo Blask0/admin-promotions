@@ -6,7 +6,6 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import {
   Alert,
   Layout,
-  ModalDialog,
   PageHeader,
   PageBlock,
   Tab,
@@ -16,13 +15,14 @@ import {
 import PromotionsTable from './components/Promotions/PromotionsTable'
 import AccountLimitsAlert from './components/Promotions/AccountLimitsAlert'
 
-import archivingPromotionById from './connectors/archivingPromotionById'
 import withAccountLimits from './connectors/withAccountLimits'
 import withPromotions from './connectors/withPromotions'
 import withArchivedPromotions from './connectors/withArchivedPromotions'
 
 import { getErrorsInfo } from './utils/errors'
 import unarchivePromotionById from './connectors/unarchivingPromotionById'
+import PromotionsList from './components/Promotions/PromotionsList'
+import ArchivedPromotionsList from './components/Promotions/ArchivedPromotionsList'
 
 const TABS = {
   table: 'table',
@@ -36,7 +36,6 @@ class PromotionsPage extends Component {
     this.state = {
       currentTab: TABS.table,
       showError: true,
-      isPromotionModalOpened: false,
     }
 
     this.errorAlert = {
@@ -63,92 +62,7 @@ class PromotionsPage extends Component {
     this.setState({ currentTab: TABS[tabKey] })
   }
 
-  getLineActions = () => {
-    const { navigate } = this.context
-    const { intl } = this.props
-    return [
-      {
-        label: () =>
-          intl.formatMessage({
-            id: 'promotions.promotions.actions.duplicate',
-          }),
-        onClick: ({ rowData: { id } }) => {
-          navigate({
-            page: 'admin.promotions.PromotionPage',
-            params: {
-              id: 'new',
-              duplicate: id,
-            },
-          })
-        },
-      },
-      {
-        label: () =>
-          intl.formatMessage({
-            id: 'promotions.promotions.actions.delete',
-          }),
-        isDangerous: true,
-        onClick: ({ rowData: { id, name } }) => {
-          this.setState({
-            isPromotionModalOpened: true,
-            promotionToBeDeleted: {
-              id,
-              name,
-            },
-          })
-        },
-      },
-    ]
-  }
-
-  getArchivedLineActions = () => {
-    const { intl, unarchivePromotionById } = this.props
-    return [
-      {
-        label: () =>
-          intl.formatMessage({
-            id: 'promotions.promotions.actions.recover',
-          }),
-        onClick: ({ rowData: { id } }) => {
-          unarchivePromotionById({
-            variables: {
-              id,
-            },
-          }).then(() => {
-            window.postMessage({ action: { type: 'START_LOADING' } }, '*')
-            window.location.reload()
-          })
-        },
-      },
-    ]
-  }
-
-  handlePromotionDeletionModalConfirmed = () => {
-    const {
-      promotionToBeDeleted: { id },
-    } = this.state
-    const { archivePromotionById } = this.props
-    const archive = archivePromotionById({
-      variables: {
-        id,
-      },
-    })
-    archive.then(() => {
-      window.postMessage({ action: { type: 'START_LOADING' } }, '*')
-      window.location.reload()
-      this.setState({
-        isPromotionModalOpened: false,
-        promotionToBeDeleted: undefined,
-      })
-    })
-  }
-
-  handlePromotionDeletionModalCanceled = () => {
-    this.setState({
-      isPromotionModalOpened: false,
-      promotionToBeDeleted: undefined,
-    })
-  }
+  getArchivedLineActions = () => {}
 
   isCreationDisabled = () => {
     const { promotions = [], accountLimits } = this.props
@@ -159,24 +73,8 @@ class PromotionsPage extends Component {
   }
 
   render() {
-    const {
-      currentTab,
-      showError,
-      isPromotionModalOpened,
-      promotionToBeDeleted: { name: promotionToBeDeletedName } = {},
-    } = this.state
-    const {
-      intl,
-      loading,
-      error,
-      promotions = [],
-      updatePromotionsQueryParams,
-      archivedPromotionsLoading,
-      archivedPromotionsError,
-      archivedPromotions = [],
-      updateArchivedPromotionsQueryParams,
-      accountLimits,
-    } = this.props
+    const { currentTab, showError } = this.state
+    const { intl, error, promotions = [], accountLimits } = this.props
 
     const [errorInfo] = getErrorsInfo(error)
 
@@ -221,13 +119,8 @@ class PromotionsPage extends Component {
                 active={currentTab === TABS.table}
                 onClick={() => this.handleTabChange('table')}>
                 <div className="mt4 w-100">
-                  <PromotionsTable
-                    loading={loading}
-                    error={error}
-                    promotions={promotions}
+                  <PromotionsList
                     creationDisabled={this.isCreationDisabled()}
-                    lineActions={this.getLineActions()}
-                    updatePromotionsSearchParams={updatePromotionsQueryParams}
                   />
                 </div>
               </Tab>
@@ -236,47 +129,12 @@ class PromotionsPage extends Component {
                 active={currentTab === TABS.trash}
                 onClick={() => this.handleTabChange('trash')}>
                 <div className="mt4 w-100">
-                  <PromotionsTable
-                    loading={archivedPromotionsLoading}
-                    error={archivedPromotionsError}
-                    promotions={archivedPromotions}
-                    lineActions={this.getArchivedLineActions()}
-                    updatePromotionsSearchParams={
-                      updateArchivedPromotionsQueryParams
-                    }
-                  />
+                  <ArchivedPromotionsList />
                 </div>
               </Tab>
             </Tabs>
           </PageBlock>
         </Layout>
-
-        <ModalDialog
-          centered
-          confirmation={{
-            onClick: this.handlePromotionDeletionModalConfirmed,
-            label: intl.formatMessage({
-              id: 'promotions.promotions.deletionModal.confirm',
-            }),
-          }}
-          cancelation={{
-            onClick: this.handlePromotionDeletionModalCanceled,
-            label: intl.formatMessage({
-              id: 'promotions.promotions.deletionModal.cancel',
-            }),
-          }}
-          isOpen={isPromotionModalOpened}
-          showCloseIcon={false}
-          closeOnEsc={false}
-          closeOnOverlayClick={false}>
-          <h1>
-            <FormattedMessage id="promotions.promotions.deletionModal.title" />
-          </h1>
-          <p>
-            <FormattedMessage id="promotions.promotions.deletionModal.text" />
-            <strong> {promotionToBeDeletedName}</strong>?
-          </p>
-        </ModalDialog>
       </Fragment>
     )
   }
@@ -287,18 +145,10 @@ PromotionsPage.propTypes = {
   error: PropTypes.object,
   loading: PropTypes.bool,
   promotions: PropTypes.arrayOf(PropTypes.object),
-  updatePromotionsQueryParams: PropTypes.func,
-  archivedPromotionsError: PropTypes.object,
-  archivedPromotionsLoading: PropTypes.bool,
-  archivedPromotions: PropTypes.arrayOf(PropTypes.object),
-  updateArchivedPromotionsQueryParams: PropTypes.func,
 }
 
 export default compose(
-  archivingPromotionById,
-  unarchivePromotionById,
   withAccountLimits,
   withPromotions,
-  withArchivedPromotions,
   injectIntl
 )(PromotionsPage)
