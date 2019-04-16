@@ -229,18 +229,17 @@ class PromotionsTable extends Component {
     })
   }
 
-  isCreationDisabled = () => {
-    const { promotions, accountLimits } = this.props
-    const activePromotions = promotions.filter(({ isActive }) => isActive)
-    return (
-      accountLimits && activePromotions.length >= accountLimits.activePromotions
-    )
-  }
-
   render() {
     const { navigate } = this.context
-    const { intl, loading, error, promotions, lineActions } = this.props
     const { dataSort, inputSearchValue } = this.state
+    const {
+      intl,
+      loading,
+      error,
+      promotions,
+      creationDisabled,
+      lineActions,
+    } = this.props
     const schema = this.getTableSchema(intl)
 
     const emptyStateLabel =
@@ -298,7 +297,7 @@ class PromotionsTable extends Component {
                   },
                 })
               },
-              disabled: this.isCreationDisabled(),
+              disabled: creationDisabled,
             },
           }}
           sort={dataSort}
@@ -320,16 +319,13 @@ PromotionsTable.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.object,
   promotions: PropTypes.arrayOf(PropTypes.object),
-  accountLimits: PropTypes.shape({
-    activePromotions: PropTypes.number,
-  }),
+  creationDisabled: PropTypes.bool,
   lineAction: PropTypes.shape({
     isDangerous: PropTypes.bool,
     label: PropTypes.func.isRequired,
     onClick: PropTypes.func.isRequired,
   }),
   updatePromotionsSearchParams: PropTypes.func,
-  handlePromotionDeletion: PropTypes.func,
 }
 
 export default injectIntl(PromotionsTable)

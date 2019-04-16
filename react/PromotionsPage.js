@@ -150,6 +150,14 @@ class PromotionsPage extends Component {
     })
   }
 
+  isCreationDisabled = () => {
+    const { promotions = [], accountLimits } = this.props
+    const activePromotions = promotions.filter(({ isActive }) => isActive)
+    return (
+      accountLimits && activePromotions.length >= accountLimits.activePromotions
+    )
+  }
+
   render() {
     const {
       currentTab,
@@ -212,15 +220,14 @@ class PromotionsPage extends Component {
                 label="Promotions"
                 active={currentTab === TABS.table}
                 onClick={() => this.handleTabChange('table')}>
-                <div className="mt4">
+                <div className="mt4 w-100">
                   <PromotionsTable
                     loading={loading}
                     error={error}
                     promotions={promotions}
-                    accountLimits={accountLimits}
+                    creationDisabled={this.isCreationDisabled()}
                     lineActions={this.getLineActions()}
                     updatePromotionsSearchParams={updatePromotionsQueryParams}
-                    handlePromotionDeletion={this.handlePromotionDeletion}
                   />
                 </div>
               </Tab>
@@ -228,7 +235,7 @@ class PromotionsPage extends Component {
                 label="🗑 Trash"
                 active={currentTab === TABS.trash}
                 onClick={() => this.handleTabChange('trash')}>
-                <div className="mt4">
+                <div className="mt4 w-100">
                   <PromotionsTable
                     loading={archivedPromotionsLoading}
                     error={archivedPromotionsError}
