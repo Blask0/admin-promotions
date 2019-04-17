@@ -60,6 +60,7 @@ class PromotionsTable extends Component {
     const {
       creationDisabled,
       emptyStateLabel,
+      extraActions,
       intl,
       lineActions,
       loading,
@@ -99,6 +100,7 @@ class PromotionsTable extends Component {
                 id: 'promotions.promotions.table.filter.hideAll',
               }),
             },
+            extraActions: extraActions,
             newLine: noNewLine
               ? null
               : {
@@ -180,6 +182,15 @@ PromotionsTable.contextTypes = {
 PromotionsTable.propTypes = {
   creationDisabled: PropTypes.bool,
   emptyStateLabel: PropTypes.string,
+  extraActions: PropTypes.shape({
+    label: PropTypes.string,
+    actions: PropTypes.arrayOf(
+      PropTypes.shape({
+        label: PropTypes.string.isRequired,
+        handleCallback: PropTypes.func.isRequired,
+      })
+    ).isRequired,
+  }),
   intl: intlShape,
   lineActions: PropTypes.shape({
     isDangerous: PropTypes.bool,

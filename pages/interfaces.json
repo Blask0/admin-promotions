@@ -8,6 +8,9 @@
   "admin.promotions.PromotionsPage": {
     "component": "PromotionsPage"
   },
+  "admin.promotions.ArchivedPromotionsPage": {
+    "component": "ArchivedPromotionsPage"
+  },
   "admin.promotions.PromotionPage": {
     "component": "PromotionPage"
   }

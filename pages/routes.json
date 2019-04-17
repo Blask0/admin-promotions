@@ -2,6 +2,9 @@
   "admin.promotions.PromotionsPage": {
     "path": "/admin/promotions"
   },
+  "admin.promotions.ArchivedPromotionsPage": {
+    "path": "/admin/promotions/archived"
+  },
   "admin.promotions.PromotionPage": {
     "path": "/admin/promotions/:id"
   }
