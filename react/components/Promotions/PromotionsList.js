@@ -35,8 +35,19 @@ function getEffectIcon(effectType) {
   }
 }
 
-function getStatus(intl, { isActive, beginDate, endDate }) {
+function getStatus(intl, { isActive, beginDateString, endDateString }) {
   const now = new Date()
+  const beginDate = new Date(beginDateString)
+  const endDate = new Date(endDateString)
+  if (!endDate || endDate.getTime() < now.getTime()) {
+    return {
+      color: '#3F3F40',
+      icon: <Completed />,
+      label: intl.formatMessage({
+        id: 'promotions.promotion.status.completed',
+      }),
+    }
+  }
   if (isActive) {
     if (beginDate.getTime() > now.getTime()) {
       return {
@@ -47,20 +58,11 @@ function getStatus(intl, { isActive, beginDate, endDate }) {
         }),
       }
     }
-    if (endDate.getTime() > now.getTime()) {
-      return {
-        color: '#8BC34A',
-        icon: <Running />,
-        label: intl.formatMessage({
-          id: 'promotions.promotion.status.running',
-        }),
-      }
-    }
     return {
-      color: '#3F3F40',
-      icon: <Completed />,
+      color: '#8BC34A',
+      icon: <Running />,
       label: intl.formatMessage({
-        id: 'promotions.promotion.status.completed',
+        id: 'promotions.promotion.status.running',
       }),
     }
   }
@@ -222,13 +224,10 @@ function getTableSchema(intl) {
             endDate: endDateString,
           },
         }) => {
-          const beginDate = new Date(beginDateString)
-          const endDate = new Date(endDateString)
-
           const { color, icon, label } = getStatus(intl, {
             isActive,
-            beginDate,
-            endDate,
+            beginDateString,
+            endDateString,
           })
 
           return (
