@@ -250,5 +250,5 @@
   "promotions.promotion.status.running": "Em execução",
   "promotions.promotion.status.paused": "Pausada",
   "promotions.promotion.status.scheduled": "Agendada",
-  "promotions.promotion.status.completed": "Completa"
+  "promotions.promotion.status.completed": "Finalizada"
 }
