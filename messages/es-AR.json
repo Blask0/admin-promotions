@@ -246,5 +246,9 @@
   "promotions.promotion.error.reason.RNB-E1005": "Error al guardar la promoción",
   "promotions.promotion.accountLimit.exceeded": "Está utilizando todo el {limit} de espacios de promoción disponibles. Remueve algunas promociones para poder crear más.",
   "promotions.promotion.accountLimit.warning": "Estás utilizando {current} fuera de las ranuras de promoción {limit}. Remueve algunas promociones para liberar más ranuras.",
-  "promotions.promotion.accountLimit.moreInfo": "Más información"
+  "promotions.promotion.accountLimit.moreInfo": "Más información",
+  "promotions.promotion.status.running": "En ejecución",
+  "promotions.promotion.status.paused": "En pausa",
+  "promotions.promotion.status.scheduled": "Programada",
+  "promotions.promotion.status.completed": "Completa"
 }

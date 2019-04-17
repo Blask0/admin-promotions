@@ -245,5 +245,9 @@
   "promotions.promotion.error.reason.RNB-E1005": "Error saving promotion",
   "promotions.promotion.accountLimit.exceeded": "You are using all {limit} of available promotion slots. Remove some promotions to be able to create more.",
   "promotions.promotion.accountLimit.warning": "You are using {current} out of {limit} promotion slots. Remove some promotions to free up more slots.",
-  "promotions.promotion.accountLimit.moreInfo": "More info"
+  "promotions.promotion.accountLimit.moreInfo": "More info",
+  "promotions.promotion.status.running": "Running",
+  "promotions.promotion.status.paused": "Paused",
+  "promotions.promotion.status.scheduled": "Scheduled",
+  "promotions.promotion.status.completed": "Completed"
 }

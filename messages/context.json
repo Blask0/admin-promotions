@@ -246,5 +246,9 @@
   "promotions.promotion.error.reason.RNB-E1005": "promotions.promotion.error.reason.RNB-E1005",
   "promotions.promotion.accountLimit.exceeded": "promotions.promotion.accountLimit.exceeded",
   "promotions.promotion.accountLimit.warning": "promotions.promotion.accountLimit.warning",
-  "promotions.promotion.accountLimit.moreInfo": "promotions.promotion.accountLimit.moreInfo"
+  "promotions.promotion.accountLimit.moreInfo": "promotions.promotion.accountLimit.moreInfo",
+  "promotions.promotion.status.running": "promotions.promotion.status.running",
+  "promotions.promotion.status.paused": "promotions.promotion.status.paused",
+  "promotions.promotion.status.scheduled": "promotions.promotion.status.scheduled",
+  "promotions.promotion.status.completed": "promotions.promotion.status.completed"
 }
