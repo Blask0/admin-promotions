@@ -3,7 +3,7 @@ import React from 'react'
 export default function Completed({
   fill = 'none',
   color = 'currentColor',
-  size = 32,
+  size = 12,
 }) {
   return (
     <svg

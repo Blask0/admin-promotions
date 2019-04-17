@@ -3,7 +3,7 @@ import React from 'react'
 export default function Scheduled({
   fill = 'none',
   color = 'currentColor',
-  size = 32,
+  size = 12,
 }) {
   return (
     <svg
