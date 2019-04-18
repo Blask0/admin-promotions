@@ -5,25 +5,15 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
 import { Alert, Layout, PageHeader, PageBlock } from 'vtex.styleguide'
 
-import AccountLimitsAlert from './components/Promotions/AccountLimitsAlert'
-
-import withAccountLimits from './connectors/withAccountLimits'
-import withPromotions from './connectors/withPromotions'
+import ArchivedPromotionsList from './components/Promotions/ArchivedPromotionsList'
 
 import { getErrorsInfo } from './utils/errors'
-import PromotionsList from './components/Promotions/PromotionsList'
 
-const TABS = {
-  table: 'table',
-  trash: 'trash',
-}
-
-class PromotionsPage extends Component {
+class ArchivedPromotionsPage extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      currentTab: TABS.table,
       showError: true,
     }
 
@@ -47,29 +37,35 @@ class PromotionsPage extends Component {
     window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
   }
 
-  handleTabChange = tabKey => {
-    this.setState({ currentTab: TABS[tabKey] })
-  }
-
-  getArchivedLineActions = () => {}
-
-  isCreationDisabled = () => {
-    const { promotions = [], accountLimits } = this.props
-    const activePromotions = promotions.filter(({ isActive }) => isActive)
-    return (
-      accountLimits && activePromotions.length >= accountLimits.activePromotions
-    )
-  }
-
   render() {
-    const { currentTab, showError } = this.state
-    const { intl, error, promotions = [], accountLimits } = this.props
+    const { navigate } = this.context
+    const { showError } = this.state
+    const { intl, error } = this.props
 
     const [errorInfo] = getErrorsInfo(error)
 
     return (
       <Fragment>
-        <Layout fullWidth pageHeader={<PageHeader title="Promotions" />}>
+        <Layout
+          fullWidth
+          pageHeader={
+            <PageHeader
+              linkLabel={intl.formatMessage({
+                id: 'promotions.promotion.linkLabel',
+              })}
+              onLinkClick={() => {
+                navigate({
+                  page: 'admin.promotions.PromotionsPage',
+                })
+              }}
+              title={intl.formatMessage({
+                id: 'promotions.promotion.archived.title',
+              })}
+              subtitle={intl.formatMessage({
+                id: 'promotions.promotion.archived.subtitle',
+              })}
+            />
+          }>
           {error && showError && (
             <div className="mb5">
               <Alert
@@ -93,17 +89,9 @@ class PromotionsPage extends Component {
               </Alert>
             </div>
           )}
-          {accountLimits && (
-            <div className="mb5">
-              <AccountLimitsAlert
-                promotions={promotions}
-                accountLimits={accountLimits}
-              />
-            </div>
-          )}
           <PageBlock>
             <div className="mt4 w-100">
-              <PromotionsList creationDisabled={this.isCreationDisabled()} />
+              <ArchivedPromotionsList />
             </div>
           </PageBlock>
         </Layout>
@@ -112,15 +100,13 @@ class PromotionsPage extends Component {
   }
 }
 
-PromotionsPage.propTypes = {
-  intl: intlShape,
-  error: PropTypes.object,
-  loading: PropTypes.bool,
-  promotions: PropTypes.arrayOf(PropTypes.object),
+ArchivedPromotionsPage.contextTypes = {
+  navigate: PropTypes.func,
 }
 
-export default compose(
-  withAccountLimits,
-  withPromotions,
-  injectIntl
-)(PromotionsPage)
+ArchivedPromotionsPage.propTypes = {
+  intl: intlShape,
+  error: PropTypes.object,
+}
+
+export default compose(injectIntl)(ArchivedPromotionsPage)

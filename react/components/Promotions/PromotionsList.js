@@ -272,7 +272,7 @@ class PromotionsList extends Component {
       {
         label: () =>
           intl.formatMessage({
-            id: 'promotions.promotions.actions.delete',
+            id: 'promotions.promotions.actions.archive',
           }),
         isDangerous: true,
         onClick: ({ rowData: { id, name } }) => {
@@ -288,7 +288,28 @@ class PromotionsList extends Component {
     ]
   }
 
-  handlePromotionDeletionModalConfirmed = () => {
+  getExtraActions = () => {
+    const { navigate } = this.context
+    const { intl } = this.props
+    return {
+      label: 'Extra actions',
+      actions: [
+        {
+          label: intl.formatMessage({
+            id: 'promotions.promotion.archived.title',
+          }),
+          handleCallback: () => {
+            window.postMessage({ action: { type: 'START_LOADING' } }, '*')
+            navigate({
+              page: 'admin.promotions.ArchivedPromotionsPage',
+            })
+          },
+        },
+      ],
+    }
+  }
+
+  handlePromotionArchivingModalConfirmed = () => {
     const {
       promotionToBeDeleted: { id },
     } = this.state
@@ -308,7 +329,7 @@ class PromotionsList extends Component {
     })
   }
 
-  handlePromotionDeletionModalCanceled = () => {
+  handlePromotionArchivingModalCanceled = () => {
     this.setState({
       isPromotionModalOpened: false,
       promotionToBeDeleted: undefined,
@@ -355,6 +376,7 @@ class PromotionsList extends Component {
           emptyStateLabel={emptyStateLabel}
           lineActions={this.getLineActions()}
           creationDisabled={creationDisabled}
+          extraActions={this.getExtraActions()}
           onRowClick={({ rowData: { id } }) =>
             this.handlePromotionSelection(id)
           }
@@ -364,15 +386,15 @@ class PromotionsList extends Component {
         <ModalDialog
           centered
           confirmation={{
-            onClick: this.handlePromotionDeletionModalConfirmed,
+            onClick: this.handlePromotionArchivingModalConfirmed,
             label: intl.formatMessage({
-              id: 'promotions.promotions.deletionModal.confirm',
+              id: 'promotions.promotions.archivingModal.confirm',
             }),
           }}
           cancelation={{
-            onClick: this.handlePromotionDeletionModalCanceled,
+            onClick: this.handlePromotionArchivingModalCanceled,
             label: intl.formatMessage({
-              id: 'promotions.promotions.deletionModal.cancel',
+              id: 'promotions.promotions.archivingModal.cancel',
             }),
           }}
           isOpen={isPromotionModalOpened}
@@ -380,10 +402,10 @@ class PromotionsList extends Component {
           closeOnEsc={false}
           closeOnOverlayClick={false}>
           <h1>
-            <FormattedMessage id="promotions.promotions.deletionModal.title" />
+            <FormattedMessage id="promotions.promotions.archivingModal.title" />
           </h1>
           <p>
-            <FormattedMessage id="promotions.promotions.deletionModal.text" />
+            <FormattedMessage id="promotions.promotions.archivingModal.text" />
             <strong> {promotionToBeDeletedName}</strong>?
           </p>
         </ModalDialog>
