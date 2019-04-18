@@ -10,6 +10,9 @@ import Price from '../Icon/Price'
 import Gift from '../Icon/Gift'
 import Shipping from '../Icon/Shipping'
 import Reward from '../Icon/Reward'
+import Play from '../Icon/Play'
+import Pause from '../Icon/Pause'
+import Clock from '../Icon/Clock'
 
 import PromotionsTable from './PromotionsTable'
 
@@ -28,6 +31,44 @@ function getEffectIcon(effectType) {
       return <Shipping />
     case 'reward':
       return <Reward />
+  }
+}
+
+function getStatus(intl, { isActive, beginDateString, endDateString }) {
+  const now = new Date()
+  const beginDate = new Date(beginDateString)
+  const endDate = new Date(endDateString)
+  if (!endDate || endDate.getTime() < now.getTime()) {
+    return {
+      color: '#3F3F40',
+      icon: <Clock />,
+      label: intl.formatMessage({
+        id: 'promotions.promotion.status.completed',
+      }),
+    }
+  }
+  if (isActive) {
+    if (beginDate.getTime() > now.getTime()) {
+      return {
+        color: '#FFB100',
+        icon: <Clock />,
+        label: intl.formatMessage({
+          id: 'promotions.promotion.status.scheduled',
+        }),
+      }
+    }
+    return {
+      color: '#8BC34A',
+      icon: <Play />,
+      label: intl.formatMessage({
+        id: 'promotions.promotion.status.running',
+      }),
+    }
+  }
+  return {
+    color: '#3F3F40',
+    icon: <Pause />,
+    label: intl.formatMessage({ id: 'promotions.promotion.status.paused' }),
   }
 }
 
@@ -172,14 +213,28 @@ function getTableSchema(intl) {
           )
         },
       },
-      isActive: {
+      status: {
         type: 'boolean',
         title: 'Status',
-        cellRenderer: ({ cellData: isActive }) => {
-          const badgeProps = isActive
-            ? { bgColor: '#8BC34A', color: '#FFFFFF', children: 'Active' }
-            : { bgColor: '#727273', color: '#FFFFFF', children: 'Inactive' }
-          return <Tag {...badgeProps} />
+        cellRenderer: ({
+          rowData: {
+            isActive,
+            beginDate: beginDateString,
+            endDate: endDateString,
+          },
+        }) => {
+          const { color, icon, label } = getStatus(intl, {
+            isActive,
+            beginDateString,
+            endDateString,
+          })
+
+          return (
+            <div className="flex items-center" style={{ color: color }}>
+              {icon}
+              <span className="ml3">{label}</span>
+            </div>
+          )
         },
       },
     },
