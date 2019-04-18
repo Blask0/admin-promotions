@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Running({
+export default function Play({
   fill = 'none',
   color = 'currentColor',
   size = 12,

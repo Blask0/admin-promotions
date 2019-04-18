@@ -10,10 +10,9 @@ import Price from '../Icon/Price'
 import Gift from '../Icon/Gift'
 import Shipping from '../Icon/Shipping'
 import Reward from '../Icon/Reward'
-import Running from '../Icon/Running'
-import Paused from '../Icon/Paused'
-import Scheduled from '../Icon/Scheduled'
-import Completed from '../Icon/Completed'
+import Play from '../Icon/Play'
+import Pause from '../Icon/Pause'
+import Clock from '../Icon/Clock'
 
 import PromotionsTable from './PromotionsTable'
 
@@ -42,7 +41,7 @@ function getStatus(intl, { isActive, beginDateString, endDateString }) {
   if (!endDate || endDate.getTime() < now.getTime()) {
     return {
       color: '#3F3F40',
-      icon: <Completed />,
+      icon: <Clock />,
       label: intl.formatMessage({
         id: 'promotions.promotion.status.completed',
       }),
@@ -52,7 +51,7 @@ function getStatus(intl, { isActive, beginDateString, endDateString }) {
     if (beginDate.getTime() > now.getTime()) {
       return {
         color: '#FFB100',
-        icon: <Scheduled />,
+        icon: <Clock />,
         label: intl.formatMessage({
           id: 'promotions.promotion.status.scheduled',
         }),
@@ -60,7 +59,7 @@ function getStatus(intl, { isActive, beginDateString, endDateString }) {
     }
     return {
       color: '#8BC34A',
-      icon: <Running />,
+      icon: <Play />,
       label: intl.formatMessage({
         id: 'promotions.promotion.status.running',
       }),
@@ -68,7 +67,7 @@ function getStatus(intl, { isActive, beginDateString, endDateString }) {
   }
   return {
     color: '#3F3F40',
-    icon: <Paused />,
+    icon: <Pause />,
     label: intl.formatMessage({ id: 'promotions.promotion.status.paused' }),
   }
 }

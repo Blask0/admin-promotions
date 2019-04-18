@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Paused({
+export default function Pause({
   fill = 'none',
   color = 'currentColor',
   size = 12,
