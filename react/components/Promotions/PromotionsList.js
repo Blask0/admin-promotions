@@ -167,7 +167,7 @@ function getTableSchema(intl) {
       beginDate: {
         type: 'string',
         title: intl.formatMessage({
-          id: 'promotions.promotion.generalInfo.startDate',
+          id: 'promotions.promotions.column.from',
         }),
         sortable: true,
         cellRenderer: ({ cellData: beginDate }) => {
@@ -188,7 +188,7 @@ function getTableSchema(intl) {
       endDate: {
         type: 'string',
         title: intl.formatMessage({
-          id: 'promotions.promotion.generalInfo.endDate',
+          id: 'promotions.promotions.column.to',
         }),
         sortable: true,
         cellRenderer: ({ cellData: endDate }) => {

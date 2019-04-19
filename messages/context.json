@@ -252,5 +252,7 @@
   "promotions.promotion.status.running": "promotions.promotion.status.running",
   "promotions.promotion.status.paused": "promotions.promotion.status.paused",
   "promotions.promotion.status.scheduled": "promotions.promotion.status.scheduled",
-  "promotions.promotion.status.completed": "promotions.promotion.status.completed"
+  "promotions.promotion.status.completed": "promotions.promotion.status.completed",
+  "promotions.promotions.column.from": "promotions.promotions.column.from",
+  "promotions.promotions.column.to": "promotions.promotions.column.to"
 }

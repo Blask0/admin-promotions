@@ -9,9 +9,9 @@
   "promotions.promotion.generalInfo.status": "Status inicial",
   "promotions.promotion.generalInfo.status.active": "Activa",
   "promotions.promotion.generalInfo.status.inactive": "Inactiva",
-  "promotions.promotion.generalInfo.startDate": "Fecha y hora de início (UTC)",
+  "promotions.promotion.generalInfo.startDate": "Fecha y hora de início",
   "promotions.promotion.generalInfo.hasEndDate": "Fijar fecha de finalización",
-  "promotions.promotion.generalInfo.endDate": "Fecha y hora de finalización (UTC)",
+  "promotions.promotion.generalInfo.endDate": "Fecha y hora de finalización",
   "promotions.promotion.generalInfo.accumulateWithPromotions.label": "Acumular con otras promociones",
   "promotions.promotion.generalInfo.accumulateWithManualPrices.label": "Acumular con precios manuales",
   "promotions.promotion.generalInfo.tz": "Zona horaria es GMT{tz} ({tzLabel})",
@@ -252,5 +252,7 @@
   "promotions.promotion.status.running": "En ejecución",
   "promotions.promotion.status.paused": "En pausa",
   "promotions.promotion.status.scheduled": "Programada",
-  "promotions.promotion.status.completed": "Finalizada"
+  "promotions.promotion.status.completed": "Finalizada",
+  "promotions.promotions.column.from": "De",
+  "promotions.promotions.column.to": "Hasta"
 }
