@@ -254,5 +254,6 @@
   "promotions.promotion.status.scheduled": "Programada",
   "promotions.promotion.status.completed": "Finalizada",
   "promotions.promotions.column.from": "De",
-  "promotions.promotions.column.to": "Hasta"
+  "promotions.promotions.column.to": "Hasta",
+  "promotions.promotion.legacy": "Legado"
 }

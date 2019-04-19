@@ -21,6 +21,8 @@ import { toDate, format } from 'date-fns'
 import archivingPromotionById from '../../connectors/archivingPromotionById'
 import withPromotions from '../../connectors/withPromotions'
 
+const NO_TITLE_COLUMN = ' '
+
 function getEffectIcon(effectType) {
   switch (effectType) {
     case 'price':
@@ -76,7 +78,7 @@ function getTableSchema(intl) {
   return {
     properties: {
       activation: {
-        title: ' ',
+        title: NO_TITLE_COLUMN,
         width: 60,
         cellRenderer: ({ rowData: promotion }) => (
           <PromotionActivationToggle promotion={promotion} />
@@ -87,7 +89,22 @@ function getTableSchema(intl) {
         title: intl.formatMessage({
           id: 'promotions.promotion.generalInfo.name',
         }),
+        width: 350,
         sortable: true,
+      },
+      legacy: {
+        type: 'any',
+        title: NO_TITLE_COLUMN,
+        width: 89,
+        cellRenderer: ({ rowData: { conditionsIds } }) => {
+          return (
+            !conditionsIds && (
+              <Tag variation="low" color="#C28702">
+                <FormattedMessage id="promotions.promotion.legacy" />
+              </Tag>
+            )
+          )
+        },
       },
       effectType: {
         type: 'string',
@@ -95,11 +112,16 @@ function getTableSchema(intl) {
           id: 'promotions.promotion.effects.title',
         }),
         sortable: true,
-        cellRenderer: ({ cellData: effectType }) => {
+        cellRenderer: ({ cellData: effectType, rowData: { type } }) => {
           return (
             <div className="dt">
               {getEffectIcon(effectType)}
-              <span className="dtc v-mid pl3">{effectType}</span>
+              <span className="dtc v-mid pl3">
+                {effectType ||
+                  intl.formatMessage({
+                    id: `promotions.promotions.newPromotion.${type}`,
+                  })}
+              </span>
             </div>
           )
         },
@@ -129,7 +151,7 @@ function getTableSchema(intl) {
             type: 'int',
           },
         },
-        width: 300,
+        minWidth: 200,
         cellRenderer: ({ cellData }) => {
           if (cellData) {
             if (cellData.allCatalog) {
