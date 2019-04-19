@@ -95,11 +95,11 @@ function getTableSchema(intl) {
       legacy: {
         type: 'any',
         title: NO_TITLE_COLUMN,
-        width: 89,
+        width: 81,
         cellRenderer: ({ rowData: { conditionsIds } }) => {
           return (
             !conditionsIds && (
-              <Tag variation="low" color="#C28702">
+              <Tag size="small" variation="low" color="#C28702">
                 <FormattedMessage id="promotions.promotion.legacy" />
               </Tag>
             )
@@ -151,7 +151,7 @@ function getTableSchema(intl) {
             type: 'int',
           },
         },
-        minWidth: 200,
+        minWidth: 180,
         cellRenderer: ({ cellData }) => {
           if (cellData) {
             if (cellData.allCatalog) {
