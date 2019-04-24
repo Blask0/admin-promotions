@@ -22,6 +22,7 @@ import archivingPromotionById from '../../connectors/archivingPromotionById'
 import withPromotions from '../../connectors/withPromotions'
 
 const NO_TITLE_COLUMN = ' '
+const LEGACY_TAG_COLOR = '#C28702'
 
 function getEffectIcon(effectType) {
   switch (effectType) {
@@ -99,7 +100,7 @@ function getTableSchema(intl) {
         cellRenderer: ({ rowData: { conditionsIds } }) => {
           return (
             !conditionsIds && (
-              <Tag size="small" variation="low" color="#C28702">
+              <Tag size="small" variation="low" color={LEGACY_TAG_COLOR}>
                 <FormattedMessage id="promotions.promotion.legacy" />
               </Tag>
             )
