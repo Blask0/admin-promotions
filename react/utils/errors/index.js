@@ -3,7 +3,9 @@ export function getErrorsInfo(error) {
     ? error.graphQLErrors.map(error => ({
       operationId: error.operationId,
       reason: error.extensions.exception.reason,
-      httpStatusCode: error.extensions.exception.details.response.status,
+      httpStatusCode:
+          error.extensions.exception.details &&
+          error.extensions.exception.details.response.status,
     }))
     : []
 }

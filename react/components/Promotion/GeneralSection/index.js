@@ -89,6 +89,41 @@ class GeneralSection extends Component {
                 }}
               />
             </div>
+            <div className="mv4">
+              <Checkbox
+                checked={generalInfo.highlight}
+                id="highlight"
+                label={intl.formatMessage({
+                  id: 'promotions.promotion.generalInfo.highlight',
+                })}
+                name="highlight-checkbox"
+                onChange={() => {
+                  updatePageState({
+                    highlight: !generalInfo.highlight,
+                  })
+                }}
+                value="highlight"
+              />
+            </div>
+            {/* {generalInfo.hasEndDate ? (
+            <div className="mt4">
+              <DatePicker
+                locale={intl.locale}
+                onChange={date => {
+                  updatePageState({
+                    endDate: {
+                      value: date,
+                    },
+                  })
+                }}
+                errorMessage={generalInfo.endDate.error}
+                value={generalInfo.endDate.value}
+                label={intl.formatMessage({
+                  id: 'promotions.promotion.generalInfo.endDate',
+                })}
+              />
+            </div>
+          ) : null} */}
           </div>
         </div>
         <Scheduling
