@@ -4,7 +4,8 @@ import { IconFailure } from 'vtex.styleguide'
 import { injectIntl, FormattedMessage } from 'react-intl'
 
 function stopAdminLoading() {
-  window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
+  window.top &&
+    window.top.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
 }
 
 function NoAccessPage() {

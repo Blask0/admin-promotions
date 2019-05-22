@@ -322,7 +322,8 @@ class PromotionsList extends Component {
             id: 'promotions.promotion.archived.title',
           }),
           handleCallback: () => {
-            window.postMessage({ action: { type: 'START_LOADING' } }, '*')
+            window.top &&
+              window.top.postMessage({ action: { type: 'START_LOADING' } }, '*')
             navigate({
               page: 'admin.app.archived-promotions',
             })
@@ -343,7 +344,8 @@ class PromotionsList extends Component {
       },
     })
     archive.then(() => {
-      window.postMessage({ action: { type: 'START_LOADING' } }, '*')
+      window.top &&
+        window.top.postMessage({ action: { type: 'START_LOADING' } }, '*')
       window.location.reload()
       this.setState({
         isPromotionModalOpened: false,
@@ -374,7 +376,8 @@ class PromotionsList extends Component {
         to: `/admin/rnb/#/benefit/${id}`,
       })
     }
-    window.postMessage({ action: { type: 'START_LOADING' } }, '*')
+    window.top &&
+      window.top.postMessage({ action: { type: 'START_LOADING' } }, '*')
   }
 
   render() {
