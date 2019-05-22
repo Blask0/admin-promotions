@@ -1,0 +1,20 @@
+{
+  "toastr": {
+    "component": "toastr"
+  },
+  "admin.app.promotions": {
+    "around": ["toastr"],
+    "component": "PromotionsPage",
+    "path": "/admin/app/promotions"
+  },
+  "admin.app.archived-promotions": {
+    "around": ["toastr"],
+    "component": "ArchivedPromotionsPage",
+    "path": "/admin/app/promotions/archived"
+  },
+  "admin.app.promotion": {
+    "around": ["toastr"],
+    "component": "PromotionPage",
+    "path": "/admin/app/promotions/:id"
+  }
+}
