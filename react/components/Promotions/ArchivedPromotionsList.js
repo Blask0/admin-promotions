@@ -218,7 +218,7 @@ class ArchivedPromotionsList extends Component {
           lineActions={this.getLineActions()}
           onRowClick={({ rowData: { id } }) => {
             navigate({
-              page: 'admin.promotions.PromotionPage',
+              page: 'admin.app.promotion',
               params: {
                 id: id,
               },

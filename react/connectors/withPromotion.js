@@ -56,7 +56,7 @@ function withPromotion(WrappedComponent) {
                 actionMessageId="promotions.promotion.error.goToPromotions"
                 onActionExecuted={() => {
                   navigate({
-                    page: 'admin.promotions.PromotionsPage',
+                    page: 'admin.app.promotions',
                   })
                   window.postMessage({ action: { type: 'START_LOADING' } }, '*')
                 }}

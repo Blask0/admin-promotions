@@ -791,7 +791,7 @@ class PromotionPage extends Component {
     })
       .then(() => {
         navigate({
-          page: 'admin.promotions.PromotionsPage',
+          page: 'admin.app.promotions',
         })
         window.postMessage({ action: { type: 'START_LOADING' } }, '*')
       })
@@ -824,7 +824,7 @@ class PromotionPage extends Component {
             })}
             onLinkClick={() => {
               navigate({
-                page: 'admin.promotions.PromotionsPage',
+                page: 'admin.app.promotions',
               })
             }}
             title={

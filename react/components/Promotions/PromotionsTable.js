@@ -109,7 +109,7 @@ class PromotionsTable extends Component {
                 }),
                 handleCallback: () => {
                   navigate({
-                    page: 'admin.promotions.PromotionPage',
+                    page: 'admin.app.promotion',
                     params: {
                       id: 'new',
                     },

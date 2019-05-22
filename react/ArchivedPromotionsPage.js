@@ -55,7 +55,7 @@ class ArchivedPromotionsPage extends Component {
               })}
               onLinkClick={() => {
                 navigate({
-                  page: 'admin.promotions.PromotionsPage',
+                  page: 'admin.app.promotions',
                 })
               }}
               title={intl.formatMessage({

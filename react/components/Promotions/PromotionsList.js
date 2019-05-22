@@ -284,7 +284,7 @@ class PromotionsList extends Component {
           }),
         onClick: ({ rowData: { id } }) => {
           navigate({
-            page: 'admin.promotions.PromotionPage',
+            page: 'admin.app.promotion',
             params: {
               id: 'new',
               duplicate: id,
@@ -324,7 +324,7 @@ class PromotionsList extends Component {
           handleCallback: () => {
             window.postMessage({ action: { type: 'START_LOADING' } }, '*')
             navigate({
-              page: 'admin.promotions.ArchivedPromotionsPage',
+              page: 'admin.app.archived-promotions',
             })
           },
         },
@@ -364,7 +364,7 @@ class PromotionsList extends Component {
     const { id, effectType } = promotion
     if (effectType) {
       navigate({
-        page: 'admin.promotions.PromotionPage',
+        page: 'admin.app.promotion',
         params: {
           id,
         },
