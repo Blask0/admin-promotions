@@ -103,11 +103,6 @@ export const newPromotion = (intl, promotion, salesChannels) => {
       ? generalInfo.cron.split(' ')
       : []
 
-    const r = getRestrictSalesChannelVerbOptions(intl)
-    const w = getSelectedWeekDays(weekDay)
-    const t = getSelectedTimes(hour)
-    const nfv = newFieldWithValidation
-
     return {
       ...promotion,
       generalInfo: {
@@ -118,6 +113,7 @@ export const newPromotion = (intl, promotion, salesChannels) => {
         endDate: generalInfo.endDate
           ? newFieldWithValidation(new Date(generalInfo.endDate))
           : newFieldWithValidation(),
+        highlight: generalInfo.highlight,
         useRecurrency,
         recurrency: {
           weekDays: useRecurrency
@@ -175,6 +171,7 @@ export const newPromotion = (intl, promotion, salesChannels) => {
       hasEndDate: false,
       endDate: newFieldWithValidation(),
       tz: -new Date().getTimezoneOffset() / 60,
+      highlight: false,
       useRecurrency: false,
       recurrency: {
         weekDays: newFieldWithValidation(null),

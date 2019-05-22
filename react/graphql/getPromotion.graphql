@@ -5,6 +5,7 @@ query GetPromotion($id: String!) {
       name
       startDate
       endDate
+      highlight
       tz
       cron
       isActive

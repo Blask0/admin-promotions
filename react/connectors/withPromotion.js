@@ -62,14 +62,16 @@ function withPromotion(WrappedComponent) {
                 }}
               />
             ) : (
-              <WrappedComponent
-                {...this.props}
-                loading={loading}
-                error={error}
-                promotion={
-                  data ? this.mapPromotion(data.getPromotion) : undefined
-                }
-              />
+              !loading && (
+                <WrappedComponent
+                  {...this.props}
+                  loading={loading}
+                  error={error}
+                  promotion={
+                    data ? this.mapPromotion(data.getPromotion) : undefined
+                  }
+                />
+              )
             )
           }}
         </Query>

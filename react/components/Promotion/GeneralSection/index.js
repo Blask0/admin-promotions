@@ -2,11 +2,13 @@ import React, { Fragment, Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-import { Checkbox, Input, Toggle } from 'vtex.styleguide'
+import { Checkbox, Input, Toggle, IconHelp } from 'vtex.styleguide'
 import Scheduling from './Scheduling'
 
 import { fieldShape } from '../../../utils/propTypes'
 import { applyFocus } from '../../../utils/functions'
+
+const OPTICAL_COMPENSATION = '1px'
 
 class GeneralSection extends Component {
   constructor(props) {
@@ -39,6 +41,7 @@ class GeneralSection extends Component {
   }
 
   render() {
+    const { navigate } = this.context
     const { intl, generalInfo, updatePageState } = this.props
 
     return (
@@ -88,6 +91,36 @@ class GeneralSection extends Component {
                   })
                 }}
               />
+            </div>
+            <div className="mv4 flex items-center">
+              <Checkbox
+                checked={generalInfo.highlight}
+                id="highlight"
+                label={intl.formatMessage({
+                  id: 'promotions.promotion.generalInfo.highlight',
+                })}
+                name="highlight-checkbox"
+                onChange={() => {
+                  updatePageState({
+                    highlight: !generalInfo.highlight,
+                  })
+                }}
+                value="highlight"
+              />
+              <div
+                className="ml2 c-muted-2 flex items-center pointer"
+                style={{ paddingTop: OPTICAL_COMPENSATION }}
+                title={intl.formatMessage({
+                  id: 'promotions.promotion.generalInfo.highlight.helpText',
+                })}
+                onClick={() =>
+                  window.open(
+                    'https://help.vtex.com/tutorial/configurando-promocao-com-destaque-flag--tutorials_2295',
+                    '_blank'
+                  )
+                }>
+                <IconHelp size={14} />
+              </div>
             </div>
           </div>
         </div>

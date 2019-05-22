@@ -4,8 +4,10 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
 import { Checkbox, DatePicker, Collapsible } from 'vtex.styleguide'
 
-import { fieldShape } from '../../../utils/propTypes'
 import AdvancedScheduling from './AdvancedScheduling'
+
+import { fieldShape } from '../../../utils/propTypes'
+import { addDays } from 'date-fns'
 
 function Scheduling({ intl, generalInfo, updatePageState }) {
   const tzLabel = Intl.DateTimeFormat().resolvedOptions().timeZone

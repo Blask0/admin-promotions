@@ -782,6 +782,7 @@ class PromotionPage extends Component {
   handleSave = promotion => {
     this.setState({ isSaving: true, showError: true })
     this.errorAlert.focus = true
+    const { navigate } = this.context
     const { savePromotion } = this.props
     savePromotion({
       variables: {
