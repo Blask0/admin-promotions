@@ -13,6 +13,7 @@
   "promotions.promotion.generalInfo.hasEndDate": "promotions.promotion.generalInfo.hasEndDate",
   "promotions.promotion.generalInfo.endDate": "promotions.promotion.generalInfo.endDate",
   "promotions.promotion.generalInfo.highlight": "promotions.promotion.generalInfo.highlight",
+  "promotions.promotion.generalInfo.highlight.helpText": "promotions.promotion.generalInfo.highlight.helpText",
   "promotions.promotion.generalInfo.accumulateWithPromotions.label": "promotions.promotion.generalInfo.accumulateWithPromotions.label",
   "promotions.promotion.generalInfo.accumulateWithManualPrices.label": "promotions.promotion.generalInfo.accumulateWithManualPrices.label",
   "promotions.promotion.generalInfo.tz": "promotions.promotion.generalInfo.tz",
