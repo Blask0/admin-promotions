@@ -1,10 +1,13 @@
 query GetPromotions($name: String, $effect: String) {
   getPromotions(name: $name, effect: $effect) {
-    cacheId
-    id
-    name
     beginDate
+    cacheId
+    conditionsIds
+    effectType
     endDate
+    id
+    isActive
+    name
     scope {
       allCatalog
       skus
@@ -13,7 +16,6 @@ query GetPromotions($name: String, $effect: String) {
       categories
       brands
     }
-    isActive
-    effectType
+    type
   }
 }

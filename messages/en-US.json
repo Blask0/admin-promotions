@@ -253,5 +253,6 @@
   "promotions.promotion.status.scheduled": "Scheduled",
   "promotions.promotion.status.completed": "Completed",
   "promotions.promotions.column.from": "From",
-  "promotions.promotions.column.to": "To"
+  "promotions.promotions.column.to": "To",
+  "promotions.promotion.legacy": "Legacy"
 }
