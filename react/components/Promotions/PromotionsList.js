@@ -359,14 +359,21 @@ class PromotionsList extends Component {
     })
   }
 
-  handlePromotionSelection = id => {
+  handlePromotionSelection = promotion => {
     const { navigate } = this.context
-    navigate({
-      page: 'admin.promotions.PromotionPage',
-      params: {
-        id,
-      },
-    })
+    const { id, effectType } = promotion
+    if (effectType) {
+      navigate({
+        page: 'admin.promotions.PromotionPage',
+        params: {
+          id,
+        },
+      })
+    } else {
+      navigate({
+        to: `/admin/rnb/#/benefit/${id}`,
+      })
+    }
     window.postMessage({ action: { type: 'START_LOADING' } }, '*')
   }
 
@@ -400,8 +407,8 @@ class PromotionsList extends Component {
           lineActions={this.getLineActions()}
           creationDisabled={creationDisabled}
           extraActions={this.getExtraActions()}
-          onRowClick={({ rowData: { id } }) =>
-            this.handlePromotionSelection(id)
+          onRowClick={({ rowData: promotion }) =>
+            this.handlePromotionSelection(promotion)
           }
           onSearch={updatePromotionsQueryParams}
         />
