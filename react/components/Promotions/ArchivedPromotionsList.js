@@ -179,7 +179,8 @@ class ArchivedPromotionsList extends Component {
             id: 'promotions.promotions.actions.recover',
           }),
         onClick: ({ rowData: { id } }) => {
-          window.postMessage({ action: { type: 'START_LOADING' } }, '*')
+          window.top &&
+            window.top.postMessage({ action: { type: 'START_LOADING' } }, '*')
           unarchivePromotionById({
             variables: {
               id,
@@ -218,12 +219,13 @@ class ArchivedPromotionsList extends Component {
           lineActions={this.getLineActions()}
           onRowClick={({ rowData: { id } }) => {
             navigate({
-              page: 'admin.promotions.PromotionPage',
+              page: 'admin.app.promotion',
               params: {
                 id: id,
               },
             })
-            window.postMessage({ action: { type: 'START_LOADING' } }, '*')
+            window.top &&
+              window.top.postMessage({ action: { type: 'START_LOADING' } }, '*')
           }}
           onSearch={updateArchivedPromotionsQueryParams}
           noNewLine

@@ -23,7 +23,8 @@ function withPromotion(WrappedComponent) {
     }
 
     componentWillMount() {
-      window.postMessage({ action: { type: 'START_LOADING' } }, '*')
+      window.top &&
+        window.top.postMessage({ action: { type: 'START_LOADING' } }, '*')
     }
 
     mapPromotion = promotion =>
@@ -56,9 +57,12 @@ function withPromotion(WrappedComponent) {
                 actionMessageId="promotions.promotion.error.goToPromotions"
                 onActionExecuted={() => {
                   navigate({
-                    page: 'admin.promotions.PromotionsPage',
+                    page: 'admin.app.promotions',
                   })
-                  window.postMessage({ action: { type: 'START_LOADING' } }, '*')
+                  window.top.postMessage(
+                    { action: { type: 'START_LOADING' } },
+                    '*'
+                  )
                 }}
               />
             ) : (

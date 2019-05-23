@@ -284,7 +284,7 @@ class PromotionsList extends Component {
           }),
         onClick: ({ rowData: { id } }) => {
           navigate({
-            page: 'admin.promotions.PromotionPage',
+            page: 'admin.app.promotion',
             params: {
               id: 'new',
               duplicate: id,
@@ -322,9 +322,10 @@ class PromotionsList extends Component {
             id: 'promotions.promotion.archived.title',
           }),
           handleCallback: () => {
-            window.postMessage({ action: { type: 'START_LOADING' } }, '*')
+            window.top &&
+              window.top.postMessage({ action: { type: 'START_LOADING' } }, '*')
             navigate({
-              page: 'admin.promotions.ArchivedPromotionsPage',
+              page: 'admin.app.archived-promotions',
             })
           },
         },
@@ -343,7 +344,8 @@ class PromotionsList extends Component {
       },
     })
     archive.then(() => {
-      window.postMessage({ action: { type: 'START_LOADING' } }, '*')
+      window.top &&
+        window.top.postMessage({ action: { type: 'START_LOADING' } }, '*')
       window.location.reload()
       this.setState({
         isPromotionModalOpened: false,
@@ -364,7 +366,7 @@ class PromotionsList extends Component {
     const { id, effectType } = promotion
     if (effectType) {
       navigate({
-        page: 'admin.promotions.PromotionPage',
+        page: 'admin.app.promotion',
         params: {
           id,
         },
@@ -374,7 +376,8 @@ class PromotionsList extends Component {
         to: `/admin/rnb/#/benefit/${id}`,
       })
     }
-    window.postMessage({ action: { type: 'START_LOADING' } }, '*')
+    window.top &&
+      window.top.postMessage({ action: { type: 'START_LOADING' } }, '*')
   }
 
   render() {

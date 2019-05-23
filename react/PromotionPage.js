@@ -80,7 +80,8 @@ class PromotionPage extends Component {
   }
 
   componentDidMount() {
-    window.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
+    window.top &&
+      window.top.postMessage({ action: { type: 'STOP_LOADING' } }, '*')
   }
 
   validate = () => {
@@ -791,9 +792,10 @@ class PromotionPage extends Component {
     })
       .then(() => {
         navigate({
-          page: 'admin.promotions.PromotionsPage',
+          page: 'admin.app.promotions',
         })
-        window.postMessage({ action: { type: 'START_LOADING' } }, '*')
+        window.top &&
+          window.top.postMessage({ action: { type: 'START_LOADING' } }, '*')
       })
       .finally(() => this.setState({ isSaving: false }))
   }
@@ -824,7 +826,7 @@ class PromotionPage extends Component {
             })}
             onLinkClick={() => {
               navigate({
-                page: 'admin.promotions.PromotionsPage',
+                page: 'admin.app.promotions',
               })
             }}
             title={

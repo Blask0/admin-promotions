@@ -1,0 +1,12 @@
+{
+  "section": "products",
+  "subSection": "discount",
+  "subSectionItems": [
+    {
+      "id": "promotions",
+      "labelId": "promotions.app.title",
+      "path": "/admin/promotions",
+      "searchKeyWordsHelpers": "promotions.app.searchKeyWordsHelpers"
+    }
+  ]
+}
