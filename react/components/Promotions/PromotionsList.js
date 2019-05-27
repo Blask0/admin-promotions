@@ -40,8 +40,8 @@ function getEffectIcon(effectType) {
 function getStatus(intl, { isActive, beginDateString, endDateString }) {
   const now = new Date()
   const beginDate = new Date(beginDateString)
-  const endDate = new Date(endDateString)
-  if (!endDate || endDate.getTime() < now.getTime()) {
+  const endDate = endDateString ? new Date(endDateString) : null
+  if (endDate && endDate.getTime() < now.getTime()) {
     return {
       color: '#3F3F40',
       icon: <Clock />,
