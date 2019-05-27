@@ -97,9 +97,9 @@ function getTableSchema(intl) {
         type: 'any',
         title: NO_TITLE_COLUMN,
         width: 81,
-        cellRenderer: ({ rowData: { conditionsIds } }) => {
+        cellRenderer: ({ rowData: { effectType } }) => {
           return (
-            !conditionsIds && (
+            !effectType && (
               <Tag size="small" variation="low" color={LEGACY_TAG_COLOR}>
                 <FormattedMessage id="promotions.promotion.legacy" />
               </Tag>
