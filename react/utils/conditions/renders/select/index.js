@@ -70,7 +70,7 @@ const renderSelectObject = ({
     return (
       <Fragment>
         <div className="flex flex-row ">
-          <div>
+          <div className="flex-grow-1">
             <EXPERIMENTAL_Select
               placeholder={placeholder}
               options={options}
