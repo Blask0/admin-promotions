@@ -36,13 +36,7 @@ const renderRangeInputObject = ({
 
           statements[statementIndex].object = currentObject
           statements[statementIndex].error = undefined
-          update({
-            statements: {
-              value: statements,
-              error: undefined,
-              focus: false,
-            },
-          })
+          update(statements)
         }}
       />
 
@@ -63,13 +57,7 @@ const renderRangeInputObject = ({
 
           statements[statementIndex].object = currentObject
           statements[statementIndex].error = undefined
-          update({
-            statements: {
-              value: statements,
-              error: undefined,
-              focus: false,
-            },
-          })
+          update(statements)
         }}
       />
     </div>

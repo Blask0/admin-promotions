@@ -28,13 +28,7 @@ const renderInputCurrencyObject = ({
         onChange={e => {
           statements[statementIndex].object = e.target.value
           statements[statementIndex].error = undefined
-          update({
-            statements: {
-              value: statements,
-              error: undefined,
-              focus: false,
-            },
-          })
+          update(statements)
         }}
       />
     </div>
