@@ -1,8 +1,12 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
-import { Button, ModalDialog, Spinner } from 'vtex.styleguide'
+
+import { ModalDialog, Spinner } from 'vtex.styleguide'
+
+import File from '../Icon/File'
 import FileModal from './fileModal'
+
 import {
   mapProductsToSelect,
   mapSkusToSelect,
@@ -77,12 +81,9 @@ class BulkImporter extends Component {
 
     return (
       <Fragment>
-        <Button
-          variation="tertiary"
-          onClick={this.handleModalToggle}
-          disabled={productQueryIsLoading}>
-          <FormattedMessage id="promotions.promotion.import" />
-        </Button>
+        <div className="pointer" onClick={this.handleModalToggle}>
+          <File />
+        </div>
         <ModalDialog
           centered
           confirmation={{
