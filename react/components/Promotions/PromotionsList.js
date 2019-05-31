@@ -24,6 +24,12 @@ import withPromotions from '../../connectors/withPromotions'
 const NO_TITLE_COLUMN = ' '
 const LEGACY_TAG_COLOR = '#C28702'
 
+function toTitleCase(str) {
+  return str.replace(/\w\S*/g, function(txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+  })
+}
+
 function getEffectIcon(effectType) {
   switch (effectType) {
     case 'price':
@@ -118,7 +124,7 @@ function getTableSchema(intl) {
             <div className="dt">
               {getEffectIcon(effectType)}
               <span className="dtc v-mid pl3">
-                {effectType ||
+                {toTitleCase(effectType) ||
                   intl.formatMessage({
                     id: `promotions.promotions.newPromotion.${type}`,
                   })}
