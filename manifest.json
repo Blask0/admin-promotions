@@ -5,7 +5,9 @@
   "title": "Promotions Admin",
   "description": "Admin interface for Promotions",
   "mustUpdateAt": "2019-08-27",
-  "registries": ["smartcheckout"],
+  "registries": [
+    "smartcheckout"
+  ],
   "scripts": {
     "postreleasy": "vtex publish --public"
   },
@@ -63,5 +65,6 @@
   ],
   "billingOptions": {
     "free": true
-  }
+  },
+  "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
 }
