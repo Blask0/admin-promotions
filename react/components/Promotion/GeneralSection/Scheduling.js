@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
@@ -8,8 +8,13 @@ import AdvancedScheduling from './AdvancedScheduling'
 
 import { fieldShape } from '../../../utils/propTypes'
 import { addDays } from 'date-fns'
+import { isAlways } from '../../../utils/promotion/recurrency'
 
 function Scheduling({ intl, generalInfo, updatePageState }) {
+  const [hasRecurrencyBeenOpened, setHasRecurrencyBeenOpened] = useState(
+    !isAlways(generalInfo.recurrency)
+  )
+
   const tzLabel = Intl.DateTimeFormat().resolvedOptions().timeZone
 
   return (
@@ -97,9 +102,15 @@ function Scheduling({ intl, generalInfo, updatePageState }) {
                   <FormattedMessage id="promotions.promotion.generalInfo.scheduling.recurrency" />
                 </span>
               }
-              onClick={e => updatePageState({ useRecurrency: e.target.isOpen })}
-              isOpen={generalInfo.useRecurrency}>
-              <div className="ml6">
+              onClick={e => {
+                setHasRecurrencyBeenOpened(true)
+                updatePageState({ useRecurrency: e.target.isOpen })
+              }}
+              isOpen={
+                generalInfo.useRecurrency &&
+                (hasRecurrencyBeenOpened || !isAlways(generalInfo.recurrency))
+              }>
+              <div className="mt4 ml6">
                 <AdvancedScheduling
                   value={generalInfo.recurrency}
                   onChange={e => {

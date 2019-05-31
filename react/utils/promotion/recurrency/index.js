@@ -32,6 +32,10 @@ export function isTimeValid({ hours }) {
   return hours !== undefined && hours !== '' && hours !== `${undefined}`
 }
 
+export function isAlways({ times, weekDays }) {
+  return !times.value && !weekDays.value
+}
+
 export function isToBeforeFrom(from, to) {
   return (
     isTimeValid(from) &&
