@@ -36,7 +36,7 @@ const renderRangeInputCurrencyObject = ({
           currentObject.first = e.target.value
           statements[statementIndex].object = currentObject
           statements[statementIndex].error = undefined
-          update(statementss)
+          update(statements)
         }}
       />
 
