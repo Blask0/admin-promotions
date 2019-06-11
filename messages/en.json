@@ -259,5 +259,7 @@
   "promotions.promotion.status.completed": "Completed",
   "promotions.promotions.column.from": "From",
   "promotions.promotions.column.to": "To",
-  "promotions.promotion.legacy": "Legacy"
+  "promotions.promotion.legacy": "Legacy",
+  "promotions.promotions.pagination.showRows": "Show rows",
+  "promotions.promotions.pagination.of": "of"
 }
