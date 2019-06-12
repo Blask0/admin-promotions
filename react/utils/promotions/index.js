@@ -80,3 +80,13 @@ export function sortPromotions(promotions, { sortedBy, sortOrder }) {
       return promotions
   }
 }
+
+export function paginate(promotions, { page, rowsPerPage }) {
+  const from = (page - 1) * rowsPerPage
+  const to = from + rowsPerPage
+  return {
+    items: promotions.slice(from, to),
+    from,
+    to,
+  }
+}

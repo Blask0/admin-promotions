@@ -260,5 +260,7 @@
   "promotions.promotion.status.completed": "promotions.promotion.status.completed",
   "promotions.promotions.column.from": "promotions.promotions.column.from",
   "promotions.promotions.column.to": "promotions.promotions.column.to",
-  "promotions.promotion.legacy": "promotions.promotion.legacy"
+  "promotions.promotion.legacy": "promotions.promotion.legacy",
+  "promotions.promotions.pagination.showRows": "promotions.promotions.pagination.showRows",
+  "promotions.promotions.pagination.of": "promotions.promotions.pagination.of"
 }

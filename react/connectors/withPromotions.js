@@ -27,7 +27,7 @@ function withPromotions(WrappedComponent) {
         <Query
           query={getPromotions}
           variables={{ name, effect }}
-          fetchPolicy="network-only">
+          fetchPolicy="cache-and-network">
           {({ loading, error, data }) => {
             const [errorInfo] = getErrorsInfo(error)
             return cannotAccess(errorInfo) ? (

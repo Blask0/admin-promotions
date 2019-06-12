@@ -260,5 +260,7 @@
   "promotions.promotion.status.completed": "Finalizada",
   "promotions.promotions.column.from": "De",
   "promotions.promotions.column.to": "Hasta",
-  "promotions.promotion.legacy": "Legado"
+  "promotions.promotion.legacy": "Legado",
+  "promotions.promotions.pagination.showRows": "Mostrar filas",
+  "promotions.promotions.pagination.of": "de"
 }

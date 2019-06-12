@@ -4,7 +4,9 @@ import { injectIntl, intlShape } from 'react-intl'
 
 import { Table } from 'vtex.styleguide'
 
-import { sortPromotions } from '../../utils/promotions'
+import { sortPromotions, paginate } from '../../utils/promotions'
+
+const ROWS_PER_PAGE_OPTIONS = [5, 10, 15, 25]
 
 class PromotionsTable extends Component {
   constructor(props) {
@@ -12,8 +14,12 @@ class PromotionsTable extends Component {
 
     this.state = {
       dataSort: {
-        sortedBy: null,
-        sortOrder: null,
+        sortedBy: 'name',
+        sortOrder: 'ASC',
+      },
+      pagination: {
+        page: 1,
+        rowsPerPage: ROWS_PER_PAGE_OPTIONS[0],
       },
       inputSearchValue: '',
     }
@@ -54,9 +60,36 @@ class PromotionsTable extends Component {
     })
   }
 
+  handleRowsPerPageChange = (event, rowsPerPage) => {
+    this.setState(({ pagination }) => ({
+      pagination: {
+        ...pagination,
+        rowsPerPage: parseInt(rowsPerPage),
+      },
+    }))
+  }
+
+  handleNextPageClick = () => {
+    this.setState(({ pagination }) => ({
+      pagination: {
+        ...pagination,
+        page: pagination.page + 1,
+      },
+    }))
+  }
+
+  handlePrevPageClick = () => {
+    this.setState(({ pagination }) => ({
+      pagination: {
+        ...pagination,
+        page: pagination.page - 1,
+      },
+    }))
+  }
+
   render() {
     const { navigate } = this.context
-    const { dataSort, inputSearchValue } = this.state
+    const { dataSort, inputSearchValue, pagination } = this.state
     const {
       creationDisabled,
       emptyStateLabel,
@@ -70,6 +103,11 @@ class PromotionsTable extends Component {
       schema,
     } = this.props
 
+    const { items, from, to } = paginate(
+      sortPromotions(promotions, dataSort),
+      pagination
+    )
+
     return (
       <div>
         <Table
@@ -77,8 +115,23 @@ class PromotionsTable extends Component {
           schema={schema}
           loading={loading}
           emptyStateLabel={emptyStateLabel}
-          items={sortPromotions(promotions, dataSort)}
+          items={items}
           onRowClick={onRowClick}
+          pagination={{
+            onNextClick: this.handleNextPageClick,
+            onPrevClick: this.handlePrevPageClick,
+            currentItemFrom: from + 1,
+            currentItemTo: to,
+            onRowsChange: this.handleRowsPerPageChange,
+            textShowRows: intl.formatMessage({
+              id: 'promotions.promotions.pagination.showRows',
+            }),
+            textOf: intl.formatMessage({
+              id: 'promotions.promotions.pagination.of',
+            }),
+            totalItems: promotions.length,
+            rowsOptions: ROWS_PER_PAGE_OPTIONS,
+          }}
           toolbar={{
             inputSearch: {
               value: inputSearchValue,
