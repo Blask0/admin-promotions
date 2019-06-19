@@ -4,6 +4,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
 import { Radio, Input, EXPERIMENTAL_Conditions, Alert } from 'vtex.styleguide'
 import PromotionsInputCurrency from '../../../components/Promotion/PromotionInputCurrency'
+import InputPercentage from '../../utils/InputPercentage'
 
 import {
   brand,
@@ -41,7 +42,7 @@ class PriceForm extends Component {
       priceEffect: { discount },
     } = this.props
 
-    discountWithoutValidation && onChange({
+    onChange({
       discount: {
         ...discount,
         value: discountWithoutValidation,
@@ -193,13 +194,11 @@ class PriceForm extends Component {
           />
           {this.isDiscountTypeSelected('percentual') ? (
             <div className="mv4 mh7 w-20">
-              <Input
-                type="number"
-                value={priceEffect.discount.value}
+              <InputPercentage
                 ref={priceEffect.discount.ref}
+                value={priceEffect.discount.value}
                 errorMessage={priceEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
-                prefix={<span className="b f6">%</span>}
               />
             </div>
           ) : null}

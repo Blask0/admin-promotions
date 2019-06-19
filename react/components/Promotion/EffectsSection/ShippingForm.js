@@ -2,8 +2,9 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape } from 'react-intl'
 
-import { Radio, Input } from 'vtex.styleguide'
+import { Radio } from 'vtex.styleguide'
 import PromotionsInputCurrency from '../../../components/Promotion/PromotionInputCurrency'
+import InputPercentage from '../../utils/InputPercentage'
 
 import { applyFocus } from '../../../utils/functions'
 
@@ -26,14 +27,20 @@ class ShippingForm extends Component {
     })
   }
 
-  changeDiscount = discount =>
-    discount &&
-    this.props.onChange({
+  changeDiscount = discountWithoutValidation => {
+    const {
+      onChange,
+      shippingEffect: { discount },
+    } = this.props
+
+    onChange({
       discount: {
-        ...this.props.shippingEffect.discount,
-        value: discount,
+        ...discount,
+        value: discountWithoutValidation,
+        error: undefined,
       },
     })
+  }
 
   componentDidUpdate = () => {
     const {
@@ -92,16 +99,11 @@ class ShippingForm extends Component {
           />
           {this.isDiscountTypeSelected('percentual') ? (
             <div className="mv4 mh7 w-20">
-              <Input
-                type="number"
-                value={shippingEffect.discount.value}
+              <InputPercentage
                 ref={shippingEffect.discount.ref}
+                value={shippingEffect.discount.value}
                 errorMessage={shippingEffect.discount.error}
                 onChange={e => this.changeDiscount(e.target.value)}
-                placeholder={intl.formatMessage({
-                  id: 'promotions.promotion.effects.shippingForm.placeholder',
-                })}
-                prefix={<span className="b f6">%</span>}
               />
             </div>
           ) : null}
