@@ -6,10 +6,6 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import { ModalDialog, Tag } from 'vtex.styleguide'
 import { PromotionActivationToggle } from './PromotionActivationToggle'
 
-import Price from '../Icon/Price'
-import Gift from '../Icon/Gift'
-import Shipping from '../Icon/Shipping'
-import Reward from '../Icon/Reward'
 import Play from '../Icon/Play'
 import Pause from '../Icon/Pause'
 import Clock from '../Icon/Clock'
@@ -20,28 +16,11 @@ import { toDate, format } from 'date-fns'
 
 import archivingPromotionById from '../../connectors/archivingPromotionById'
 import withPromotions from '../../connectors/withPromotions'
+import { getEffectIcon } from '../../utils/promotion'
+import { toTitleCase } from '../../utils'
 
 const NO_TITLE_COLUMN = ' '
 const LEGACY_TAG_COLOR = '#C28702'
-
-function toTitleCase(str) {
-  return str.replace(/\w\S*/g, function(txt) {
-    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
-  })
-}
-
-function getEffectIcon(effectType) {
-  switch (effectType) {
-    case 'price':
-      return <Price />
-    case 'gift':
-      return <Gift />
-    case 'shipping':
-      return <Shipping />
-    case 'reward':
-      return <Reward />
-  }
-}
 
 function getStatus(intl, { isActive, beginDateString, endDateString }) {
   const now = new Date()

@@ -11,6 +11,11 @@ import {
 import { newFieldWithValidation } from '../validation'
 import { mapSalesChannelsToSelect } from '../mappers'
 
+import Price from '../../components/Icon/Price'
+import Reward from '../../components/Icon/Reward'
+import Shipping from '../../components/Icon/Shipping'
+import Gift from '../../components/Icon/Gift'
+
 export const INITIAL_PRICE_EFFECT = {
   discountType: 'nominal',
   discount: newFieldWithValidation(),
@@ -206,5 +211,20 @@ export const newPromotion = (intl, promotion, salesChannels) => {
       restrictSalesChannelVerb: getRestrictSalesChannelVerbOptions(intl)[0],
       restrictedSalesChannels: newFieldWithValidation(),
     },
+  }
+}
+
+export const getEffectIcon = (effectType = '', size) => {
+  switch(effectType) {
+    case 'price':
+      return <Price size={size} />
+    case 'reward':
+      return <Reward size={size} />
+    case 'shipping':
+      return <Shipping size={size} />
+    case 'gift':
+      return <Gift size={size} />
+    default:
+      return null
   }
 }

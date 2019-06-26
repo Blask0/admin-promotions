@@ -2,34 +2,13 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { compose } from 'react-apollo'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
-
-import { ModalDialog, Tag } from 'vtex.styleguide'
-import { PromotionActivationToggle } from './PromotionActivationToggle'
-
-import Price from '../Icon/Price'
-import Gift from '../Icon/Gift'
-import Shipping from '../Icon/Shipping'
-import Reward from '../Icon/Reward'
+import { toDate, format } from 'date-fns'
 
 import PromotionsTable from './PromotionsTable'
 
-import { toDate, format } from 'date-fns'
-
+import { getEffectIcon } from '../../utils/promotion'
 import unarchivingPromotionById from '../../connectors/unarchivingPromotionById'
 import withArchivedPromotions from '../../connectors/withArchivedPromotions'
-
-function getEffectIcon(effectType) {
-  switch (effectType) {
-    case 'price':
-      return <Price />
-    case 'gift':
-      return <Gift />
-    case 'shipping':
-      return <Shipping />
-    case 'reward':
-      return <Reward />
-  }
-}
 
 function getTableSchema(intl) {
   return {
