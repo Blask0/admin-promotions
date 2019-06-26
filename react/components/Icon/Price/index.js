@@ -1,16 +1,17 @@
 import React from 'react'
+const DEFAULT_SIZE = 32
 
 export default function Price({
   fill = 'none',
   color = 'currentColor',
-  size = 32,
+  size = DEFAULT_SIZE,
 }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width={size}
       height={size}
-      viewBox={`0 0 ${size} ${size}`}
+      viewBox={`0 0 ${DEFAULT_SIZE} ${DEFAULT_SIZE}`}
       fill={fill}>
       <g clipPath="url(#clip0)">
         <path
@@ -44,7 +45,7 @@ export default function Price({
       </g>
       <defs>
         <clipPath id="clip0">
-          <rect width={size} height={size} fill="white" />
+          <rect width={DEFAULT_SIZE} height={DEFAULT_SIZE} fill="white" />
         </clipPath>
       </defs>
     </svg>
