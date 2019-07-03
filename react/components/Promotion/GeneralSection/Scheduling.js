@@ -51,6 +51,7 @@ function Scheduling({ intl, generalInfo, updatePageState }) {
               label={intl.formatMessage({
                 id: 'promotions.promotion.generalInfo.startDate',
               })}
+              useTime
             />
           </div>
           <div className="mv4">
@@ -92,6 +93,7 @@ function Scheduling({ intl, generalInfo, updatePageState }) {
                 label={intl.formatMessage({
                   id: 'promotions.promotion.generalInfo.endDate',
                 })}
+                useTime
               />
             </div>
           ) : null}
