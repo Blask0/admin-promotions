@@ -102,7 +102,7 @@ function getTableSchema(intl) {
           return (
             <div className="dt">
               {getEffectIcon(effectType)}
-              <span className="dtc v-mid pl3">
+              <span className="dtc v-mid pl3 ws-normal">
                 {toTitleCase(effectType) ||
                   intl.formatMessage({
                     id: `promotions.promotions.newPromotion.${type}`,

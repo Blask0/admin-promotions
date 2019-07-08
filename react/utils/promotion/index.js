@@ -15,6 +15,9 @@ import Price from '../../components/Icon/Price'
 import Reward from '../../components/Icon/Reward'
 import Shipping from '../../components/Icon/Shipping'
 import Gift from '../../components/Icon/Gift'
+import Play from '../../components/Icon/Play'
+import Pause from '../../components/Icon/Pause'
+import Clock from '../../components/Icon/Clock'
 
 export const INITIAL_PRICE_EFFECT = {
   discountType: 'nominal',
@@ -224,6 +227,20 @@ export const getEffectIcon = (effectType = '', size) => {
       return <Shipping size={size} />
     case 'gift':
       return <Gift size={size} />
+    default:
+      return null
+  }
+}
+
+export const getStatusIcon = (status = '', size) => {
+  switch(status) {
+    case 'running':
+      return <Play size={size} />
+    case 'paused':
+      return <Pause size={size} />
+    case 'scheduled':
+      return <Clock size={size} />
+    case 'completed':
     default:
       return null
   }
