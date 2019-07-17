@@ -4,7 +4,15 @@ import { injectIntl, intlShape } from 'react-intl'
 
 import { Table } from 'vtex.styleguide'
 
-import { sortPromotions, paginate } from '../../utils/promotions'
+import {
+  filterPromotions,
+  sortPromotions,
+  paginate,
+} from '../../utils/promotions'
+
+import {
+  getFilterOptions,
+} from '../utils/filterBarUtils'
 
 const ROWS_PER_PAGE_OPTIONS = [5, 10, 15, 25]
 
@@ -22,6 +30,7 @@ class PromotionsTable extends Component {
         rowsPerPage: ROWS_PER_PAGE_OPTIONS[0],
       },
       inputSearchValue: '',
+      filters: [],
     }
   }
 
@@ -89,7 +98,7 @@ class PromotionsTable extends Component {
 
   render() {
     const { navigate } = this.context
-    const { dataSort, inputSearchValue, pagination } = this.state
+    const { dataSort, inputSearchValue, pagination, filters } = this.state
     const {
       creationDisabled,
       emptyStateLabel,
@@ -104,7 +113,10 @@ class PromotionsTable extends Component {
     } = this.props
 
     const { items, from, to } = paginate(
-      sortPromotions(promotions, dataSort),
+      sortPromotions(
+        filterPromotions(promotions, filters),
+        dataSort
+      ),
       pagination
     )
 
@@ -115,6 +127,12 @@ class PromotionsTable extends Component {
           schema={schema}
           loading={loading}
           emptyStateLabel={emptyStateLabel}
+          filters={{
+            alwaysVisibleFilters: ['effect', 'status', 'startDate', 'endDate'],
+            options: getFilterOptions(intl),
+            onChangeStatements: filters => this.setState({ filters }),
+            statements: filters,
+          }}
           items={items}
           onRowClick={onRowClick}
           pagination={{
@@ -256,4 +274,4 @@ PromotionsTable.propTypes = {
   schema: PropTypes.object.isRequired,
 }
 
-export default PromotionsTable
+export default injectIntl(PromotionsTable)
