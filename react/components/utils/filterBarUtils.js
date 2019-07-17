@@ -82,59 +82,59 @@ const messages = defineMessages({
     defaultMessage: 'and',
     description: 'FilterTag connector for date range',
   },
-  effectprice: {
+  price: {
     id: 'promotions.promotion.effects.price',
     defaultMessage: 'Price',
   },
-  effectgift: {
+  gift: {
     id: 'promotions.promotion.effects.gift',
     defaultMessage: 'Gift',
   },
-  effectshipping: {
+  shipping: {
     id: 'promotions.promotion.effects.shipping',
     defaultMessage: 'Shipping',
   },
-  effectreward: {
+  reward: {
     id: 'promotions.promotion.effects.reward',
     defaultMessage: 'Reward',
   },
-  effectbuyAndWin: {
+  buyAndWin: {
     id: 'promotions.promotions.newPromotion.buyAndWin',
     defaultMessage: 'Buy one get one',
   },
-  effectcampaign:{
+  campaign:{
     id: 'promotions.promotions.newPromotion.campaign',
     defaultMessage: 'Campaign',
   },
-  effectcombo:{
+  combo:{
     id: 'promotions.promotions.newPromotion.combo',
     defaultMessage: 'Buy together - Bundle"',
   },
-  effectforThePriceOf:{
+  forThePriceOf:{
     id: 'promotions.promotions.newPromotion.forThePriceOf',
     defaultMessage: 'More for less',
   },
-  effectprogressive:{
+  progressive:{
     id: 'promotions.promotions.newPromotion.progressive',
     defaultMessage: 'Progressive discount',
   },
-  effectregular: {
+  regular: {
     id: 'promotions.promotions.newPromotion.regular',
     defaultMessage: 'Regular',
   },
-  statusrunning: {
+  running: {
     id: 'promotions.promotion.status.running',
     defaultMessage: 'Running',
   },
-  statuspaused: {
+  paused: {
     id: 'promotions.promotion.status.paused',
     defaultMessage: 'Paused',
   },
-  statuscompleted: {
+  completed: {
     id: 'promotions.promotion.status.completed',
     defaultMessage: 'Completed',
   },
-  statusscheduled: {
+  scheduled: {
     id: 'promotions.promotion.status.scheduled',
     defaultMessage: 'Scheduled',
   },
@@ -173,16 +173,12 @@ const composeCheckboxGroupFilterLable = intl => st => {
   const isAllTrue = !keys.some(key => !st.object[key])
   const isAllFalse = !keys.some(key => st.object[key])
   const trueKeys = keys.filter(key => st.object[key])
-  let trueKeysLabel = ''
-  trueKeys.forEach((key, index) => {
-    trueKeysLabel += `${key}${index === trueKeys.length - 1 ? '' : ', '}`
-  })
   return `${
     isAllTrue
       ? intl.formatMessage(messages.checkboxGroupFilterLabelAll)
       : isAllFalse
         ? intl.formatMessage(messages.checkboxGroupFilterLabelNone)
-        : `${trueKeysLabel}`
+        : `${trueKeys.map(key => intl.formatMessage(messages[key])).join(', ')}`
   }`
 }
 
@@ -248,7 +244,7 @@ const effectSelectorObject = ({
                   <div>
                     {getEffectIcon(opt, 14)}
                     <span className="ml3">
-                      {extraParams.intl.formatMessage(messages[`effect${opt}`])}
+                      {extraParams.intl.formatMessage(messages[opt])}
                     </span>
                   </div>
                 }
@@ -341,7 +337,7 @@ const statusSelectorObject = ({
                       lineHeight: '20px',
                     }}
                     className={opt === 'completed' ? '' : 'ml3'}>
-                    {extraParams.intl.formatMessage(messages[`status${opt}`])}
+                    {extraParams.intl.formatMessage(messages[opt])}
                   </span>
                 </div>
               }
