@@ -129,7 +129,7 @@ class PromotionsTable extends Component {
           emptyStateLabel={emptyStateLabel}
           filters={{
             alwaysVisibleFilters: ['effect', 'status', 'startDate', 'endDate'],
-            options: getFilterOptions(),
+            options: getFilterOptions(intl),
             onChangeStatements: filters => this.setState({ filters }),
             statements: filters,
           }}
@@ -274,4 +274,4 @@ PromotionsTable.propTypes = {
   schema: PropTypes.object.isRequired,
 }
 
-export default PromotionsTable
+export default injectIntl(PromotionsTable)

@@ -1,46 +1,173 @@
 import React from 'react'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, defineMessages } from 'react-intl'
 import { Checkbox, Collapsible, DatePicker } from 'vtex.styleguide'
 import { getEffectIcon, getStatusIcon } from '../../utils/promotion'
-import Circle from '../Icon/Circle'
 const {
   culture: { locale },
 } = __RUNTIME__
 
-export const getFilterOptions = () => {
+const messages = defineMessages({
+  effectFilterLabel: {
+    id: 'admin/promotions.filterBar.effectFilterLabel',
+    defaultMessage: 'Effect',
+    description: 'FilterTag label for Effect',
+  },
+  statusFilterLabel: {
+    id: 'admin/promotions.filterBar.statusFilterLabel',
+    defaultMessage: 'Status',
+    description: 'FilterTag label for Status',
+  },
+  startDateFilterLabel: {
+    id: 'admin/promotions.filterBar.startDateFilterLabel',
+    defaultMessage: 'Starting date',
+    description: 'FilterTag label for Starting date',
+  },
+  endDateFilterLabel: {
+    id: 'admin/promotions.filterBar.endDateFilterLabel',
+    defaultMessage: 'Ending date',
+    description: 'FilterTag label for Ending date',
+  },
+  checkboxGroupFilterLabelAll: {
+    id: 'admin/promotions.filterBar.checkboxGroupFilterLabel.all',
+    defaultMessage: 'All',
+    description: 'FilterTag label for all checkbox groups checked',
+  },
+  checkboxGroupFilterLabelNone: {
+    id: 'admin/promotions.filterBar.checkboxGroupFilterLabel.none',
+    defaultMessage: 'None',
+    description: 'FilterTag label for all checkbox groups unchecked',
+  },
+  checkboxGroupFilterVerb: {
+    id: 'admin/promotions.filterBar.checkboxGroupFilterVerb',
+    defaultMessage: 'includes',
+    description: 'FilterTag verb for checkbox groups',
+  },
+  dateVerbIs: {
+    id: 'admin/promotions.filterBar.dateVerb.is',
+    defaultMessage: 'is',
+    description: 'FilterTag verb for date is',
+  },
+  dateVerbIsAfter: {
+    id: 'admin/promotions.filterBar.dateVerb.isAfter',
+    defaultMessage: 'is after',
+    description: 'FilterTag verb for date is after',
+  },
+  dateVerbIsBefore: {
+    id: 'admin/promotions.filterBar.dateVerb.isBefore',
+    defaultMessage: 'is before',
+    description: 'FilterTag verb for date is before',
+  },
+  dateVerbIsWithin: {
+    id: 'admin/promotions.filterBar.dateVerb.isWithin',
+    defaultMessage: 'is within',
+    description: 'FilterTag verb for date is within',
+  },
+  dateVerbWithin: {
+    id: 'admin/promotions.filterBar.dateVerb.within',
+    defaultMessage: 'within',
+    description: 'FilterTag verb for date within',
+  },
+  dateVerbIsNotWithin: {
+    id: 'admin/promotions.filterBar.dateVerb.isNotWithin',
+    defaultMessage: 'is not within',
+    description: 'FilterTag verb for date is not within',
+  },
+  dateVerbNotWithin: {
+    id: 'admin/promotions.filterBar.dateVerb.notWithin',
+    defaultMessage: 'not within',
+    description: 'FilterTag verb for date not within',
+  },
+  dateVerbAnd: {
+    id: 'admin/promotions.filterBar.dateVerb.and',
+    defaultMessage: 'and',
+    description: 'FilterTag connector for date range',
+  },
+  effectprice: {
+    id: 'promotions.promotion.effects.price',
+    defaultMessage: 'Price',
+  },
+  effectgift: {
+    id: 'promotions.promotion.effects.gift',
+    defaultMessage: 'Gift',
+  },
+  effectshipping: {
+    id: 'promotions.promotion.effects.shipping',
+    defaultMessage: 'Shipping',
+  },
+  effectreward: {
+    id: 'promotions.promotion.effects.reward',
+    defaultMessage: 'Reward',
+  },
+  effectbuyAndWin: {
+    id: 'promotions.promotions.newPromotion.buyAndWin',
+    defaultMessage: 'Buy one get one',
+  },
+  effectcampaign:{
+    id: 'promotions.promotions.newPromotion.campaign',
+    defaultMessage: 'Campaign',
+  },
+  effectcombo:{
+    id: 'promotions.promotions.newPromotion.combo',
+    defaultMessage: 'Buy together - Bundle"',
+  },
+  effectforThePriceOf:{
+    id: 'promotions.promotions.newPromotion.forThePriceOf',
+    defaultMessage: 'More for less',
+  },
+  effectprogressive:{
+    id: 'promotions.promotions.newPromotion.progressive',
+    defaultMessage: 'Progressive discount',
+  },
+  effectregular: {
+    id: 'promotions.promotions.newPromotion.regular',
+    defaultMessage: 'Regular',
+  },
+  statusrunning: {
+    id: 'promotions.promotion.status.running',
+    defaultMessage: 'Running',
+  },
+  statuspaused: {
+    id: 'promotions.promotion.status.paused',
+    defaultMessage: 'Paused',
+  },
+  statuscompleted: {
+    id: 'promotions.promotion.status.completed',
+    defaultMessage: 'Completed',
+  },
+  statusscheduled: {
+    id: 'promotions.promotion.status.scheduled',
+    defaultMessage: 'Scheduled',
+  },
+})
+
+export const getFilterOptions = intl => {
   return {
     effect: {
-      label: 'Effect',
-      renderFilterLabel: composeCheckboxGroupFilterLable,
-      verbs: composeCheckboxGroupSingleVerb(effectSelectorObject),
+      label: intl.formatMessage(messages.effectFilterLabel),
+      renderFilterLabel: composeCheckboxGroupFilterLable(intl),
+      verbs: composeCheckboxGroupSingleVerb(effectSelectorObject, intl),
     },
     status: {
-      label: 'Status',
-      renderFilterLabel: composeCheckboxGroupFilterLable,
-      verbs: composeCheckboxGroupSingleVerb(statusSelectorObject),
+      label: intl.formatMessage(messages.statusFilterLabel),
+      renderFilterLabel: composeCheckboxGroupFilterLable(intl),
+      verbs: composeCheckboxGroupSingleVerb(statusSelectorObject, intl),
     },
     startDate: {
-      label: 'Starting date',
-      renderFilterLabel: composeDateLable,
-      verbs: composeDateVerbs(),
+      label: intl.formatMessage(messages.startDateFilterLabel),
+      renderFilterLabel: composeDateLable(intl),
+      verbs: composeDateVerbs(intl),
     },
     endDate: {
-      label: 'Ending date',
-      renderFilterLabel: composeDateLable,
-      verbs: composeDateVerbs(),
-    },
-    active: {
-      label: 'Active',
-      renderFilterLabel: composeCheckboxGroupFilterLable,
-      verbs: composeCheckboxGroupSingleVerb(activeSelectorObject),
+      label: intl.formatMessage(messages.endDateFilterLabel),
+      renderFilterLabel: composeDateLable(intl),
+      verbs: composeDateVerbs(intl),
     },
   }
 }
 
-const composeCheckboxGroupFilterLable = st => {
+const composeCheckboxGroupFilterLable = intl => st => {
   if (!st || !st.object) {
-    // you should treat empty object cases only for alwaysVisibleFilters
-    return 'All'
+    return intl.formatMessage(messages.checkboxGroupFilterLabelAll)
   }
   const keys = st.object ? Object.keys(st.object) : []
   const isAllTrue = !keys.some(key => !st.object[key])
@@ -50,23 +177,35 @@ const composeCheckboxGroupFilterLable = st => {
   trueKeys.forEach((key, index) => {
     trueKeysLabel += `${key}${index === trueKeys.length - 1 ? '' : ', '}`
   })
-  return `${isAllTrue ? 'All' : isAllFalse ? 'None' : `${trueKeysLabel}`}`
+  return `${
+    isAllTrue
+      ? intl.formatMessage(messages.checkboxGroupFilterLabelAll)
+      : isAllFalse
+        ? intl.formatMessage(messages.checkboxGroupFilterLabelNone)
+        : `${trueKeysLabel}`
+  }`
 }
 
-const composeCheckboxGroupSingleVerb = renderFn => {
+const composeCheckboxGroupSingleVerb = (renderFn, intl) => {
   return [
     {
-      label: 'includes',
+      label: intl.formatMessage(messages.checkboxGroupFilterVerb),
       value: 'includes',
       object: {
         renderFn,
-        extraParams: {},
+        extraParams: {
+          intl,
+        },
       },
     },
   ]
 }
 
-const effectSelectorObject = ({ values, onChangeObjectCallback }) => {
+const effectSelectorObject = ({
+  values,
+  onChangeObjectCallback,
+  extraParams,
+}) => {
   const legacyEffects = [
     'buyAndWin',
     'campaign',
@@ -109,7 +248,7 @@ const effectSelectorObject = ({ values, onChangeObjectCallback }) => {
                   <div>
                     {getEffectIcon(opt, 14)}
                     <span className="ml3">
-                      {opt.charAt(0).toUpperCase() + opt.slice(1)}
+                      {extraParams.intl.formatMessage(messages[`effect${opt}`])}
                     </span>
                   </div>
                 }
@@ -135,8 +274,11 @@ const effectSelectorObject = ({ values, onChangeObjectCallback }) => {
                   <Checkbox
                     checked={values ? values[opt] : initialValue[opt]}
                     id={`${opt}-legacy-effect`}
-                    label={<FormattedMessage
-                      id={`promotions.promotions.newPromotion.${opt}`} />}
+                    label={
+                      <FormattedMessage
+                        id={`promotions.promotions.newPromotion.${opt}`}
+                      />
+                    }
                     name="legacy-effect-filter-checkbox-group"
                     onChange={() =>
                       onChangeObjectCallback(toggleValueByKey(`${opt}`))
@@ -153,56 +295,11 @@ const effectSelectorObject = ({ values, onChangeObjectCallback }) => {
   )
 }
 
-const activeSelectorObject = ({ values, onChangeObjectCallback }) => {
-  const initialValue = {
-    active: true,
-    inactive: true,
-  }
-  const toggleValueByKey = key => {
-    const newValues = {
-      ...(values || initialValue),
-      [key]: values ? !values[key] : false,
-    }
-    return newValues
-  }
-  return (
-    <div>
-      {Object.keys(initialValue).map((opt, index) => {
-        return (
-          <div
-            className="mb3"
-            key={`active-filter-statment-object-${opt}-${index}`}>
-            <Checkbox
-              checked={values ? values[opt] : initialValue[opt]}
-              id={`active-${opt}`}
-              label={
-                <div>
-                  <Circle active={opt === 'active'} />
-                  <span
-                    style={{
-                      color: opt === 'active' ? '#8BC34A' : '#FF4C4C',
-                      fontWeight: 500,
-                      lineHeight: '20px',
-                    }}
-                    className="ml3">
-                    {opt.charAt(0).toUpperCase() + opt.slice(1)}
-                  </span>
-                </div>
-              }
-              name="active-filter-checkbox-group"
-              onChange={() =>
-                onChangeObjectCallback(toggleValueByKey(`${opt}`))
-              }
-              value={opt}
-            />
-          </div>
-        )
-      })}
-    </div>
-  )
-}
-
-const statusSelectorObject = ({ values, onChangeObjectCallback }) => {
+const statusSelectorObject = ({
+  values,
+  onChangeObjectCallback,
+  extraParams,
+}) => {
   const initialValue = {
     running: true,
     paused: true,
@@ -244,7 +341,7 @@ const statusSelectorObject = ({ values, onChangeObjectCallback }) => {
                       lineHeight: '20px',
                     }}
                     className={opt === 'completed' ? '' : 'ml3'}>
-                    {opt.charAt(0).toUpperCase() + opt.slice(1)}
+                    {extraParams.intl.formatMessage(messages[`status${opt}`])}
                   </span>
                 </div>
               }
@@ -261,13 +358,34 @@ const statusSelectorObject = ({ values, onChangeObjectCallback }) => {
   )
 }
 
-const composeDateLable = st => {
+const composeDateLable = intl => st => {
   if (!st || !st.object) return 'All'
-  return `${
-    st.verb === 'between'
-      ? `between ${st.object.from} and ${st.object.to}`
-      : `is ${st.object}`
-  }`
+  switch (st.verb) {
+    case 'is':
+      return `${intl.formatMessage(messages.dateVerbIs)} ${intl.formatDate(
+        new Date(st.object)
+      )}`
+    case 'is after':
+      return `${intl.formatMessage(messages.dateVerbIsAfter)} ${intl.formatDate(
+        new Date(st.object)
+      )}`
+    case 'is before':
+      return `${intl.formatMessage(
+        messages.dateVerbIsBefore
+      )} ${intl.formatDate(new Date(st.object))}`
+    case 'is within':
+      return `${intl.formatMessage(messages.dateVerbWithin)} ${intl.formatDate(
+        new Date(st.object.from)
+      )} ${intl.formatMessage(messages.dateVerbAnd)} ${intl.formatDate(
+        new Date(st.object.to)
+      )}`
+    case 'is not within':
+      return `${intl.formatMessage(
+        messages.dateVerbNotWithin
+      )} ${intl.formatDate(new Date(st.object.from))} ${intl.formatMessage(
+        messages.dateVerbAnd
+      )} ${intl.formatDate(new Date(st.object.to))}`
+  }
 }
 
 const datePickerObject = ({ values, onChangeObjectCallback }) => {
@@ -284,7 +402,7 @@ const datePickerObject = ({ values, onChangeObjectCallback }) => {
   )
 }
 
-const datePickerRangeObject = ({ values, onChangeObjectCallback }) => {
+const datePickerRangeObject = ({ values, onChangeObjectCallback, extraParams }) => {
   return (
     <div className="flex flex-column w-100">
       <DatePicker
@@ -296,7 +414,10 @@ const datePickerRangeObject = ({ values, onChangeObjectCallback }) => {
       />
       <div className="mt3">
         <DatePicker
-          label="and"
+          label={
+            extraParams.intl &&
+            extraParams.intl.formatMessage(messages.dateVerbAnd)
+          }
           value={values && values.to}
           onChange={date => {
             onChangeObjectCallback({ ...(values || {}), to: date })
@@ -308,10 +429,10 @@ const datePickerRangeObject = ({ values, onChangeObjectCallback }) => {
   )
 }
 
-const composeDateVerbs = () => {
+const composeDateVerbs = intl => {
   return [
     {
-      label: 'is',
+      label: intl.formatMessage(messages.dateVerbIs),
       value: 'is',
       object: {
         renderFn: datePickerObject,
@@ -319,7 +440,7 @@ const composeDateVerbs = () => {
       },
     },
     {
-      label: 'is after',
+      label: intl.formatMessage(messages.dateVerbIsAfter),
       value: 'is after',
       object: {
         renderFn: datePickerObject,
@@ -327,7 +448,7 @@ const composeDateVerbs = () => {
       },
     },
     {
-      label: 'is before',
+      label: intl.formatMessage(messages.dateVerbIsBefore),
       value: 'is before',
       object: {
         renderFn: datePickerObject,
@@ -335,19 +456,23 @@ const composeDateVerbs = () => {
       },
     },
     {
-      label: 'is within',
+      label: intl.formatMessage(messages.dateVerbIsWithin),
       value: 'is within',
       object: {
         renderFn: datePickerRangeObject,
-        extraParams: {},
+        extraParams: {
+          intl,
+        },
       },
     },
     {
-      label: 'is not within',
+      label: intl.formatMessage(messages.dateVerbIsNotWithin),
       value: 'is not within',
       object: {
         renderFn: datePickerRangeObject,
-        extraParams: {},
+        extraParams: {
+          intl,
+        },
       },
     },
   ]

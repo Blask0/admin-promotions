@@ -263,5 +263,20 @@
   "promotions.promotions.column.to": "Hasta",
   "promotions.promotion.legacy": "Legado",
   "promotions.promotions.pagination.showRows": "Mostrar filas",
-  "promotions.promotions.pagination.of": "de"
+  "promotions.promotions.pagination.of": "de",
+  "admin/promotions.filterBar.effectFilterLabel": "Efecto",
+  "admin/promotions.filterBar.statusFilterLabel": "Status",
+  "admin/promotions.filterBar.startDateFilterLabel": "Fecha de inicio",
+  "admin/promotions.filterBar.endDateFilterLabel": "Fecha de finalización",
+  "admin/promotions.filterBar.checkboxGroupFilterLabel.all": "Todo",
+  "admin/promotions.filterBar.checkboxGroupFilterLabel.none": "Ninguno",
+  "admin/promotions.filterBar.checkboxGroupFilterVerb": "incluye",
+  "admin/promotions.filterBar.dateVerb.is": "es",
+  "admin/promotions.filterBar.dateVerb.isAfter": "es después",
+  "admin/promotions.filterBar.dateVerb.isBefore": "fue antes",
+  "admin/promotions.filterBar.dateVerb.isWithin": "es entre",
+  "admin/promotions.filterBar.dateVerb.within": "entre",
+  "admin/promotions.filterBar.dateVerb.isNotWithin": "no es entre",
+  "admin/promotions.filterBar.dateVerb.notWithin": "no es entre",
+  "admin/promotions.filterBar.dateVerb.and": "y"
 }
