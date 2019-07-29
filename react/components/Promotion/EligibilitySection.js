@@ -14,7 +14,6 @@ import {
   utm,
   zipCodeRange,
   totalPriceRange,
-  clusterExpressions,
   creditCardBin,
   marketingTags,
 } from '../../utils/conditions/options'
@@ -86,10 +85,6 @@ class EligibilitySection extends Component {
         intl,
         this.updateEligiblityStatements,
         currencyCode
-      ),
-      clusterExpressions: clusterExpressions(
-        intl,
-        this.updateEligiblityStatements
       ),
       creditCardBin: creditCardBin(intl, this.updateEligiblityStatements),
       marketingTags: marketingTags(intl, this.updateEligiblityStatements),
