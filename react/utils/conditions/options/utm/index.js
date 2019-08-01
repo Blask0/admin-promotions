@@ -1,3 +1,5 @@
+import React from 'react'
+
 import { renderInputObject, renderSelectObject } from '../../renders'
 
 const utm = (intl, update, type) => {

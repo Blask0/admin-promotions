@@ -16,7 +16,7 @@ import {
   totalPriceRange,
   creditCardBin,
   marketingTags,
-} from '../../utils/conditions/options'
+} from '../../../utils/conditions/options'
 
 class EligibilitySection extends Component {
   constructor(props) {
