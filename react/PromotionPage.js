@@ -726,7 +726,7 @@ class PromotionPage extends Component {
         ...generalInfo,
         name: generalInfo.name.value,
         endDate: generalInfo.endDate.value,
-        cron: `* ${cronHour} * * ${cronWeekDay}`,
+        cron: `* * ${cronHour} * * ${cronWeekDay}`,
       },
       effects: {
         ...effects,
