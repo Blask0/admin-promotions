@@ -1,6 +1,7 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
+import { compose } from 'react-apollo'
 
 import {
   Layout,
@@ -20,20 +21,8 @@ import withSalesChannels from './connectors/withSalesChannels'
 import withPromotion from './connectors/withPromotion'
 import savingPromotion from './connectors/savingPromotion'
 
-import { newPromotion } from './utils/promotion'
-
-import { compose } from 'react-apollo'
-import {
-  getRewardEffectOrderStatusOptions,
-  getRestrictSalesChannelVerbOptions,
-} from './utils/constants'
-
-import {
-  createCronHour,
-  createCronWeekDay,
-  isTimeValid,
-  isToBeforeFrom,
-} from './utils/promotion/recurrency'
+import { newPromotion, prepareToSave } from './utils/promotion'
+import { isTimeValid, isToBeforeFrom } from './utils/promotion/recurrency'
 import { getErrorsInfo } from './utils/errors'
 
 class PromotionPage extends Component {
@@ -679,115 +668,15 @@ class PromotionPage extends Component {
     return [...new Set(currencyCodes)]
   }
 
-  removeRefsFromStatements(statements) {
-    return statements.map(({ refs, ...statement }) => statement)
-  }
-
-  prepareToSave = promotion => {
-    const { intl } = this.props
-    const {
-      generalInfo: { hasEndDate, useRecurrency, recurrency, ...generalInfo },
-      eligibility,
-      effects,
-      restriction,
-    } = promotion
-
-    const { limitQuantityPerPurchase, ...giftEffect } = effects.gift
-
-    const {
-      statements: { value: scopeStatementsWithRefs },
-    } = effects.price.appliesTo
-    const {
-      statements: { value: eligibilityStatementsWithRefs },
-    } = eligibility
-    const scopeStatements = this.removeRefsFromStatements(
-      scopeStatementsWithRefs
-    )
-    const eligibilityStatements = this.removeRefsFromStatements(
-      eligibilityStatementsWithRefs
-    )
-
-    const {
-      weekDays: { value: weekDays },
-      times: { value: timesWithValidation },
-    } = recurrency
-    const times = timesWithValidation
-      ? timesWithValidation.map(time => ({
-        from: time.from.value,
-        to: time.to.value,
-      }))
-      : timesWithValidation
-    const cronWeekDay = createCronWeekDay(weekDays)
-    const cronHour = createCronHour(times)
-
-    return {
-      ...promotion,
-      generalInfo: {
-        ...generalInfo,
-        name: generalInfo.name.value,
-        endDate: generalInfo.endDate.value,
-        cron: `* * ${cronHour} * * ${cronWeekDay}`,
-      },
-      effects: {
-        ...effects,
-        activeEffectType: effects.activeEffectType.value,
-        price: {
-          ...effects.price,
-          discount: effects.price.discount.value,
-          appliesTo: {
-            ...effects.price.appliesTo,
-            statements: JSON.stringify(scopeStatements),
-          },
-        },
-        gift: {
-          ...giftEffect,
-          skus: giftEffect.skus.value.map(sku => ({
-            id: sku.value,
-            name: sku.label,
-          })),
-          maxQuantityPerPurchase: giftEffect.maxQuantityPerPurchase.value,
-        },
-        shipping: {
-          ...effects.shipping,
-          discount: effects.shipping.discount.value,
-        },
-        reward: {
-          ...effects.reward,
-          discount: effects.reward.discount.value,
-          applyByOrderStatus: effects.reward.applyByOrderStatus
-            ? effects.reward.applyByOrderStatus.value
-            : getRewardEffectOrderStatusOptions(intl)[0].value,
-        },
-      },
-      eligibility: {
-        ...eligibility,
-        statements: JSON.stringify(eligibilityStatements),
-      },
-      restriction: {
-        ...restriction,
-        perStore: restriction.perStore.value,
-        perClient: restriction.perClient.value,
-        maxNumberOfAffectedItems: restriction.maxNumberOfAffectedItems.value,
-        restrictSalesChannelVerb: restriction.isRestrictingSalesChannels
-          ? restriction.restrictSalesChannelVerb
-            ? restriction.restrictSalesChannelVerb.value
-            : getRestrictSalesChannelVerbOptions(intl)[0].value
-          : undefined,
-        restrictedSalesChannels: restriction.isRestrictingSalesChannels
-          ? restriction.restrictedSalesChannels.value.map(sc => sc.value)
-          : undefined,
-      },
-    }
-  }
-
   handleSave = promotion => {
     this.setState({ isSaving: true, showError: true })
     this.errorAlert.focus = true
     const { navigate } = this.context
-    const { savePromotion } = this.props
+    const { savePromotion, intl } = this.props
+    const preparedPromotion = prepareToSave(promotion, intl)
     savePromotion({
       variables: {
-        promotion,
+        promotion: preparedPromotion,
       },
     })
       .then(() => {
@@ -926,8 +815,7 @@ class PromotionPage extends Component {
             isLoading={isSaving}
             onClick={() => {
               if (this.canSave()) {
-                const preparedPromotion = this.prepareToSave(promotion)
-                this.handleSave(preparedPromotion)
+                this.handleSave(promotion)
               }
             }}>
             <FormattedMessage id="promotions.promotion.save" />
