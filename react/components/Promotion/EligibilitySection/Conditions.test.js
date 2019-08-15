@@ -29,7 +29,7 @@ describe('Conditions components tests', () => {
       utmSource: utm(MOCK_INTL, MOCK, 'Source'),
     }
 
-    it('should have a UTM Source with equals verb displayed', async () => {
+    it('should have a UTM Source with `equals` verb displayed', async () => {
       const statements = [
         {
           subject: 'utmSource',
@@ -54,7 +54,7 @@ describe('Conditions components tests', () => {
       expect(object).toBeDefined()
     })
 
-    it('should have a UTM Source with any verb displayed', async () => {
+    it('should have a UTM Source with `any` verb displayed', async () => {
       const statements = [
         {
           subject: 'utmSource',
@@ -88,7 +88,7 @@ describe('Conditions components tests', () => {
       utmCampaign: utm(MOCK_INTL, MOCK, 'Campaign'),
     }
 
-    it('should have a UTM Campaign with equals verb displayed', async () => {
+    it('should have a UTM Campaign with `equals` verb displayed', async () => {
       const statements = [
         {
           subject: 'utmCampaign',
@@ -115,7 +115,7 @@ describe('Conditions components tests', () => {
       expect(object).toBeDefined()
     })
 
-    it('should have a UTM Campaign with any verb displayed', async () => {
+    it('should have a UTM Campaign with `any` verb displayed', async () => {
       const statements = [
         {
           subject: 'utmCampaign',
