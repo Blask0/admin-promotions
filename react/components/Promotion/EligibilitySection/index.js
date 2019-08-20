@@ -2,20 +2,25 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-import { Radio, EXPERIMENTAL_Conditions, Alert } from 'vtex.styleguide'
+import {
+  Alert,
+  Conditions,
+  EXPERIMENTAL_Conditions,
+  Radio,
+} from 'vtex.styleguide'
 
 import {
   affiliates,
-  installments,
-  firstBuy,
   cartProduct,
-  shippingMethods,
+  creditCardBin,
+  firstBuy,
+  installments,
+  marketingTags,
   paymentMethods,
+  shippingMethods,
+  totalPriceRange,
   utm,
   zipCodeRange,
-  totalPriceRange,
-  creditCardBin,
-  marketingTags,
 } from '../../../utils/conditions/options'
 
 class EligibilitySection extends Component {
@@ -68,7 +73,6 @@ class EligibilitySection extends Component {
     } = this.props
 
     const conditionsOptions = {
-      installments: installments(intl, this.updateEligiblityStatements),
       affiliates: affiliates(intl, this.updateEligiblityStatements),
       firstBuy: firstBuy(intl, this.updateEligiblityStatements),
       cartProduct: cartProduct(
@@ -88,6 +92,10 @@ class EligibilitySection extends Component {
       ),
       creditCardBin: creditCardBin(intl, this.updateEligiblityStatements),
       marketingTags: marketingTags(intl, this.updateEligiblityStatements),
+    }
+
+    const conditionsOptions2 = {
+      installments: installments(intl),
     }
 
     const conditionsLabels = {
@@ -182,6 +190,30 @@ class EligibilitySection extends Component {
                   },
                 })
               }}
+            />
+            <Conditions
+              canDelete
+              labels={conditionsLabels}
+              onChangeOperator={({ operator }) => {
+                updatePageState({ operator })
+              }}
+              onChangeStatements={newStatements => {
+                console.log('Changed statements to:', newStatements)
+                updatePageState({
+                  statements: {
+                    ...statements,
+                    value: newStatements,
+                    error: undefined,
+                  },
+                })
+              }}
+              operator={operator}
+              options={conditionsOptions2}
+              subjectPlaceholder={intl.formatMessage({
+                id:
+                  'promotions.promotion.elligibility.conditions.subjectPlaceholder',
+              })}
+              statements={statements.value}
             />
           </div>
         ) : null}

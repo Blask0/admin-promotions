@@ -1,6 +1,12 @@
-import { renderInputObject, renderRangeInputObject } from '../../renders'
+import React from 'react'
+import { InjectedIntl } from 'react-intl'
 
-const installments = (intl, update) => {
+import {
+  InputObject,
+  InputNumberRangeObject,
+} from '../../../../components/Promotion/EligibilitySection/Conditions/Objects'
+
+const installments = (intl: InjectedIntl) => {
   return {
     label: intl.formatMessage({
       id: 'promotions.promotion.elligibility.installments.label',
@@ -11,49 +17,44 @@ const installments = (intl, update) => {
           id: 'promotions.promotion.elligibility.installments.verb.gt',
         }),
         value: '>',
-        object: {
-          renderFn: renderInputObject,
-          extraParams: {
-            placeholder: intl.formatMessage({
+        object: (props: any) => (
+          <InputObject
+            {...props}
+            placeholder={intl.formatMessage({
               id: 'promotions.promotion.elligibility.installments.placeholder',
-            }),
-            type: 'number',
-            update: update,
-          },
-        },
+            })}
+            type="number"
+          />
+        ),
       },
       {
         label: intl.formatMessage({
           id: 'promotions.promotion.elligibility.installments.verb.lt',
         }),
         value: '<',
-        object: {
-          renderFn: renderInputObject,
-          extraParams: {
-            placeholder: intl.formatMessage({
+        object: (props: any) => (
+          <InputObject
+            {...props}
+            placeholder={intl.formatMessage({
               id: 'promotions.promotion.elligibility.installments.placeholder',
-            }),
-            type: 'number',
-            update: update,
-          },
-        },
+            })}
+            type="number"
+          />
+        ),
       },
       {
         label: intl.formatMessage({
           id: 'promotions.promotion.elligibility.installments.verb.between',
         }),
         value: 'between',
-        object: {
-          renderFn: renderRangeInputObject,
-          extraParams: {
-            placeholder: intl.formatMessage({
+        object: (props: any) => (
+          <InputNumberRangeObject
+            {...props}
+            placeholder={intl.formatMessage({
               id: 'promotions.promotion.elligibility.installments.placeholder',
-            }),
-            type: 'number',
-            update: update,
-            intl: intl,
-          },
-        },
+            })}
+          />
+        ),
       },
     ],
   }
