@@ -1,8 +1,11 @@
 import React from 'react'
 
-import { renderInputObject, renderSelectObject } from '../../renders'
+import {
+  InputObject,
+  SelectObject,
+} from '../../../../components/Promotion/EligibilitySection/Conditions/Objects'
 
-const utm = (intl, update, type) => {
+const utm = (intl, type) => {
   return {
     label: intl.formatMessage({
       id: `promotions.promotion.elligibility.utm${type}.label`,
@@ -13,32 +16,14 @@ const utm = (intl, update, type) => {
           id: 'promotions.promotion.elligibility.utm.verb.==',
         }),
         value: '==',
-        object: {
-          renderFn: renderInputObject,
-          extraParams: {
-            update: update,
-          },
-        },
+        object: props => <InputObject {...props} />,
       },
       {
         label: intl.formatMessage({
           id: 'promotions.promotion.elligibility.utm.verb.any',
         }),
         value: 'any',
-        object: {
-          renderFn: renderSelectObject,
-          extraParams: {
-            queryInfo: {
-              connector: WrappedComponent => props => (
-                <WrappedComponent {...props} />
-              ),
-              dataGetter: () => [],
-            },
-            creatable: true,
-            update: update,
-            multi: true,
-          },
-        },
+        object: props => <SelectObject {...props} creatable multi />,
       },
     ],
   }

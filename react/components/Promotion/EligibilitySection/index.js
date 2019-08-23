@@ -82,8 +82,6 @@ class EligibilitySection extends Component {
       ),
       shippingMethods: shippingMethods(intl, this.updateEligiblityStatements),
       paymentMethods: paymentMethods(intl, this.updateEligiblityStatements),
-      utmSource: utm(intl, this.updateEligiblityStatements, 'Source'),
-      utmCampaign: utm(intl, this.updateEligiblityStatements, 'Campaign'),
       zipCodeRange: zipCodeRange(intl, this.updateEligiblityStatements),
       totalPriceRange: totalPriceRange(
         intl,
@@ -96,6 +94,8 @@ class EligibilitySection extends Component {
 
     const conditionsOptions2 = {
       installments: installments(intl),
+      utmSource: utm(intl, 'Source'),
+      utmCampaign: utm(intl, 'Campaign'),
     }
 
     const conditionsLabels = {

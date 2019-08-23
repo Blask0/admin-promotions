@@ -1,4 +1,5 @@
 import InputObject from './InputObject'
 import InputNumberRangeObject from './InputNumberRangeObject'
+import SelectObject from './SelectObject'
 
-export { InputObject, InputNumberRangeObject }
+export { InputObject, InputNumberRangeObject, SelectObject }
