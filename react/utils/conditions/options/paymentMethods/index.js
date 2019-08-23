@@ -8,6 +8,18 @@ const map = paymentMethods =>
     value: paymentMethod.id,
   }))
 
+function PaymentMethodsSelect({ paymentMethods = [], ...props }) {
+  return (
+    <SelectObject
+      {...props}
+      options={paymentMethods.map(paymentMethod => ({
+        label: paymentMethod.name,
+        value: paymentMethod.id,
+      }))}
+    />
+  )
+}
+
 const paymentMethods = (intl, update) => {
   return {
     label: intl.formatMessage({
