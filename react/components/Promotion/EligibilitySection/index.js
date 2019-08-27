@@ -73,7 +73,6 @@ class EligibilitySection extends Component {
     } = this.props
 
     const conditionsOptions = {
-      firstBuy: firstBuy(intl, this.updateEligiblityStatements),
       cartProduct: cartProduct(
         intl,
         this.updateEligiblityStatements,
@@ -91,6 +90,7 @@ class EligibilitySection extends Component {
 
     const conditionsOptions2 = {
       affiliates: affiliates(intl),
+      firstBuy: firstBuy(intl),
       installments: installments(intl),
       paymentMethods: paymentMethods(intl),
       shippingMethods: shippingMethods(intl),
