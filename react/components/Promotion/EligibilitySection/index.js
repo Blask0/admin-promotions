@@ -73,7 +73,6 @@ class EligibilitySection extends Component {
     } = this.props
 
     const conditionsOptions = {
-      affiliates: affiliates(intl, this.updateEligiblityStatements),
       firstBuy: firstBuy(intl, this.updateEligiblityStatements),
       cartProduct: cartProduct(
         intl,
@@ -91,6 +90,7 @@ class EligibilitySection extends Component {
     }
 
     const conditionsOptions2 = {
+      affiliates: affiliates(intl),
       installments: installments(intl),
       paymentMethods: paymentMethods(intl),
       shippingMethods: shippingMethods(intl),
@@ -169,7 +169,7 @@ class EligibilitySection extends Component {
 
         {!allCustomers ? (
           <div className="mt6">
-            <EXPERIMENTAL_Conditions
+            {/* <EXPERIMENTAL_Conditions
               options={conditionsOptions}
               subjectPlaceholder={intl.formatMessage({
                 id:
@@ -190,7 +190,7 @@ class EligibilitySection extends Component {
                   },
                 })
               }}
-            />
+            /> */}
             <Conditions
               canDelete
               labels={conditionsLabels}
