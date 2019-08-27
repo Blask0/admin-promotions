@@ -81,7 +81,6 @@ class EligibilitySection extends Component {
         currencyCode
       ),
       shippingMethods: shippingMethods(intl, this.updateEligiblityStatements),
-      paymentMethods: paymentMethods(intl, this.updateEligiblityStatements),
       zipCodeRange: zipCodeRange(intl, this.updateEligiblityStatements),
       totalPriceRange: totalPriceRange(
         intl,
@@ -94,6 +93,7 @@ class EligibilitySection extends Component {
 
     const conditionsOptions2 = {
       installments: installments(intl),
+      paymentMethods: paymentMethods(intl),
       utmSource: utm(intl, 'Source'),
       utmCampaign: utm(intl, 'Campaign'),
     }

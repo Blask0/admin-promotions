@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 
 import { Input } from 'vtex.styleguide'
 
-type Props = {
+export interface Props {
   error?: string
   placeholder?: string
   onChange: (value: Props['value'], error?: Props['error']) => void

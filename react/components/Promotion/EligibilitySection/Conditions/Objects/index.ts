@@ -1,5 +1,14 @@
-import InputObject from './InputObject'
-import InputNumberRangeObject from './InputNumberRangeObject'
-import SelectObject from './SelectObject'
+import InputObject, { Props as InputObjectProps } from './InputObject'
+import InputNumberRangeObject, {
+  Props as InputNumberRangeObjectProps,
+} from './InputNumberRangeObject'
+import SelectObject, { Props as SelectObjectProps } from './SelectObject'
 
-export { InputObject, InputNumberRangeObject, SelectObject }
+export {
+  InputObject,
+  InputObjectProps,
+  InputNumberRangeObject,
+  InputNumberRangeObjectProps,
+  SelectObject,
+  SelectObjectProps,
+}

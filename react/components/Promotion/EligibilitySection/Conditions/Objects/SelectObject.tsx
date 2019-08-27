@@ -4,7 +4,7 @@ import { EXPERIMENTAL_Select } from 'vtex.styleguide'
 
 const SELECT_TEXTAREA_MAX_HEIGHT = 100
 
-type Props = {
+export type Props = {
   creatable?: boolean
   error?: string
   loading?: boolean

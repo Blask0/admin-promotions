@@ -1,11 +1,12 @@
 import React from 'react'
+import { InjectedIntl } from 'react-intl'
 
 import {
   InputObject,
   SelectObject,
 } from '../../../../components/Promotion/EligibilitySection/Conditions/Objects'
 
-const utm = (intl, type) => {
+const utm = (intl: InjectedIntl, type: string) => {
   return {
     label: intl.formatMessage({
       id: `promotions.promotion.elligibility.utm${type}.label`,
@@ -16,14 +17,14 @@ const utm = (intl, type) => {
           id: 'promotions.promotion.elligibility.utm.verb.==',
         }),
         value: '==',
-        object: props => <InputObject {...props} />,
+        object: (props: any) => <InputObject {...props} />,
       },
       {
         label: intl.formatMessage({
           id: 'promotions.promotion.elligibility.utm.verb.any',
         }),
         value: 'any',
-        object: props => <SelectObject {...props} creatable multi />,
+        object: (props: any) => <SelectObject {...props} creatable multi />,
       },
     ],
   }

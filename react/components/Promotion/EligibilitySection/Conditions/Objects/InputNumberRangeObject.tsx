@@ -3,7 +3,7 @@ import { injectIntl, InjectedIntlProps } from 'react-intl'
 
 import { Input } from 'vtex.styleguide'
 
-interface Props extends InjectedIntlProps {
+export interface Props extends InjectedIntlProps {
   error?: string
   operator: string
   placeholder?: string
