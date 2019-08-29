@@ -1,3 +1,9 @@
+import InputCurrencyObject, {
+  Props as InputCurrencyObjectProps,
+} from './InputCurrencyObject'
+import InputCurrencyRangeObject, {
+  Props as InputCurrencyRangeObjectProps,
+} from './InputCurrencyRangeObject'
 import InputNumberRangeObject, {
   Props as InputNumberRangeObjectProps,
 } from './InputNumberRangeObject'
@@ -8,6 +14,10 @@ import InputRangeObject, {
 import SelectObject, { Props as SelectObjectProps } from './SelectObject'
 
 export {
+  InputCurrencyObject,
+  InputCurrencyObjectProps,
+  InputCurrencyRangeObject,
+  InputCurrencyRangeObjectProps,
   InputObject,
   InputObjectProps,
   InputRangeObject,

@@ -78,11 +78,6 @@ class EligibilitySection extends Component {
         this.updateEligiblityStatements,
         currencyCode
       ),
-      totalPriceRange: totalPriceRange(
-        intl,
-        this.updateEligiblityStatements,
-        currencyCode
-      ),
     }
 
     const conditionsOptions2 = {
@@ -93,6 +88,7 @@ class EligibilitySection extends Component {
       marketingTags: marketingTags(intl),
       paymentMethods: paymentMethods(intl),
       shippingMethods: shippingMethods(intl),
+      totalPriceRange: totalPriceRange(intl, currencyCode),
       utmSource: utm(intl, 'Source'),
       utmCampaign: utm(intl, 'Campaign'),
       zipCodeRange: zipCodeRange(intl),
