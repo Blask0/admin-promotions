@@ -110,6 +110,7 @@
   "promotions.promotion.elligibility.creditCardBin.label": "BIN do cartão de crédito",
   "promotions.promotion.elligibility.creditCardBin.verb.any": "é qualquer um entre",
   "promotions.promotion.elligibility.creditCardBin.placeholder": "Número de BIN…",
+  "promotions.promotion.elligibility.creditCardBin.error": "BIN {bins} não {binsCount, plural, one {pode} other {podem}} ter mais que 8 caractéres",
   "promotions.promotion.elligibility.cartProduct.label": "Produto no carrinho",
   "promotions.promotion.elligibility.cartProduct.verb.brand.any": "pertence a alguma dessas marcas",
   "promotions.promotion.elligibility.cartProduct.verb.brand.not.any": "não pertence a alguma dessas marcas",

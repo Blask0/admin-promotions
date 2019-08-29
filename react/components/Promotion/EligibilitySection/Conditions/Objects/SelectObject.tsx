@@ -4,37 +4,40 @@ import { EXPERIMENTAL_Select } from 'vtex.styleguide'
 
 const SELECT_TEXTAREA_MAX_HEIGHT = 100
 
+export type SelectValue = {
+  label: string
+  value: unknown
+}
+
 export type Props = {
   creatable?: boolean
   error?: string
   loading?: boolean
   multi?: boolean
   placeholder?: string
-  onChange: (value: Props['value'], error?: Props['error']) => void
-  onSearch: (searchTerm: string) => void
-  options: {
-    label: string
-    value: Props['value']
-  }[]
-  value: unknown
+  onChange:
+    | ((value: SelectValue, error?: Props['error']) => void)
+    | ((value: SelectValue[], error?: Props['error']) => void)
+  onSearch?: (searchTerm: string) => void
+  options: SelectValue[]
+  value: SelectValue | SelectValue[]
 }
 
-const SelectObject: React.FC<Props> = ({
+const SingleSelectObject: React.FC<Props> = ({
   creatable,
   error,
-  loading,
   multi,
+  loading,
   placeholder,
   onChange,
-  onSearch,
+  onSearch = () => {},
   options,
   value,
 }) => {
-  // any for now because select has a custom API (ex: setFocus())
   const ref = useRef<any>(null)
 
   if (error && ref.current) {
-    ref.current.setFocus()
+    ref.current.focus()
   }
 
   return (
@@ -54,4 +57,4 @@ const SelectObject: React.FC<Props> = ({
   )
 }
 
-export default SelectObject
+export default SingleSelectObject

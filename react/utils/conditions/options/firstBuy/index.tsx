@@ -8,27 +8,25 @@ import {
 
 type Props = InjectedIntlProps & SelectObjectProps
 
-const FirstBuySelect: React.FC<Props> = ({ intl, ...props }) => {
-  return (
-    <SelectObject
-      {...props}
-      options={[
-        {
-          label: intl.formatMessage({
-            id: 'promotions.promotion.elligibility.firstBuy.true',
-          }),
-          value: true,
-        },
-        {
-          label: intl.formatMessage({
-            id: 'promotions.promotion.elligibility.firstBuy.false',
-          }),
-          value: false,
-        },
-      ]}
-    />
-  )
-}
+const FirstBuySelect: React.FC<Props> = ({ intl, ...props }) => (
+  <SelectObject
+    {...props}
+    options={[
+      {
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.firstBuy.true',
+        }),
+        value: true,
+      },
+      {
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.firstBuy.false',
+        }),
+        value: false,
+      },
+    ]}
+  />
+)
 
 const FirstBuySelectObject = injectIntl<Props>(FirstBuySelect)
 

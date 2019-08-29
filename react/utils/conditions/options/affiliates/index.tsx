@@ -14,17 +14,15 @@ interface Props extends SelectObjectProps {
   affiliates: AffiliatesMethodsData['getAffiliates']
 }
 
-const AffiliatesSelect: React.FC<Props> = ({ affiliates = [], ...props }) => {
-  return (
-    <SelectObject
-      {...props}
-      options={affiliates.map(affiliate => ({
-        label: affiliate.name,
-        value: affiliate.id,
-      }))}
-    />
-  )
-}
+const AffiliatesSelect: React.FC<Props> = ({ affiliates = [], ...props }) => (
+  <SelectObject
+    {...props}
+    options={affiliates.map(affiliate => ({
+      label: affiliate.name,
+      value: affiliate.id,
+    }))}
+  />
+)
 
 const AffiliatesSelectObject = withAffiliates<Props>(AffiliatesSelect)
 

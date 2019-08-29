@@ -17,17 +17,15 @@ interface Props extends SelectObjectProps {
 const PaymentMethodsSelect: React.FC<Props> = ({
   paymentMethods = [],
   ...props
-}) => {
-  return (
-    <SelectObject
-      {...props}
-      options={paymentMethods.map(paymentMethod => ({
-        label: paymentMethod.name,
-        value: paymentMethod.id,
-      }))}
-    />
-  )
-}
+}) => (
+  <SelectObject
+    {...props}
+    options={paymentMethods.map(paymentMethod => ({
+      label: paymentMethod.name,
+      value: paymentMethod.id,
+    }))}
+  />
+)
 
 const PaymentMethodsSelectObject = withPaymentMethods<Props>(
   PaymentMethodsSelect

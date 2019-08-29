@@ -17,17 +17,15 @@ interface Props extends SelectObjectProps {
 const ShippingMethodsSelect: React.FC<Props> = ({
   shippingMethods = [],
   ...props
-}) => {
-  return (
-    <SelectObject
-      {...props}
-      options={shippingMethods.map(shippingMethod => ({
-        label: shippingMethod.name,
-        value: shippingMethod.id,
-      }))}
-    />
-  )
-}
+}) => (
+  <SelectObject
+    {...props}
+    options={shippingMethods.map(shippingMethod => ({
+      label: shippingMethod.name,
+      value: shippingMethod.id,
+    }))}
+  />
+)
 
 const ShippingMethodsSelectObject = withShippingMethods<Props>(
   ShippingMethodsSelect
