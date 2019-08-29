@@ -83,7 +83,6 @@ class EligibilitySection extends Component {
         this.updateEligiblityStatements,
         currencyCode
       ),
-      marketingTags: marketingTags(intl, this.updateEligiblityStatements),
     }
 
     const conditionsOptions2 = {
@@ -91,6 +90,7 @@ class EligibilitySection extends Component {
       creditCardBin: creditCardBin(intl),
       firstBuy: firstBuy(intl),
       installments: installments(intl),
+      marketingTags: marketingTags(intl),
       paymentMethods: paymentMethods(intl),
       shippingMethods: shippingMethods(intl),
       utmSource: utm(intl, 'Source'),
