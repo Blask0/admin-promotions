@@ -16,7 +16,7 @@ import {
   totalPriceRange,
   utm,
   zipCodeRange,
-} from './Conditions/options'
+} from './options'
 
 class EligibilitySection extends Component {
   constructor(props) {
@@ -153,28 +153,6 @@ class EligibilitySection extends Component {
 
         {!allCustomers ? (
           <div className="mt6">
-            {/* <EXPERIMENTAL_Conditions
-              options={conditionsOptions}
-              subjectPlaceholder={intl.formatMessage({
-                id:
-                  'promotions.promotion.elligibility.conditions.subjectPlaceholder',
-              })}
-              labels={conditionsLabels}
-              statements={statements.value}
-              operator={operator}
-              onChangeOperator={({ operator }) => {
-                updatePageState({ operator })
-              }}
-              onChangeStatements={statementsValue => {
-                updatePageState({
-                  statements: {
-                    ...statements,
-                    value: statementsValue,
-                    error: undefined,
-                  },
-                })
-              }}
-            /> */}
             <Conditions
               canDelete
               labels={conditionsLabels}
