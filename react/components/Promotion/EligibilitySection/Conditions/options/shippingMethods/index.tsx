@@ -4,11 +4,11 @@ import { InjectedIntl } from 'react-intl'
 import {
   SelectObject,
   SelectObjectProps,
-} from '../../../../components/Promotion/EligibilitySection/Conditions/Objects'
+} from '../../Objects'
 
 import withShippingMethods, {
   ShippingMethodsData,
-} from '../../../../connectors/withShippingMethods'
+} from '../../../../../../connectors/withShippingMethods'
 
 interface Props extends SelectObjectProps {
   shippingMethods: ShippingMethodsData['getShippingMethods']

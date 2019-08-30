@@ -4,7 +4,7 @@ import { InjectedIntl } from 'react-intl'
 import {
   InputObject,
   SelectObject,
-} from '../../../../components/Promotion/EligibilitySection/Conditions/Objects'
+} from '../../Objects'
 
 const utm = (intl: InjectedIntl, type: string) => {
   return {

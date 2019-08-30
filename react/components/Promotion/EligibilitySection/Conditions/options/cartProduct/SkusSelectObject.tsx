@@ -1,12 +1,9 @@
 import React from 'react'
 import { injectIntl, InjectedIntlProps } from 'react-intl'
 
-import {
-  SelectObject,
-  SelectObjectProps,
-} from '../../../../components/Promotion/EligibilitySection/Conditions/Objects'
+import { SelectObject, SelectObjectProps } from '../../Objects'
 
-import withSkus, { Sku, WithSkusProps } from '../../../../connectors/withSkus'
+import withSkus, { Sku, WithSkusProps } from '../../../../../../connectors/withSkus'
 
 interface Props extends SelectObjectProps, WithSkusProps {
   skus: Sku[]

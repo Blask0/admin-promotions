@@ -4,11 +4,11 @@ import { InjectedIntl } from 'react-intl'
 import {
   SelectObject,
   SelectObjectProps,
-} from '../../../../components/Promotion/EligibilitySection/Conditions/Objects'
+} from '../../Objects'
 
 import withPaymentMethods, {
   PaymentMethodsData,
-} from '../../../../connectors/withPaymentMethods'
+} from '../../../../../../connectors/withPaymentMethods'
 
 interface Props extends SelectObjectProps {
   paymentMethods: PaymentMethodsData['getPaymentMethods']

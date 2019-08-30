@@ -4,7 +4,7 @@ import { InjectedIntl } from 'react-intl'
 import {
   InputObject,
   InputNumberRangeObject,
-} from '../../../../components/Promotion/EligibilitySection/Conditions/Objects'
+} from '../../Objects'
 
 const installments = (intl: InjectedIntl) => {
   return {

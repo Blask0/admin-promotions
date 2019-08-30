@@ -1,14 +1,11 @@
 import React from 'react'
 import { InjectedIntl } from 'react-intl'
 
-import {
-  SelectObject,
-  SelectObjectProps,
-} from '../../../../components/Promotion/EligibilitySection/Conditions/Objects'
+import { SelectObject, SelectObjectProps } from '../../Objects'
 
 import withAffiliates, {
   AffiliatesMethodsData,
-} from '../../../../connectors/withAffiliates'
+} from '../../../../../../connectors/withAffiliates'
 
 interface Props extends SelectObjectProps {
   affiliates: AffiliatesMethodsData['getAffiliates']

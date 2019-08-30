@@ -16,7 +16,7 @@ import {
   totalPriceRange,
   utm,
   zipCodeRange,
-} from '../../../utils/conditions/options'
+} from './Conditions/options'
 
 class EligibilitySection extends Component {
   constructor(props) {

@@ -4,7 +4,7 @@ import { InjectedIntl } from 'react-intl'
 import {
   InputCurrencyObject,
   InputCurrencyRangeObject,
-} from '../../../../components/Promotion/EligibilitySection/Conditions/Objects'
+} from '../../Objects'
 
 const totalPriceRange = (intl: InjectedIntl, currencyCode: string) => {
   return {

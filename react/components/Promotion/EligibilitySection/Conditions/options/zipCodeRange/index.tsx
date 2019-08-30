@@ -1,7 +1,7 @@
 import React from 'react'
 import { InjectedIntl } from 'react-intl'
 
-import { InputRangeObject } from '../../../../components/Promotion/EligibilitySection/Conditions/Objects'
+import { InputRangeObject } from '../../Objects'
 
 const zipCodeRange = (intl: InjectedIntl) => {
   return {

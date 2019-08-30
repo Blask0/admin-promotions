@@ -4,16 +4,16 @@ import { InjectedIntl, injectIntl, InjectedIntlProps } from 'react-intl'
 import {
   SelectObject,
   SelectObjectProps,
-} from '../../../../components/Promotion/EligibilitySection/Conditions/Objects'
+} from '../../Objects'
 
-import { SelectValue } from '../../../../components/Promotion/EligibilitySection/Conditions/Objects/SelectObject'
+import { SelectValue } from '../../Objects/SelectObject'
 
 interface MarketingTagsSelectProps
   extends SelectObjectProps,
     InjectedIntlProps {
   onChange: (
     value: MarketingTagsSelectProps['value'],
-    error?: MarketingTagsSelectProps['error']
+    error?: SelectObjectProps['error']
   ) => void
   value: SelectValue[]
 }

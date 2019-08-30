@@ -4,16 +4,16 @@ import { InjectedIntl, injectIntl, InjectedIntlProps } from 'react-intl'
 import {
   SelectObject,
   SelectObjectProps,
-} from '../../../../components/Promotion/EligibilitySection/Conditions/Objects'
+} from '../../Objects'
 
-import { SelectValue } from '../../../../components/Promotion/EligibilitySection/Conditions/Objects/SelectObject'
+import { SelectValue } from '../../Objects/SelectObject'
 
 interface CreditCardBINSelectProps
   extends SelectObjectProps,
     InjectedIntlProps {
   onChange: (
     value: CreditCardBINSelectProps['value'],
-    error?: CreditCardBINSelectProps['error']
+    error?: SelectObjectProps['error']
   ) => void
   value: SelectValue[]
 }

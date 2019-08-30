@@ -9,10 +9,7 @@ import SelllersSelectObject from './SelllersSelectObject'
 import SkusSelectObject from './SkusSelectObject'
 import ListPriceAndPriceComparisonObject from './ListPriceAndPriceComparisonObject'
 
-import {
-  InputCurrencyObject,
-  InputCurrencyRangeObject,
-} from '../../../../components/Promotion/EligibilitySection/Conditions/Objects'
+import { InputCurrencyObject, InputCurrencyRangeObject } from '../../Objects'
 
 const cartProduct = (intl: InjectedIntl, currencyCode: string) => {
   return {

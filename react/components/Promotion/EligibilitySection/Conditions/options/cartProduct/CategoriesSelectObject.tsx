@@ -1,15 +1,12 @@
 import React from 'react'
 import { injectIntl, InjectedIntlProps } from 'react-intl'
 
-import {
-  SelectObject,
-  SelectObjectProps,
-} from '../../../../components/Promotion/EligibilitySection/Conditions/Objects'
+import { SelectObject, SelectObjectProps } from '../../Objects'
 
 import withCategories, {
   CategoriesData,
   WithCategoriesProps,
-} from '../../../../connectors/withCategories'
+} from '../../../../../../connectors/withCategories'
 
 interface Props extends SelectObjectProps, WithCategoriesProps {
   categories: CategoriesData['getCategories']

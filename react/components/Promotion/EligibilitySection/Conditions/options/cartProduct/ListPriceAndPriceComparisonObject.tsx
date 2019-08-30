@@ -1,10 +1,7 @@
 import React from 'react'
 import { injectIntl, InjectedIntlProps } from 'react-intl'
 
-import {
-  SelectObject,
-  SelectObjectProps,
-} from '../../../../components/Promotion/EligibilitySection/Conditions/Objects'
+import { SelectObject, SelectObjectProps } from '../../Objects'
 
 type Props = InjectedIntlProps & SelectObjectProps
 

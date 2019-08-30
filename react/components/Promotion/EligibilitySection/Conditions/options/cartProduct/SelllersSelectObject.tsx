@@ -1,15 +1,12 @@
 import React from 'react'
 import { injectIntl, InjectedIntlProps } from 'react-intl'
 
-import {
-  SelectObject,
-  SelectObjectProps,
-} from '../../../../components/Promotion/EligibilitySection/Conditions/Objects'
+import { SelectObject, SelectObjectProps } from '../../Objects'
 
 import withSellers, {
   SellersData,
   WithSellersProps,
-} from '../../../../connectors/withSellers'
+} from '../../../../../../connectors/withSellers'
 
 interface Props extends SelectObjectProps, WithSellersProps {
   collections: SellersData['getSellers']
