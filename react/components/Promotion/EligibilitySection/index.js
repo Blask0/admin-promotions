@@ -2,12 +2,7 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-import {
-  Alert,
-  Conditions,
-  EXPERIMENTAL_Conditions,
-  Radio,
-} from 'vtex.styleguide'
+import { Alert, Conditions, Radio } from 'vtex.styleguide'
 
 import {
   affiliates,
@@ -73,15 +68,8 @@ class EligibilitySection extends Component {
     } = this.props
 
     const conditionsOptions = {
-      cartProduct: cartProduct(
-        intl,
-        this.updateEligiblityStatements,
-        currencyCode
-      ),
-    }
-
-    const conditionsOptions2 = {
       affiliates: affiliates(intl),
+      cartProduct: cartProduct(intl, currencyCode),
       creditCardBin: creditCardBin(intl),
       firstBuy: firstBuy(intl),
       installments: installments(intl),
@@ -204,7 +192,7 @@ class EligibilitySection extends Component {
                 })
               }}
               operator={operator}
-              options={conditionsOptions2}
+              options={conditionsOptions}
               subjectPlaceholder={intl.formatMessage({
                 id:
                   'promotions.promotion.elligibility.conditions.subjectPlaceholder',

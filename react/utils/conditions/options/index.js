@@ -9,7 +9,6 @@ import zipCodeRange from './zipCodeRange'
 import totalPriceRange from './totalPriceRange'
 import creditCardBin from './creditCardBin'
 import marketingTags from './marketingTags'
-import restrictTradePoliciesStatement from './restrictTradePolicies'
 
 export {
   affiliates,
@@ -23,5 +22,4 @@ export {
   totalPriceRange,
   creditCardBin,
   marketingTags,
-  restrictTradePoliciesStatement,
 }

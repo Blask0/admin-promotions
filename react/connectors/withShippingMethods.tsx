@@ -5,7 +5,7 @@ import getShippingMethods from '../graphql/getShippingMethods.graphql'
 
 export type ShippingMethodsData = {
   getShippingMethods?: {
-    id: number
+    id: string
     name: string
   }[]
 }

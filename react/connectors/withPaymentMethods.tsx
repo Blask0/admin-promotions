@@ -5,7 +5,7 @@ import getPaymentMethods from '../graphql/getPaymentMethods.graphql'
 
 export type PaymentMethodsData = {
   getPaymentMethods?: {
-    id: number
+    id: string
     name: string
   }[]
 }

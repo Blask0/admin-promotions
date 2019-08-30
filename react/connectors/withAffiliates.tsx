@@ -5,7 +5,7 @@ import getAffiliates from '../graphql/getAffiliates.graphql'
 
 export type AffiliatesMethodsData = {
   getAffiliates?: {
-    id: number
+    id: string
     name: string
   }[]
 }
