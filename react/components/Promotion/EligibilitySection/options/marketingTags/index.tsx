@@ -61,38 +61,13 @@ const marketingTags = (intl: InjectedIntl) => {
         value: 'any',
         object: (props: any) => <MarketingTagsSelectObject {...props} />,
       },
-      // {
-      //   label: intl.formatMessage({
-      //     id: 'promotions.promotion.elligibility.marketingTags.verb.not.any',
-      //   }),
-      //   value: 'not.any',
-      //   object: {
-      //     renderFn: renderSelectObject,
-      //     extraParams: {
-      //       queryInfo: {
-      //         connector: WrappedComponent => props => (
-      //           <WrappedComponent {...props} />
-      //         ),
-      //         dataGetter: () => [],
-      //       },
-      //       placeholder: intl.formatMessage({
-      //         id: 'promotions.promotion.elligibility.marketingTags.placeholder',
-      //       }),
-      //       validation: {
-      //         execute: selected =>
-      //           selected.filter(({ value }) => !value.match(/^\w+=\w+/g))
-      //             .length === 0,
-      //         errorMessage: intl.formatMessage({
-      //           id:
-      //             'promotions.promotion.elligibility.marketingTags.errorMessage',
-      //         }),
-      //       },
-      //       multi: true,
-      //       creatable: true,
-      //       update: update,
-      //     },
-      //   },
-      // },
+      {
+        label: intl.formatMessage({
+          id: 'promotions.promotion.elligibility.marketingTags.verb.not.any',
+        }),
+        value: 'not.any',
+        object: (props: any) => <MarketingTagsSelectObject {...props} />,
+      },
     ],
   }
 }
