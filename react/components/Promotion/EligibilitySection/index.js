@@ -156,10 +156,8 @@ class EligibilitySection extends Component {
             <Conditions
               canDelete
               labels={conditionsLabels}
-              onChangeOperator={({ operator }) => {
-                updatePageState({ operator })
-              }}
-              onChangeStatements={newStatements => {
+              onChangeOperator={operator => updatePageState({ operator })}
+              onChangeStatements={newStatements =>
                 updatePageState({
                   statements: {
                     ...statements,
@@ -167,7 +165,7 @@ class EligibilitySection extends Component {
                     error: undefined,
                   },
                 })
-              }}
+              }
               operator={operator}
               options={conditionsOptions}
               subjectPlaceholder={intl.formatMessage({
