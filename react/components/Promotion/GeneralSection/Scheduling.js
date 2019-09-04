@@ -67,10 +67,14 @@ function Scheduling({ intl, generalInfo, updatePageState }) {
                   hasEndDate: !generalInfo.hasEndDate,
                   endDate: !generalInfo.hasEndDate
                     ? {
+                      ...generalInfo.endDate,
                       value: addDays(new Date(), 1),
+                      error: undefined,
                     }
                     : {
+                      ...generalInfo.endDate,
                       value: undefined,
+                      error: undefined,
                     },
                 })
               }}
@@ -80,11 +84,14 @@ function Scheduling({ intl, generalInfo, updatePageState }) {
           {generalInfo.hasEndDate ? (
             <div className="mt4">
               <DatePicker
+                ref={generalInfo.endDate.ref}
                 locale={intl.locale}
                 onChange={date => {
                   updatePageState({
                     endDate: {
+                      ...generalInfo.endDate,
                       value: date,
+                      error: undefined,
                     },
                   })
                 }}
