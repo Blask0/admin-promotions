@@ -19,6 +19,9 @@ const renderRangeInputCurrencyObject = ({
   return (
     <div className="flex">
       <PromotionsInputCurrency
+        // Temporary workaround until render supports `react-intl` v3.
+        // For more info see https://github.com/formatjs/react-intl/blob/master/docs/Upgrade-Guide.md#migrate-withref-to-forwardref
+        intl={intl}
         placeholder={placeholder}
         locale={locale}
         ref={statements[statementIndex].refs.object}
@@ -43,6 +46,9 @@ const renderRangeInputCurrencyObject = ({
       <div className="mv4 mh3 c-muted-2 b">and</div>
 
       <PromotionsInputCurrency
+        // Temporary workaround until render supports `react-intl` v3.
+        // For more info see https://github.com/formatjs/react-intl/blob/master/docs/Upgrade-Guide.md#migrate-withref-to-forwardref
+        intl={intl}
         placeholder={placeholder}
         locale={locale}
         currencyCode={currencyCode}

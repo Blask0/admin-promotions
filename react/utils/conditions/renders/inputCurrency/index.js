@@ -19,6 +19,9 @@ const renderInputCurrencyObject = ({
   return (
     <div className="flex">
       <PromotionsInputCurrency
+        // Temporary workaround until render supports `react-intl` v3.
+        // For more info see https://github.com/formatjs/react-intl/blob/master/docs/Upgrade-Guide.md#migrate-withref-to-forwardref
+        intl={intl}
         placeholder={placeholder}
         locale={locale}
         currencyCode={currencyCode}

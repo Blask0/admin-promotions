@@ -1,5 +1,5 @@
 import React from 'react'
-import { injectIntl, InjectedIntlProps } from 'react-intl'
+import { InjectedIntlProps } from 'react-intl'
 
 import { InputCurrency, InputCurrencyProps, Input } from 'vtex.styleguide'
 import { withForwardedRef, ForwardedRefProps } from '../utils/withForwardedRef'
@@ -22,4 +22,4 @@ const PromotionInputCurrency: React.FC<
   )
 }
 
-export default withForwardedRef(injectIntl(PromotionInputCurrency))
+export default withForwardedRef(PromotionInputCurrency)

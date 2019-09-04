@@ -3,6 +3,7 @@ import React, { useRef } from 'react'
 import PromotionsInputCurrency, {
   Props as PromotionsInputCurrencyProps,
 } from '../../../Promotion/PromotionInputCurrency'
+import { InjectedIntlProps, injectIntl } from 'react-intl'
 
 export type Props = Omit<
   PromotionsInputCurrencyProps,
@@ -12,9 +13,10 @@ export type Props = Omit<
   error?: string
 }
 
-const InputCurrencyObject: React.FC<Props> = ({
+const InputCurrencyObject: React.FC<Props & InjectedIntlProps> = ({
   currencyCode,
   error,
+  intl,
   locale,
   onChange,
   value,
@@ -28,6 +30,9 @@ const InputCurrencyObject: React.FC<Props> = ({
 
   return (
     <PromotionsInputCurrency
+      // Temporary workaround until render supports `react-intl` v3.
+      // For more info see https://github.com/formatjs/react-intl/blob/master/docs/Upgrade-Guide.md#migrate-withref-to-forwardref
+      intl={intl}
       currencyCode={currencyCode}
       errorMessage={error}
       locale={locale}
@@ -39,4 +44,4 @@ const InputCurrencyObject: React.FC<Props> = ({
   )
 }
 
-export default InputCurrencyObject
+export default injectIntl<Props>(InputCurrencyObject)

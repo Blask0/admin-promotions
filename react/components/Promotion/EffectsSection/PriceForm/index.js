@@ -163,6 +163,9 @@ class PriceForm extends Component {
           {this.isDiscountTypeSelected('nominal') ? (
             <div className="mv4 mh7 w-20">
               <PromotionsInputCurrency
+                // Temporary workaround until render supports `react-intl` v3.
+                // For more info see https://github.com/formatjs/react-intl/blob/master/docs/Upgrade-Guide.md#migrate-withref-to-forwardref
+                intl={intl}
                 locale={intl.locale}
                 currencyCode={currencyCode}
                 value={priceEffect.discount.value}

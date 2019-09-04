@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 
 import PromotionsInputCurrency, {
   Props as PromotionsInputCurrencyProps,
@@ -31,14 +31,22 @@ const InputCurrencyRange: React.FC<Props & InjectedIntlProps> = ({
 }) => {
   const ref = useRef<any>(null)
 
-  if (error && ref.current) {
-    // ref.current.focus()
-  }
+  useEffect(
+    () => {
+      if (error && ref.current) {
+        ref.current.focus()
+      }
+    },
+    [error]
+  )
 
   return (
     <div className="flex">
       <PromotionsInputCurrency
         currencyCode={currencyCode}
+        // Temporary workaround until render supports `react-intl` v3.
+        // For more info see https://github.com/formatjs/react-intl/blob/master/docs/Upgrade-Guide.md#migrate-withref-to-forwardref
+        intl={intl}
         locale={locale}
         onChange={e =>
           onChange({
@@ -59,6 +67,9 @@ const InputCurrencyRange: React.FC<Props & InjectedIntlProps> = ({
       <PromotionsInputCurrency
         currencyCode={currencyCode}
         errorMessage={error}
+        // Temporary workaround until render supports `react-intl` v3.
+        // For more info see https://github.com/formatjs/react-intl/blob/master/docs/Upgrade-Guide.md#migrate-withref-to-forwardref
+        intl={intl}
         locale={locale}
         onChange={e =>
           onChange({
