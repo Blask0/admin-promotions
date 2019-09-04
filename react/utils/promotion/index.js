@@ -241,8 +241,8 @@ export const getStatusIcon = (status = '', size) => {
     case 'paused':
       return <Pause size={size} />
     case 'scheduled':
-      return <Clock size={size} />
     case 'completed':
+      return <Clock size={size} />
     default:
       return null
   }
@@ -343,5 +343,41 @@ export function prepareToSave(promotion, intl) {
         ? restriction.restrictedSalesChannels.value.map(sc => sc.value)
         : undefined,
     },
+  }
+}
+
+export const getStatus = ({ isActive, beginDateString, endDateString }) => {
+  const now = new Date()
+  const beginDate = new Date(beginDateString)
+  const endDate = endDateString ? new Date(endDateString) : null
+  if (endDate && endDate.getTime() < now.getTime()) {
+    return {
+      color: '#3F3F40',
+      id: 'completed',
+      icon: getStatusIcon('completed'),
+      labelId: 'promotions.promotion.status.completed',
+    }
+  }
+  if (isActive) {
+    if (beginDate.getTime() > now.getTime()) {
+      return {
+        color: '#FFB100',
+        icon: getStatusIcon('scheduled'),
+        labelId: 'promotions.promotion.status.scheduled',
+        id: 'scheduled',
+      }
+    }
+    return {
+      color: '#8BC34A',
+      icon: getStatusIcon('running'),
+      labelId: 'promotions.promotion.status.running',
+      id: 'running',
+    }
+  }
+  return {
+    color: '#3F3F40',
+    icon: getStatusIcon('paused'),
+    labelId: 'promotions.promotion.status.paused',
+    id: 'paused',
   }
 }

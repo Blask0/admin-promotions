@@ -6,59 +6,17 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import { ModalDialog, Tag } from 'vtex.styleguide'
 import { PromotionActivationToggle } from './PromotionActivationToggle'
 
-import Play from '../Icon/Play'
-import Pause from '../Icon/Pause'
-import Clock from '../Icon/Clock'
-
 import PromotionsTable from './PromotionsTable'
 
 import { toDate, format } from 'date-fns'
 
 import archivingPromotionById from '../../connectors/archivingPromotionById'
 import withPromotions from '../../connectors/withPromotions'
-import { getEffectIcon } from '../../utils/promotion'
+import { getEffectIcon, getStatus } from '../../utils/promotion'
 import { toTitleCase } from '../../utils'
 
 const NO_TITLE_COLUMN = ' '
 const LEGACY_TAG_COLOR = '#C28702'
-
-function getStatus(intl, { isActive, beginDateString, endDateString }) {
-  const now = new Date()
-  const beginDate = new Date(beginDateString)
-  const endDate = endDateString ? new Date(endDateString) : null
-  if (endDate && endDate.getTime() < now.getTime()) {
-    return {
-      color: '#3F3F40',
-      icon: <Clock />,
-      label: intl.formatMessage({
-        id: 'promotions.promotion.status.completed',
-      }),
-    }
-  }
-  if (isActive) {
-    if (beginDate.getTime() > now.getTime()) {
-      return {
-        color: '#FFB100',
-        icon: <Clock />,
-        label: intl.formatMessage({
-          id: 'promotions.promotion.status.scheduled',
-        }),
-      }
-    }
-    return {
-      color: '#8BC34A',
-      icon: <Play />,
-      label: intl.formatMessage({
-        id: 'promotions.promotion.status.running',
-      }),
-    }
-  }
-  return {
-    color: '#3F3F40',
-    icon: <Pause />,
-    label: intl.formatMessage({ id: 'promotions.promotion.status.paused' }),
-  }
-}
 
 function getTableSchema(intl) {
   return {
@@ -231,7 +189,7 @@ function getTableSchema(intl) {
             endDate: endDateString,
           },
         }) => {
-          const { color, icon, label } = getStatus(intl, {
+          const { color, icon, labelId } = getStatus({
             isActive,
             beginDateString,
             endDateString,
@@ -240,7 +198,9 @@ function getTableSchema(intl) {
           return (
             <div className="flex items-center" style={{ color: color }}>
               {icon}
-              <span className="ml3">{label}</span>
+              <span className="ml3">
+                <FormattedMessage id={labelId} />
+              </span>
             </div>
           )
         },
