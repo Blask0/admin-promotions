@@ -23,7 +23,6 @@ const InputNumberRangeObject: React.FC<Props> = ({
     <InputRangeObject
       {...props}
       onChange={value => {
-        console.log('number range change:', value)
 
         let error: string | undefined
         if (

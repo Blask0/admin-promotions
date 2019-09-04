@@ -264,7 +264,6 @@ class PriceForm extends Component {
                 canDelete
                 labels={conditionsLabels}
                 onChangeStatements={newStatements => {
-                  console.log('Changed statements to:', newStatements)
                   this.changeAppliesTo({
                     statements: {
                       ...priceEffect.appliesTo.statements,

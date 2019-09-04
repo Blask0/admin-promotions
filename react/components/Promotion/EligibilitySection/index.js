@@ -160,7 +160,6 @@ class EligibilitySection extends Component {
                 updatePageState({ operator })
               }}
               onChangeStatements={newStatements => {
-                console.log('Changed statements to:', newStatements)
                 updatePageState({
                   statements: {
                     ...statements,
