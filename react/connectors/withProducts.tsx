@@ -12,6 +12,11 @@ export type ProductsData = {
   }
 }
 
+export type Product = {
+  id: string
+  name: string
+}
+
 export type WithProductsProps = {
   searchForProducts: (searchTerm: string) => React.SetStateAction<string>
 }

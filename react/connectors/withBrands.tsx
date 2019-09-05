@@ -10,6 +10,11 @@ export type BrandsData = {
   }[]
 }
 
+export type Brand = {
+  id: string
+  name: string
+}
+
 export type WithBrandsProps = {
   searchForBrands: (searchTerm: string) => React.SetStateAction<string>
 }

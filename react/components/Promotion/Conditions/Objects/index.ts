@@ -25,9 +25,9 @@ import CollectionsSelectObject, {
 import ProductsSelectObject, {
   Props as ProductsSelectObjectProps,
 } from './ProductsSelectObject'
-import SelllersSelectObject, {
-  Props as SelllersSelectObjectProps,
-} from './SelllersSelectObject'
+import SellersSelectObject, {
+  Props as SellersSelectObjectProps,
+} from './SellersSelectObject'
 import SkusSelectObject, {
   Props as SkusSelectObjectProps,
 } from './SkusSelectObject'
@@ -53,8 +53,8 @@ export {
   CollectionsSelectObjectProps,
   ProductsSelectObject,
   ProductsSelectObjectProps,
-  SelllersSelectObject,
-  SelllersSelectObjectProps,
+  SellersSelectObject,
+  SellersSelectObjectProps,
   SkusSelectObject,
   SkusSelectObjectProps,
 }

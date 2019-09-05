@@ -1,12 +1,13 @@
 import React from 'react'
 import { injectIntl, InjectedIntlProps } from 'react-intl'
 
-import { SelectObject, SelectObjectProps } from '.'
-
 import withProducts, {
   ProductsData,
   WithProductsProps,
 } from '../../../../connectors/withProducts'
+
+import { SelectObject, SelectObjectProps } from '.'
+import { mapProductsToSelect } from '../../../../utils/mappers'
 
 export interface Props extends SelectObjectProps, WithProductsProps {
   productsData: ProductsData['getProducts']
@@ -25,14 +26,7 @@ const ProductsSelectObject: React.FC<Props & InjectedIntlProps> = ({
       id:
         'promotions.promotion.elligibility.cartProduct.hasProducts.placeholder',
     })}
-    options={
-      productsData
-        ? productsData.products.map(product => ({
-            label: `${product.id} - ${product.name}`,
-            value: product.id,
-          }))
-        : []
-    }
+    options={productsData ? mapProductsToSelect(productsData.products) : []}
     onSearch={searchForProducts}
   />
 )

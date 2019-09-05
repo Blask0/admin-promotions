@@ -1,12 +1,13 @@
 import React from 'react'
 import { injectIntl, InjectedIntlProps } from 'react-intl'
 
-import { SelectObject, SelectObjectProps } from '.'
-
 import withBrands, {
   BrandsData,
   WithBrandsProps,
 } from '../../../../connectors/withBrands'
+
+import { SelectObject, SelectObjectProps } from '.'
+import { mapBrandsToSelect } from '../../../../utils/mappers'
 
 export interface Props extends SelectObjectProps, WithBrandsProps {
   brands: BrandsData['getBrands']
@@ -24,10 +25,7 @@ const BrandsSelectObject: React.FC<Props & InjectedIntlProps> = ({
     placeholder={intl.formatMessage({
       id: 'promotions.promotion.elligibility.cartProduct.hasBrand.placeholder',
     })}
-    options={brands.map(brand => ({
-      label: brand.name,
-      value: brand.id,
-    }))}
+    options={mapBrandsToSelect(brands)}
     onSearch={searchForBrands}
   />
 )

@@ -1,7 +1,7 @@
 import React from 'react'
 import { InjectedIntl } from 'react-intl'
 
-import { SelllersSelectObject } from '../../../../Conditions/Objects'
+import { SellersSelectObject } from '../../../../Conditions/Objects'
 
 const sellers = (intl: InjectedIntl) => {
   return {
@@ -14,14 +14,14 @@ const sellers = (intl: InjectedIntl) => {
           id: 'promotions.promotion.scopeSelector.seller.verb.any',
         }),
         value: 'any',
-        object: (props: any) => <SelllersSelectObject {...props} />,
+        object: (props: any) => <SellersSelectObject {...props} />,
       },
       {
         label: intl.formatMessage({
           id: 'promotions.promotion.scopeSelector.seller.verb.not.any',
         }),
         value: 'not.any',
-        object: (props: any) => <SelllersSelectObject {...props} />,
+        object: (props: any) => <SellersSelectObject {...props} />,
       },
     ],
   }

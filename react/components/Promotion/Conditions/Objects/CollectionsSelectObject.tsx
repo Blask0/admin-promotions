@@ -1,12 +1,13 @@
 import React from 'react'
 import { injectIntl, InjectedIntlProps } from 'react-intl'
 
-import { SelectObject, SelectObjectProps } from '.'
-
 import withCollections, {
   CollectionsData,
   WithCollectionsProps,
 } from '../../../../connectors/withCollections'
+
+import { SelectObject, SelectObjectProps } from '.'
+import { mapCollectionsToSelect } from '../../../../utils/mappers'
 
 export interface Props extends SelectObjectProps, WithCollectionsProps {
   collections: CollectionsData['getCollections']
@@ -25,10 +26,7 @@ const CollectionsSelectObject: React.FC<Props & InjectedIntlProps> = ({
       id:
         'promotions.promotion.elligibility.cartProduct.hasCollections.placeholder',
     })}
-    options={collections.map(collection => ({
-      label: collection.name,
-      value: collection.id,
-    }))}
+    options={mapCollectionsToSelect(collections)}
     onSearch={searchForCollections}
   />
 )

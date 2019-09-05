@@ -10,6 +10,11 @@ export type SellersData = {
   }[]
 }
 
+export type Seller = {
+  id: string
+  name: string
+}
+
 export type WithSellersProps = {
   searchForSellers: (searchTerm: string) => React.SetStateAction<string>
 }
@@ -27,7 +32,7 @@ const withSellers = <T extends WithSellersProps>(
             {...props}
             loading={loading}
             error={error}
-            collections={data && data.getSellers}
+            sellers={data && data.getSellers}
             searchForSellers={searchTerm => setName(searchTerm)}
           />
         )}

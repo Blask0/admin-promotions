@@ -1,12 +1,13 @@
 import React from 'react'
 import { injectIntl, InjectedIntlProps } from 'react-intl'
 
-import { SelectObject, SelectObjectProps } from '.'
-
 import withCategories, {
   CategoriesData,
   WithCategoriesProps,
 } from '../../../../connectors/withCategories'
+
+import { SelectObject, SelectObjectProps } from '.'
+import { mapCategoriesToSelect } from '../../../../utils/mappers'
 
 export interface Props extends SelectObjectProps, WithCategoriesProps {
   categories: CategoriesData['getCategories']
@@ -25,10 +26,7 @@ const CategoriesSelectObject: React.FC<Props & InjectedIntlProps> = ({
       id:
         'promotions.promotion.elligibility.cartProduct.hasCategories.placeholder',
     })}
-    options={categories.map(categorie => ({
-      label: categorie.name,
-      value: categorie.id,
-    }))}
+    options={mapCategoriesToSelect(categories)}
     onSearch={searchForCategories}
   />
 )

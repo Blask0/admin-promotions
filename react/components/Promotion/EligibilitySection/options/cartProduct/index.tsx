@@ -6,7 +6,7 @@ import CategoriesSelectObject from '../../../Conditions/Objects/CategoriesSelect
 import CollectionsSelectObject from '../../../Conditions/Objects/CollectionsSelectObject'
 import ListPriceAndPriceComparisonObject from './ListPriceAndPriceComparisonObject'
 import ProductsSelectObject from '../../../Conditions/Objects/ProductsSelectObject'
-import SelllersSelectObject from '../../../Conditions/Objects/SelllersSelectObject'
+import SellersSelectObject from '../../../Conditions/Objects/SellersSelectObject'
 import SkusSelectObject from '../../../Conditions/Objects/SkusSelectObject'
 
 import {
@@ -189,7 +189,7 @@ const cartProduct = (intl: InjectedIntl, currencyCode: string) => {
           id: 'promotions.promotion.elligibility.cartProduct.verb.seller.any',
         }),
         value: 'any',
-        object: (props: any) => <SelllersSelectObject {...props} />,
+        object: (props: any) => <SellersSelectObject {...props} />,
       },
       {
         label: intl.formatMessage({
@@ -197,7 +197,7 @@ const cartProduct = (intl: InjectedIntl, currencyCode: string) => {
             'promotions.promotion.elligibility.cartProduct.verb.seller.not.any',
         }),
         value: 'not.any',
-        object: (props: any) => <SelllersSelectObject {...props} />,
+        object: (props: any) => <SellersSelectObject {...props} />,
       },
     ],
   }

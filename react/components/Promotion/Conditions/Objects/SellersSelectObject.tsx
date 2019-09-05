@@ -1,19 +1,20 @@
 import React from 'react'
 import { injectIntl, InjectedIntlProps } from 'react-intl'
 
-import { SelectObject, SelectObjectProps } from '.'
-
 import withSellers, {
   SellersData,
   WithSellersProps,
 } from '../../../../connectors/withSellers'
 
+import { SelectObject, SelectObjectProps } from '.'
+import { mapSellersToSelect } from '../../../../utils/mappers'
+
 export interface Props extends SelectObjectProps, WithSellersProps {
-  collections: SellersData['getSellers']
+  sellers: SellersData['getSellers']
 }
 
 const SellersSelectObject: React.FC<Props & InjectedIntlProps> = ({
-  collections = [],
+  sellers = [],
   intl,
   searchForSellers,
   ...props
@@ -25,10 +26,7 @@ const SellersSelectObject: React.FC<Props & InjectedIntlProps> = ({
       id:
         'promotions.promotion.elligibility.cartProduct.hasSellers.placeholder',
     })}
-    options={collections.map(collection => ({
-      label: collection.name,
-      value: collection.id,
-    }))}
+    options={mapSellersToSelect(sellers)}
     onSearch={searchForSellers}
   />
 )

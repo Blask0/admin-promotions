@@ -10,6 +10,11 @@ export type CategoriesData = {
   }[]
 }
 
+export type Category = {
+  id: string
+  name: string
+}
+
 export type WithCategoriesProps = {
   searchForCategories: (searchTerm: string) => React.SetStateAction<string>
 }

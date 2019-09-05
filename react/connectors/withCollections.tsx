@@ -10,6 +10,11 @@ export type CollectionsData = {
   }[]
 }
 
+export type Collection = {
+  id: string
+  name: string
+}
+
 export type WithCollectionsProps = {
   searchForCollections: (searchTerm: string) => React.SetStateAction<string>
 }
