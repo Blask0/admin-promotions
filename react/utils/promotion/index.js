@@ -52,57 +52,57 @@ export const INITIAL_REWARD_EFFECT = {
 const getPriceEffect = priceEffect =>
   priceEffect
     ? {
-      ...priceEffect,
-      discount: newFieldWithValidation(
-        priceEffect ? priceEffect.discount : undefined
-      ),
-      appliesTo: {
-        ...priceEffect.appliesTo,
-        statements: newFieldWithValidation(
-          JSON.parse(priceEffect.appliesTo.statements)
+        ...priceEffect,
+        discount: newFieldWithValidation(
+          priceEffect ? priceEffect.discount : undefined
         ),
-      },
-    }
+        appliesTo: {
+          ...priceEffect.appliesTo,
+          statements: newFieldWithValidation(
+            JSON.parse(priceEffect.appliesTo.statements)
+          ),
+        },
+      }
     : INITIAL_PRICE_EFFECT
 
 const getGiftEffect = giftEffect =>
   giftEffect
     ? {
-      ...giftEffect,
-      skus: newFieldWithValidation(
-        giftEffect.skus.map(sku => ({
-          label: sku.name,
-          value: sku.id,
-        }))
-      ),
-      limitQuantityPerPurchase: !!giftEffect.maxQuantityPerPurchase,
-      maxQuantityPerPurchase: newFieldWithValidation(
-        giftEffect ? giftEffect.maxQuantityPerPurchase : undefined
-      ),
-    }
+        ...giftEffect,
+        skus: newFieldWithValidation(
+          giftEffect.skus.map(sku => ({
+            label: sku.name,
+            value: sku.id,
+          }))
+        ),
+        limitQuantityPerPurchase: !!giftEffect.maxQuantityPerPurchase,
+        maxQuantityPerPurchase: newFieldWithValidation(
+          giftEffect ? giftEffect.maxQuantityPerPurchase : undefined
+        ),
+      }
     : INITIAL_GIFT_EFFECT
 
 const getShippingEffect = shippingEffect =>
   shippingEffect
     ? {
-      ...shippingEffect,
-      discount: newFieldWithValidation(
-        shippingEffect ? shippingEffect.discount : undefined
-      ),
-    }
+        ...shippingEffect,
+        discount: newFieldWithValidation(
+          shippingEffect ? shippingEffect.discount : undefined
+        ),
+      }
     : INITIAL_SHIPPING_EFFECT
 
 const getRewardEffect = (intl, rewardEffect) =>
   rewardEffect
     ? {
-      ...rewardEffect,
-      discount: newFieldWithValidation(
-        rewardEffect ? rewardEffect.discount : undefined
-      ),
-      applyByOrderStatus: getRewardEffectOrderStatusOptions(intl).find(
-        option => option.value === rewardEffect.applyByOrderStatus
-      ),
-    }
+        ...rewardEffect,
+        discount: newFieldWithValidation(
+          rewardEffect ? rewardEffect.discount : undefined
+        ),
+        applyByOrderStatus: getRewardEffectOrderStatusOptions(intl).find(
+          option => option.value === rewardEffect.applyByOrderStatus
+        ),
+      }
     : INITIAL_REWARD_EFFECT
 
 export const newPromotion = (intl, promotion, salesChannels) => {
@@ -241,15 +241,11 @@ export const getStatusIcon = (status = '', size) => {
     case 'paused':
       return <Pause size={size} />
     case 'scheduled':
-      return <Clock size={size} />
     case 'completed':
+      return <Clock size={size} />
     default:
       return null
   }
-}
-
-function removeRefsFromStatements(statements) {
-  return statements.map(({ refs, ...statement }) => statement)
 }
 
 export function prepareToSave(promotion, intl) {
@@ -263,15 +259,11 @@ export function prepareToSave(promotion, intl) {
   const { limitQuantityPerPurchase, ...giftEffect } = effects.gift
 
   const {
-    statements: { value: scopeStatementsWithRefs },
+    statements: { value: scopeStatements },
   } = effects.price.appliesTo
   const {
-    statements: { value: eligibilityStatementsWithRefs },
+    statements: { value: eligibilityStatements },
   } = eligibility
-  const scopeStatements = removeRefsFromStatements(scopeStatementsWithRefs)
-  const eligibilityStatements = removeRefsFromStatements(
-    eligibilityStatementsWithRefs
-  )
 
   const {
     weekDays: { value: weekDays },
@@ -279,9 +271,9 @@ export function prepareToSave(promotion, intl) {
   } = recurrency
   const times = timesWithValidation
     ? timesWithValidation.map(time => ({
-      from: time.from.value,
-      to: time.to.value,
-    }))
+        from: time.from.value,
+        to: time.to.value,
+      }))
     : timesWithValidation
   const cronWeekDay = createCronWeekDay(weekDays)
   const cronHour = createCronHour(times)
@@ -343,5 +335,41 @@ export function prepareToSave(promotion, intl) {
         ? restriction.restrictedSalesChannels.value.map(sc => sc.value)
         : undefined,
     },
+  }
+}
+
+export const getStatus = ({ isActive, beginDateString, endDateString }) => {
+  const now = new Date()
+  const beginDate = new Date(beginDateString)
+  const endDate = endDateString ? new Date(endDateString) : null
+  if (endDate && endDate.getTime() < now.getTime()) {
+    return {
+      color: '#3F3F40',
+      id: 'completed',
+      icon: getStatusIcon('completed'),
+      labelId: 'promotions.promotion.status.completed',
+    }
+  }
+  if (isActive) {
+    if (beginDate.getTime() > now.getTime()) {
+      return {
+        color: '#FFB100',
+        icon: getStatusIcon('scheduled'),
+        labelId: 'promotions.promotion.status.scheduled',
+        id: 'scheduled',
+      }
+    }
+    return {
+      color: '#8BC34A',
+      icon: getStatusIcon('running'),
+      labelId: 'promotions.promotion.status.running',
+      id: 'running',
+    }
+  }
+  return {
+    color: '#3F3F40',
+    icon: getStatusIcon('paused'),
+    labelId: 'promotions.promotion.status.paused',
+    id: 'paused',
   }
 }

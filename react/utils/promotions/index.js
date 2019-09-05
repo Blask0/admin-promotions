@@ -1,3 +1,5 @@
+import { getStatus } from '../promotion'
+
 function sortNameAlphapeticallyASC(a, b) {
   return a.name.toLowerCase() < b.name.toLowerCase()
     ? -1
@@ -106,27 +108,14 @@ export function filterPromotions(promotions, statements = []) {
           }
         })
       case 'status':
-        return filteredPromotions.filter(promo => {
-          const now = new Date()
-          const beginDate = new Date(promo.beginDate)
-          const endDate = promo.endDate ? new Date(promo.endDate) : null
-          if (
-            !st.object.completed &&
-            endDate && endDate.getTime() < now.getTime()
-          ) {
-            return false
-          }
-          if (promo.isActive) {
-            if (!st.object.scheduled && beginDate.getTime() > now.getTime()) {
-              return false
-            }
-            if (!st.object.running && beginDate.getTime() < now.getTime()) {
-              return false
-            }
-          } else if (!st.object.paused) {
-            return false
-          }
-          return true
+        return filteredPromotions.filter(({
+          isActive,
+          beginDate: beginDateString,
+          endDate: endDateString,
+        }) => {
+          const { id } = getStatus({ isActive, beginDateString, endDateString })
+          console.log('AEAE ID ', id, '  aa bool ', !st.object[id], '  full obj ', st.object)
+          return st.object[id]
         })
       case 'startDate':
         switch (st.verb) {

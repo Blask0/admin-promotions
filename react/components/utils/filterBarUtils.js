@@ -336,7 +336,7 @@ const statusSelectorObject = ({
                       fontWeight: 500,
                       lineHeight: '20px',
                     }}
-                    className={opt === 'completed' ? '' : 'ml3'}>
+                    className="ml3">
                     {extraParams.intl.formatMessage(messages[opt])}
                   </span>
                 </div>

@@ -2,21 +2,21 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-import { Radio, EXPERIMENTAL_Conditions, Alert } from 'vtex.styleguide'
+import { Alert, Conditions, Radio } from 'vtex.styleguide'
 
 import {
   affiliates,
-  installments,
-  firstBuy,
   cartProduct,
-  shippingMethods,
+  creditCardBin,
+  firstBuy,
+  installments,
+  marketingTags,
   paymentMethods,
+  shippingMethods,
+  totalPriceRange,
   utm,
   zipCodeRange,
-  totalPriceRange,
-  creditCardBin,
-  marketingTags,
-} from '../../../utils/conditions/options'
+} from './options'
 
 class EligibilitySection extends Component {
   constructor(props) {
@@ -68,26 +68,18 @@ class EligibilitySection extends Component {
     } = this.props
 
     const conditionsOptions = {
-      installments: installments(intl, this.updateEligiblityStatements),
-      affiliates: affiliates(intl, this.updateEligiblityStatements),
-      firstBuy: firstBuy(intl, this.updateEligiblityStatements),
-      cartProduct: cartProduct(
-        intl,
-        this.updateEligiblityStatements,
-        currencyCode
-      ),
-      shippingMethods: shippingMethods(intl, this.updateEligiblityStatements),
-      paymentMethods: paymentMethods(intl, this.updateEligiblityStatements),
-      utmSource: utm(intl, this.updateEligiblityStatements, 'Source'),
-      utmCampaign: utm(intl, this.updateEligiblityStatements, 'Campaign'),
-      zipCodeRange: zipCodeRange(intl, this.updateEligiblityStatements),
-      totalPriceRange: totalPriceRange(
-        intl,
-        this.updateEligiblityStatements,
-        currencyCode
-      ),
-      creditCardBin: creditCardBin(intl, this.updateEligiblityStatements),
-      marketingTags: marketingTags(intl, this.updateEligiblityStatements),
+      affiliates: affiliates(intl),
+      cartProduct: cartProduct(intl, currencyCode),
+      creditCardBin: creditCardBin(intl),
+      firstBuy: firstBuy(intl),
+      installments: installments(intl),
+      marketingTags: marketingTags(intl),
+      paymentMethods: paymentMethods(intl),
+      shippingMethods: shippingMethods(intl),
+      totalPriceRange: totalPriceRange(intl, currencyCode),
+      utmSource: utm(intl, 'Source'),
+      utmCampaign: utm(intl, 'Campaign'),
+      zipCodeRange: zipCodeRange(intl),
     }
 
     const conditionsLabels = {
@@ -161,27 +153,26 @@ class EligibilitySection extends Component {
 
         {!allCustomers ? (
           <div className="mt6">
-            <EXPERIMENTAL_Conditions
+            <Conditions
+              canDelete
+              labels={conditionsLabels}
+              onChangeOperator={operator => updatePageState({ operator })}
+              onChangeStatements={newStatements =>
+                updatePageState({
+                  statements: {
+                    ...statements,
+                    value: newStatements,
+                    error: undefined,
+                  },
+                })
+              }
+              operator={operator}
               options={conditionsOptions}
               subjectPlaceholder={intl.formatMessage({
                 id:
                   'promotions.promotion.elligibility.conditions.subjectPlaceholder',
               })}
-              labels={conditionsLabels}
               statements={statements.value}
-              operator={operator}
-              onChangeOperator={({ operator }) => {
-                updatePageState({ operator })
-              }}
-              onChangeStatements={statementsValue => {
-                updatePageState({
-                  statements: {
-                    ...statements,
-                    value: statementsValue,
-                    error: undefined,
-                  },
-                })
-              }}
             />
           </div>
         ) : null}
