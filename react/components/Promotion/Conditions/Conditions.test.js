@@ -1,14 +1,14 @@
 import React from 'react'
 import { render } from '@vtex/test-tools/react'
 
-import EXPERIMENTAL_Conditions from '@vtex/styleguide/lib/EXPERIMENTAL_Conditions'
+import Conditions from '@vtex/styleguide/lib/Conditions'
 
-import { utm } from './options/'
+import { utm } from '../EligibilitySection/options'
 
 describe('Conditions components tests', () => {
   function renderComponent({ options, statements }) {
     return render(
-      <EXPERIMENTAL_Conditions
+      <Conditions
         options={options}
         subjectPlaceholder="subject"
         statements={statements}
@@ -19,14 +19,13 @@ describe('Conditions components tests', () => {
     )
   }
 
-  const MOCK = jest.fn()
   const MOCK_INTL = {
     formatMessage: ({ id }) => id,
   }
 
   describe('UTM Source statement tests', () => {
     const options = {
-      utmSource: utm(MOCK_INTL, MOCK, 'Source'),
+      utmSource: utm(MOCK_INTL, 'Source'),
     }
 
     it('should have a UTM Source with `equals` verb displayed', async () => {
@@ -85,7 +84,7 @@ describe('Conditions components tests', () => {
 
   describe('UTM Campaign statement tests', () => {
     const options = {
-      utmCampaign: utm(MOCK_INTL, MOCK, 'Campaign'),
+      utmCampaign: utm(MOCK_INTL, 'Campaign'),
     }
 
     it('should have a UTM Campaign with `equals` verb displayed', async () => {
