@@ -59,11 +59,11 @@ class GeneralSection extends Component {
                 label={
                   generalInfo.isActive
                     ? intl.formatMessage({
-                      id: 'promotions.promotion.generalInfo.status.active',
-                    })
+                        id: 'promotions.promotion.generalInfo.status.active',
+                      })
                     : intl.formatMessage({
-                      id: 'promotions.promotion.generalInfo.status.inactive',
-                    })
+                        id: 'promotions.promotion.generalInfo.status.inactive',
+                      })
                 }
                 checked={generalInfo.isActive}
                 onChange={() => {
@@ -134,9 +134,9 @@ class GeneralSection extends Component {
             <h4 className="t-heading-4 mt0 mb4">
               <FormattedMessage id="promotions.promotion.accumulation.title" />
             </h4>
-            <span className="c-muted-1 t-small-s">
+            {/* <span className="c-muted-1 t-small-s">
               <FormattedMessage id="promotions.promotion.accumulation.briefExplanation" />
-            </span>
+            </span> */}
           </div>
           <div className="flex flex-column w-50">
             <div className="mt4">
