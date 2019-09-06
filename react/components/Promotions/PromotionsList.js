@@ -317,9 +317,11 @@ class PromotionsList extends Component {
         },
       })
     } else {
-      navigate({
-        to: `/admin/rnb/#/benefit/${id}`,
-      })
+      // temporary until vtex.admin-iframe-container is fixed
+      window.top.location.replace(`/admin/rnb/#/benefit/${id}`)
+      // navigate({
+      //   to: `/admin/rnb/#/benefit/${id}`,
+      // })
     }
     window.top &&
       window.top.postMessage({ action: { type: 'START_LOADING' } }, '*')
