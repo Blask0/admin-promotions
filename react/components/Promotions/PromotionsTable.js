@@ -192,46 +192,61 @@ class PromotionsTable extends Component {
                     label: intl.formatMessage({
                       id: 'promotions.promotions.newPromotion.regular',
                     }),
-                    onClick: () =>
-                      navigate({
-                        to: '/admin/rnb/#/benefit/new?type=regular',
-                      }),
+                    onClick: () => {
+                      // temporary until vtex.admin-iframe-container is fixed
+                      window.top.location.replace('/admin/rnb/#/benefit/new?type=regular')
+                      // navigate({
+                      //   to: '/admin/rnb/#/benefit/new?type=regular',
+                      // })
+                    },
                   },
                   {
                     label: intl.formatMessage({
                       id: 'promotions.promotions.newPromotion.combo',
                     }),
-                    onClick: () =>
-                      navigate({
-                        to: '/admin/rnb/#/benefit/new?type=combo',
-                      }),
+                    onClick: () => {
+                      // temporary until vtex.admin-iframe-container is fixed
+                      window.top.location.replace('/admin/rnb/#/benefit/new?type=combo')
+                      // navigate({
+                      //   to: '/admin/rnb/#/benefit/new?type=combo',
+                      // })
+                    },
                   },
                   {
                     label: intl.formatMessage({
                       id: 'promotions.promotions.newPromotion.forThePriceOf',
                     }),
-                    onClick: () =>
-                      navigate({
-                        to: '/admin/rnb/#/benefit/new?type=forThePriceOf',
-                      }),
+                    onClick: () => {
+                      // temporary until vtex.admin-iframe-container is fixed
+                      window.top.location.replace('/admin/rnb/#/benefit/new?type=forThePriceOf')
+                      // navigate({
+                      //   to: '/admin/rnb/#/benefit/new?type=forThePriceOf',
+                      // })
+                    },
                   },
                   {
                     label: intl.formatMessage({
                       id: 'promotions.promotions.newPromotion.progressive',
                     }),
-                    onClick: () =>
-                      navigate({
-                        to: '/admin/rnb/#/benefit/new?type=progressive',
-                      }),
+                    onClick: () => {
+                      // temporary until vtex.admin-iframe-container is fixed
+                      window.top.location.replace('/admin/rnb/#/benefit/new?type=progressive')
+                      // navigate({
+                      //   to: '/admin/rnb/#/benefit/new?type=progressive',
+                      // })
+                    },
                   },
                   {
                     label: intl.formatMessage({
                       id: 'promotions.promotions.newPromotion.buyAndWin',
                     }),
-                    onClick: () =>
-                      navigate({
-                        to: '/admin/rnb/#/benefit/new?type=buyAndWin',
-                      }),
+                    onClick: () => {
+                      // temporary until vtex.admin-iframe-container is fixed
+                      window.top.location.replace('/admin/rnb/#/benefit/new?type=buyAndWin')
+                      // navigate({
+                      //   to: '/admin/rnb/#/benefit/new?type=buyAndWin',
+                      // })
+                    },
                   },
                 ],
               },
