@@ -1,6 +1,8 @@
 import React from 'react'
+import { FormattedMessage } from 'react-intl'
 
 import { RadioGroup } from 'vtex.styleguide'
+
 import OriginRestrictionOption from './OriginRestrictionItem'
 
 type Props = {
@@ -9,23 +11,27 @@ type Props = {
 }
 
 const OriginRestriction: React.FC<Props> = ({ origin, onChange }) => {
-  console.log(origin)
   return (
-    <RadioGroup
-      name="origin-restriction"
-      options={[
-        {
-          value: 'marketplace',
-          label: <OriginRestrictionOption id="marketplace" />,
-        },
-        {
-          value: 'fulfillment',
-          label: <OriginRestrictionOption id="fulfillment" />,
-        },
-      ]}
-      value={origin}
-      onChange={e => onChange(e.currentTarget.value)}
-    />
+    <>
+      <div className="mt6 mb4">
+        <FormattedMessage id="promotions.promotion.restriction.origin" />
+      </div>
+      <RadioGroup
+        name="origin-restriction"
+        options={[
+          {
+            value: 'marketplace',
+            label: <OriginRestrictionOption id="marketplace" />,
+          },
+          {
+            value: 'fulfillment',
+            label: <OriginRestrictionOption id="fulfillment" />,
+          },
+        ]}
+        value={origin}
+        onChange={e => onChange(e.currentTarget.value)}
+      />
+    </>
   )
 }
 

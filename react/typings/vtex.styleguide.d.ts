@@ -28,6 +28,7 @@ declare module 'vtex.styleguide' {
     disabled?: boolean
     value?: RadioGroupProps['options'][0]['value']
   }
+
   export const RadioGroup: React.FC<RadioGroupProps>
 
   export class EXPERIMENTAL_Select extends React.Component<
