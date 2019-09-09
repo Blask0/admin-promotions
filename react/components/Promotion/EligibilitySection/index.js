@@ -5,7 +5,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 import { Alert, Conditions, Radio } from 'vtex.styleguide'
 
 import {
-  affiliates,
+  // affiliates,
   cartProduct,
   creditCardBin,
   firstBuy,
@@ -68,7 +68,7 @@ class EligibilitySection extends Component {
     } = this.props
 
     const conditionsOptions = {
-      affiliates: affiliates(intl),
+      // affiliates: affiliates(intl),
       cartProduct: cartProduct(intl, currencyCode),
       creditCardBin: creditCardBin(intl),
       firstBuy: firstBuy(intl),
