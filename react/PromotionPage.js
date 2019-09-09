@@ -328,7 +328,13 @@ class PromotionPage extends Component {
             }}>
             <FormattedMessage id="promotions.promotion.save" />
           </Button>
-          <Button variation="tertiary">
+          <Button
+            variation="tertiary"
+            onClick={() => {
+              navigate({
+                page: 'admin.app.promotions',
+              })
+            }}>
             <FormattedMessage id="promotions.promotion.cancel" />
           </Button>
         </div>
