@@ -10,9 +10,7 @@ import {
   paginate,
 } from '../../utils/promotions'
 
-import {
-  getFilterOptions,
-} from '../utils/filterBarUtils'
+import { getFilterOptions } from '../utils/filterBarUtils'
 
 const ROWS_PER_PAGE_OPTIONS = [5, 10, 15, 25]
 
@@ -113,10 +111,7 @@ class PromotionsTable extends Component {
     } = this.props
 
     const { items, from, to } = paginate(
-      sortPromotions(
-        filterPromotions(promotions, filters),
-        dataSort
-      ),
+      sortPromotions(filterPromotions(promotions, filters), dataSort),
       pagination
     )
 
@@ -175,81 +170,105 @@ class PromotionsTable extends Component {
             newLine: noNewLine
               ? null
               : {
-                label: intl.formatMessage({
-                  id: 'promotions.promotions.newPromotion',
-                }),
-                handleCallback: () => {
-                  navigate({
-                    page: 'admin.app.promotion',
-                    params: {
-                      id: 'new',
+                  label: intl.formatMessage({
+                    id: 'promotions.promotions.newPromotion',
+                  }),
+                  handleCallback: () => {
+                    navigate({
+                      page: 'admin.app.promotion',
+                      params: {
+                        id: 'new',
+                      },
+                    })
+                  },
+                  disabled: creationDisabled,
+                  actions: [
+                    {
+                      label: intl.formatMessage({
+                        id: 'promotions.promotions.newPromotion.regular',
+                      }),
+                      onClick: () => {
+                        // temporary until vtex.admin-iframe-container is fixed
+                        window.top.location.replace(
+                          '/admin/rnb/#/benefit/new?type=regular'
+                        )
+                        // navigate({
+                        //   to: '/admin/rnb/#/benefit/new?type=regular',
+                        // })
+                      },
                     },
-                  })
+                    {
+                      label: intl.formatMessage({
+                        id: 'promotions.promotions.newPromotion.combo',
+                      }),
+                      onClick: () => {
+                        // temporary until vtex.admin-iframe-container is fixed
+                        window.top.location.replace(
+                          '/admin/rnb/#/benefit/new?type=combo'
+                        )
+                        // navigate({
+                        //   to: '/admin/rnb/#/benefit/new?type=combo',
+                        // })
+                      },
+                    },
+                    {
+                      label: intl.formatMessage({
+                        id: 'promotions.promotions.newPromotion.forThePriceOf',
+                      }),
+                      onClick: () => {
+                        // temporary until vtex.admin-iframe-container is fixed
+                        window.top.location.replace(
+                          '/admin/rnb/#/benefit/new?type=forThePriceOf'
+                        )
+                        // navigate({
+                        //   to: '/admin/rnb/#/benefit/new?type=forThePriceOf',
+                        // })
+                      },
+                    },
+                    {
+                      label: intl.formatMessage({
+                        id: 'promotions.promotions.newPromotion.progressive',
+                      }),
+                      onClick: () => {
+                        // temporary until vtex.admin-iframe-container is fixed
+                        window.top.location.replace(
+                          '/admin/rnb/#/benefit/new?type=progressive'
+                        )
+                        // navigate({
+                        //   to: '/admin/rnb/#/benefit/new?type=progressive',
+                        // })
+                      },
+                    },
+                    {
+                      label: intl.formatMessage({
+                        id: 'promotions.promotions.newPromotion.buyAndWin',
+                      }),
+                      onClick: () => {
+                        // temporary until vtex.admin-iframe-container is fixed
+                        window.top.location.replace(
+                          '/admin/rnb/#/benefit/new?type=buyAndWin'
+                        )
+                        // navigate({
+                        //   to: '/admin/rnb/#/benefit/new?type=buyAndWin',
+                        // })
+                      },
+                    },
+                    {
+                      label: intl.formatMessage({
+                        id: 'promotions.promotions.newPromotion.campaign',
+                      }),
+                      onClick: () => {
+                        // temporary until vtex.admin-iframe-container is fixed
+                        window.top.location.replace(
+                          '/admin/rnb/#/benefit/new?type=campaign'
+                        )
+                        // navigate({
+                        //   to: '/admin/rnb/#/benefit/new?type=campaign',
+                        // })
+                      },
+                    },
+                  ],
                 },
-                disabled: creationDisabled,
-                actions: [
-                  {
-                    label: intl.formatMessage({
-                      id: 'promotions.promotions.newPromotion.regular',
-                    }),
-                    onClick: () => {
-                      // temporary until vtex.admin-iframe-container is fixed
-                      window.top.location.replace('/admin/rnb/#/benefit/new?type=regular')
-                      // navigate({
-                      //   to: '/admin/rnb/#/benefit/new?type=regular',
-                      // })
-                    },
-                  },
-                  {
-                    label: intl.formatMessage({
-                      id: 'promotions.promotions.newPromotion.combo',
-                    }),
-                    onClick: () => {
-                      // temporary until vtex.admin-iframe-container is fixed
-                      window.top.location.replace('/admin/rnb/#/benefit/new?type=combo')
-                      // navigate({
-                      //   to: '/admin/rnb/#/benefit/new?type=combo',
-                      // })
-                    },
-                  },
-                  {
-                    label: intl.formatMessage({
-                      id: 'promotions.promotions.newPromotion.forThePriceOf',
-                    }),
-                    onClick: () => {
-                      // temporary until vtex.admin-iframe-container is fixed
-                      window.top.location.replace('/admin/rnb/#/benefit/new?type=forThePriceOf')
-                      // navigate({
-                      //   to: '/admin/rnb/#/benefit/new?type=forThePriceOf',
-                      // })
-                    },
-                  },
-                  {
-                    label: intl.formatMessage({
-                      id: 'promotions.promotions.newPromotion.progressive',
-                    }),
-                    onClick: () => {
-                      // temporary until vtex.admin-iframe-container is fixed
-                      window.top.location.replace('/admin/rnb/#/benefit/new?type=progressive')
-                      // navigate({
-                      //   to: '/admin/rnb/#/benefit/new?type=progressive',
-                      // })
-                    },
-                  },
-                  {
-                    label: intl.formatMessage({
-                      id: 'promotions.promotions.newPromotion.buyAndWin',
-                    }),
-                    onClick: () => {
-                      // temporary until vtex.admin-iframe-container is fixed
-                      window.top.location.replace('/admin/rnb/#/benefit/new?type=buyAndWin')
-                      // navigate({
-                      //   to: '/admin/rnb/#/benefit/new?type=buyAndWin',
-                      // })
-                    },
-                  },
-                ],
-              },
           }}
           sort={dataSort}
           onSort={this.handleSort}
