@@ -25,9 +25,9 @@ function Scheduling({ intl, generalInfo, updatePageState }) {
           <h4 className="t-heading-4 mt0 mb4">
             <FormattedMessage id="promotions.promotion.generalInfo.scheduling.title" />
           </h4>
-          <span className="c-muted-1 t-small-s">
+          {/* <span className="c-muted-1 t-small-s">
             <FormattedMessage id="promotions.promotion.generalInfo.scheduling.briefExplanation" />
-          </span>
+          </span> */}
         </div>
         <div className="flex flex-column w-50">
           <div className="mv4">
@@ -67,15 +67,15 @@ function Scheduling({ intl, generalInfo, updatePageState }) {
                   hasEndDate: !generalInfo.hasEndDate,
                   endDate: !generalInfo.hasEndDate
                     ? {
-                      ...generalInfo.endDate,
-                      value: addDays(new Date(), 1),
-                      error: undefined,
-                    }
+                        ...generalInfo.endDate,
+                        value: addDays(new Date(), 1),
+                        error: undefined,
+                      }
                     : {
-                      ...generalInfo.endDate,
-                      value: undefined,
-                      error: undefined,
-                    },
+                        ...generalInfo.endDate,
+                        value: undefined,
+                        error: undefined,
+                      },
                 })
               }}
               value="hasEndDate"
