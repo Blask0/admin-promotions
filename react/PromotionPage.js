@@ -22,7 +22,6 @@ import withPromotion from './connectors/withPromotion'
 import savingPromotion from './connectors/savingPromotion'
 
 import { newPromotion, prepareToSave } from './utils/promotion'
-import { isTimeValid, isToBeforeFrom } from './utils/promotion/recurrency'
 import { getErrorsInfo } from './utils/errors'
 import {
   validateGeneralInfoSection,

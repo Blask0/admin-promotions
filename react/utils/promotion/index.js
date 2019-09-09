@@ -105,6 +105,8 @@ const getRewardEffect = (intl, rewardEffect) =>
       }
     : INITIAL_REWARD_EFFECT
 
+const DEFAULT_ORIGIN = 'marketplace'
+
 export const newPromotion = (intl, promotion, salesChannels) => {
   if (promotion) {
     const { generalInfo, eligibility, effects, restriction } = promotion
@@ -168,6 +170,7 @@ export const newPromotion = (intl, promotion, salesChannels) => {
             )
           )
         ),
+        origin: restriction.origin || DEFAULT_ORIGIN,
       },
     }
   }
@@ -215,6 +218,7 @@ export const newPromotion = (intl, promotion, salesChannels) => {
       isRestrictingSalesChannels: false,
       restrictSalesChannelVerb: getRestrictSalesChannelVerbOptions(intl)[0],
       restrictedSalesChannels: newFieldWithValidation(),
+      origin: DEFAULT_ORIGIN,
     },
   }
 }

@@ -1,19 +1,15 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
-import { applyFocus } from '../../utils/functions'
+import { applyFocus } from '../../../utils/functions'
 
-import {
-  RadioGroup,
-  Checkbox,
-  Input,
-  EXPERIMENTAL_Select,
-} from 'vtex.styleguide'
+import { Checkbox, Input, EXPERIMENTAL_Select } from 'vtex.styleguide'
+import OriginRestriction from './OriginRestriction'
 
-import { fieldShape } from '../../utils/propTypes'
-import { getRestrictSalesChannelVerbOptions } from '../../utils/constants'
-import { mapSalesChannelsToSelect } from '../../utils/mappers'
-import withSalesChannels from '../../connectors/withSalesChannels'
+import { fieldShape } from '../../../utils/propTypes'
+import { getRestrictSalesChannelVerbOptions } from '../../../utils/constants'
+import { mapSalesChannelsToSelect } from '../../../utils/mappers'
+import withSalesChannels from '../../../connectors/withSalesChannels'
 
 class RestrictionSection extends Component {
   constructor(props) {
@@ -81,6 +77,7 @@ class RestrictionSection extends Component {
         isRestrictingSalesChannels,
         restrictSalesChannelVerb,
         restrictedSalesChannels,
+        origin,
       },
       salesChannels = [],
       loading,
@@ -291,6 +288,16 @@ class RestrictionSection extends Component {
             </div>
           </div>
         )}
+        <div className="pv3 w-70">
+          <OriginRestriction
+            origin={origin}
+            onChange={origin =>
+              updatePageState({
+                origin,
+              })
+            }
+          />
+        </div>
       </Fragment>
     )
   }

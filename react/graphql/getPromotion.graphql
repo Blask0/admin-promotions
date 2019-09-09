@@ -58,6 +58,7 @@ query GetPromotion($id: String!) {
       isRestrictingSalesChannels
       restrictSalesChannelVerb
       restrictedSalesChannels
+      origin
     }
   }
 }
