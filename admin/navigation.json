@@ -1,12 +1,14 @@
 {
   "section": "products",
   "subSection": "discount",
+  "tag": "promotions.app.tag",
   "subSectionItems": [
     {
       "id": "promotions",
       "labelId": "promotions.app.title",
       "path": "/admin/promotions",
-      "searchKeyWordsHelpers": "promotions.app.searchKeyWordsHelpers"
+      "searchKeyWordsHelpers": "promotions.app.searchKeyWordsHelpers",
+      "isNew": true
     }
   ]
 }
