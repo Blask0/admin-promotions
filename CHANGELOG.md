@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+ - "BETA" badge on admin navigation menu was not being translated.
+
 ## [0.1.0] - 2019-09-10
 
 ### Changed
