@@ -16,5 +16,9 @@
     "around": ["toastr"],
     "component": "PromotionPage",
     "path": "/admin/app/promotions/:id"
+  },
+  "admin.app.promotion-announcement": {
+    "component": "PromotionAnnouncement",
+    "path": "/admin/app/promotions/announcement"
   }
 }
