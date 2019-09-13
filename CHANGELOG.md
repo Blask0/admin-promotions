@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Add new Announcement page with special instructions for users in Closed Beta.
+
 ## [0.1.1] - 2019-09-11
 
 ### Fixed
