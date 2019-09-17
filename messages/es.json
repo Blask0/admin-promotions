@@ -39,7 +39,7 @@
   "promotions.promotion.archived.subtitle": "Las promociones archivadas se eliminan automáticamente después de 30 días.",
   "promotions.promotion.generalInfo.title": "General",
   "promotions.promotion.generalInfo.name": "Nombre de la promoción",
-  "promotions.promotion.generalInfo.status": "Status inicial",
+  "promotions.promotion.generalInfo.status": "Status",
   "promotions.promotion.generalInfo.status.active": "Activa",
   "promotions.promotion.generalInfo.status.inactive": "Inactiva",
   "promotions.promotion.generalInfo.startDate": "Fecha y hora de início",

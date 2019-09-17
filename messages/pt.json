@@ -39,7 +39,7 @@
   "promotions.promotion.archived.subtitle": "As promoções arquivadas são deletas automaticamente após 30 dias.",
   "promotions.promotion.generalInfo.title": "Informações gerais",
   "promotions.promotion.generalInfo.name": "Nome da promoção",
-  "promotions.promotion.generalInfo.status": "Status inicial",
+  "promotions.promotion.generalInfo.status": "Status",
   "promotions.promotion.generalInfo.status.active": "Ativa",
   "promotions.promotion.generalInfo.status.inactive": "Inativa",
   "promotions.promotion.generalInfo.startDate": "Data e hora de início",
