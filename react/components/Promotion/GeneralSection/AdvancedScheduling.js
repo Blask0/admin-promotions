@@ -110,6 +110,7 @@ function AdvancedScheduling({ intl, value, onChange }) {
       <div ref={weekDays.ref} className="mb4">
         <RadioGroup
           name="days"
+          hideBorder
           options={daysOptions}
           value={weekDays.value === null ? 'everyday' : 'specificDays'}
           onChange={e => {
@@ -123,7 +124,7 @@ function AdvancedScheduling({ intl, value, onChange }) {
         />
       </div>
       {weekDays.value !== null && (
-        <div className="ml7 mb3">
+        <div className="ml7 mb6">
           {weekDays.error && (
             <div className="c-danger t-small mb3 lh-title">
               {weekDays.error}
@@ -158,6 +159,7 @@ function AdvancedScheduling({ intl, value, onChange }) {
       <div ref={times.ref} className="mb4">
         <RadioGroup
           name="times"
+          hideBorder
           options={timesOptions}
           value={times.value === null ? 'allDay' : 'specificTimes'}
           onChange={e => {
