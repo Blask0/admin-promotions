@@ -19,6 +19,7 @@ declare module 'vtex.styleguide' {
 
   type RadioGroupProps = {
     name: string
+    hideBorder?: boolean
     onChange: React.ChangeEventHandler<HTMLButtonElement>
     options: {
       value: string | number
