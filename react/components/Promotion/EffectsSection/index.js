@@ -177,8 +177,9 @@ class EffectSection extends Component {
         )}
 
         <div className="flex flex-row">
-          <div className="mh3">
+          <div className="mh0">
             <SelectableCard
+              hasGroupRight
               selected={this.isEffectActive('price')}
               onClick={() => this.changeActiveEffectType('price')}>
               <div className="flex flex-column items-center center tc ph5">
@@ -189,8 +190,10 @@ class EffectSection extends Component {
               </div>
             </SelectableCard>
           </div>
-          <div className="mh3">
+          <div className="mh0">
             <SelectableCard
+              hasGroupLeft
+              hasGroupRight
               selected={this.isEffectActive('gift')}
               onClick={() => this.changeActiveEffectType('gift')}>
               <div className="flex flex-column items-center center tc ph5">
@@ -201,8 +204,9 @@ class EffectSection extends Component {
               </div>
             </SelectableCard>
           </div>
-          <div className="mh3">
+          <div className="mh0">
             <SelectableCard
+              hasGroupLeft
               selected={this.isEffectActive('shipping')}
               onClick={() => this.changeActiveEffectType('shipping')}>
               <div className="flex flex-column items-center center tc ph5">
@@ -213,7 +217,7 @@ class EffectSection extends Component {
               </div>
             </SelectableCard>
           </div>
-          <div className="mh3">
+          {/* <div className="mh0">
             <SelectableCard
               selected={this.isEffectActive('reward')}
               onClick={() => this.changeActiveEffectType('reward')}>
@@ -224,7 +228,7 @@ class EffectSection extends Component {
                 </div>
               </div>
             </SelectableCard>
-          </div>
+          </div> */}
         </div>
         <div className="flex flex-column">
           {this.renderEffectFormByType(effects.activeEffectType.value)}
