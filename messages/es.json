@@ -184,6 +184,8 @@
   "promotions.promotions.newPromotion.progressive": "Descuento progresivo",
   "promotions.promotions.newPromotion.buyAndWin": "Comprar y obtener",
   "promotions.promotions.newPromotion.campaign": "Campaña",
+  "promotions.promotions.betaBanner.text": "Este admin está en BETA. ",
+  "promotions.promotions.betaBanner.link": "Ver más",
   "promotions.promotion.restriction.title": "Restricciones",
   "promotions.promotion.restriction.limitUsage.label": "Limitar el uso",
   "promotions.promotion.restriction.limit.perAffectedItems.label": "Limitar el número máximo de artículos afectados",

@@ -184,6 +184,8 @@
   "promotions.promotions.newPromotion.progressive": "Progressive discount",
   "promotions.promotions.newPromotion.buyAndWin": "Buy one get one",
   "promotions.promotions.newPromotion.campaign": "Campaign",
+  "promotions.promotions.betaBanner.text": "This admin is in closed BETA. ",
+  "promotions.promotions.betaBanner.link": "Learn more",
   "promotions.promotion.restriction.title": "Restrictions",
   "promotions.promotion.restriction.limit.perAffectedItems.label": "Limit maximum number of affected items",
   "promotions.promotion.restriction.limit.perAffectedItems.placeholder": "Desired maximum number of items",

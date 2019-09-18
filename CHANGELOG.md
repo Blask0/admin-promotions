@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Special BETA message in Admin PageHeader.
+
 ## [0.3.0] - 2019-09-18
 
 - Updates Announcement with translated content in the 3 languages.
