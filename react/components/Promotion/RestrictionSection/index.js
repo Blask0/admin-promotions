@@ -104,7 +104,7 @@ class RestrictionSection extends Component {
                 isLimitingPerStore: !isLimitingPerStore,
                 perStore: {
                   ...perStore,
-                  value: undefined,
+                  value: isLimitingPerStore ? undefined : '1',
                   error: undefined,
                 },
               })
@@ -113,13 +113,12 @@ class RestrictionSection extends Component {
           />
         </div>
         {isLimitingPerStore && (
-          <div className="pv3 pl5 w-30">
+          <div className={`flex flex-row v-mid items-center pv3 pl5 ${
+            perStore.value > 1 ? 'w-34' : 'w-33'
+          }`}>
             <Input
-              placeholder={intl.formatMessage({
-                id:
-                  'promotions.promotion.restriction.limit.perStore.placeholder',
-              })}
               type="number"
+              min={1}
               value={perStore.value}
               ref={perStore.ref}
               errorMessage={perStore.error}
@@ -133,6 +132,12 @@ class RestrictionSection extends Component {
                 })
               }}
             />
+            <span className="ml3 c-muted-1">
+              <FormattedMessage
+                id="promotions.promotion.restriction.limit.helper"
+                values={{ limit: perStore.value || '1' }}
+              />
+            </span>
           </div>
         )}
         <div className="pv3">
@@ -148,7 +153,7 @@ class RestrictionSection extends Component {
                 isLimitingPerClient: !isLimitingPerClient,
                 perClient: {
                   ...perClient,
-                  value: undefined,
+                  value: isLimitingPerClient ? undefined : '1',
                   error: undefined,
                 },
               })
@@ -157,13 +162,12 @@ class RestrictionSection extends Component {
           />
         </div>
         {isLimitingPerClient && (
-          <div className="pv3 pl5 w-30">
+          <div className={`flex flex-row v-mid items-center pv3 pl5 ${
+            perClient.value > 1 ? 'w-34' : 'w-33'
+          }`}>
             <Input
-              placeholder={intl.formatMessage({
-                id:
-                  'promotions.promotion.restriction.limit.perClient.placeholder',
-              })}
               type="number"
+              min={1}
               value={perClient.value}
               ref={perClient.ref}
               errorMessage={perClient.error}
@@ -177,6 +181,12 @@ class RestrictionSection extends Component {
                 })
               }}
             />
+            <span className="ml3 c-muted-1">
+              <FormattedMessage
+                id="promotions.promotion.restriction.limit.helper"
+                values={{ limit: perClient.value || '1' }}
+              />
+            </span>
           </div>
         )}
         <div className="pv3">
@@ -193,7 +203,7 @@ class RestrictionSection extends Component {
                 isLimitingPerNumOfAffectedItems: !isLimitingPerNumOfAffectedItems,
                 maxNumberOfAffectedItems: {
                   ...maxNumberOfAffectedItems,
-                  value: undefined,
+                  value: isLimitingPerNumOfAffectedItems ? undefined : '1',
                   error: undefined,
                 },
               })
@@ -204,11 +214,8 @@ class RestrictionSection extends Component {
         {isLimitingPerNumOfAffectedItems && (
           <div className="pv3 pl5 w-30">
             <Input
-              placeholder={intl.formatMessage({
-                id:
-                  'promotions.promotion.restriction.limit.perAffectedItems.placeholder',
-              })}
               type="number"
+              min={1}
               value={maxNumberOfAffectedItems.value}
               ref={maxNumberOfAffectedItems.ref}
               errorMessage={maxNumberOfAffectedItems.error}

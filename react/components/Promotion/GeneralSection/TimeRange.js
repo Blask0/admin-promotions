@@ -75,7 +75,7 @@ function TimeRange({ intl, from, to, onChange: callback }) {
       <div className="mr3">
         <TimePicker
           ref={from.ref}
-          label={from.value.label}
+          label={from.label}
           locale={intl.locale}
           timeIntervals={TIME_INTERVALS}
           value={fromDate}
@@ -89,7 +89,7 @@ function TimeRange({ intl, from, to, onChange: callback }) {
       <div className="mr3">
         <TimePicker
           ref={to.ref}
-          label={to.value.label}
+          label={to.label}
           locale={intl.locale}
           timeIntervals={TIME_INTERVALS}
           value={toDate}

@@ -18,6 +18,7 @@ const OriginRestriction: React.FC<Props> = ({ origin, onChange }) => {
       </div>
       <RadioGroup
         name="origin-restriction"
+        hideBorder
         options={[
           {
             value: 'marketplace',

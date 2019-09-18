@@ -1,5 +1,7 @@
-# Campaigns Admin
-Campaigns Admin
+# Promotions Admin
+
+`vcs.rates-and-benefits-ui` spiritual successor.
 
 ## Reference Layout
-https://www.figma.com/file/NGHGyqWQNafy3TDyVCBn74MC/Conditions-Builder?node-id=687%3A5963
+
+https://www.figma.com/file/5SWeKhbx2nwFKAeCYlxHBU/Promotions-Admin
