@@ -11,16 +11,6 @@ import { getRestrictSalesChannelVerbOptions } from '../../../utils/constants'
 import { mapSalesChannelsToSelect } from '../../../utils/mappers'
 import withSalesChannels from '../../../connectors/withSalesChannels'
 
-const getLimitInputHelper = (limit = '1') => (
-  <span className="ml3 c-muted-1">
-    {
-      limit > 1
-        ? <FormattedMessage id="promotions.promotion.restriction.limit.helper-multi" />
-        : <FormattedMessage id="promotions.promotion.restriction.limit.helper-single" />
-    }
-  </span>
-)
-
 class RestrictionSection extends Component {
   constructor(props) {
     super(props)
@@ -142,7 +132,12 @@ class RestrictionSection extends Component {
                 })
               }}
             />
-            {getLimitInputHelper(perStore.value)}
+            <span className="ml3 c-muted-1">
+              <FormattedMessage
+                id="promotions.promotion.restriction.limit.helper"
+                values={{ limit: perStore.value || '1' }}
+              />
+            </span>
           </div>
         )}
         <div className="pv3">
@@ -186,7 +181,12 @@ class RestrictionSection extends Component {
                 })
               }}
             />
-            {getLimitInputHelper(perClient.value)}
+            <span className="ml3 c-muted-1">
+              <FormattedMessage
+                id="promotions.promotion.restriction.limit.helper"
+                values={{ limit: perClient.value || '1' }}
+              />
+            </span>
           </div>
         )}
         <div className="pv3">
