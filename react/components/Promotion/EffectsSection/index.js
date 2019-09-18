@@ -217,7 +217,12 @@ class EffectSection extends Component {
               </div>
             </SelectableCard>
           </div>
-          {/* <div className="mh0">
+          {/* Note to the future:
+           ** The Reward effect was removed from the beta launch (in a pre-launch rush).
+           ** It's only used by few clients and it is a feature of complex understanding.
+           ** If this feature dies forever after the launch it needs to be properly deleted,
+           ** just deleting this card is not enough.
+          <div className="mh0">
             <SelectableCard
               selected={this.isEffectActive('reward')}
               onClick={() => this.changeActiveEffectType('reward')}>
