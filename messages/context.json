@@ -184,6 +184,8 @@
   "promotions.promotions.newPromotion.progressive": "promotions.promotions.newPromotion.progressive",
   "promotions.promotions.newPromotion.buyAndWin": "promotions.promotions.newPromotion.buyAndWin",
   "promotions.promotions.newPromotion.campaign": "promotions.promotions.newPromotion.campaign",
+  "promotions.promotions.betaBanner.text": "promotions.promotions.betaBanner.text",
+  "promotions.promotions.betaBanner.link": "promotions.promotions.betaBanner.link",
   "promotions.promotion.restriction.title": "promotions.promotion.restriction.title",
   "promotions.promotion.restriction.limitUsage.label": "promotions.promotion.restriction.limitUsage.label",
   "promotions.promotion.restriction.limit.perAffectedItems.label": "promotions.promotion.restriction.limit.perAffectedItems.label",

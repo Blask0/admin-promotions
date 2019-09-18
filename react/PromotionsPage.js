@@ -3,7 +3,13 @@ import PropTypes from 'prop-types'
 import { compose } from 'react-apollo'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-import { Alert, Layout, PageHeader, PageBlock } from 'vtex.styleguide'
+import { 
+  Alert,
+  Layout,
+  PageHeader,
+  PageBlock,
+  Link
+} from 'vtex.styleguide'
 
 import AccountLimitsAlert from './components/Promotions/AccountLimitsAlert'
 
@@ -69,7 +75,22 @@ class PromotionsPage extends Component {
 
     return (
       <Fragment>
-        <Layout fullWidth pageHeader={<PageHeader title="Promotions" />}>
+        <Layout
+          fullWidth
+          pageHeader={
+            <PageHeader
+              title={
+                intl.formatMessage({ id: 'promotions.promotions.title' })
+              }
+              >
+                <div className="bg-warning--faded br2 pv2 ph3 relative bottom--1">
+                  { intl.formatMessage({ id: 'promotions.promotions.betaBanner.text'}) }
+                  <Link href="promotions/announcement">
+                    { intl.formatMessage({ id: 'promotions.promotions.betaBanner.link'}) }
+                  </Link>
+                </div>
+            </PageHeader>
+          }>
           {error && showError && (
             <div className="mb5">
               <Alert
