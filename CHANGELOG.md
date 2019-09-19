@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.2] - 2019-09-19
+
 ### Removed
 
  - Announcement page. (it's been added to admin-home, since we need to see it even if this app is not installed)
