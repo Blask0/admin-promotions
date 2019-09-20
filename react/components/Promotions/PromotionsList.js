@@ -67,8 +67,8 @@ function getTableSchema(intl) {
         sortable: true,
         cellRenderer: ({ cellData: effectType, rowData: { type } }) => {
           return (
-            <div className="dt">
-              {getEffectIcon(effectType, 15)}
+            <div className="dt flex items-center">
+              {getEffectIcon(effectType, 18)}
               <span className="dtc v-mid pl3 ws-normal">
                 {toTitleCase(effectType) ||
                   intl.formatMessage({

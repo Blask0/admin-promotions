@@ -1,6 +1,6 @@
 import React from 'react'
 import { FormattedMessage, defineMessages } from 'react-intl'
-import { Checkbox, Collapsible, DatePicker } from 'vtex.styleguide'
+import { Checkbox, DatePicker } from 'vtex.styleguide'
 import { getEffectIcon, getStatusIcon } from '../../utils/promotion'
 const {
   culture: { locale },
@@ -258,10 +258,10 @@ const effectSelectorObject = ({
           )
         })}
       <div className="c-on-base">
-        <Collapsible
-          isOpen
-          header={<FormattedMessage id="promotions.promotion.legacy" />}>
-          <div className="mt3">
+        <span className="c-muted-1">
+          <FormattedMessage id="promotions.promotion.legacy" />
+        </span>
+        <div className="mt3">
             {legacyEffects.map((opt, index) => {
               return (
                 <div
@@ -285,7 +285,6 @@ const effectSelectorObject = ({
               )
             })}
           </div>
-        </Collapsible>
       </div>
     </div>
   )
