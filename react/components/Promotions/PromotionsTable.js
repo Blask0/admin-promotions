@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape } from 'react-intl'
+import omitBy from 'lodash/omitBy'
 
 import { Table } from 'vtex.styleguide'
 
@@ -29,7 +30,24 @@ class PromotionsTable extends Component {
       },
       inputSearchValue: '',
       filters: [],
+      width: 0,
     }
+  }
+
+  handleWindowResize = () => {
+    const { width } = this.state
+    const newWidth = window.innerWidth || 0
+    if (width !== newWidth) {
+      this.setState({ width: newWidth })
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.handleWindowResize)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', () => {})
   }
 
   handleSearchChange = e => {
@@ -96,7 +114,7 @@ class PromotionsTable extends Component {
 
   render() {
     const { navigate } = this.context
-    const { dataSort, inputSearchValue, pagination, filters } = this.state
+    const { dataSort, inputSearchValue, pagination, filters, width } = this.state
     const {
       creationDisabled,
       emptyStateLabel,
@@ -115,11 +133,21 @@ class PromotionsTable extends Component {
       pagination
     )
 
+    // hides legacy column if there is no legacy promotions after filter
+    const hasAnyLegacyPromotions = items.some(promo => !promo.effectType)
+    const newSchema = {
+      ...schema,
+      properties: {
+        ...omitBy(schema.properties, (value, key) => !hasAnyLegacyPromotions && key === 'legacy')
+      },
+    }
+
     return (
       <div>
         <Table
           density="low"
-          schema={schema}
+          updateTableKey={`promotions-table-${width}-${hasAnyLegacyPromotions}`}
+          schema={newSchema}
           loading={loading}
           emptyStateLabel={emptyStateLabel}
           filters={{
