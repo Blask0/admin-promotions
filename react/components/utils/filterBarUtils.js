@@ -1,7 +1,7 @@
 import React from 'react'
 import { FormattedMessage, defineMessages } from 'react-intl'
-import { Checkbox, DatePicker } from 'vtex.styleguide'
-import { getEffectIcon, getStatusIcon } from '../../utils/promotion'
+import { Checkbox, DatePicker, Tag } from 'vtex.styleguide'
+import { getEffectIcon } from '../../utils/promotion'
 const {
   culture: { locale },
 } = __RUNTIME__
@@ -319,26 +319,17 @@ const statusSelectorObject = ({
               checked={values ? values[opt] : initialValue[opt]}
               id={`status-${opt}`}
               label={
-                <div
-                  className="flex items-center"
-                  style={{
-                    color:
-                      opt === 'running'
-                        ? '#8BC34A'
-                        : opt === 'scheduled'
-                          ? '#FFB100'
-                          : '',
-                  }}>
-                  {getStatusIcon(opt, 14)}
-                  <span
-                    style={{
-                      fontWeight: 500,
-                      lineHeight: '20px',
-                    }}
-                    className="ml3">
-                    {extraParams.intl.formatMessage(messages[opt])}
-                  </span>
-                </div>
+                <Tag
+                  bgColor={
+                    opt === 'running'
+                      ? '#8BC34A'
+                      : opt === 'scheduled'
+                        ? '#FFB100'
+                        : '#3f3f40'
+                  }
+                >
+                  {extraParams.intl.formatMessage(messages[opt])}
+                </Tag>
               }
               name="effect-filter-checkbox-group"
               onChange={() =>

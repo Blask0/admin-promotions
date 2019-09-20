@@ -205,12 +205,9 @@ function getTableSchema(intl) {
           })
 
           return (
-            <div className="flex items-center" style={{ color: color }}>
-              {icon}
-              <span className="ml3">
-                <FormattedMessage id={labelId} />
-              </span>
-            </div>
+            <Tag bgColor={color}>
+              <FormattedMessage id={labelId} />
+            </Tag>
           )
         },
       },
