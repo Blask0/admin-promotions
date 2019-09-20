@@ -275,5 +275,6 @@
   "admin/promotions.filterBar.dateVerb.within": "entre",
   "admin/promotions.filterBar.dateVerb.isNotWithin": "no es entre",
   "admin/promotions.filterBar.dateVerb.notWithin": "no es entre",
-  "admin/promotions.filterBar.dateVerb.and": "y"
+  "admin/promotions.filterBar.dateVerb.and": "y",
+  "admin/promotions.filterBar.clearAllFilters": "Borar los filtros"
 }

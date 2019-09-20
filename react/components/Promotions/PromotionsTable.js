@@ -155,6 +155,9 @@ class PromotionsTable extends Component {
             options: getFilterOptions(intl),
             onChangeStatements: filters => this.setState({ filters }),
             statements: filters,
+            clearAllFiltersButtonLabel: intl.formatMessage({
+              id: 'admin/promotions.filterBar.clearAllFilters',
+            })
           }}
           items={items}
           onRowClick={onRowClick}

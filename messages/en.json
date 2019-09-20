@@ -274,5 +274,6 @@
   "admin/promotions.filterBar.dateVerb.within": "within",
   "admin/promotions.filterBar.dateVerb.isNotWithin": "is not within",
   "admin/promotions.filterBar.dateVerb.notWithin": "not within",
-  "admin/promotions.filterBar.dateVerb.and": "and"
+  "admin/promotions.filterBar.dateVerb.and": "and",
+  "admin/promotions.filterBar.clearAllFilters": "Clear filters"
 }
