@@ -2,6 +2,28 @@ import React from 'react'
 import { FormattedMessage, defineMessages } from 'react-intl'
 import { Checkbox, DatePicker, Tag } from 'vtex.styleguide'
 import { getEffectIcon } from '../../utils/promotion'
+const STATUS_TAG_RUNNING_TEXT = 'running'
+const STATUS_TAG_RUNNING_BG_COLOR = '#8BC34A'
+const STATUS_TAG_SCHEDULED_TEXT = 'scheduled'
+const STATUS_TAG_SCHEDULED_BG_COLOR = '#FFB100'
+const STATUS_TAG_COMPLETED_TEXT = 'completed'
+const STATUS_TAG_COMPLETED_BG_COLOR = '#3f3f40'
+const STATUS_TAG_PAUSED_TEXT = 'paused'
+const STATUS_TAG_PAUSED_BG_COLOR = '#3f3f40'
+const getTagBGColor = status => {
+  switch(status) {
+    case STATUS_TAG_RUNNING_TEXT:
+      return STATUS_TAG_RUNNING_BG_COLOR
+    case STATUS_TAG_SCHEDULED_TEXT:
+      return STATUS_TAG_SCHEDULED_BG_COLOR
+    case STATUS_TAG_PAUSED_TEXT:
+      return STATUS_TAG_PAUSED_BG_COLOR
+    case STATUS_TAG_COMPLETED_TEXT:
+      return STATUS_TAG_COMPLETED_BG_COLOR
+    default:
+      return STATUS_TAG_COMPLETED_BG_COLOR
+  }
+}
 const {
   culture: { locale },
 } = __RUNTIME__
@@ -296,10 +318,10 @@ const statusSelectorObject = ({
   extraParams,
 }) => {
   const initialValue = {
-    running: true,
-    paused: true,
-    completed: true,
-    scheduled: true,
+    [STATUS_TAG_RUNNING_TEXT]: true,
+    [STATUS_TAG_PAUSED_TEXT]: true,
+    [STATUS_TAG_COMPLETED_TEXT]: true,
+    [STATUS_TAG_SCHEDULED_TEXT]: true,
   }
   const toggleValueByKey = key => {
     const newValues = {
@@ -319,15 +341,7 @@ const statusSelectorObject = ({
               checked={values ? values[opt] : initialValue[opt]}
               id={`status-${opt}`}
               label={
-                <Tag
-                  bgColor={
-                    opt === 'running'
-                      ? '#8BC34A'
-                      : opt === 'scheduled'
-                        ? '#FFB100'
-                        : '#3f3f40'
-                  }
-                >
+                <Tag bgColor={getTagBGColor(opt)}>
                   {extraParams.intl.formatMessage(messages[opt])}
                 </Tag>
               }
