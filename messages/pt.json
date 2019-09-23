@@ -174,6 +174,7 @@
   "promotions.promotion.restriction.origin.fulfillment.explanation": "Pedidos nos quais sua loja está atuando como seller",
   "promotions.promotion.accumulation.title": "Acumulação e concorrência",
   "promotions.promotion.accumulation.briefExplanation": "Some brief explanation of how concurrency works blabalblabalbalbalba",
+  "promotions.validation.invalidField": "Este campo está inválido",
   "promotions.validation.emptyField": "Este campo não pode ser vazio",
   "promotions.validation.endDateSmaller": "A data de fim não pode ser antes da data de início",
   "promotions.validation.rangeInput": "Não pode ser menor que o valor anterior",

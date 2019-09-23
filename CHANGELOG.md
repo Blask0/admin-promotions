@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+ - operator in Price effect Conditions was not updating onChange
+ - gitf effect limitations was not beeing validated properly
+
 ## [0.4.3] - 2019-09-23
 
 ### Fixed

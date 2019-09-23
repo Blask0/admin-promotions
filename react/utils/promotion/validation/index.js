@@ -227,6 +227,20 @@ function validateGiftEffect(gift, intl) {
     isValid = false
   }
 
+  if (
+    gift.limitQuantityPerPurchase &&
+    (gift.maxQuantityPerPurchase.value < 1 || !/^\d*$/.test(gift.maxQuantityPerPurchase.value))
+  ) {
+    gift.maxQuantityPerPurchase = {
+      ...gift.maxQuantityPerPurchase,
+      error: intl.formatMessage({
+        id: 'promotions.validation.invalidField',
+      }),
+      focus: true,
+    }
+    isValid = false
+  }
+
   return { gift, isValid }
 }
 

@@ -173,6 +173,7 @@
   "promotions.promotion.restriction.origin.fulfillment.explanation": "Orders where your store is acting as a seller",
   "promotions.promotion.accumulation.title": "Accumulation & concurrency",
   "promotions.promotion.accumulation.briefExplanation": "Some brief explanation of how concurrency works blabalblabalbalbalba",
+  "promotions.validation.invalidField": "This field value is invalid",
   "promotions.validation.emptyField": "This field cannot be empty",
   "promotions.validation.endDateSmaller": "End date can't be before start date",
   "promotions.validation.rangeInput": "Cannot be smaller than the previous value",

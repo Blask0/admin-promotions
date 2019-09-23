@@ -116,6 +116,7 @@ class GiftForm extends Component {
                     'promotions.promotion.effects.quantitySelectable.placeholder',
                 })}
                 type="number"
+                min={1}
                 value={giftEffect.maxQuantityPerPurchase.value}
                 ref={giftEffect.maxQuantityPerPurchase.ref}
                 errorMessage={giftEffect.maxQuantityPerPurchase.error}

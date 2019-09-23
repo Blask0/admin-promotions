@@ -266,6 +266,7 @@ class PriceForm extends Component {
               <Conditions
                 canDelete
                 labels={conditionsLabels}
+                onChangeOperator={operator => this.changeAppliesTo({ operator })}
                 onChangeStatements={newStatements => {
                   this.changeAppliesTo({
                     statements: {
