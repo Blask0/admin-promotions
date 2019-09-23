@@ -33,7 +33,16 @@ function getTableSchema(intl) {
         title: intl.formatMessage({
           id: 'promotions.promotion.generalInfo.name',
         }),
-        width: 350,
+        cellRenderer: ({ cellData: name }) => {
+          return (
+            <div className="dt">
+              <span className="dtc v-mid ws-normal">
+                {name}
+              </span>
+            </div>
+          )
+        },
+        width: 300,
         sortable: true,
       },
       legacy: {
@@ -58,8 +67,8 @@ function getTableSchema(intl) {
         sortable: true,
         cellRenderer: ({ cellData: effectType, rowData: { type } }) => {
           return (
-            <div className="dt">
-              {getEffectIcon(effectType)}
+            <div className="dt flex items-center">
+              {getEffectIcon(effectType, 18)}
               <span className="dtc v-mid pl3 ws-normal">
                 {toTitleCase(effectType) ||
                   intl.formatMessage({
@@ -196,12 +205,9 @@ function getTableSchema(intl) {
           })
 
           return (
-            <div className="flex items-center" style={{ color: color }}>
-              {icon}
-              <span className="ml3">
-                <FormattedMessage id={labelId} />
-              </span>
-            </div>
+            <Tag bgColor={color}>
+              <FormattedMessage id={labelId} />
+            </Tag>
           )
         },
       },

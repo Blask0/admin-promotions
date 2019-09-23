@@ -1,7 +1,29 @@
 import React from 'react'
 import { FormattedMessage, defineMessages } from 'react-intl'
-import { Checkbox, Collapsible, DatePicker } from 'vtex.styleguide'
-import { getEffectIcon, getStatusIcon } from '../../utils/promotion'
+import { Checkbox, DatePicker, Tag } from 'vtex.styleguide'
+import { getEffectIcon } from '../../utils/promotion'
+const STATUS_TAG_RUNNING_TEXT = 'running'
+const STATUS_TAG_RUNNING_BG_COLOR = '#8BC34A'
+const STATUS_TAG_SCHEDULED_TEXT = 'scheduled'
+const STATUS_TAG_SCHEDULED_BG_COLOR = '#FFB100'
+const STATUS_TAG_COMPLETED_TEXT = 'completed'
+const STATUS_TAG_COMPLETED_BG_COLOR = '#3f3f40'
+const STATUS_TAG_PAUSED_TEXT = 'paused'
+const STATUS_TAG_PAUSED_BG_COLOR = '#3f3f40'
+const getTagBGColor = status => {
+  switch(status) {
+    case STATUS_TAG_RUNNING_TEXT:
+      return STATUS_TAG_RUNNING_BG_COLOR
+    case STATUS_TAG_SCHEDULED_TEXT:
+      return STATUS_TAG_SCHEDULED_BG_COLOR
+    case STATUS_TAG_PAUSED_TEXT:
+      return STATUS_TAG_PAUSED_BG_COLOR
+    case STATUS_TAG_COMPLETED_TEXT:
+      return STATUS_TAG_COMPLETED_BG_COLOR
+    default:
+      return STATUS_TAG_COMPLETED_BG_COLOR
+  }
+}
 const {
   culture: { locale },
 } = __RUNTIME__
@@ -258,10 +280,10 @@ const effectSelectorObject = ({
           )
         })}
       <div className="c-on-base">
-        <Collapsible
-          isOpen
-          header={<FormattedMessage id="promotions.promotion.legacy" />}>
-          <div className="mt3">
+        <span className="c-muted-1">
+          <FormattedMessage id="promotions.promotion.legacy" />
+        </span>
+        <div className="mt3">
             {legacyEffects.map((opt, index) => {
               return (
                 <div
@@ -285,7 +307,6 @@ const effectSelectorObject = ({
               )
             })}
           </div>
-        </Collapsible>
       </div>
     </div>
   )
@@ -297,10 +318,10 @@ const statusSelectorObject = ({
   extraParams,
 }) => {
   const initialValue = {
-    running: true,
-    paused: true,
-    completed: true,
-    scheduled: true,
+    [STATUS_TAG_RUNNING_TEXT]: true,
+    [STATUS_TAG_PAUSED_TEXT]: true,
+    [STATUS_TAG_COMPLETED_TEXT]: true,
+    [STATUS_TAG_SCHEDULED_TEXT]: true,
   }
   const toggleValueByKey = key => {
     const newValues = {
@@ -320,26 +341,9 @@ const statusSelectorObject = ({
               checked={values ? values[opt] : initialValue[opt]}
               id={`status-${opt}`}
               label={
-                <div
-                  className="flex items-center"
-                  style={{
-                    color:
-                      opt === 'running'
-                        ? '#8BC34A'
-                        : opt === 'scheduled'
-                          ? '#FFB100'
-                          : '',
-                  }}>
-                  {getStatusIcon(opt, 14)}
-                  <span
-                    style={{
-                      fontWeight: 500,
-                      lineHeight: '20px',
-                    }}
-                    className="ml3">
-                    {extraParams.intl.formatMessage(messages[opt])}
-                  </span>
-                </div>
+                <Tag bgColor={getTagBGColor(opt)}>
+                  {extraParams.intl.formatMessage(messages[opt])}
+                </Tag>
               }
               name="effect-filter-checkbox-group"
               onChange={() =>

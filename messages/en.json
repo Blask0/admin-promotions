@@ -146,7 +146,7 @@
   "promotions.promotion.save": "save",
   "promotions.promotion.cancel": "cancel",
   "promotions.promotions.title": "Promotions",
-  "promotions.promotions.search": "Search promotions by name of effect",
+  "promotions.promotions.search": "Search",
   "promotions.promotions.newPromotion": "New Promotion",
   "promotions.promotions.newPromotion.regular": "Regular",
   "promotions.promotions.newPromotion.combo": "Buy together - Bundle",
@@ -274,5 +274,6 @@
   "admin/promotions.filterBar.dateVerb.within": "within",
   "admin/promotions.filterBar.dateVerb.isNotWithin": "is not within",
   "admin/promotions.filterBar.dateVerb.notWithin": "not within",
-  "admin/promotions.filterBar.dateVerb.and": "and"
+  "admin/promotions.filterBar.dateVerb.and": "and",
+  "admin/promotions.filterBar.clearAllFilters": "Clear filters"
 }
