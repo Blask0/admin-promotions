@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { injectIntl, intlShape } from 'react-intl'
+import { intlShape } from 'react-intl'
 import omitBy from 'lodash/omitBy'
 
 import { Table } from 'vtex.styleguide'
@@ -339,4 +339,4 @@ PromotionsTable.propTypes = {
   schema: PropTypes.object.isRequired,
 }
 
-export default injectIntl(PromotionsTable)
+export default PromotionsTable
