@@ -61,9 +61,9 @@ class ArchivedPromotionsPage extends Component {
               title={intl.formatMessage({
                 id: 'promotions.promotion.archived.title',
               })}
-              subtitle={intl.formatMessage({
-                id: 'promotions.promotion.archived.subtitle',
-              })}
+              // subtitle={intl.formatMessage({
+              //   id: 'promotions.promotion.archived.subtitle',
+              // })}
             />
           }>
           {error && showError && (

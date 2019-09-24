@@ -7,13 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.4.6] - 2019-09-25
+### Fixed
 
-## [0.4.5] - 2019-09-24
+ - false label about auto-cleaning of archived promotions.
+
+## [0.4.6] - 2019-09-25
 
 ### Changed
 
 - Improves dashboard table sizes to use better the screen available size.
+
+## [0.4.5] - 2019-09-24
 
 ### Fixed
 
