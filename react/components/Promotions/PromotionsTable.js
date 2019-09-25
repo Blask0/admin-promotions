@@ -13,7 +13,7 @@ import {
 
 import { getFilterOptions } from '../utils/filterBarUtils'
 
-const ROWS_PER_PAGE_OPTIONS = [5, 10, 15, 25]
+const ROWS_PER_PAGE_OPTIONS = [10, 25, 50, 100]
 
 class PromotionsTable extends Component {
   constructor(props) {
@@ -155,6 +155,7 @@ class PromotionsTable extends Component {
             options: getFilterOptions(intl),
             onChangeStatements: filters => this.setState({ filters }),
             statements: filters,
+            collapseLeft: true,
             clearAllFiltersButtonLabel: intl.formatMessage({
               id: 'admin/promotions.filterBar.clearAllFilters',
             })
