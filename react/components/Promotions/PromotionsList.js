@@ -19,11 +19,13 @@ const NO_TITLE_COLUMN = ' '
 const LEGACY_TAG_COLOR = '#C28702'
 
 function getTableSchema(intl) {
+  const cellTypeStyles = 'dtc t-small v-mid ws-normal ';
+
   return {
     properties: {
       activation: {
         title: NO_TITLE_COLUMN,
-        width: 60,
+        width: 48,
         cellRenderer: ({ rowData: promotion }) => (
           <PromotionActivationToggle promotion={promotion} />
         ),
@@ -33,22 +35,22 @@ function getTableSchema(intl) {
         title: intl.formatMessage({
           id: 'promotions.promotion.generalInfo.name',
         }),
+        minWidth: 200,
         cellRenderer: ({ cellData: name }) => {
           return (
             <div className="dt">
-              <span className="dtc v-mid ws-normal">
+              <span className={cellTypeStyles}>
                 {name}
               </span>
             </div>
           )
         },
-        width: 300,
         sortable: true,
       },
       legacy: {
         type: 'any',
         title: NO_TITLE_COLUMN,
-        width: 81,
+        width: 80,
         cellRenderer: ({ rowData: { effectType } }) => {
           return (
             !effectType && (
@@ -65,11 +67,13 @@ function getTableSchema(intl) {
           id: 'promotions.promotion.effects.title',
         }),
         sortable: true,
+        width: 100,
         cellRenderer: ({ cellData: effectType, rowData: { type } }) => {
+          const icon = getEffectIcon(effectType, 18);
           return (
             <div className="dt flex items-center">
-              {getEffectIcon(effectType, 18)}
-              <span className="dtc v-mid pl3 ws-normal">
+              {icon}
+              <span className={cellTypeStyles + (icon ? 'pl2' : '')}>
                 {toTitleCase(effectType) ||
                   intl.formatMessage({
                     id: `promotions.promotions.newPromotion.${type}`,
@@ -104,38 +108,41 @@ function getTableSchema(intl) {
             type: 'int',
           },
         },
-        minWidth: 180,
+        width: 110,
         cellRenderer: ({ cellData }) => {
           if (cellData) {
             if (cellData.allCatalog) {
               return (
-                <span className="fw5">
+                <span className={cellTypeStyles + 'fw5'}>
                   {intl.formatMessage({
                     id: 'promotions.scopeColumn.allProducts',
                   })}
                 </span>
               )
+            } else {
+              let scopeInfo = []
+              const blackList = ['allCatalog', '__typename']
+
+              Object.keys(cellData).forEach((key, index) => {
+                if (cellData[key] !== 0 && !blackList.includes(key)) {
+                  scopeInfo = [
+                    ...scopeInfo,
+                    `${intl.formatMessage(
+                      {
+                        id: `promotions.scopeColumn.${key}`,
+                      },
+                      {
+                        itemCount: cellData[key],
+                      }
+                    )}`,
+                  ]
+                }
+
+                return <span className={cellTypeStyles}>
+                  {scopeInfo.join(', ')}
+                </span>
+              })
             }
-            let scopeInfo = []
-            const blackList = ['allCatalog', '__typename']
-
-            Object.keys(cellData).forEach((key, index) => {
-              if (cellData[key] !== 0 && !blackList.includes(key)) {
-                scopeInfo = [
-                  ...scopeInfo,
-                  `${intl.formatMessage(
-                    {
-                      id: `promotions.scopeColumn.${key}`,
-                    },
-                    {
-                      itemCount: cellData[key],
-                    }
-                  )}`,
-                ]
-              }
-            })
-
-            return <span>{scopeInfo.join(', ')}</span>
           }
         },
       },
@@ -145,16 +152,17 @@ function getTableSchema(intl) {
           id: 'promotions.promotions.column.from',
         }),
         sortable: true,
+        width: 110,
         cellRenderer: ({ cellData: beginDate }) => {
           const date = format(toDate(beginDate), 'PP')
           const time = format(toDate(beginDate), 'p')
           return (
             <div>
               <div className="dt">
-                <span className="dtc v-mid">{date}</span>
+                <span className={cellTypeStyles}>{date}</span>
               </div>
               <div className="dt">
-                <span className="dtc v-mid">{time}</span>
+                <span className={cellTypeStyles}>{time}</span>
               </div>
             </div>
           )
@@ -166,11 +174,12 @@ function getTableSchema(intl) {
           id: 'promotions.promotions.column.to',
         }),
         sortable: true,
+        width: 110,
         cellRenderer: ({ cellData: endDate }) => {
           if (!endDate) {
             return (
               <div className="dt">
-                <span className="dtc v-mid">-</span>
+                <span className={cellTypeStyles}>-</span>
               </div>
             )
           }
@@ -179,10 +188,10 @@ function getTableSchema(intl) {
           return (
             <div>
               <div className="dt">
-                <span className="dtc v-mid">{date}</span>
+                <span className={cellTypeStyles}>{date}</span>
               </div>
               <div className="dt">
-                <span className="dtc v-mid">{time}</span>
+                <span className={cellTypeStyles}>{time}</span>
               </div>
             </div>
           )
@@ -191,6 +200,7 @@ function getTableSchema(intl) {
       status: {
         type: 'boolean',
         title: 'Status',
+        width: 100,
         cellRenderer: ({
           rowData: {
             isActive,
@@ -204,10 +214,19 @@ function getTableSchema(intl) {
             endDateString,
           })
 
+          console.log(labelId);
+
           return (
-            <Tag bgColor={color}>
-              <FormattedMessage id={labelId} />
-            </Tag>
+            labelId === 'promotions.promotion.status.completed' ?
+              <div className="dt">
+                <span className={cellTypeStyles}>
+                  <FormattedMessage id={labelId} />
+                </span>
+              </div>
+              :
+              <Tag size="small" bgColor={color}>
+                <FormattedMessage id={labelId} />
+              </Tag>
           )
         },
       },

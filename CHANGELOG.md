@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.4.5] - 2019-09-24
 
+### Changed
+
+- Improves dashboard table sizes to use better the screen available size.
+
 ### Fixed
 
  - translations and outdated texts.
