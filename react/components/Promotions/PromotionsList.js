@@ -214,7 +214,6 @@ function getTableSchema(intl) {
             endDateString,
           })
 
-          console.log(labelId);
 
           return (
             labelId === 'promotions.promotion.status.completed' ?
