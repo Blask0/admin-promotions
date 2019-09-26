@@ -11,6 +11,7 @@ import unarchivingPromotionById from '../../connectors/unarchivingPromotionById'
 import withArchivedPromotions from '../../connectors/withArchivedPromotions'
 
 function getTableSchema(intl) {
+  const cellTypeStyles = 'dtc t-small v-mid ws-normal '
   return {
     properties: {
       name: {
@@ -19,6 +20,16 @@ function getTableSchema(intl) {
           id: 'promotions.promotion.generalInfo.name',
         }),
         sortable: true,
+        minWidth: 200,
+        cellRenderer: ({ cellData: name }) => {
+          return (
+            <div className="dt">
+              <span className={cellTypeStyles}>
+                {name}
+              </span>
+            </div>
+          )
+        },
       },
       effectType: {
         type: 'string',
@@ -26,11 +37,13 @@ function getTableSchema(intl) {
           id: 'promotions.promotion.effects.title',
         }),
         sortable: true,
+        width: 100,
         cellRenderer: ({ cellData: effectType }) => {
+          const icon = getEffectIcon(effectType, 18)
           return (
             <div className="dt">
-              {getEffectIcon(effectType)}
-              <span className="dtc v-mid pl3">{effectType}</span>
+              {icon}
+              <span className={`${cellTypeStyles} ${icon ? 'pl2' : ''}`}>{effectType}</span>
             </div>
           )
         },
@@ -60,12 +73,12 @@ function getTableSchema(intl) {
             type: 'int',
           },
         },
-        width: 300,
+        width: 110,
         cellRenderer: ({ cellData }) => {
           if (cellData) {
             if (cellData.allCatalog) {
               return (
-                <span className="fw5">
+                <span className={`${cellTypeStyles} fw5`}>
                   {intl.formatMessage({
                     id: 'promotions.scopeColumn.allProducts',
                   })}
@@ -91,7 +104,9 @@ function getTableSchema(intl) {
               }
             })
 
-            return <span>{scopeInfo.join(', ')}</span>
+            return <span className={cellTypeStyles}>
+              {scopeInfo.join(', ')}
+            </span>
           }
         },
       },
@@ -101,16 +116,17 @@ function getTableSchema(intl) {
           id: 'promotions.promotion.generalInfo.startDate',
         }),
         sortable: true,
+        width: 160,
         cellRenderer: ({ cellData: beginDate }) => {
           const date = format(toDate(beginDate), 'PP')
           const time = format(toDate(beginDate), 'p')
           return (
             <div>
               <div className="dt">
-                <span className="dtc v-mid">{date}</span>
+                <span className={cellTypeStyles}>{date}</span>
               </div>
               <div className="dt">
-                <span className="dtc v-mid">{time}</span>
+                <span className={cellTypeStyles}>{time}</span>
               </div>
             </div>
           )
@@ -122,11 +138,12 @@ function getTableSchema(intl) {
           id: 'promotions.promotion.generalInfo.endDate',
         }),
         sortable: true,
+        width: 160,
         cellRenderer: ({ cellData: endDate }) => {
           if (!endDate) {
             return (
               <div className="dt">
-                <span className="dtc v-mid">-</span>
+                <span className={cellTypeStyles}>-</span>
               </div>
             )
           }
@@ -135,10 +152,10 @@ function getTableSchema(intl) {
           return (
             <div>
               <div className="dt">
-                <span className="dtc v-mid">{date}</span>
+                <span className={cellTypeStyles}>{date}</span>
               </div>
               <div className="dt">
-                <span className="dtc v-mid">{time}</span>
+                <span className={cellTypeStyles}>{time}</span>
               </div>
             </div>
           )

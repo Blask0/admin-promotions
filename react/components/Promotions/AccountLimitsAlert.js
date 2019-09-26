@@ -7,7 +7,8 @@ import { Alert } from 'vtex.styleguide'
 const ref = React.createRef()
 
 function AccountLimitsAlert({ intl, promotions, accountLimits }) {
-  const percentual = promotions.length / accountLimits.activePromotions
+  const activePromotions = promotions.filter(({ isActive }) => isActive)
+  const percentual = activePromotions.length / accountLimits.activePromotions
 
   const alertProps =
     percentual >= 1
@@ -34,7 +35,7 @@ function AccountLimitsAlert({ intl, promotions, accountLimits }) {
         <FormattedMessage
           id={alertProps.message}
           values={{
-            current: promotions.length,
+            current: activePromotions.length,
             limit: accountLimits.activePromotions,
           }}
         />
