@@ -10,7 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
  - false label about auto-cleaning of archived promotions.
- - Improves archived dashboard table sizes to use better the screen available size.
+ - archived dashboard table sizes to use better the screen available size.
+ - account limit alert accounting active promotions only instead of all of them.
 
 ## [0.4.6] - 2019-09-25
 
