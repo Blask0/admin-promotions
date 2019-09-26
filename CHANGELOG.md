@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.7] - 2019-09-26
+
 ### Fixed
 
  - false label about auto-cleaning of archived promotions.
