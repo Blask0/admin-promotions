@@ -71,7 +71,7 @@
   "promotions.promotion.elligibility.conditions.headerPrefix": "Que satisfacen",
   "promotions.promotion.elligibility.conditions.headerSufix": "de las seguientes condiciones",
   "promotions.promotion.elligibility.conditions.subjectPlaceholder": "Seleccione...",
-  "promotions.promotion.elligibility.shippingMethod.label": "Método de envío",
+  "promotions.promotion.elligibility.shippingMethod.label": "Tipo de envío",
   "promotions.promotion.elligibility.shippingMethod.verb.==": "es",
   "promotions.promotion.elligibility.shippingMethod.verb.!=": "no es",
   "promotions.promotion.elligibility.shippingMethod.verb.any": "es cualquier entre",
