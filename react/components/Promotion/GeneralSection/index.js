@@ -2,13 +2,11 @@ import React, { Fragment, Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
-import { Checkbox, Input, Toggle, IconHelp } from 'vtex.styleguide'
+import { Checkbox, Input, Link, Toggle } from 'vtex.styleguide'
 import Scheduling from './Scheduling'
 
 import { fieldShape } from '../../../utils/propTypes'
 import { applyFocus } from '../../../utils/functions'
-
-const OPTICAL_COMPENSATION = '1px'
 
 class GeneralSection extends Component {
   constructor(props) {
@@ -92,36 +90,6 @@ class GeneralSection extends Component {
                 }}
               />
             </div>
-            <div className="mv4 flex items-center">
-              <Checkbox
-                checked={generalInfo.highlight}
-                id="highlight"
-                label={intl.formatMessage({
-                  id: 'promotions.promotion.generalInfo.highlight',
-                })}
-                name="highlight-checkbox"
-                onChange={() => {
-                  updatePageState({
-                    highlight: !generalInfo.highlight,
-                  })
-                }}
-                value="highlight"
-              />
-              <div
-                className="ml2 c-muted-2 flex items-center pointer"
-                style={{ paddingTop: OPTICAL_COMPENSATION }}
-                title={intl.formatMessage({
-                  id: 'promotions.promotion.generalInfo.highlight.helpText',
-                })}
-                onClick={() =>
-                  window.open(
-                    'https://help.vtex.com/tutorial/configurando-promocao-com-destaque-flag--tutorials_2295',
-                    '_blank'
-                  )
-                }>
-                <IconHelp size={14} />
-              </div>
-            </div>
           </div>
         </div>
         <Scheduling
@@ -129,7 +97,7 @@ class GeneralSection extends Component {
           updatePageState={updatePageState}
         />
         <hr className="b--muted-4 bt-0" />
-        <div className="flex flex-row mt7">
+        <div className="flex flex-row mv7">
           <div className="w-50">
             <h4 className="t-heading-4 mt0 mb4">
               <FormattedMessage id="promotions.promotion.accumulation.title" />
@@ -174,6 +142,37 @@ class GeneralSection extends Component {
                 value="accumulateWithManualPrices"
               />
             </div>
+          </div>
+        </div>
+        <hr className="b--muted-4 bt-0" />
+        <div className="flex flex-row mt7">
+          <h4 className="t-heading-4 mt0 w-50">
+            <FormattedMessage id="promotions.promotion.appearance" />
+          </h4>
+          <div className="flex flex-column w-50">
+            <Checkbox
+              checked={generalInfo.highlight}
+              id="highlight"
+              label={intl.formatMessage({
+                id: 'promotions.promotion.generalInfo.highlight',
+              })}
+              name="highlight-checkbox"
+              onChange={() => {
+                updatePageState({
+                  highlight: !generalInfo.highlight,
+                })
+              }}
+              value="highlight"
+            />
+            <span className="mt2 ml6 f6 c-muted-1">
+              <FormattedMessage id="promotions.promotion.generalInfo.highlight.helpText" />
+              <Link
+                href="https://help.vtex.com/tutorial/configurando-promocao-com-destaque-flag--tutorials_2295"
+                target="_blank"
+                mediumWeigth>
+                  Help Center
+              </Link>
+            </span>
           </div>
         </div>
       </Fragment>
