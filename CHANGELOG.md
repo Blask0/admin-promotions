@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.10] - 2019-10-01
+
 ### Fixed
 
 - highlight component texts and updates front with figma.
