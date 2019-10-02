@@ -5,6 +5,8 @@ import { SelectObject, SelectObjectProps } from '../../../Conditions/Objects'
 
 import { SelectValue } from '../../../Conditions/Objects/SelectObject'
 
+const BIN_REGEX = /^[0-9]{6,9}$/
+
 interface CreditCardBINSelectProps
   extends SelectObjectProps,
     InjectedIntlProps {
@@ -27,7 +29,7 @@ const CreditCardBINSelect: React.FC<CreditCardBINSelectProps> = ({
       multi
       onChange={(value: CreditCardBINSelectProps['value']) => {
         const errorValues = value.filter(
-          item => typeof item.value === 'string' && item.value.length > 8
+          item => typeof item.value === 'string' && !BIN_REGEX.test(item.value)
         )
         const error =
           errorValues.length > 0
