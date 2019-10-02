@@ -1,6 +1,8 @@
 declare module 'vtex.styleguide' {
+  export const Checkbox
   export const Input
   export const InputCurrency
+  export const Link
 
   type InputCurrencyElement = Omit<HTMLInputElement, 'value'> & {
     value: number
