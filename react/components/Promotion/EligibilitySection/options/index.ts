@@ -8,7 +8,6 @@ import utm from './utm'
 import zipCodeRange from './zipCodeRange'
 import totalPriceRange from './totalPriceRange'
 import creditCardBin from './creditCardBin'
-import marketingTags from './marketingTags'
 
 export {
   affiliates,
@@ -21,5 +20,4 @@ export {
   zipCodeRange,
   totalPriceRange,
   creditCardBin,
-  marketingTags,
 }
