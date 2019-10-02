@@ -111,7 +111,7 @@
   "promotions.promotion.elligibility.creditCardBin.label": "Credit card BIN",
   "promotions.promotion.elligibility.creditCardBin.verb.any": "is any of",
   "promotions.promotion.elligibility.creditCardBin.placeholder": "Type a BIN number…",
-  "promotions.promotion.elligibility.creditCardBin.error": "BINs {bins} cannot have less than 6 or more than 9 numeric digits",
+  "promotions.promotion.elligibility.creditCardBin.error": "{binsCount, plural, one {BIN} other {BINs}} {bins} cannot have less than 6 or more than 9 numeric digits",
   "promotions.promotion.elligibility.cartProduct.label": "Product in cart",
   "promotions.promotion.elligibility.cartProduct.verb.brand.any": "belongs to any of these brands",
   "promotions.promotion.elligibility.cartProduct.verb.brand.not.any": "does not belong to any of these brands",

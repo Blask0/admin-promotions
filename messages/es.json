@@ -111,7 +111,7 @@
   "promotions.promotion.elligibility.creditCardBin.label": "BIN de tarjeta de crédito",
   "promotions.promotion.elligibility.creditCardBin.verb.any": "es cualquier entre",
   "promotions.promotion.elligibility.creditCardBin.placeholder": "Número de BIN…",
-  "promotions.promotion.elligibility.creditCardBin.error": "BINs {bins} {binsCount, plural, one {debe} other {deben}} tener como mínimo 6 y máximo 9 dígitos numéricos",
+  "promotions.promotion.elligibility.creditCardBin.error": "{binsCount, plural, one {BIN} other {BINs}} {bins} {binsCount, plural, one {debe} other {deben}} tener como mínimo 6 y máximo 9 dígitos numéricos",
   "promotions.promotion.elligibility.cartProduct.label": "Produto en carrito",
   "promotions.promotion.elligibility.cartProduct.verb.brand.any": "pertenece a alguna de estas marcas",
   "promotions.promotion.elligibility.cartProduct.verb.brand.not.any": "no pertenece a alguna de estas marcas",
