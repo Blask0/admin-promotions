@@ -7,13 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+
+- Gift multiplier.
+- Checkbox to limit maximum quantity of gifts per purchase.
+
+### Changed
+
+- Gift effect form layout.
+
 ## [0.5.2] - 2019-10-03
 
 ### Removed
 
-- Old GraphQL policies
-- Empty yarn.lock file
-- react-ace dependency
+- Old GraphQL policies.
+- Empty yarn.lock file.
+- react-ace dependency.
 
 ## [0.5.1] - 2019-10-03
 
@@ -37,7 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Fix "shipping method" translations
+- Fix "shipping method" translations.
 
 ## [0.4.8] - 2019-09-26
 
@@ -66,8 +75,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- operator in Price effect Conditions was not updating onChange
-- gitf effect limitations was not beeing validated properly
+- operator in Price effect Conditions was not updating onChange.
+- gitf effect limitations was not beeing validated properly.
 
 ## [0.4.3] - 2019-09-23
 
@@ -79,7 +88,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-- Announcement page. (it's been added to admin-home, since we need to see it even if this app is not installed)
+- Announcement page (it's been added to admin-home, since we need to see it even if this app is not installed).
 
 ## [0.4.1] - 2019-09-18
 

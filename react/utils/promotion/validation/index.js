@@ -97,8 +97,8 @@ export function validateGeneralInfoSection(generalInfo, intl) {
                   ...from,
                   error: !isTimeValid(from.value)
                     ? intl.formatMessage({
-                      id: 'promotions.validation.emptyField',
-                    })
+                        id: 'promotions.validation.emptyField',
+                      })
                     : undefined,
                   focus: !isTimeValid(from.value),
                 },
@@ -106,13 +106,13 @@ export function validateGeneralInfoSection(generalInfo, intl) {
                   ...to,
                   error: !isTimeValid(to.value)
                     ? intl.formatMessage({
-                      id: 'promotions.validation.emptyField',
-                    })
+                        id: 'promotions.validation.emptyField',
+                      })
                     : isToBeforeFrom(from.value, to.value)
-                      ? intl.formatMessage({
+                    ? intl.formatMessage({
                         id: 'promotions.promotion.validation.toBeforeFrom',
                       })
-                      : undefined,
+                    : undefined,
                   focus:
                     !isTimeValid(to.value) ||
                     isToBeforeFrom(from.value, to.value),
@@ -185,8 +185,8 @@ function validatePriceEffect(price, intl) {
         error:
           statement.subject && !statement.object
             ? intl.formatMessage({
-              id: 'promotions.validation.incompleteStatement',
-            })
+                id: 'promotions.validation.incompleteStatement',
+              })
             : undefined,
         focus: statement.subject && !statement.object,
       })),
@@ -216,7 +216,7 @@ function validateGiftEffect(gift, intl) {
     isValid = false
   }
 
-  if (gift.limitQuantityPerPurchase && !gift.maxQuantityPerPurchase.value) {
+  if (!gift.maxQuantityPerPurchase.value) {
     gift.maxQuantityPerPurchase = {
       ...gift.maxQuantityPerPurchase,
       error: intl.formatMessage({
@@ -228,8 +228,8 @@ function validateGiftEffect(gift, intl) {
   }
 
   if (
-    gift.limitQuantityPerPurchase &&
-    (gift.maxQuantityPerPurchase.value < 1 || !/^\d*$/.test(gift.maxQuantityPerPurchase.value))
+    gift.maxQuantityPerPurchase.value < 1 ||
+    !/^\d*$/.test(gift.maxQuantityPerPurchase.value)
   ) {
     gift.maxQuantityPerPurchase = {
       ...gift.maxQuantityPerPurchase,
@@ -358,8 +358,8 @@ export function validateEligibilitySection(eligibility, intl) {
       error:
         statement.subject && !statement.object
           ? intl.formatMessage({
-            id: 'promotions.validation.incompleteStatement',
-          })
+              id: 'promotions.validation.incompleteStatement',
+            })
           : undefined,
       focus: statement.subject && !statement.object,
     })),
@@ -375,9 +375,9 @@ function getAffectedSalesChannels(restriction, salesChannels) {
   } = restriction
   return restrictedSalesChannels && restrictedSalesChannels.length > 0
     ? salesChannels.filter(({ id }) => {
-      const f = restrictedSalesChannels.find(({ value }) => id === value)
-      return restrictSalesChannelVerb === 'any' ? f : !f
-    })
+        const f = restrictedSalesChannels.find(({ value }) => id === value)
+        return restrictSalesChannelVerb === 'any' ? f : !f
+      })
     : salesChannels
 }
 

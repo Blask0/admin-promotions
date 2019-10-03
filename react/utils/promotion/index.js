@@ -33,9 +33,7 @@ export const INITIAL_PRICE_EFFECT = {
 
 export const INITIAL_GIFT_EFFECT = {
   skus: newFieldWithValidation([]),
-  multiplier: false,
-  limitQuantityPerPurchase: false,
-  maxQuantityPerPurchase: newFieldWithValidation(),
+  maxQuantityPerPurchase: newFieldWithValidation(1),
 }
 
 export const INITIAL_SHIPPING_EFFECT = {
@@ -75,7 +73,6 @@ const getGiftEffect = giftEffect =>
             value: sku.id,
           }))
         ),
-        limitQuantityPerPurchase: !!giftEffect.maxQuantityPerPurchase,
         maxQuantityPerPurchase: newFieldWithValidation(
           giftEffect ? giftEffect.maxQuantityPerPurchase : undefined
         ),
@@ -260,8 +257,6 @@ export function prepareToSave(promotion, intl) {
     restriction,
   } = promotion
 
-  const { limitQuantityPerPurchase, ...giftEffect } = effects.gift
-
   const {
     statements: { value: scopeStatements },
   } = effects.price.appliesTo
@@ -302,12 +297,12 @@ export function prepareToSave(promotion, intl) {
         },
       },
       gift: {
-        ...giftEffect,
-        skus: giftEffect.skus.value.map(sku => ({
+        ...effects.gift,
+        skus: effects.gift.skus.value.map(sku => ({
           id: sku.value,
           name: sku.label,
         })),
-        maxQuantityPerPurchase: giftEffect.maxQuantityPerPurchase.value,
+        maxQuantityPerPurchase: effects.gift.maxQuantityPerPurchase.value,
       },
       shipping: {
         ...effects.shipping,

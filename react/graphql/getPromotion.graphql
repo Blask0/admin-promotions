@@ -29,7 +29,6 @@ query GetPromotion($id: String!) {
           id
           name
         }
-        multiplier
         maxQuantityPerPurchase
       }
       shipping {
