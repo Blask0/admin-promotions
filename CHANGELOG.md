@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.1] - 2019-10-03
+
 ### Fixed
 
 - Credit card bin validation to allow only numeric values between 6 and 9 digits.
