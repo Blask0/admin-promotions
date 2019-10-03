@@ -33,7 +33,7 @@ export const INITIAL_PRICE_EFFECT = {
 
 export const INITIAL_GIFT_EFFECT = {
   skus: newFieldWithValidation([]),
-  maxQuantityPerPurchase: newFieldWithValidation(),
+  maxQuantityPerPurchase: newFieldWithValidation(1),
 }
 
 export const INITIAL_SHIPPING_EFFECT = {
