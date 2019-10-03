@@ -295,25 +295,25 @@ export function validateEffectsSection(effects, intl) {
 
   switch (effects.activeEffectType.value) {
     case 'price':
-      ;({ price: effects.price, isValid } = validatePriceEffect(
+      ({ price: effects.price, isValid } = validatePriceEffect(
         effects.price,
         intl
       ))
       break
     case 'gift':
-      ;({ gift: effects.gift, isValid } = validateGiftEffect(
+      ({ gift: effects.gift, isValid } = validateGiftEffect(
         effects.gift,
         intl
       ))
       break
     case 'shipping':
-      ;({ shipping: effects.shipping, isValid } = validateShippingEffect(
+      ({ shipping: effects.shipping, isValid } = validateShippingEffect(
         effects.shipping,
         intl
       ))
       break
     case 'reward':
-      ;({ reward: effects.reward, isValid } = validateRewardEffect(
+      ({ reward: effects.reward, isValid } = validateRewardEffect(
         effects.reward,
         intl
       ))
