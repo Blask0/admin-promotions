@@ -1,7 +1,7 @@
 {
   "name": "admin-promotions",
   "vendor": "vtex",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "title": "Promotions Admin",
   "description": "Admin interface for Promotions",
   "mustUpdateAt": "2019-08-27",
