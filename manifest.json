@@ -16,49 +16,6 @@
     "vtex.styleguide": "9.x",
     "vtex.admin-promotions-graphql": "0.x"
   },
-  "policies": [
-    {
-      "name": "read_prices"
-    },
-    {
-      "name": "modify_prices"
-    },
-    {
-      "name": "outbound-access",
-      "attrs": {
-        "host": "api.vtex.com",
-        "path": "/{{account}}/conditions/{{type}}/condition/{{conditionId}}"
-      }
-    },
-    {
-      "name": "outbound-access",
-      "attrs": {
-        "host": "{{account}}.vtexcommercestable.com.br",
-        "path": "/api/catalog_system/*"
-      }
-    },
-    {
-      "name": "outbound-access",
-      "attrs": {
-        "host": "{{account}}.vtexcommercestable.com.br",
-        "path": "/api/rnb/*"
-      }
-    },
-    {
-      "name": "outbound-access",
-      "attrs": {
-        "host": "logistics.vtexcommercestable.com.br",
-        "path": "/api/logistics/*"
-      }
-    },
-    {
-      "name": "outbound-access",
-      "attrs": {
-        "host": "{{account}}.vtexpayments.com.br",
-        "path": "/api/pvt/merchants/payment-systems"
-      }
-    }
-  ],
   "billingOptions": {
     "free": true
   },
