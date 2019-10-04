@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- New appearance section to promotion form.
+
+### Changed
+
+- Moved highlight flag to the new appearance section.
+
 ## [0.6.0] - 2019-10-03
 
 ### Removed
