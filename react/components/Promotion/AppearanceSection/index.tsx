@@ -39,7 +39,7 @@ const AppearanceSection: React.FC<Props & InjectedIntlProps> = ({
           })
         }}
       />
-      <span className="mt2 ml6 f6 c-muted-1">
+      <div className="mt2 ml6 f6 lh-copy c-muted-1">
         <FormattedMessage id="promotions.promotion.generalInfo.highlight.helpText" />
         <Link
           href="https://help.vtex.com/tutorial/configurando-promocao-com-destaque-flag--tutorials_2295"
@@ -47,7 +47,7 @@ const AppearanceSection: React.FC<Props & InjectedIntlProps> = ({
           mediumWeigth>
           Help Center
         </Link>
-      </span>
+      </div>
     </>
   )
 }
