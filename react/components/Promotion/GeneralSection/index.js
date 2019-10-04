@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
@@ -39,11 +39,10 @@ class GeneralSection extends Component {
   }
 
   render() {
-    const { navigate } = this.context
     const { intl, generalInfo, updatePageState } = this.props
 
     return (
-      <Fragment>
+      <>
         <div className="flex flex-row mb6">
           <h4 className="t-heading-4 mt0 w-50">
             <FormattedMessage id="promotions.promotion.generalInfo.title" />
@@ -144,44 +143,9 @@ class GeneralSection extends Component {
             </div>
           </div>
         </div>
-        <hr className="b--muted-4 bt-0" />
-        <div className="flex flex-row mt7">
-          <h4 className="t-heading-4 mt0 w-50">
-            <FormattedMessage id="promotions.promotion.appearance" />
-          </h4>
-          <div className="flex flex-column w-50">
-            <Checkbox
-              checked={generalInfo.highlight}
-              id="highlight"
-              label={intl.formatMessage({
-                id: 'promotions.promotion.generalInfo.highlight',
-              })}
-              name="highlight-checkbox"
-              onChange={() => {
-                updatePageState({
-                  highlight: !generalInfo.highlight,
-                })
-              }}
-              value="highlight"
-            />
-            <span className="mt2 ml6 f6 c-muted-1">
-              <FormattedMessage id="promotions.promotion.generalInfo.highlight.helpText" />
-              <Link
-                href="https://help.vtex.com/tutorial/configurando-promocao-com-destaque-flag--tutorials_2295"
-                target="_blank"
-                mediumWeigth>
-                  Help Center
-              </Link>
-            </span>
-          </div>
-        </div>
-      </Fragment>
+      </>
     )
   }
-}
-
-GeneralSection.contextTypes = {
-  navigate: PropTypes.func,
 }
 
 GeneralSection.propTypes = {

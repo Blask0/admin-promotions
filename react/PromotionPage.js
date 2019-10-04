@@ -16,6 +16,7 @@ import EffectsSection from './components/Promotion/EffectsSection'
 import EligibilitySection from './components/Promotion/EligibilitySection'
 import GeneralSection from './components/Promotion/GeneralSection'
 import RestrictionSection from './components/Promotion/RestrictionSection'
+import AppearanceSection from './components/Promotion/AppearanceSection'
 
 import withSalesChannels from './connectors/withSalesChannels'
 import withPromotion from './connectors/withPromotion'
@@ -315,6 +316,12 @@ class PromotionPage extends Component {
           <RestrictionSection
             restriction={restriction}
             updatePageState={this.handleRestrictionSectionChange}
+          />
+        </PageBlock>
+        <PageBlock>
+          <AppearanceSection
+            generalInfo={generalInfo}
+            updatePageState={this.handleGeneralInfoChange}
           />
         </PageBlock>
         <div className="flex flex-row">
