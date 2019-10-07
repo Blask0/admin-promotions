@@ -372,3 +372,10 @@ export const getStatus = ({ isActive, beginDateString, endDateString }) => {
     id: 'paused',
   }
 }
+
+export const STATUS_ORDER = {
+  running: 0,
+  scheduled: 1,
+  paused: 2,
+  completed: 3,
+}

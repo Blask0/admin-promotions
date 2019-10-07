@@ -1,27 +1,27 @@
-import { getStatus } from '../promotion'
+import { getStatus, STATUS_ORDER } from '../promotion'
 
 function sortNameAlphapeticallyASC(a, b) {
   return a.name.toLowerCase() < b.name.toLowerCase()
     ? -1
     : a.name.toLowerCase() > b.name.toLowerCase()
-      ? 1
-      : 0
+    ? 1
+    : 0
 }
 
 function sortNameAlphapeticallyDESC(a, b) {
   return a.name.toLowerCase() < b.name.toLowerCase()
     ? 1
     : a.name.toLowerCase() > b.name.toLowerCase()
-      ? -1
-      : 0
+    ? -1
+    : 0
 }
 
 function sortEffectAlphapeticallyASC(a, b) {
   return a.effectType.toLowerCase() < b.effectType.toLowerCase()
     ? -1
     : a.effectType.toLowerCase() > b.effectType.toLowerCase()
-      ? 1
-      : 0
+    ? 1
+    : 0
 }
 
 function sortEffectAlphapeticallyDESC(a, b) {
@@ -32,32 +32,72 @@ function sortStartDateASC(a, b) {
   return new Date(a.beginDate).getTime() < new Date(b.beginDate).getTime()
     ? -1
     : new Date(a.beginDate).getTime() > new Date(b.beginDate).getTime()
-      ? 1
-      : 0
+    ? 1
+    : 0
 }
 
 function sortStartDateDESC(a, b) {
   return new Date(a.beginDate).getTime() < new Date(b.beginDate).getTime()
     ? 1
     : new Date(a.beginDate).getTime() > new Date(b.beginDate).getTime()
-      ? -1
-      : 0
+    ? -1
+    : 0
 }
 
 function sortEndDateASC(a, b) {
   return new Date(a.endDate).getTime() < new Date(b.endDate).getTime()
     ? -1
     : new Date(a.endDate).getTime() > new Date(b.endDate).getTime()
-      ? 1
-      : 0
+    ? 1
+    : 0
 }
 
 function sortEndDateDESC(a, b) {
   return new Date(a.endDate).getTime() < new Date(b.endDate).getTime()
     ? 1
     : new Date(a.endDate).getTime() > new Date(b.endDate).getTime()
-      ? -1
-      : 0
+    ? -1
+    : 0
+}
+
+function sortStatusASC(a, b) {
+  const statusA = getStatus({
+    isActive: a.isActive,
+    beginDateString: a.beginDate,
+    endDateString: a.endDate,
+  })
+
+  const statusB = getStatus({
+    isActive: b.isActive,
+    beginDateString: b.beginDate,
+    endDateString: b.endDate,
+  })
+
+  return STATUS_ORDER[statusA.id] < STATUS_ORDER[statusB.id]
+    ? -1
+    : STATUS_ORDER[statusA.id] > STATUS_ORDER[statusB.id]
+    ? 1
+    : 0
+}
+
+function sortStatusDESC(a, b) {
+  const statusA = getStatus({
+    isActive: a.isActive,
+    beginDateString: a.beginDate,
+    endDateString: a.endDate,
+  })
+
+  const statusB = getStatus({
+    isActive: b.isActive,
+    beginDateString: b.beginDate,
+    endDateString: b.endDate,
+  })
+
+  return STATUS_ORDER[statusA.id] < STATUS_ORDER[statusB.id]
+    ? 1
+    : STATUS_ORDER[statusA.id] > STATUS_ORDER[statusB.id]
+    ? -1
+    : 0
 }
 
 export function sortPromotions(promotions, { sortedBy, sortOrder }) {
@@ -78,6 +118,10 @@ export function sortPromotions(promotions, { sortedBy, sortOrder }) {
       return sortOrder === 'ASC'
         ? promotions.slice().sort(sortEndDateASC)
         : promotions.slice().sort(sortEndDateDESC)
+    case 'status':
+      return sortOrder === 'ASC'
+        ? promotions.slice().sort(sortStatusASC)
+        : promotions.slice().sort(sortStatusDESC)
     default:
       return promotions
   }
@@ -103,20 +147,34 @@ export function filterPromotions(promotions, statements = []) {
         return filteredPromotions.filter(promo => {
           if (promo.effectType) {
             return !!st.object[promo.effectType]
-          } else { // legacy type
+          } else {
+            // legacy type
             return !!st.object[promo.type]
           }
         })
       case 'status':
-        return filteredPromotions.filter(({
-          isActive,
-          beginDate: beginDateString,
-          endDate: endDateString,
-        }) => {
-          const { id } = getStatus({ isActive, beginDateString, endDateString })
-          console.log('AEAE ID ', id, '  aa bool ', !st.object[id], '  full obj ', st.object)
-          return st.object[id]
-        })
+        return filteredPromotions.filter(
+          ({
+            isActive,
+            beginDate: beginDateString,
+            endDate: endDateString,
+          }) => {
+            const { id } = getStatus({
+              isActive,
+              beginDateString,
+              endDateString,
+            })
+            console.log(
+              'AEAE ID ',
+              id,
+              '  aa bool ',
+              !st.object[id],
+              '  full obj ',
+              st.object
+            )
+            return st.object[id]
+          }
+        )
       case 'startDate':
         switch (st.verb) {
           case 'is':

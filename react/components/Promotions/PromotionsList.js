@@ -19,7 +19,7 @@ const NO_TITLE_COLUMN = ' '
 const LEGACY_TAG_COLOR = '#C28702'
 
 function getTableSchema(intl) {
-  const cellTypeStyles = 'dtc t-small v-mid ws-normal ';
+  const cellTypeStyles = 'dtc t-small v-mid ws-normal '
 
   return {
     properties: {
@@ -39,9 +39,7 @@ function getTableSchema(intl) {
         cellRenderer: ({ cellData: name }) => {
           return (
             <div className="dt">
-              <span className={cellTypeStyles}>
-                {name}
-              </span>
+              <span className={cellTypeStyles}>{name}</span>
             </div>
           )
         },
@@ -69,7 +67,7 @@ function getTableSchema(intl) {
         sortable: true,
         width: 100,
         cellRenderer: ({ cellData: effectType, rowData: { type } }) => {
-          const icon = getEffectIcon(effectType, 18);
+          const icon = getEffectIcon(effectType, 18)
           return (
             <div className="dt flex items-center">
               {icon}
@@ -138,9 +136,9 @@ function getTableSchema(intl) {
                   ]
                 }
 
-                return <span className={cellTypeStyles}>
-                  {scopeInfo.join(', ')}
-                </span>
+                return (
+                  <span className={cellTypeStyles}>{scopeInfo.join(', ')}</span>
+                )
               })
             }
           }
@@ -200,6 +198,7 @@ function getTableSchema(intl) {
       status: {
         type: 'boolean',
         title: 'Status',
+        sortable: true,
         width: 100,
         cellRenderer: ({
           rowData: {
@@ -214,17 +213,16 @@ function getTableSchema(intl) {
             endDateString,
           })
 
-          return (
-            labelId === 'promotions.promotion.status.completed' ?
-              <div className="dt">
-                <span className={cellTypeStyles}>
-                  <FormattedMessage id={labelId} />
-                </span>
-              </div>
-              :
-              <Tag size="small" bgColor={color}>
+          return labelId === 'promotions.promotion.status.completed' ? (
+            <div className="dt">
+              <span className={cellTypeStyles}>
                 <FormattedMessage id={labelId} />
-              </Tag>
+              </span>
+            </div>
+          ) : (
+            <Tag size="small" bgColor={color}>
+              <FormattedMessage id={labelId} />
+            </Tag>
           )
         },
       },
