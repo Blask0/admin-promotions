@@ -164,14 +164,6 @@ export function filterPromotions(promotions, statements = []) {
               beginDateString,
               endDateString,
             })
-            console.log(
-              'AEAE ID ',
-              id,
-              '  aa bool ',
-              !st.object[id],
-              '  full obj ',
-              st.object
-            )
             return st.object[id]
           }
         )

@@ -21,7 +21,7 @@ class PromotionsTable extends Component {
 
     this.state = {
       dataSort: {
-        sortedBy: 'name',
+        sortedBy: 'status',
         sortOrder: 'ASC',
       },
       pagination: {
@@ -114,7 +114,13 @@ class PromotionsTable extends Component {
 
   render() {
     const { navigate } = this.context
-    const { dataSort, inputSearchValue, pagination, filters, width } = this.state
+    const {
+      dataSort,
+      inputSearchValue,
+      pagination,
+      filters,
+      width,
+    } = this.state
     const {
       creationDisabled,
       emptyStateLabel,
@@ -138,7 +144,10 @@ class PromotionsTable extends Component {
     const newSchema = {
       ...schema,
       properties: {
-        ...omitBy(schema.properties, (value, key) => !hasAnyLegacyPromotions && key === 'legacy')
+        ...omitBy(
+          schema.properties,
+          (value, key) => !hasAnyLegacyPromotions && key === 'legacy'
+        ),
       },
     }
 
@@ -158,7 +167,7 @@ class PromotionsTable extends Component {
             collapseLeft: true,
             clearAllFiltersButtonLabel: intl.formatMessage({
               id: 'admin/promotions.filterBar.clearAllFilters',
-            })
+            }),
           }}
           items={items}
           onRowClick={onRowClick}
