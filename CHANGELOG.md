@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Allow users to sort promotions based on the current promotions status.
+- Initialize table sorted by status.
+
 ## [0.7.0] - 2019-10-10
 
 ### Added
