@@ -1,11 +1,13 @@
 {
   "name": "admin-promotions",
   "vendor": "vtex",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "title": "Promotions Admin",
   "description": "Admin interface for Promotions",
   "mustUpdateAt": "2019-08-27",
-  "registries": ["smartcheckout"],
+  "registries": [
+    "smartcheckout"
+  ],
   "scripts": {},
   "builders": {
     "messages": "1.x",
