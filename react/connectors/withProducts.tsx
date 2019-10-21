@@ -33,7 +33,7 @@ const withProducts = <T extends WithProductsProps>(
           <WrappedComponent
             {...props}
             loading={loading}
-            error={error}
+            error={error && error.message}
             productsData={data && data.getProducts}
             searchForProducts={searchTerm => setName(searchTerm)}
           />

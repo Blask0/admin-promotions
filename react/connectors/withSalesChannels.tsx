@@ -35,7 +35,7 @@ const withSalesChannels = <T extends WithSalesChannelsProps>(
           <WrappedComponent
             {...props}
             loading={loading}
-            error={error}
+            error={error && error.message}
             salesChannels={
               data && data.getSalesChannels
                 ? uniqByProp(data.getSalesChannels, 'id')

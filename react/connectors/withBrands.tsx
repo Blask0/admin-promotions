@@ -31,7 +31,7 @@ const withBrands = <T extends WithBrandsProps>(
           <WrappedComponent
             {...props}
             loading={loading}
-            error={error}
+            error={error && error.message}
             brands={data && data.getBrands}
             searchForBrands={searchTerm => setName(searchTerm)}
           />

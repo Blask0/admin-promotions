@@ -19,7 +19,7 @@ const withAffiliates = <T extends {}>(
         <WrappedComponent
           {...props}
           loading={loading}
-          error={error}
+          error={error && error.message}
           affiliates={data && data.getAffiliates}
         />
       )}
