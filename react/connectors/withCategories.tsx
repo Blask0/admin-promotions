@@ -31,7 +31,7 @@ const withCategories = <T extends WithCategoriesProps>(
           <WrappedComponent
             {...props}
             loading={loading}
-            error={error}
+            error={error && error.message}
             categories={data && data.getCategories}
             searchForCategories={searchTerm => setName(searchTerm)}
           />

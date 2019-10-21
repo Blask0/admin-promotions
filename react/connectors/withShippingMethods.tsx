@@ -19,7 +19,7 @@ const withShippingMethods = <T extends {}>(
         <WrappedComponent
           {...props}
           loading={loading}
-          error={error}
+          error={error && error.message}
           shippingMethods={data && data.getShippingMethods}
         />
       )}

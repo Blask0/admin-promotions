@@ -58,7 +58,7 @@ const withSkus = <T extends WithSkusProps>(
             <WrappedComponent
               {...props}
               loading={loading}
-              error={error}
+              error={error && error.message}
               skus={skus}
               searchForSkus={searchTerm => setName(searchTerm)}
             />

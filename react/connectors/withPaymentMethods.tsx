@@ -19,7 +19,7 @@ const withPaymentMethods = <T extends {}>(
         <WrappedComponent
           {...props}
           loading={loading}
-          error={error}
+          error={error && error.message}
           paymentMethods={data && data.getPaymentMethods}
         />
       )}

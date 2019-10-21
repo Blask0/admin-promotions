@@ -31,7 +31,7 @@ const withCollections = <T extends WithCollectionsProps>(
           <WrappedComponent
             {...props}
             loading={loading}
-            error={error}
+            error={error && error.message}
             collections={data && data.getCollections}
             searchForCollections={searchTerm => setName(searchTerm)}
           />
