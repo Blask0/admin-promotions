@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Connectors error prop type passed to wrappedComponents.
+
 ## [0.7.0] - 2019-10-10
 
 ### Added
