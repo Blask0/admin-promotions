@@ -1,5 +1,5 @@
 query GetProductsAndSkus($name: String!) {
-  getProducts(q: $name, itemsPerPage: 999999) {
+  getProducts(q: $name, itemsPerPage: 100) {
     products {
       id
       name
