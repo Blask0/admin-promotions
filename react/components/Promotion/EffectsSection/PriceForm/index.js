@@ -199,16 +199,16 @@ class PriceForm extends Component {
             </div>
           ) : null}
           <Radio
-            id="promotions.promotion.effects.priceForm.discountType.priceTables"
+            id="promotions.promotion.effects.priceForm.discountType.priceTable"
             name="price-tables-discount-type"
-            checked={this.isDiscountTypeSelected('priceTables')}
+            checked={this.isDiscountTypeSelected('priceTable')}
             label={intl.formatMessage({
               id:
-                'promotions.promotion.effects.priceForm.discountType.priceTables',
+                'promotions.promotion.effects.priceForm.discountType.priceTable',
             })}
-            onChange={() => this.changeDiscountType('priceTables')}
+            onChange={() => this.changeDiscountType('priceTable')}
           />
-          {this.isDiscountTypeSelected('priceTables') ? (
+          {this.isDiscountTypeSelected('priceTable') ? (
             <div className="mv4 mh7 w-20">
               <Input
                 value={priceEffect.discount.value}
