@@ -204,8 +204,9 @@ class PromotionPage extends Component {
       error,
       salesChannels,
     } = this.props
-
+    console.log('OLHAUQ CHEGOU AQUI: ', { error })
     const [errorInfo] = getErrorsInfo(error)
+    console.log('DALE: ', { errorInfo, erroSemSErInfo: getErrorsInfo(error) })
 
     const uniqueCurrencyCodes = getUniqueCurrencyCodes(
       restriction,

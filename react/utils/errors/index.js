@@ -1,5 +1,5 @@
 export function getErrorsInfo(error) {
-  return error
+  return error && error.graphQLErrors && error.graphQLErrors.length > 0
     ? error.graphQLErrors.map(error => ({
       operationId: error.operationId,
       reason: error.extensions.exception.reason,
@@ -7,6 +7,12 @@ export function getErrorsInfo(error) {
           error.extensions.exception.details &&
           error.extensions.exception.details.response.status,
     }))
+    : error && error.message && error.networkError ?
+      [{
+        operationId: undefined,
+        reason: error.networkError.statusCode === 400 ? 'RNB-E1005' : 'nao-sei',
+        httpStatusCode: error.networkError.statusCode,
+      }]
     : []
 }
 
