@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.0] - 2019-10-31
+
 ### Changed
 
 - getProduct query quantity per page asked from 999999 to 15.
