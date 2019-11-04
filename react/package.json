@@ -1,6 +1,6 @@
 {
   "name": "admin-promotions",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Admin Promotions",
   "main": "index.js",
   "scripts": {
