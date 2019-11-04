@@ -38,7 +38,7 @@
   "promotions.promotion.effects.priceForm.discountType.title": "Tipo de desconto",
   "promotions.promotion.effects.priceForm.discountType.nominal": "Nominal",
   "promotions.promotion.effects.priceForm.discountType.percentual": "Percentual",
-  "promotions.promotion.effects.priceForm.discountType.priceTables": "Price tables",
+  "promotions.promotion.effects.priceForm.discountType.priceTable": "Tabela de preços",
   "promotions.promotion.effects.priceForm.appliesTo.title": "Itens afetados",
   "promotions.promotion.effects.priceForm.appliesTo.all": "Todo o catálogo",
   "promotions.promotion.effects.priceForm.appliesTo.specific": "Produtos específicos",
