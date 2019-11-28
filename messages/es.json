@@ -127,7 +127,7 @@
   "promotions.promotion.elligibility.cartProduct.verb.itemPriceRange.lt": "con precio inferior a",
   "promotions.promotion.elligibility.cartProduct.verb.itemPriceRange.between": "con precio entre",
   "promotions.promotion.elligibility.cartProduct.verb.fromToPrices": "con precio 'de'/'por'",
-  "promotions.promotion.elligibility.cartProduct.verb.seller.any": "es de uno de esos vendedores",
+  "promotions.promotion.elligibility.cartProduct.verb.seller.any": "es de uno de esos Sellers",
   "promotions.promotion.elligibility.cartProduct.verb.seller.not.any": "no es de uno de esos vendedores",
   "promotions.promotion.elligibility.cartProduct.itemPriceRange.placeholder": "Valor deseado del producto",
   "promotions.promotion.elligibility.cartProduct.fromToPrices.placeholder": "Seleccione...",
